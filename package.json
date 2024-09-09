@@ -1,0 +1,85 @@
+{
+	"name": "@miozu/jera",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && npm run package",
+		"preview": "vite preview",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepublishOnly": "npm run package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+		"test": "npm run test:integration && npm run test:unit && npm run test:e2e && npm run test:unit -- --run",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test:integration": "playwright test",
+		"test:unit": "vitest",
+		"test:e2e": "playwright test"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"files": ["dist", "!dist/**/*.test.*", "!dist/**/*.spec.*"],
+	"peerDependencies": {
+		"svelte": "^5.0.0-next.1"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.47.0",
+		"@sveltejs/adapter-auto": "^3.2.4",
+		"@sveltejs/kit": "^2.5.26",
+		"@sveltejs/package": "^2.3.4",
+		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
+		"@types/eslint": "^9.6.1",
+		"eslint": "^9.10.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.43.0",
+		"globals": "^15.9.0",
+		"prettier": "^3.3.3",
+		"prettier-plugin-svelte": "^3.2.6",
+		"publint": "^0.2.10",
+		"svelte": "^5.0.0-next.1",
+		"svelte-check": "^4.0.1",
+		"typescript": "^5.5.4",
+		"vite": "^5.4.3",
+		"vitest": "^2.0.5"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"description": "library is in development...",
+	"main": "eslint.config.js",
+	"directories": {
+		"test": "tests"
+	},
+	"dependencies": {
+		"eslint-compat-utils": "^0.5.1",
+		"eslint-scope": "^8.0.2",
+		"eslint-visitor-keys": "^4.0.0",
+		"svelte-eslint-parser": "^0.41.0"
+	},
+	"author": "Nicholas Glazer",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/miozu-com/jera.git"
+	},
+	"keywords": [
+		"svelte",
+		"headless",
+		"components",
+		"component",
+		"library",
+		"ui",
+		"ux",
+		"library",
+		"miozu",
+		"wyrd"
+	],
+	"bugs": {
+		"url": "https://github.com/miozu-com/jera/issues"
+	},
+	"homepage": "https://github.com/miozu-com/jera#readme"
+}
