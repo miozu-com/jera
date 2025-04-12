@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+.pnpm-store/
+.npm/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+dist/
+build/
+out/
+.svelte-kit/
+
+# Editor files (Emacs)
+*~
+\#*\#
+.\#*
+.dir-locals.el
+.projectile
+.tern-port
+.tags
+TAGS
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Testing
+coverage/
+
+# Temporary files
+tmp/
+.temp/

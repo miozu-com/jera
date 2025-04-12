@@ -1,0 +1,24 @@
+{
+  "name": "@miozu/jera",
+  "version": "0.0.2",
+  "description": "Svelte 5 component library",
+  "main": "jera.js",
+  "bin": {
+    "jera": "./jera.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/miozu/jera"
+  },
+  "keywords": ["component library", "svelte 5", "sveltekit"],
+  "author": "Nicholas Glazer <info@nicgl.com>",
+  "license": "MIT",
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "commander": "^13.1.0"
+  }
+}
