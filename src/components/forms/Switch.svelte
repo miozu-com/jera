@@ -27,13 +27,8 @@
 
   const inputId = id || generateId();
 
-  const sizes = {
-    sm: { track: 'w-8 h-4', thumb: 'w-3 h-3', translate: 'translate-x-4' },
-    md: { track: 'w-10 h-5', thumb: 'w-4 h-4', translate: 'translate-x-5' },
-    lg: { track: 'w-12 h-6', thumb: 'w-5 h-5', translate: 'translate-x-6' }
-  };
-
-  const sizeConfig = $derived(sizes[size] || sizes.md);
+  // Size classes map to CSS classes defined below
+  const sizeClass = $derived(`switch-${size}`);
 </script>
 
 <label
@@ -53,8 +48,8 @@
     {...rest}
   />
 
-  <span class={cn('switch-track', sizeConfig.track, checked && 'switch-track-checked')}>
-    <span class={cn('switch-thumb', sizeConfig.thumb, checked && sizeConfig.translate)} />
+  <span class={cn('switch-track', sizeClass, checked && 'switch-track-checked')}>
+    <span class={cn('switch-thumb', checked && 'switch-thumb-checked')} />
   </span>
 
   {#if children}
@@ -123,18 +118,42 @@
     color: var(--color-text);
   }
 
-  /* Tailwind-like utilities inline */
-  .w-8 { width: 2rem; }
-  .w-10 { width: 2.5rem; }
-  .w-12 { width: 3rem; }
-  .h-4 { height: 1rem; }
-  .h-5 { height: 1.25rem; }
-  .h-6 { height: 1.5rem; }
-  .w-3 { width: 0.75rem; }
-  .w-4 { width: 1rem; }
-  .w-5 { width: 1.25rem; }
-  .h-3 { height: 0.75rem; }
-  .translate-x-4 { transform: translateX(1rem); }
-  .translate-x-5 { transform: translateX(1.25rem); }
-  .translate-x-6 { transform: translateX(1.5rem); }
+  /* Size variants - Small */
+  .switch-sm {
+    width: 2rem;
+    height: 1rem;
+  }
+  .switch-sm .switch-thumb {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  .switch-sm .switch-thumb-checked {
+    transform: translateX(1rem);
+  }
+
+  /* Size variants - Medium (default) */
+  .switch-md {
+    width: 2.5rem;
+    height: 1.25rem;
+  }
+  .switch-md .switch-thumb {
+    width: 1rem;
+    height: 1rem;
+  }
+  .switch-md .switch-thumb-checked {
+    transform: translateX(1.25rem);
+  }
+
+  /* Size variants - Large */
+  .switch-lg {
+    width: 3rem;
+    height: 1.5rem;
+  }
+  .switch-lg .switch-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .switch-lg .switch-thumb-checked {
+    transform: translateX(1.5rem);
+  }
 </style>
