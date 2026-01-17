@@ -1,0 +1,47 @@
+{
+  "name": "@miozu/jera",
+  "version": "0.1.0",
+  "description": "Minimal, reactive component library for Svelte 5",
+  "type": "module",
+  "svelte": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "svelte": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./tokens": "./src/tokens/index.css",
+    "./utils": "./src/utils/index.js",
+    "./actions": "./src/actions/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "prepublishOnly": "npm run check"
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "devDependencies": {
+    "svelte": "^5.41.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.6.0"
+  },
+  "keywords": [
+    "svelte",
+    "svelte5",
+    "components",
+    "design-system",
+    "ui",
+    "miozu"
+  ],
+  "author": "Miozu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miozu-com/jera"
+  }
+}
