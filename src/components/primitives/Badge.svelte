@@ -32,13 +32,13 @@
 
     variants: {
       variant: {
-        default: 'bg-[var(--color-surface-alt)] text-[var(--color-text)]',
-        primary: 'bg-[color-mix(in_srgb,var(--color-primary)_15%,transparent)] text-[var(--color-primary)]',
-        secondary: 'bg-[color-mix(in_srgb,var(--color-secondary)_15%,transparent)] text-[var(--color-secondary)]',
-        success: 'bg-[color-mix(in_srgb,var(--color-success)_15%,transparent)] text-[var(--color-success)]',
-        warning: 'bg-[color-mix(in_srgb,var(--color-warning)_15%,transparent)] text-[var(--color-warning)]',
-        error: 'bg-[color-mix(in_srgb,var(--color-error)_15%,transparent)] text-[var(--color-error)]',
-        info: 'bg-[color-mix(in_srgb,var(--color-info)_15%,transparent)] text-[var(--color-info)]'
+        default: 'bg-[var(--color-base02)] text-[var(--color-base05)]',
+        primary: 'bg-[color-mix(in_srgb,var(--color-base0D)_15%,transparent)] text-[var(--color-base0D)]',
+        secondary: 'bg-[color-mix(in_srgb,var(--color-base0C)_15%,transparent)] text-[var(--color-base0C)]',
+        success: 'bg-[color-mix(in_srgb,var(--color-base0B)_15%,transparent)] text-[var(--color-base0B)]',
+        warning: 'bg-[color-mix(in_srgb,var(--color-base0A)_15%,transparent)] text-[var(--color-base0A)]',
+        error: 'bg-[color-mix(in_srgb,var(--color-base08)_15%,transparent)] text-[var(--color-base08)]',
+        info: 'bg-[color-mix(in_srgb,var(--color-base0D)_15%,transparent)] text-[var(--color-base0D)]'
       },
 
       size: {

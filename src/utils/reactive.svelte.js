@@ -48,7 +48,7 @@ export function createReactive(initial) {
  * @returns {{ readonly value: T }}
  */
 export function createDerived(fn) {
-  const value = $derived(fn());
+  const value = $derived.by(fn);
 
   return {
     get value() {
@@ -73,7 +73,7 @@ export class ThemeState {
   current = $state('system');
 
   /** @type {'light' | 'dark'} */
-  resolved = $derived(this.#resolveTheme());
+  resolved = $derived.by(() => this.#resolveTheme());
 
   /** @type {boolean} */
   #mounted = false;
@@ -193,10 +193,9 @@ export function getThemeContext() {
 export function createComponentState(initialState, derivedFn) {
   const state = $state(initialState);
 
-  // $derived must be used as direct initializer, so we always derive
-  // and use an empty function if none provided
+  // $derived.by tracks dependencies inside the function
   const deriveFn = derivedFn || (() => ({}));
-  const derived = $derived(deriveFn(state));
+  const derived = $derived.by(() => deriveFn(state));
 
   return {
     get state() {

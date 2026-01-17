@@ -85,24 +85,24 @@
 <style>
   .input-base {
     width: 100%;
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-sm);
-    line-height: var(--leading-normal);
-    color: var(--color-text-strong);
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border-muted);
-    border-radius: var(--radius-lg);
-    transition: var(--transition-colors);
+    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    font-size: var(--text-sm, 0.875rem);
+    line-height: var(--leading-normal, 1.5);
+    color: var(--color-base07);
+    background-color: var(--color-base00);
+    border: 1px solid var(--color-base02);
+    border-radius: var(--radius-lg, 0.5rem);
+    transition: border-color 150ms, box-shadow 150ms;
   }
 
   .input-base::placeholder {
-    color: var(--color-text-muted);
+    color: var(--color-base04);
   }
 
   .input-base:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border-color: var(--color-base0D);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
   }
 
   .input-base:disabled {
@@ -111,11 +111,11 @@
   }
 
   .input-error {
-    border-color: var(--color-error);
+    border-color: var(--color-base08);
   }
 
   .input-error:focus {
-    border-color: var(--color-error);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 20%, transparent);
+    border-color: var(--color-base08);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base08) 20%, transparent);
   }
 </style>
