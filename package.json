@@ -10,11 +10,17 @@
       "default": "./src/index.js"
     },
     "./tokens": "./src/tokens/index.css",
+    "./tokens/colors": "./src/tokens/colors.css",
+    "./tokens/spacing": "./src/tokens/spacing.css",
+    "./tokens/typography": "./src/tokens/typography.css",
+    "./tokens/effects": "./src/tokens/effects.css",
     "./utils": "./src/utils/index.js",
     "./actions": "./src/actions/index.js"
   },
   "files": [
-    "src"
+    "src",
+    "llms.txt",
+    "CLAUDE.md"
   ],
   "peerDependencies": {
     "svelte": "^5.0.0"
@@ -28,12 +34,18 @@
     "components",
     "design-system",
     "ui",
-    "miozu"
+    "miozu",
+    "base16",
+    "dark-theme"
   ],
-  "author": "Nicholas Glazer <info@nicgl.com>",
+  "author": "Nicholas Glazer <glazer.nicholas@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/miozu-com/jera"
+  },
+  "homepage": "https://miozu.com",
+  "bugs": {
+    "url": "https://github.com/miozu-com/jera/issues"
   }
 }

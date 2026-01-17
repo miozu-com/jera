@@ -1,22 +1,20 @@
 # @miozu/jera
 
-A minimal, reactive component library for Svelte 5. Designed for elegance, scalability, and ease of application.
+A minimal, reactive component library for Svelte 5.
 
-## Philosophy
+**Jera** (ᛃ) — the rune of harvest and cycles. Build on foundations, yield results.
 
-**Jera** (ᛃ) represents harvest and cycles—building on foundations to yield results. This library embodies:
+## Features
 
-- **Minimal** — Only what you need, nothing more
-- **Reactive** — Built on Svelte 5 runes for fine-grained reactivity
-- **Composable** — Mix utilities and components freely
-- **Accessible** — ARIA patterns and keyboard navigation built-in
-- **Themeable** — CSS variables for complete customization
+- **Miozu Design Tokens** — Base16 color system, spacing, typography, effects
+- **Reactive Utilities** — `cn()`, `cv()` for class composition with Svelte 5 runes
+- **Accessible Components** — Button, Input, Select, Badge, Checkbox, Switch, Toast
+- **Svelte Actions** — clickOutside, focusTrap, portal, escapeKey, and more
+- **AI-First Documentation** — Optimized for LLM-assisted development
 
 ## Installation
 
 ```bash
-npm install @miozu/jera
-# or
 pnpm add @miozu/jera
 ```
 
@@ -24,295 +22,180 @@ pnpm add @miozu/jera
 
 ```svelte
 <script>
-  import { Button, Select, cn, cv } from '@miozu/jera';
+  import { Button, Input, Badge } from '@miozu/jera';
   import '@miozu/jera/tokens';
 
-  let selected = $state(null);
-  const options = [
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'react', label: 'React' },
-    { value: 'vue', label: 'Vue' }
-  ];
+  let email = $state('');
 </script>
 
-<Select {options} bind:value={selected} />
-<Button onclick={() => console.log(selected)}>Submit</Button>
+<Input bind:value={email} type="email" placeholder="Enter email" />
+<Button onclick={() => console.log(email)}>Submit</Button>
+<Badge variant="success">Active</Badge>
 ```
 
-## Core Concepts
+## Design Tokens
 
-### 1. Class Variance (`cv`)
+Import tokens for consistent styling:
 
-Type-safe variant composition inspired by CVA, optimized for Svelte 5:
+```css
+/* All tokens */
+@import '@miozu/jera/tokens';
 
-```javascript
-import { cv } from '@miozu/jera';
-
-const badge = cv({
-  base: 'inline-flex items-center rounded-full font-medium',
-  variants: {
-    color: {
-      gray: 'bg-muted/10 text-muted',
-      blue: 'bg-primary/10 text-primary',
-      green: 'bg-success/10 text-success',
-      red: 'bg-error/10 text-error'
-    },
-    size: {
-      sm: 'px-2 py-0.5 text-xs',
-      md: 'px-2.5 py-1 text-sm',
-      lg: 'px-3 py-1.5 text-base'
-    }
-  },
-  defaults: { color: 'gray', size: 'md' }
-});
-
-// Use in template
-<span class={badge({ color: 'blue', size: 'lg' })}>New</span>
+/* Individual token sets */
+@import '@miozu/jera/tokens/colors';
+@import '@miozu/jera/tokens/spacing';
+@import '@miozu/jera/tokens/typography';
+@import '@miozu/jera/tokens/effects';
 ```
 
-### 2. Reactive Classes
+### Miozu Color Palette
 
-Compose classes that update automatically with state changes:
-
-```svelte
-<script>
-  import { cn } from '@miozu/jera';
-
-  let isActive = $state(false);
-  let size = $state('md');
-
-  // Reactive: recomputes when dependencies change
-  const buttonClass = $derived(cn(
-    'base-button',
-    isActive && 'is-active',
-    `size-${size}`
-  ));
-</script>
-
-<button class={buttonClass}>Click</button>
-```
-
-### 3. Actions
-
-Reusable element behaviors:
-
-```svelte
-<script>
-  import { clickOutside, focusTrap, autoFocus } from '@miozu/jera/actions';
-
-  let isOpen = $state(false);
-</script>
-
-<div use:clickOutside={() => isOpen = false}>
-  <dialog use:focusTrap={{ enabled: isOpen }}>
-    <input use:autoFocus />
-  </dialog>
-</div>
-```
-
-### 4. Theme State
-
-SSR-safe theme management:
-
-```svelte
-<script>
-  import { ThemeState, createThemeContext } from '@miozu/jera';
-  import { onMount } from 'svelte';
-
-  const theme = createThemeContext();
-
-  onMount(() => theme.init());
-</script>
-
-<button onclick={() => theme.toggle()}>
-  {theme.resolved === 'dark' ? '☀️' : '🌙'}
-</button>
-```
+| Base | Hex | Accent | Hex |
+|------|-----|--------|-----|
+| base0 | `#232733` | magenta | `#C974E6` |
+| base1 | `#2C3040` | blue | `#83D2FC` |
+| base2 | `#3E4359` | green | `#6DD672` |
+| base3 | `#565E78` | yellow | `#E8D176` |
+| base4 | `#737E99` | red | `#EB3137` |
+| base5 | `#D0D2DB` | cyan | `#40FFE2` |
+| base6 | `#F3F4F7` | orange | `#FF9837` |
+| base7 | `#FAFDFB` | peach | `#FF9982` |
 
 ## Components
 
 ### Button
 
-Polymorphic button with variants:
-
 ```svelte
-<Button>Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="ghost" size="sm">Small Ghost</Button>
+<Button variant="primary|secondary|ghost|outline|danger|success" size="xs|sm|md|lg|xl">
+  Click me
+</Button>
 <Button href="/about">Link Button</Button>
 <Button loading>Loading...</Button>
-<Button disabled>Disabled</Button>
-
-<!-- With icons -->
-<Button>
-  {#snippet iconLeft()}<IconPlus size={16} />{/snippet}
-  Add Item
-</Button>
 ```
 
-**Props:**
-- `variant`: `'primary'` | `'secondary'` | `'ghost'` | `'outline'` | `'danger'` | `'success'`
-- `size`: `'xs'` | `'sm'` | `'md'` | `'lg'` | `'xl'`
-- `disabled`: boolean
-- `loading`: boolean
-- `fullWidth`: boolean
-- `href`: string (renders as `<a>`)
+### Input
+
+```svelte
+<Input bind:value={text} placeholder="Enter text" />
+<Input type="password" disableBrowserFeatures />
+<Input error={!isValid} />
+```
 
 ### Select
 
-Accessible dropdown with keyboard navigation:
-
 ```svelte
 <Select
-  options={[
-    { value: '1', label: 'Option 1' },
-    { value: '2', label: 'Option 2' }
-  ]}
+  options={[{ value: '1', label: 'Option 1' }]}
   bind:value={selected}
   placeholder="Choose..."
-  onchange={(opt) => console.log(opt)}
-/>
-
-<!-- Custom keys -->
-<Select
-  options={users}
-  bind:value={selectedId}
-  labelKey="name"
-  valueKey="id"
 />
 ```
 
-**Props:**
-- `options`: Array of `{ label, value }` objects
-- `value`: Current selected value (bindable)
-- `labelKey`: Key for display label (default: `'label'`)
-- `valueKey`: Key for value (default: `'value'`)
-- `placeholder`: Placeholder text
-- `disabled`: boolean
-- `error`: boolean
+### Badge
+
+```svelte
+<Badge variant="default|primary|secondary|success|warning|error|info">
+  Status
+</Badge>
+```
+
+### Checkbox & Switch
+
+```svelte
+<Checkbox bind:checked={agreed}>I agree</Checkbox>
+<Switch bind:checked={enabled}>Enable notifications</Switch>
+```
 
 ### Toast
 
-Notification system with auto-dismiss:
-
 ```svelte
-<!-- Provider (in root layout) -->
+<!-- Root layout -->
 <script>
   import { Toast, createToastContext } from '@miozu/jera';
-  const toast = createToastContext();
+  createToastContext();
 </script>
-
 <Toast />
-<slot />
 
-<!-- Usage anywhere -->
+<!-- Any component -->
 <script>
   import { getToastContext } from '@miozu/jera';
   const toast = getToastContext();
-
-  function handleSave() {
-    toast.success('Saved successfully!');
-  }
-
-  function handleError() {
-    toast.error('Something went wrong', { duration: 6000 });
-  }
+  toast.success('Saved!');
 </script>
 ```
 
-## Design Tokens
+## Utilities
 
-Import the CSS tokens for consistent styling:
+### cn() — Class concatenation
 
-```css
-@import '@miozu/jera/tokens';
+```javascript
+import { cn } from '@miozu/jera';
+
+cn('base', condition && 'conditional', ['array', 'classes']);
+// => "base conditional array classes"
 ```
 
-Available CSS variables:
+### cv() — Class variants
 
-```css
-/* Colors */
---color-bg, --color-surface, --color-border
---color-text, --color-text-strong, --color-muted
---color-primary, --color-secondary, --color-accent
---color-success, --color-warning, --color-error, --color-info
+```javascript
+import { cv } from '@miozu/jera';
 
-/* Spacing */
---space-1 through --space-16
+const button = cv({
+  base: 'inline-flex items-center',
+  variants: {
+    variant: { primary: 'bg-primary', secondary: 'bg-surface' },
+    size: { sm: 'h-8', md: 'h-10' }
+  },
+  defaults: { variant: 'primary', size: 'md' }
+});
 
-/* Typography */
---font-sans, --font-serif, --font-mono
---text-xs through --text-4xl
-
-/* Shadows */
---shadow-xs through --shadow-xl
-
-/* Radius */
---radius-sm through --radius-full
-
-/* Transitions */
---duration-fast, --duration-base, --duration-slow
---ease-default, --ease-in, --ease-out, --ease-bounce
+button({ variant: 'secondary' }); // => "inline-flex items-center bg-surface h-10"
 ```
 
-## Dark Mode
-
-The library uses `data-theme` attribute for theming:
-
-```html
-<!-- In your app.html -->
-<script>
-  const theme = document.cookie.match(/jera-theme=(\w+)/)?.[1]
-    || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
-</script>
-```
-
-## Advanced Patterns
-
-### Compound Components
-
-Create related components that share state:
+## Actions
 
 ```svelte
 <script>
-  import { setContext, getContext } from 'svelte';
-
-  // Parent sets context
-  const TABS_KEY = Symbol('tabs');
-
-  export function createTabsContext() {
-    let activeTab = $state(0);
-    const ctx = { activeTab, setTab: (i) => activeTab = i };
-    setContext(TABS_KEY, ctx);
-    return ctx;
-  }
-
-  export function getTabsContext() {
-    return getContext(TABS_KEY);
-  }
+  import { clickOutside, focusTrap, escapeKey, portal } from '@miozu/jera/actions';
 </script>
+
+<div use:clickOutside={() => close()}>
+  <dialog use:focusTrap={{ enabled: isOpen }}>
+    <div use:escapeKey={() => close()}>
+      Content
+    </div>
+  </dialog>
+</div>
+
+<div use:portal={'body'}>Renders at body level</div>
 ```
 
-### Custom Variants
+## Theming
 
-Extend components with custom variants:
+Dark theme is default. Switch themes with `data-theme` attribute:
+
+```html
+<html data-theme="dark">  <!-- Dark (default) -->
+<html data-theme="light"> <!-- Light -->
+```
+
+Or use ThemeState:
 
 ```javascript
-import { cv, buttonStyles } from '@miozu/jera';
+import { createThemeContext } from '@miozu/jera';
 
-// Extend button with custom variants
-const myButton = cv({
-  ...buttonStyles.config,
-  variants: {
-    ...buttonStyles.config.variants,
-    variant: {
-      ...buttonStyles.config.variants.variant,
-      brand: 'bg-brand-500 text-white hover:bg-brand-600'
-    }
-  }
-});
+const theme = createThemeContext();
+theme.init();    // Reads from localStorage/system preference
+theme.toggle();  // Switch between light/dark
 ```
+
+## AI-First Design
+
+This library includes AI-optimized documentation:
+
+- `llms.txt` — Structured index for LLM consumption
+- `CLAUDE.md` — Detailed context for AI assistants
+- JSDoc comments throughout the codebase
 
 ## Browser Support
 
@@ -325,4 +208,4 @@ Requires Svelte 5.0+
 
 ## License
 
-MIT © [Miozu](https://miozu.com)
+MIT © [Nicholas Glazer](https://miozu.com)
