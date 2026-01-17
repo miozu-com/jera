@@ -15,3 +15,8 @@ export {
   createIdGenerator,
   generateId
 } from './reactive.svelte.js';
+
+export {
+  createSidebarState,
+  SIDEBAR_CONTEXT_KEY
+} from './sidebar.svelte.js';

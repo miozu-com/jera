@@ -5,6 +5,7 @@
  * for visual harmony and reduced eye strain.
  *
  * Documentation: https://miozu.com/colors
+ * Source: https://github.com/miozu-com
  * Author: Nicholas Glazer <glazer.nicholas@gmail.com>
  *
  * USAGE:
@@ -16,98 +17,141 @@
 
 :root {
   /* ========================================
-   * BASE COLORS (Grayscale Spectrum)
-   * From darkest (base0) to lightest (base7)
+   * BASE16 COLORS
+   * Proper Base16 hex naming: base00-base0F
    * ======================================== */
 
-  --base0: #232733;  /* Darkest background */
-  --base1: #2C3040;  /* Default dark background */
-  --base2: #3E4359;  /* Selection, highlights */
-  --base3: #565E78;  /* Comments, subtle text */
-  --base4: #737E99;  /* Muted foreground */
-  --base5: #D0D2DB;  /* Default foreground */
-  --base6: #F3F4F7;  /* Light foreground */
-  --base7: #FAFDFB;  /* Lightest/white */
+  /* Grayscale (base00-base07) */
+  --base00: #232733;  /* Darkest background */
+  --base01: #2C3040;  /* Default dark background */
+  --base02: #3E4359;  /* Selection, highlights */
+  --base03: #565E78;  /* Comments, subtle text */
+  --base04: #737E99;  /* Muted foreground */
+  --base05: #D0D2DB;  /* Default foreground */
+  --base06: #F3F4F7;  /* Light foreground */
+  --base07: #FAFBFD;  /* Lightest/white */
+
+  /* Accents (base08-base0F) */
+  --base08: #EB3137;  /* Red - errors, destructive */
+  --base09: #FF9837;  /* Orange - numbers, attention */
+  --base0A: #E8D176;  /* Yellow - warnings, highlights */
+  --base0B: #6DD672;  /* Green - success, positive */
+  --base0C: #40FFE2;  /* Cyan - methods, cool accent */
+  --base0D: #83D2FC;  /* Blue - info, links */
+  --base0E: #C974E6;  /* Magenta - primary brand */
+  --base0F: #FF9982;  /* Peach - keywords, warm accent */
 
   /* ========================================
-   * ACCENT COLORS
-   * Semantic colors for UI states
+   * COLOR ALIASES
+   * Prefixed version for CSS custom property usage
    * ======================================== */
 
-  --yellow:  #E8D176;  /* Warnings, highlights */
-  --green:   #6DD672;  /* Success, positive */
-  --blue:    #83D2FC;  /* Info, links */
-  --cyan:    #40FFE2;  /* Secondary accent */
-  --peach:   #FF9982;  /* Warm accent */
-  --magenta: #C974E6;  /* Primary brand */
-  --orange:  #FF9837;  /* Numbers, attention */
-  --red:     #EB3137;  /* Error, destructive */
+  --color-base00: var(--base00);
+  --color-base01: var(--base01);
+  --color-base02: var(--base02);
+  --color-base03: var(--base03);
+  --color-base04: var(--base04);
+  --color-base05: var(--base05);
+  --color-base06: var(--base06);
+  --color-base07: var(--base07);
+  --color-base08: var(--base08);
+  --color-base09: var(--base09);
+  --color-base0A: var(--base0A);
+  --color-base0B: var(--base0B);
+  --color-base0C: var(--base0C);
+  --color-base0D: var(--base0D);
+  --color-base0E: var(--base0E);
+  --color-base0F: var(--base0F);
 
-  /* ========================================
-   * SEMANTIC MAPPINGS (Dark Theme Default)
-   * Use these in components for consistency
-   * ======================================== */
-
-  /* Backgrounds */
-  --color-bg: var(--base0);
-  --color-surface: var(--base1);
-  --color-surface-alt: var(--base2);
-  --color-hover: var(--base2);
-
-  /* Foregrounds */
-  --color-text: var(--base5);
-  --color-text-strong: var(--base7);
-  --color-text-muted: var(--base4);
-  --color-text-subtle: var(--base3);
-
-  /* Borders */
-  --color-border: var(--base3);
-  --color-border-muted: var(--base2);
-
-  /* Brand */
-  --color-primary: var(--magenta);
-  --color-secondary: var(--blue);
-  --color-accent: var(--cyan);
-
-  /* States */
-  --color-success: var(--green);
-  --color-warning: var(--yellow);
-  --color-error: var(--red);
-  --color-info: var(--blue);
+  /* Border utility */
+  --color-border: var(--base03);
 }
 
 /* ========================================
  * LIGHT THEME
- * Inverted grayscale, same accents
+ * Inverted grayscale for light backgrounds
+ *
+ * Supports multiple selectors:
+ * - data-theme="light" (generic)
+ * - data-theme="miozu-light" (Selify/Miozu apps)
+ * - .light (class-based)
  * ======================================== */
 
 [data-theme="light"],
+[data-theme="miozu-light"],
 .light {
-  /* Inverted base colors */
-  --color-bg: var(--base7);
-  --color-surface: var(--base6);
-  --color-surface-alt: var(--base5);
-  --color-hover: var(--base5);
+  /* Inverted grayscale */
+  --base00: #FAFBFD;
+  --base01: #F3F4F7;
+  --base02: #D0D2DB;
+  --base03: #737E99;
+  --base04: #565E78;
+  --base05: #3E4359;
+  --base06: #2C3040;
+  --base07: #232733;
 
-  /* Inverted foregrounds */
-  --color-text: var(--base2);
-  --color-text-strong: var(--base0);
-  --color-text-muted: var(--base3);
-  --color-text-subtle: var(--base4);
+  /* Update aliases */
+  --color-base00: var(--base00);
+  --color-base01: var(--base01);
+  --color-base02: var(--base02);
+  --color-base03: var(--base03);
+  --color-base04: var(--base04);
+  --color-base05: var(--base05);
+  --color-base06: var(--base06);
+  --color-base07: var(--base07);
 
-  /* Inverted borders */
-  --color-border: var(--base4);
-  --color-border-muted: var(--base5);
+  --color-border: var(--base03);
 }
 
 /* ========================================
- * CONTRAST VARIANTS
- * For accessibility and preference
+ * DARK THEME (Explicit)
+ * Same as :root default
+ *
+ * Supports multiple selectors:
+ * - data-theme="dark" (generic)
+ * - data-theme="miozu-dark" (Selify/Miozu apps)
+ * - .dark (class-based)
+ * ======================================== */
+
+[data-theme="dark"],
+[data-theme="miozu-dark"],
+.dark {
+  --base00: #232733;
+  --base01: #2C3040;
+  --base02: #3E4359;
+  --base03: #565E78;
+  --base04: #737E99;
+  --base05: #D0D2DB;
+  --base06: #F3F4F7;
+  --base07: #FAFBFD;
+
+  --color-base00: var(--base00);
+  --color-base01: var(--base01);
+  --color-base02: var(--base02);
+  --color-base03: var(--base03);
+  --color-base04: var(--base04);
+  --color-base05: var(--base05);
+  --color-base06: var(--base06);
+  --color-base07: var(--base07);
+
+  --color-border: var(--base03);
+}
+
+/* ========================================
+ * HIGH CONTRAST THEME
+ * For accessibility
  * ======================================== */
 
 [data-theme="high-contrast"] {
-  --color-text: var(--base7);
-  --color-text-strong: #FFFFFF;
-  --color-bg: #000000;
-  --color-border: var(--base5);
+  --base00: #000000;
+  --base01: #0a0a0a;
+  --base02: #1a1a1a;
+  --base07: #FFFFFF;
+
+  --color-base00: var(--base00);
+  --color-base01: var(--base01);
+  --color-base02: var(--base02);
+  --color-base07: var(--base07);
+
+  --color-border: var(--base05);
 }

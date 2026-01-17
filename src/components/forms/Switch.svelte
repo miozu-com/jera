@@ -91,16 +91,16 @@
     align-items: center;
     flex-shrink: 0;
     border-radius: var(--radius-full);
-    background-color: var(--color-border);
+    background-color: var(--color-base03);
     transition: var(--transition-colors);
   }
 
   .switch-track-checked {
-    background-color: var(--color-primary);
+    background-color: var(--color-base0D);
   }
 
   .switch-input:focus-visible + .switch-track {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-base0D);
     outline-offset: 2px;
   }
 
@@ -115,7 +115,7 @@
 
   .switch-label {
     font-size: var(--text-sm);
-    color: var(--color-text);
+    color: var(--color-base05);
   }
 
   /* Size variants - Small */

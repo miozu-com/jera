@@ -24,9 +24,11 @@ jera/
 │   ├── actions/
 │   │   └── index.js          # Svelte actions
 │   └── components/
-│       ├── primitives/       # Button, Badge
+│       ├── primitives/       # Button, Badge, Divider, Avatar
 │       ├── forms/            # Input, Select, Checkbox, Switch
-│       └── feedback/         # Toast
+│       ├── feedback/         # Toast, Skeleton, ProgressBar, Spinner
+│       ├── overlays/         # Modal, Popover
+│       └── navigation/       # Tabs, Accordion, AccordionItem
 ├── llms.txt                  # AI documentation index
 ├── CLAUDE.md                 # This file
 └── package.json
@@ -197,6 +199,123 @@ export const componentStyles = cv({
 </script>
 ```
 
+### Modal
+```svelte
+<script>
+  import { Modal, Button } from '@miozu/jera';
+  let showModal = $state(false);
+</script>
+
+<Button onclick={() => showModal = true}>Open Modal</Button>
+
+<Modal bind:open={showModal} title="Confirm Action" variant="danger">
+  <p>Are you sure you want to proceed?</p>
+  {#snippet footer()}
+    <Button variant="ghost" onclick={() => showModal = false}>Cancel</Button>
+    <Button variant="danger" onclick={handleConfirm}>Confirm</Button>
+  {/snippet}
+</Modal>
+```
+
+Props: `open`, `title`, `size` (sm/md/lg/xl), `variant` (default/danger/warning/success/info), `closeOnBackdrop`, `closeOnEscape`, `showClose`, `children`, `footer`, `icon`, `onclose`
+
+### Popover
+```svelte
+<script>
+  import { Popover, Button } from '@miozu/jera';
+</script>
+
+<Popover content="Helpful tooltip text" position="top">
+  <Button>Hover me</Button>
+</Popover>
+```
+
+Props: `content`, `position` (top/bottom/left/right), `delay` ({show, hide}), `offset`
+
+### Divider
+```svelte
+<Divider />
+<Divider orientation="vertical" />
+<Divider>or continue with</Divider>
+```
+
+Props: `orientation` (horizontal/vertical), `thickness`, `spacing`, `children`
+
+### Avatar
+```svelte
+<Avatar src="/user.jpg" alt="John Doe" />
+<Avatar name="John Doe" />
+<Avatar src="/user.jpg" status="online" size="lg" />
+```
+
+Props: `src`, `alt`, `name`, `size` (xs/sm/md/lg/xl/2xl), `status` (online/offline/busy/away)
+
+### Skeleton
+```svelte
+<Skeleton width="80%" />
+<Skeleton variant="circle" size="48px" />
+<Skeleton variant="rect" width="100%" height="200px" />
+<Skeleton lines={3} />
+```
+
+Props: `variant` (text/heading/circle/rect), `width`, `height`, `size`, `lines`, `animate`
+
+### ProgressBar
+```svelte
+<ProgressBar value={65} />
+<ProgressBar value={80} showLabel variant="success" />
+<ProgressBar indeterminate />
+```
+
+Props: `value`, `max`, `size` (sm/md/lg), `variant` (primary/success/warning/error/info), `showLabel`, `label`, `indeterminate`
+
+### Spinner
+```svelte
+<Spinner />
+<Spinner size="lg" color="var(--color-base11)" />
+```
+
+Props: `size` (xs/sm/md/lg/xl), `color`, `label`
+
+### Tabs
+```svelte
+<script>
+  import { Tabs } from '@miozu/jera';
+  let activeTab = $state('tab1');
+</script>
+
+<Tabs
+  tabs={[
+    { id: 'tab1', label: 'Overview' },
+    { id: 'tab2', label: 'Settings', badge: 3 },
+    { id: 'tab3', label: 'Analytics', disabled: true }
+  ]}
+  bind:active={activeTab}
+  variant="underline"
+/>
+```
+
+Props: `tabs` (array), `active`, `variant` (default/underline/pills), `size` (sm/md/lg), `fullWidth`, `onchange`
+
+### Accordion
+```svelte
+<script>
+  import { Accordion, AccordionItem } from '@miozu/jera';
+</script>
+
+<Accordion multiple>
+  <AccordionItem id="section1" title="Section 1">
+    Content for section 1
+  </AccordionItem>
+  <AccordionItem id="section2" title="Section 2">
+    Content for section 2
+  </AccordionItem>
+</Accordion>
+```
+
+Accordion props: `expanded` (array of ids), `multiple`
+AccordionItem props: `id`, `title`, `disabled`
+
 ---
 
 ## Actions Reference
@@ -250,6 +369,65 @@ import { createThemeContext } from '@miozu/jera';
 const theme = createThemeContext();
 theme.init(); // Reads from localStorage/system
 theme.toggle();
+```
+
+### Supported Theme Selectors
+jera supports multiple theme attribute values for flexibility:
+
+| Theme | Selectors |
+|-------|-----------|
+| Dark | `[data-theme="dark"]`, `[data-theme="miozu-dark"]`, `.dark` |
+| Light | `[data-theme="light"]`, `[data-theme="miozu-light"]`, `.light` |
+| High Contrast | `[data-theme="high-contrast"]` |
+
+This allows jera to integrate with any theming system. For example:
+- Selify apps use `miozu-dark` / `miozu-light`
+- Generic apps can use `dark` / `light`
+- Class-based theming via `.dark` / `.light`
+
+---
+
+## Integration with dash.selify.ai
+
+jera components work out-of-the-box with dash.selify.ai. The semantic tokens are already configured in both systems.
+
+### Required: Import jera tokens
+```css
+/* In your app.css or layout */
+@import '@miozu/jera/tokens/colors.css';
+```
+
+### Semantic Token Mapping
+| jera Token | dash.selify.ai Equivalent |
+|------------|---------------------------|
+| `--color-bg` | `--color-base00` |
+| `--color-surface` | `--color-base01` |
+| `--color-surface-alt` | `--color-base02` |
+| `--color-text` | `--color-base05` |
+| `--color-text-strong` | `--color-base07` |
+| `--color-text-muted` | `--color-base04` |
+| `--color-primary` | `--color-base0D` |
+| `--color-success` | `--color-base0B` |
+| `--color-warning` | `--color-base0A` |
+| `--color-error` | `--color-base08` |
+| `--color-info` | `--color-base0C` |
+
+### Using jera Components in dash.selify.ai
+```svelte
+<script>
+  import { Button, Modal, Input } from '@miozu/jera';
+
+  let showModal = $state(false);
+</script>
+
+<!-- Works with existing dash.selify.ai theme system -->
+<Button variant="primary" onclick={() => showModal = true}>
+  Open Modal
+</Button>
+
+<Modal bind:open={showModal} title="Example">
+  <Input placeholder="Type here..." />
+</Modal>
 ```
 
 ---
