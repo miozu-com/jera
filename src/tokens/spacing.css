@@ -1,0 +1,49 @@
+/**
+ * Miozu Spacing System
+ *
+ * Based on 4px base unit with geometric progression.
+ * Consistent spacing creates visual rhythm.
+ *
+ * USAGE:
+ * padding: var(--space-4);  // 16px
+ * gap: var(--space-3);      // 12px
+ */
+
+:root {
+  /* Base unit: 4px */
+  --space-px: 1px;
+  --space-0: 0;
+  --space-0-5: 2px;   /* 0.5 * 4 */
+  --space-1: 4px;     /* 1 * 4 */
+  --space-1-5: 6px;   /* 1.5 * 4 */
+  --space-2: 8px;     /* 2 * 4 */
+  --space-2-5: 10px;  /* 2.5 * 4 */
+  --space-3: 12px;    /* 3 * 4 */
+  --space-3-5: 14px;  /* 3.5 * 4 */
+  --space-4: 16px;    /* 4 * 4 */
+  --space-5: 20px;    /* 5 * 4 */
+  --space-6: 24px;    /* 6 * 4 */
+  --space-7: 28px;    /* 7 * 4 */
+  --space-8: 32px;    /* 8 * 4 */
+  --space-9: 36px;    /* 9 * 4 */
+  --space-10: 40px;   /* 10 * 4 */
+  --space-11: 44px;   /* 11 * 4 */
+  --space-12: 48px;   /* 12 * 4 */
+  --space-14: 56px;   /* 14 * 4 */
+  --space-16: 64px;   /* 16 * 4 */
+  --space-20: 80px;   /* 20 * 4 */
+  --space-24: 96px;   /* 24 * 4 */
+  --space-28: 112px;  /* 28 * 4 */
+  --space-32: 128px;  /* 32 * 4 */
+  --space-36: 144px;  /* 36 * 4 */
+  --space-40: 160px;  /* 40 * 4 */
+  --space-44: 176px;  /* 44 * 4 */
+  --space-48: 192px;  /* 48 * 4 */
+  --space-52: 208px;  /* 52 * 4 */
+  --space-56: 224px;  /* 56 * 4 */
+  --space-60: 240px;  /* 60 * 4 */
+  --space-64: 256px;  /* 64 * 4 */
+  --space-72: 288px;  /* 72 * 4 */
+  --space-80: 320px;  /* 80 * 4 */
+  --space-96: 384px;  /* 96 * 4 */
+}

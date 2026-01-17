@@ -2,11 +2,14 @@
  * @miozu/jera
  *
  * A minimal, reactive component library for Svelte 5.
- * Designed for elegance, scalability, and ease of application.
+ * Designed for elegance, scalability, and AI-assisted development.
+ *
+ * @author Nicholas Glazer <glazer.nicholas@gmail.com>
+ * @license MIT
  *
  * @example
  * // Import components
- * import { Button, Select, Toast } from '@miozu/jera';
+ * import { Button, Input, Badge, Select, Toast } from '@miozu/jera';
  *
  * // Import utilities
  * import { cn, cv } from '@miozu/jera';
@@ -19,16 +22,25 @@
  */
 
 // ============================================
-// COMPONENTS
+// COMPONENTS - Primitives
 // ============================================
 
-// Primitives
 export { default as Button, buttonStyles } from './components/primitives/Button.svelte';
+export { default as Badge, badgeStyles } from './components/primitives/Badge.svelte';
 
-// Forms
+// ============================================
+// COMPONENTS - Forms
+// ============================================
+
+export { default as Input } from './components/forms/Input.svelte';
 export { default as Select } from './components/forms/Select.svelte';
+export { default as Checkbox } from './components/forms/Checkbox.svelte';
+export { default as Switch } from './components/forms/Switch.svelte';
 
-// Feedback
+// ============================================
+// COMPONENTS - Feedback
+// ============================================
+
 export {
   default as Toast,
   ToastController,
@@ -39,13 +51,15 @@ export {
 } from './components/feedback/Toast.svelte';
 
 // ============================================
-// UTILITIES
+// UTILITIES - Class Composition
 // ============================================
 
-// Class composition
 export { cn, rcn, cv, mergeClasses, when, match } from './utils/cn.svelte.js';
 
-// Reactive state
+// ============================================
+// UTILITIES - Reactive State
+// ============================================
+
 export {
   createReactive,
   createDerived,

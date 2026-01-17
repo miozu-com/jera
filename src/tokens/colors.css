@@ -1,0 +1,113 @@
+/**
+ * Miozu Color System
+ *
+ * A Base16-inspired palette designed using Newton's color wheel
+ * for visual harmony and reduced eye strain.
+ *
+ * Documentation: https://miozu.com/colors
+ * Author: Nicholas Glazer <glazer.nicholas@gmail.com>
+ *
+ * USAGE:
+ * @import '@miozu/jera/tokens/colors.css';
+ *
+ * Or with Tailwind 4:
+ * @import '@miozu/jera/tokens/colors.css' theme(static);
+ */
+
+:root {
+  /* ========================================
+   * BASE COLORS (Grayscale Spectrum)
+   * From darkest (base0) to lightest (base7)
+   * ======================================== */
+
+  --base0: #232733;  /* Darkest background */
+  --base1: #2C3040;  /* Default dark background */
+  --base2: #3E4359;  /* Selection, highlights */
+  --base3: #565E78;  /* Comments, subtle text */
+  --base4: #737E99;  /* Muted foreground */
+  --base5: #D0D2DB;  /* Default foreground */
+  --base6: #F3F4F7;  /* Light foreground */
+  --base7: #FAFDFB;  /* Lightest/white */
+
+  /* ========================================
+   * ACCENT COLORS
+   * Semantic colors for UI states
+   * ======================================== */
+
+  --yellow:  #E8D176;  /* Warnings, highlights */
+  --green:   #6DD672;  /* Success, positive */
+  --blue:    #83D2FC;  /* Info, links */
+  --cyan:    #40FFE2;  /* Secondary accent */
+  --peach:   #FF9982;  /* Warm accent */
+  --magenta: #C974E6;  /* Primary brand */
+  --orange:  #FF9837;  /* Numbers, attention */
+  --red:     #EB3137;  /* Error, destructive */
+
+  /* ========================================
+   * SEMANTIC MAPPINGS (Dark Theme Default)
+   * Use these in components for consistency
+   * ======================================== */
+
+  /* Backgrounds */
+  --color-bg: var(--base0);
+  --color-surface: var(--base1);
+  --color-surface-alt: var(--base2);
+  --color-hover: var(--base2);
+
+  /* Foregrounds */
+  --color-text: var(--base5);
+  --color-text-strong: var(--base7);
+  --color-text-muted: var(--base4);
+  --color-text-subtle: var(--base3);
+
+  /* Borders */
+  --color-border: var(--base3);
+  --color-border-muted: var(--base2);
+
+  /* Brand */
+  --color-primary: var(--magenta);
+  --color-secondary: var(--blue);
+  --color-accent: var(--cyan);
+
+  /* States */
+  --color-success: var(--green);
+  --color-warning: var(--yellow);
+  --color-error: var(--red);
+  --color-info: var(--blue);
+}
+
+/* ========================================
+ * LIGHT THEME
+ * Inverted grayscale, same accents
+ * ======================================== */
+
+[data-theme="light"],
+.light {
+  /* Inverted base colors */
+  --color-bg: var(--base7);
+  --color-surface: var(--base6);
+  --color-surface-alt: var(--base5);
+  --color-hover: var(--base5);
+
+  /* Inverted foregrounds */
+  --color-text: var(--base2);
+  --color-text-strong: var(--base0);
+  --color-text-muted: var(--base3);
+  --color-text-subtle: var(--base4);
+
+  /* Inverted borders */
+  --color-border: var(--base4);
+  --color-border-muted: var(--base5);
+}
+
+/* ========================================
+ * CONTRAST VARIANTS
+ * For accessibility and preference
+ * ======================================== */
+
+[data-theme="high-contrast"] {
+  --color-text: var(--base7);
+  --color-text-strong: #FFFFFF;
+  --color-bg: #000000;
+  --color-border: var(--base5);
+}

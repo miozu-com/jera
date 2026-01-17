@@ -1,0 +1,64 @@
+# @miozu/jera
+
+> A minimal, reactive component library for Svelte 5. Provides design tokens (Miozu Base16 color system), utility functions (cn, cv), Svelte actions, and accessible components. Designed for AI-assisted development with clear, predictable APIs.
+
+## Quick Start
+- [Installation](#installation): `pnpm add @miozu/jera`
+- [Basic Usage](#usage): Import components and tokens
+
+## Design Tokens
+- [Colors](/src/tokens/colors.css): Miozu Base16 palette with dark/light themes
+- [Spacing](/src/tokens/spacing.css): 4px-based spacing scale
+- [Typography](/src/tokens/typography.css): Font scales and weights
+- [Effects](/src/tokens/effects.css): Shadows, radius, transitions, z-index
+
+## Utilities
+- [cn()](/src/utils/cn.svelte.js): Class name concatenation with falsy filtering
+- [cv()](/src/utils/cn.svelte.js): Class variants for type-safe variant composition
+- [ThemeState](/src/utils/reactive.svelte.js): SSR-safe theme management
+
+## Components
+- [Button](/src/components/primitives/Button.svelte): Polymorphic button with 6 variants, 5 sizes
+- [Input](/src/components/forms/Input.svelte): Text input with validation support
+- [Select](/src/components/forms/Select.svelte): Accessible dropdown with keyboard navigation
+- [Badge](/src/components/primitives/Badge.svelte): Status tags with semantic variants
+- [Checkbox](/src/components/forms/Checkbox.svelte): Checkbox input
+- [Switch](/src/components/forms/Switch.svelte): Toggle switch
+- [Toast](/src/components/feedback/Toast.svelte): Notification system
+
+## Actions
+- [clickOutside](/src/actions/index.js): Detect clicks outside element
+- [focusTrap](/src/actions/index.js): Trap focus within element
+- [portal](/src/actions/index.js): Render element in different DOM location
+- [escapeKey](/src/actions/index.js): Handle escape key press
+
+## API Patterns
+
+### Component Props Pattern
+All components accept these common props:
+- `class`: Additional CSS classes (always merged)
+- `disabled`: Boolean to disable interaction
+- Event handlers: `onclick`, `onchange`, etc.
+
+### Class Variants Pattern
+```javascript
+import { cv } from '@miozu/jera';
+
+const button = cv({
+  base: 'inline-flex items-center',
+  variants: {
+    variant: { primary: 'bg-primary', secondary: 'bg-surface' },
+    size: { sm: 'h-8 px-3', md: 'h-10 px-4' }
+  },
+  defaults: { variant: 'primary', size: 'md' }
+});
+
+// Usage: button({ variant: 'secondary', size: 'sm' })
+```
+
+### Theme Usage Pattern
+```javascript
+import { ThemeState, createThemeContext } from '@miozu/jera';
+const theme = createThemeContext(); // In root layout
+theme.toggle(); // Switch between light/dark
+```
