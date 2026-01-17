@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Minimal, reactive component library for Svelte 5",
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "echo 'Publishing @miozu/jera...' && test -f src/index.js"
+  },
   "svelte": "./src/index.js",
   "exports": {
     ".": {
