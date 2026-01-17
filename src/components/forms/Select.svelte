@@ -39,32 +39,17 @@
    * @typedef {{ [key: string]: any }} Option
    */
 
-  /** @type {Option[]} */
-  let { options = [] } = $props();
-
-  /** @type {any} - The selected value (bindable) */
-  let { value = $bindable(null) } = $props();
-
-  /** @type {string} */
-  let { placeholder = 'Select...' } = $props();
-
-  /** @type {string} - Key to use for display label */
-  let { labelKey = 'label' } = $props();
-
-  /** @type {string} - Key to use for value */
-  let { valueKey = 'value' } = $props();
-
-  /** @type {boolean} */
-  let { disabled = false } = $props();
-
-  /** @type {boolean} */
-  let { error = false } = $props();
-
-  /** @type {string} */
-  let { class: className = '' } = $props();
-
-  /** @type {((option: Option | null) => void) | undefined} */
-  let { onchange = undefined } = $props();
+  let {
+    options = [],
+    value = $bindable(null),
+    placeholder = 'Select...',
+    labelKey = 'label',
+    valueKey = 'value',
+    disabled = false,
+    error = false,
+    class: className = '',
+    onchange
+  } = $props();
 
   // Generate unique IDs for accessibility
   const triggerId = generateId();

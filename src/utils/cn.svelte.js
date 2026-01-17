@@ -85,23 +85,30 @@ export const rcn = cn;
 export function cv(config) {
   const { base = '', variants = {}, compounds = [], defaults = {} } = config;
 
+  /**
+   * @param {Record<string, any>} [props]
+   * @returns {string}
+   */
   return function (props = {}) {
     // Start with base classes
+    /** @type {(string | string[])[]} */
     const classes = [base];
 
     // Apply variant classes
     for (const [variantKey, variantOptions] of Object.entries(variants)) {
-      const selectedVariant = props[variantKey] ?? defaults[variantKey];
-      if (selectedVariant && variantOptions[selectedVariant]) {
-        classes.push(variantOptions[selectedVariant]);
+      const selectedVariant = /** @type {string} */ (props[variantKey] ?? defaults[variantKey]);
+      const variantMap = /** @type {Record<string, string>} */ (variantOptions);
+      if (selectedVariant && variantMap[selectedVariant]) {
+        classes.push(variantMap[selectedVariant]);
       }
     }
 
     // Apply compound variants (when multiple conditions match)
     for (const compound of compounds) {
       const { condition, class: compoundClass } = compound;
-      const matches = Object.entries(condition).every(([key, value]) => {
-        const actualValue = props[key] ?? defaults[key];
+      const conditionEntries = /** @type {[string, string][]} */ (Object.entries(condition));
+      const matches = conditionEntries.every(([key, value]) => {
+        const actualValue = /** @type {string} */ (props[key] ?? defaults[key]);
         return actualValue === value;
       });
       if (matches) {
@@ -158,12 +165,11 @@ export function when(condition, trueClass, falseClass = '') {
 /**
  * Switch class helper - returns class based on value matching
  *
- * @template T
- * @param {T} value
+ * @param {string | number} value
  * @param {Record<string, string>} cases
  * @param {string} [fallback]
  * @returns {string}
  */
 export function match(value, cases, fallback = '') {
-  return cases[value] ?? fallback;
+  return cases[String(value)] ?? fallback;
 }
