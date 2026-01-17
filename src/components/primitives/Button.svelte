@@ -8,7 +8,6 @@
   - Reactive class composition with cv()
   - Snippets for icon slots
   - $derived for computed properties
-  - $bindable for two-way binding
   - TypeScript-style prop definitions
 
   @example
@@ -98,18 +97,18 @@
 
     compounds: [
       // Icon-only buttons need adjusted padding
-      { condition: { iconOnly: true, size: 'xs' }, class: 'w-7' },
-      { condition: { iconOnly: true, size: 'sm' }, class: 'w-8' },
-      { condition: { iconOnly: true, size: 'md' }, class: 'w-10' },
-      { condition: { iconOnly: true, size: 'lg' }, class: 'w-12' },
-      { condition: { iconOnly: true, size: 'xl' }, class: 'w-14' }
+      { condition: { iconOnly: 'true', size: 'xs' }, class: 'w-7' },
+      { condition: { iconOnly: 'true', size: 'sm' }, class: 'w-8' },
+      { condition: { iconOnly: 'true', size: 'md' }, class: 'w-10' },
+      { condition: { iconOnly: 'true', size: 'lg' }, class: 'w-12' },
+      { condition: { iconOnly: 'true', size: 'xl' }, class: 'w-14' }
     ],
 
     defaults: {
       variant: 'primary',
       size: 'md',
-      fullWidth: false,
-      iconOnly: false
+      fullWidth: 'false',
+      iconOnly: 'false'
     }
   });
 </script>
@@ -118,48 +117,26 @@
   import { cn } from '../../utils/cn.svelte.js';
 
   /**
+   * @typedef {import('svelte').Snippet} Snippet
    * @typedef {'primary' | 'secondary' | 'ghost' | 'outline' | 'danger' | 'success'} Variant
    * @typedef {'xs' | 'sm' | 'md' | 'lg' | 'xl'} Size
    */
 
-  /** @type {Snippet | undefined} - Button content */
-  let { children } = $props();
-
-  /** @type {Snippet | undefined} - Icon on the left */
-  let { iconLeft = undefined } = $props();
-
-  /** @type {Snippet | undefined} - Icon on the right */
-  let { iconRight = undefined } = $props();
-
-  /** @type {Variant} */
-  let { variant = 'primary' } = $props();
-
-  /** @type {Size} */
-  let { size = 'md' } = $props();
-
-  /** @type {boolean} */
-  let { disabled = false } = $props();
-
-  /** @type {boolean} */
-  let { loading = false } = $props();
-
-  /** @type {boolean} */
-  let { fullWidth = false } = $props();
-
-  /** @type {string | undefined} - Renders as <a> when provided */
-  let { href = undefined } = $props();
-
-  /** @type {string | undefined} */
-  let { type = 'button' } = $props();
-
-  /** @type {string} */
-  let { class: className = '' } = $props();
-
-  /** @type {((e: MouseEvent) => void) | undefined} */
-  let { onclick = undefined } = $props();
-
-  // Collect remaining props for spreading
-  let { ...restProps } = $props();
+  let {
+    children,
+    iconLeft,
+    iconRight,
+    variant = 'primary',
+    size = 'md',
+    disabled = false,
+    loading = false,
+    fullWidth = false,
+    href,
+    type = 'button',
+    class: className = '',
+    onclick,
+    ...restProps
+  } = $props();
 
   // Derived state
   const isLink = $derived(!!href);
@@ -171,8 +148,8 @@
     buttonStyles({
       variant,
       size,
-      fullWidth,
-      iconOnly: isIconOnly,
+      fullWidth: fullWidth ? 'true' : 'false',
+      iconOnly: isIconOnly ? 'true' : 'false',
       class: className
     })
   );
