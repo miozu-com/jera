@@ -38,7 +38,7 @@
     "ui",
     "miozu"
   ],
-  "author": "Miozu",
+  "author": "Nicholas Glazer <info@nicgl.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
