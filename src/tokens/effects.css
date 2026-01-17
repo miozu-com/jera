@@ -7,6 +7,23 @@
 
 :root {
   /* ========================================
+   * BORDER WIDTHS
+   * ======================================== */
+
+  --border-width-thin: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ========================================
+   * FOCUS RING
+   * ======================================== */
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-primary);
+  --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  /* ========================================
    * BORDER RADIUS
    * ======================================== */
 

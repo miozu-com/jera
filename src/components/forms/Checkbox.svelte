@@ -17,6 +17,7 @@
     checked = $bindable(false),
     disabled = false,
     required = false,
+    error = false,
     name = '',
     id,
     class: className = '',
@@ -26,6 +27,10 @@
   } = $props();
 
   const inputId = id || generateId();
+  const checkboxClass = $derived(cn(
+    'checkbox-box',
+    error && 'checkbox-error'
+  ));
 </script>
 
 <label
@@ -41,10 +46,11 @@
     bind:checked
     {onchange}
     class="checkbox-input"
+    aria-invalid={error || undefined}
     {...rest}
   />
 
-  <span class="checkbox-box">
+  <span class={checkboxClass}>
     {#if checked}
       <svg
         class="checkbox-icon"
@@ -110,9 +116,22 @@
     border-color: var(--color-primary);
   }
 
+  .checkbox-error {
+    border-color: var(--color-error);
+  }
+
+  .checkbox-input:checked + .checkbox-error {
+    background-color: var(--color-error);
+    border-color: var(--color-error);
+  }
+
   .checkbox-input:focus-visible + .checkbox-box {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
+  }
+
+  .checkbox-input:focus-visible + .checkbox-error {
+    outline-color: var(--color-error);
   }
 
   .checkbox-icon {

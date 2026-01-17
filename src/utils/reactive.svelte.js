@@ -81,6 +81,9 @@ export class ThemeState {
   /** @type {MediaQueryList | null} */
   #mediaQuery = null;
 
+  /** @type {(() => void) | null} */
+  #mediaQueryHandler = null;
+
   constructor(initial = 'system') {
     this.current = initial;
   }
@@ -108,13 +111,25 @@ export class ThemeState {
 
     // Setup media query listener
     this.#mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    this.#mediaQuery.addEventListener('change', () => {
+    this.#mediaQueryHandler = () => {
       // Trigger re-resolution by reassigning
       this.current = this.current;
-    });
+    };
+    this.#mediaQuery.addEventListener('change', this.#mediaQueryHandler);
 
     this.#mounted = true;
     this.#apply();
+  }
+
+  /**
+   * Cleanup - call in onDestroy to prevent memory leaks
+   */
+  cleanup() {
+    if (this.#mediaQuery && this.#mediaQueryHandler) {
+      this.#mediaQuery.removeEventListener('change', this.#mediaQueryHandler);
+      this.#mediaQueryHandler = null;
+    }
+    this.#mounted = false;
   }
 
   /**
@@ -178,9 +193,10 @@ export function getThemeContext() {
 export function createComponentState(initialState, derivedFn) {
   const state = $state(initialState);
 
-  const derived = derivedFn
-    ? $derived(derivedFn(state))
-    : {};
+  // $derived must be used as direct initializer, so we always derive
+  // and use an empty function if none provided
+  const deriveFn = derivedFn || (() => ({}));
+  const derived = $derived(deriveFn(state));
 
   return {
     get state() {
