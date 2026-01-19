@@ -25,12 +25,13 @@
 // COMPONENTS - Primitives
 // ============================================
 
-export { default as Button, buttonStyles } from './components/primitives/Button.svelte';
-export { default as Badge, badgeStyles } from './components/primitives/Badge.svelte';
+export { default as Button } from './components/primitives/Button.svelte';
+export { default as Badge } from './components/primitives/Badge.svelte';
 export { default as StatusBadge } from './components/primitives/StatusBadge.svelte';
 export { default as Divider } from './components/primitives/Divider.svelte';
 export { default as Avatar } from './components/primitives/Avatar.svelte';
 export { default as Card } from './components/primitives/Card.svelte';
+export { default as Stat } from './components/primitives/Stat.svelte';
 export { default as Link } from './components/primitives/Link.svelte';
 export { default as LazyImage } from './components/primitives/LazyImage.svelte';
 
@@ -61,15 +62,14 @@ export {
   default as Toast,
   ToastController,
   createToastContext,
-  getToastContext,
-  toastStyles,
-  positionStyles
+  getToastContext
 } from './components/feedback/Toast.svelte';
 
 export { default as Skeleton } from './components/feedback/Skeleton.svelte';
 export { default as ProgressBar } from './components/feedback/ProgressBar.svelte';
 export { default as Spinner } from './components/feedback/Spinner.svelte';
 export { default as EmptyState } from './components/feedback/EmptyState.svelte';
+export { default as Alert } from './components/feedback/Alert.svelte';
 
 // ============================================
 // COMPONENTS - Overlays
@@ -97,6 +97,10 @@ export { default as SidebarItem } from './components/navigation/SidebarItem.svel
 export { default as SidebarGroup } from './components/navigation/SidebarGroup.svelte';
 export { default as SidebarPopover } from './components/navigation/SidebarPopover.svelte';
 export { default as SidebarAccountItem } from './components/navigation/SidebarAccountItem.svelte';
+export { default as SidebarToggle } from './components/navigation/SidebarToggle.svelte';
+
+// Enterprise Components
+export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.svelte';
 
 // ============================================
 // UTILITIES - Class Composition
