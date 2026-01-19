@@ -241,6 +241,34 @@ Props: `content`, `position` (top/bottom/left/right), `delay` ({show, hide}), `o
 
 Props: `orientation` (horizontal/vertical), `thickness`, `spacing`, `children`
 
+### Stat
+```svelte
+<Stat value="42" label="Users" />
+<Stat value="95%" label="Uptime" status="success" />
+<Stat value="75" max={100} label="Progress" showBar />
+<Stat value="12" unit="/15" label="Tasks" status="warning" />
+<Stat value="8" label="Errors" href="/errors" status="error" />
+```
+
+Props: `value`, `label`, `unit`, `secondary`, `status` (success/warning/error/info), `size` (sm/md/lg), `showBar`, `barValue`, `max`, `href`
+
+### Alert
+```svelte
+<Alert variant="info">This is an informational message.</Alert>
+<Alert variant="warning" title="Warning">Please review your settings.</Alert>
+<Alert variant="error" dismissible onclose={() => showAlert = false}>
+  An error occurred.
+</Alert>
+<Alert variant="success">
+  {#snippet icon()}
+    <CheckIcon size={16} />
+  {/snippet}
+  Your changes have been saved.
+</Alert>
+```
+
+Props: `variant` (info/success/warning/error), `title`, `dismissible`, `size` (sm/md/lg), `onclose`, `icon` (snippet), `actions` (snippet)
+
 ### Avatar
 ```svelte
 <Avatar src="/user.jpg" alt="John Doe" />
