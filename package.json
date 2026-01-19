@@ -12,30 +12,11 @@
       "svelte": "./src/index.js",
       "default": "./src/index.js"
     },
-    "./tokens": {
-      "style": "./src/tokens/index.css",
-      "default": "./src/tokens/index.css"
-    },
-    "./tokens/colors": {
-      "style": "./src/tokens/colors.css",
-      "default": "./src/tokens/colors.css"
-    },
-    "./tokens/spacing": {
-      "style": "./src/tokens/spacing.css",
-      "default": "./src/tokens/spacing.css"
-    },
-    "./tokens/typography": {
-      "style": "./src/tokens/typography.css",
-      "default": "./src/tokens/typography.css"
-    },
-    "./tokens/effects": {
-      "style": "./src/tokens/effects.css",
-      "default": "./src/tokens/effects.css"
-    },
-    "./layouts": {
-      "style": "./src/layouts/index.css",
-      "default": "./src/layouts/index.css"
-    },
+    "./tokens": "./src/tokens/index.css",
+    "./tokens/colors": "./src/tokens/colors.css",
+    "./tokens/spacing": "./src/tokens/spacing.css",
+    "./tokens/typography": "./src/tokens/typography.css",
+    "./tokens/effects": "./src/tokens/effects.css",
     "./utils": "./src/utils/index.js",
     "./actions": "./src/actions/index.js"
   },

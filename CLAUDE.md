@@ -18,8 +18,6 @@ jera/
 │   │   ├── spacing.css       # 4px-based scale
 │   │   ├── typography.css    # Font system
 │   │   └── effects.css       # Shadows, radius, transitions
-│   ├── layouts/              # Optional layout utilities
-│   │   └── index.css         # Page, metric, card, table patterns
 │   ├── utils/
 │   │   ├── cn.svelte.js      # cn(), cv() class utilities
 │   │   └── reactive.svelte.js # ThemeState, reactive helpers
@@ -343,77 +341,6 @@ AccordionItem props: `id`, `title`, `disabled`
 ```svelte
 <div use:escapeKey={() => close()}>
 ```
-
----
-
-## Layout Utilities (Optional CSS)
-
-jera provides optional CSS layout utilities for common dashboard/app patterns.
-These are **pure CSS** (no Tailwind required) and use `@layer jera-layouts` for specificity control.
-
-### Import
-```css
-/* In your app.css - import after theme/tokens */
-@import '@miozu/jera/layouts';
-```
-
-### Available Classes
-
-| Category | Classes |
-|----------|---------|
-| **Page** | `.page`, `.page-flex`, `.page-header`, `.page-header-row`, `.page-title`, `.page-subtitle` |
-| **Section** | `.section-header`, `.section-header-count` |
-| **Metrics** | `.metric-strip`, `.metric-strip-bordered`, `.metric`, `.metric-value`, `.metric-label`, `.metric-dim`, `.metric-bar`, `.metric-bar-fill`, `.metric.alert` |
-| **Status** | `.status-dot`, `.status-dot-ok`, `.status-dot-warn`, `.status-dot-err` |
-| **Cards** | `.card`, `.card-hover`, `.card-interactive` |
-| **Tables** | `.data-table`, `.table-wrap` |
-| **Tags** | `.tag`, `.tag-ok`, `.tag-warn`, `.tag-err`, `.tag-info` |
-| **Tabs** | `.tab-nav`, `.tab-btn`, `.tab-btn.active` |
-| **Buttons** | `.btn-primary`, `.btn-secondary`, `.btn-ghost` |
-| **Links** | `.link`, `.link-arrow` |
-| **Empty** | `.empty-state`, `.empty-state-large` |
-| **Forms** | `.filter-select` |
-
-### Usage Example
-```svelte
-<div class="page">
-  <header class="page-header">
-    <h1 class="page-title">Dashboard</h1>
-    <p class="page-subtitle">Overview of system metrics</p>
-  </header>
-
-  <div class="metric-strip">
-    <div class="metric">
-      <span class="metric-value">42<span class="metric-dim">%</span></span>
-      <span class="metric-label">CPU Usage</span>
-    </div>
-    <div class="metric" class:alert={errors > 0}>
-      <span class="metric-value">{errors}</span>
-      <span class="metric-label">Errors</span>
-    </div>
-  </div>
-
-  <section>
-    <h2 class="section-header">Services</h2>
-    <table class="data-table">
-      <thead><tr><th>Name</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td>API</td>
-          <td><span class="tag tag-ok">Healthy</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-</div>
-```
-
-### Philosophy
-- **Opt-in**: Only import if you need these patterns
-- **Pure CSS**: No Tailwind/preprocessor required
-- **Token-based**: Uses jera `--color-*` and `--space-*` variables
-- **Layered**: Uses `@layer jera-layouts` so won't fight your styles
-- **Composable**: Mix with Tailwind utilities or custom CSS
 
 ---
 
