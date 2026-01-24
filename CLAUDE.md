@@ -455,36 +455,78 @@ Props: `id`, `title`, `description`, `level` (2-6), `showAnchor`, `children`, `c
 2. Use semantic naming
 3. Add light theme variant if applicable
 
-### Theme Switching (Singleton Pattern)
+### Theme Switching (Single Source of Truth Pattern)
 
 jera uses a singleton pattern for global theme state. Storage key: `miozu-theme`.
 
-```javascript
-// In root +layout.svelte
-import { getTheme } from '@miozu/jera';
-import { onMount } from 'svelte';
+**Best Practice:** Call `getTheme()` ONCE in your root layout, then pass it down via props to child components. This provides explicit data flow and better testability.
 
-const theme = getTheme();
-onMount(() => theme.init());
+```javascript
+// +layout.js (or +layout.svelte) - SINGLE initialization point
+import { getTheme } from '@miozu/jera';
+
+const themeState = getTheme();
+
+// In SvelteKit +layout.js, return it in data:
+return { themeState, ...otherData };
+
+// Or in +layout.svelte, pass to children as props:
+// <Sidebar {themeState} />
 ```
 
-```javascript
-// Anywhere in your app
-import { getTheme } from '@miozu/jera';
+```svelte
+<!-- +layout.svelte - Initialize and pass down -->
+<script>
+  import { getTheme } from '@miozu/jera';
+  import { onMount } from 'svelte';
+  import { Sidebar } from '$components';
 
-const theme = getTheme();
-theme.toggle();              // Toggle dark/light
-theme.set('dark');           // Set to dark
-theme.set('light');          // Set to light
-theme.set('system');         // Follow system preference
+  const themeState = getTheme();
+
+  onMount(() => {
+    themeState.sync();  // Hydrate from DOM (app.html)
+    themeState.init();  // Setup media query listener
+  });
+</script>
+
+<!-- Pass themeState as prop to children -->
+<Sidebar {themeState} />
+```
+
+```svelte
+<!-- Child component - receives themeState as prop -->
+<script>
+  // DON'T call getTheme() here - receive as prop instead
+  let { themeState } = $props();
+
+  function handleToggle() {
+    themeState.toggle();
+  }
+
+  let isDark = $derived(themeState.isDark);
+</script>
+```
+
+**ThemeState API:**
+```javascript
+themeState.toggle();         // Toggle dark/light
+themeState.set('dark');      // Set to dark
+themeState.set('light');     // Set to light
+themeState.set('system');    // Follow system preference
 
 // Reactive properties
-theme.current;    // 'light' | 'dark' | 'system'
-theme.resolved;   // 'light' | 'dark' (actual resolved value)
-theme.dataTheme;  // 'miozu-light' | 'miozu-dark'
-theme.isDark;     // boolean
-theme.isLight;    // boolean
+themeState.current;    // 'light' | 'dark' | 'system'
+themeState.resolved;   // 'light' | 'dark' (actual resolved value)
+themeState.dataTheme;  // 'miozu-light' | 'miozu-dark'
+themeState.isDark;     // boolean
+themeState.isLight;    // boolean
 ```
+
+**Why pass as props instead of calling `getTheme()` everywhere?**
+1. **Explicit data flow** - You see what state each component depends on
+2. **Better testing** - Can inject mock state easily
+3. **Single initialization** - Clear where state originates
+4. **SSR-safe** - Server can pass initial value cleanly
 
 ### Theme Data Attributes
 
