@@ -30,7 +30,7 @@
 -->
 <script>
   import { getContext } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
 
   let {
@@ -73,9 +73,9 @@
         <Icon size={18} class="nav-icon" />
       {/if}
       {#if !isCollapsed}
-        <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+        <span class="nav-label" transition:fly={{ x: -20, duration: 200, delay: 50 }}>{label}</span>
         {#if badge !== null}
-          <span class="nav-badge badge-{badgeVariant}" transition:fade={{ duration: 150 }}>
+          <span class="nav-badge badge-{badgeVariant}" transition:fly={{ x: -15, duration: 200, delay: 75 }}>
             {badge}
           </span>
         {/if}
@@ -93,9 +93,9 @@
         <Icon size={18} class="nav-icon" />
       {/if}
       {#if !isCollapsed}
-        <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+        <span class="nav-label" transition:fly={{ x: -20, duration: 200, delay: 50 }}>{label}</span>
         {#if badge !== null}
-          <span class="nav-badge badge-{badgeVariant}" transition:fade={{ duration: 150 }}>
+          <span class="nav-badge badge-{badgeVariant}" transition:fly={{ x: -15, duration: 200, delay: 75 }}>
             {badge}
           </span>
         {/if}
@@ -120,7 +120,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
-    transition: all 150ms ease;
+    transition: all 200ms ease;
     overflow: hidden;
     text-decoration: none;
     border: none;
@@ -130,7 +130,7 @@
 
   .nav-item:hover {
     color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
   }
 
   .nav-item.collapsed {
@@ -159,7 +159,7 @@
 
   .nav-item.variant-warning:hover {
     color: var(--color-warning, var(--color-base0A, #E8D176));
-    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 15%, transparent);
   }
 
   /* Variant: danger */
@@ -169,12 +169,12 @@
 
   .nav-item.variant-danger:hover {
     color: var(--color-error, var(--color-base08, #EB3137));
-    background-color: color-mix(in srgb, var(--color-error, var(--color-base08, #EB3137)) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-error, var(--color-base08, #EB3137)) 15%, transparent);
   }
 
   .nav-icon {
     flex-shrink: 0;
-    transition: color 150ms ease;
+    transition: color 200ms ease;
   }
 
   .nav-label {

@@ -48,18 +48,20 @@ Import tokens for consistent styling:
 @import '@miozu/jera/tokens/effects';
 ```
 
-### Miozu Color Palette
+### Miozu Base16 Color Palette
 
-| Base | Hex | Accent | Hex |
-|------|-----|--------|-----|
-| base0 | `#232733` | magenta | `#C974E6` |
-| base1 | `#2C3040` | blue | `#83D2FC` |
-| base2 | `#3E4359` | green | `#6DD672` |
-| base3 | `#565E78` | yellow | `#E8D176` |
-| base4 | `#737E99` | red | `#EB3137` |
-| base5 | `#D0D2DB` | cyan | `#40FFE2` |
-| base6 | `#F3F4F7` | orange | `#FF9837` |
-| base7 | `#FAFDFB` | peach | `#FF9982` |
+Standard Base16 naming: `base00`-`base0F` (hex digits).
+
+| Grayscale | Usage | Accents | Usage |
+|-----------|-------|---------|-------|
+| `base00` | Background | `base08` | Error (Red) |
+| `base01` | Surface | `base09` | Warning (Orange) |
+| `base02` | Selection | `base0A` | Highlight (Yellow) |
+| `base03` | Muted | `base0B` | Success (Green) |
+| `base04` | Secondary text | `base0C` | Info (Cyan) |
+| `base05` | Primary text | `base0D` | Primary (Blue) |
+| `base06` | High emphasis | `base0E` | Accent (Purple) |
+| `base07` | Maximum contrast | `base0F` | Secondary accent |
 
 ## Components
 
@@ -172,22 +174,28 @@ button({ variant: 'secondary' }); // => "inline-flex items-center bg-surface h-1
 
 ## Theming
 
-Dark theme is default. Switch themes with `data-theme` attribute:
-
-```html
-<html data-theme="dark">  <!-- Dark (default) -->
-<html data-theme="light"> <!-- Light -->
-```
-
-Or use ThemeState:
+Dark theme is default. Uses singleton pattern with `miozu-theme` storage key.
 
 ```javascript
-import { createThemeContext } from '@miozu/jera';
+// In root +layout.svelte
+import { getTheme } from '@miozu/jera';
+import { onMount } from 'svelte';
 
-const theme = createThemeContext();
-theme.init();    // Reads from localStorage/system preference
-theme.toggle();  // Switch between light/dark
+const theme = getTheme();
+onMount(() => theme.init());
 ```
+
+```javascript
+// Anywhere in your app
+import { getTheme } from '@miozu/jera';
+
+const theme = getTheme();
+theme.toggle();        // Switch between light/dark
+theme.set('system');   // Follow system preference
+theme.isDark;          // boolean reactive property
+```
+
+Data-theme values: `miozu-dark` (default) or `miozu-light`.
 
 ## AI-First Design
 

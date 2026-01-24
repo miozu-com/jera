@@ -1,6 +1,6 @@
 {
   "name": "@miozu/jera",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Minimal, reactive component library for Svelte 5",
   "type": "module",
   "scripts": {
@@ -26,7 +26,17 @@
     "CLAUDE.md"
   ],
   "peerDependencies": {
-    "svelte": "^5.0.0"
+    "svelte": "^5.0.0",
+    "shiki": "^3.0.0",
+    "@lucide/svelte": "^0.500.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    },
+    "@lucide/svelte": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "svelte": "^5.41.0"
