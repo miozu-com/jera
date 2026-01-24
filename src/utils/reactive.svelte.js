@@ -81,6 +81,12 @@ export class ThemeState {
   /** @type {'miozu-light' | 'miozu-dark'} */
   dataTheme = $derived.by(() => this.resolved === 'dark' ? 'miozu-dark' : 'miozu-light');
 
+  /**
+   * Alias for dataTheme - backwards compatibility
+   * @type {'miozu-light' | 'miozu-dark'}
+   */
+  currentTheme = $derived.by(() => this.dataTheme);
+
   /** @type {boolean} */
   isDark = $derived.by(() => this.resolved === 'dark');
 
@@ -95,6 +101,23 @@ export class ThemeState {
 
   /** @type {(() => void) | null} */
   #mediaQueryHandler = null;
+
+  /**
+   * Parse theme from cookie string (for SSR)
+   * @param {string | null} cookieString - Raw cookie header
+   * @returns {'miozu-light' | 'miozu-dark'} - Theme value for data-theme attribute
+   */
+  static getThemeFromCookieString(cookieString) {
+    if (!cookieString) return 'miozu-dark';
+
+    const match = cookieString.match(/miozu-theme=([^;]+)/);
+    const preference = match ? match[1] : null;
+
+    if (preference === 'light') return 'miozu-light';
+    if (preference === 'dark') return 'miozu-dark';
+    // 'system' or invalid - default to dark
+    return 'miozu-dark';
+  }
 
   constructor(initial = 'system') {
     this.current = initial;
@@ -147,6 +170,21 @@ export class ThemeState {
       this.#mediaQueryHandler = null;
     }
     this.#initialized = false;
+  }
+
+  /**
+   * Sync state with current DOM attribute (for hydration)
+   * Call after SSR to ensure state matches what app.html set
+   */
+  sync() {
+    if (typeof document === 'undefined') return;
+
+    const domTheme = document.documentElement.getAttribute('data-theme');
+    if (domTheme === 'miozu-dark') {
+      this.current = 'dark';
+    } else if (domTheme === 'miozu-light') {
+      this.current = 'light';
+    }
   }
 
   /**
