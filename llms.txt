@@ -56,9 +56,19 @@ const button = cv({
 // Usage: button({ variant: 'secondary', size: 'sm' })
 ```
 
-### Theme Usage Pattern
+### Theme Usage Pattern (Singleton)
 ```javascript
-import { ThemeState, createThemeContext } from '@miozu/jera';
-const theme = createThemeContext(); // In root layout
-theme.toggle(); // Switch between light/dark
+import { getTheme } from '@miozu/jera';
+
+// In root layout
+const theme = getTheme();
+onMount(() => theme.init());
+
+// Anywhere else
+const theme = getTheme();
+theme.toggle();          // Switch light/dark
+theme.set('system');     // Follow system preference
+theme.isDark;            // Reactive boolean
 ```
+
+Storage key: `miozu-theme`. Data-theme values: `miozu-dark` | `miozu-light`.

@@ -30,7 +30,8 @@
 -->
 <script>
   import { getContext } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { fade, fly, slide } from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
   import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
 
   let {
@@ -42,11 +43,29 @@
     label = '',
     active = false,
     variant = 'default',
+    expandable = false,
+    expanded = $bindable(false),
+    subroutes = [],
+    onSubrouteClick = null,
     class: className = ''
   } = $props();
 
   const sidebar = getContext(SIDEBAR_CONTEXT_KEY);
   const isCollapsed = $derived(sidebar?.collapsed ?? false);
+
+  // Handle expand/collapse for expandable accounts
+  function toggleExpanded() {
+    if (expandable) {
+      expanded = !expanded;
+    }
+  }
+
+  // Handle subroute navigation
+  function handleSubrouteClick(subroute) {
+    if (onSubrouteClick) {
+      onSubrouteClick(subroute);
+    }
+  }
 
   const isLink = $derived(href !== null);
   const isAddVariant = $derived(variant === 'add');
@@ -57,6 +76,7 @@
     isAddVariant && 'connect-account',
     isCollapsed && isAddVariant && 'collapsed-add',
     isCollapsed && 'collapsed',
+    expandable && 'expandable',
     className
   ].filter(Boolean).join(' '));
 
@@ -71,9 +91,11 @@
 <li>
   {#if isLink}
     <a
-      {href}
+      href={expandable ? null : href}
       class={itemClass}
+      onclick={expandable ? toggleExpanded : null}
       title={isCollapsed ? label : null}
+      aria-expanded={expandable ? expanded : undefined}
     >
       {#if isAddVariant}
         <svg
@@ -127,15 +149,33 @@
         </div>
       {/if}
       {#if !isCollapsed}
-        <span class="account-label" transition:fade={{ duration: 150 }}>{label}</span>
+        <span class="account-label" transition:fly={{ x: -20, duration: 200, delay: 50 }}>{label}</span>
+        {#if expandable}
+          <svg
+            class="account-chevron {expanded ? 'rotate-180' : ''}"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transition:fly={{ x: -10, duration: 200, delay: 100 }}
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        {/if}
       {/if}
     </a>
   {:else}
     <button
       type="button"
       class={itemClass}
-      {onclick}
+      onclick={expandable ? toggleExpanded : onclick}
       title={isCollapsed ? label : null}
+      aria-expanded={expandable ? expanded : undefined}
     >
       {#if isAddVariant}
         <svg
@@ -189,9 +229,43 @@
         </div>
       {/if}
       {#if !isCollapsed}
-        <span class="account-label" transition:fade={{ duration: 150 }}>{label}</span>
+        <span class="account-label" transition:fly={{ x: -20, duration: 200, delay: 50 }}>{label}</span>
+        {#if expandable}
+          <svg
+            class="account-chevron {expanded ? 'rotate-180' : ''}"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            transition:fly={{ x: -10, duration: 200, delay: 100 }}
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        {/if}
       {/if}
     </button>
+  {/if}
+
+  {#if expandable && expanded && !isCollapsed && subroutes.length > 0}
+    <div class="account-subroutes" transition:slide={{ duration: 200, easing: cubicOut }}>
+      {#each subroutes as subroute}
+        <button
+          class="subroute-item {subroute.active ? 'active' : ''}"
+          onclick={() => handleSubrouteClick(subroute)}
+          title={subroute.label}
+        >
+          {#if subroute.icon}
+            <subroute.icon size={14} />
+          {/if}
+          <span>{subroute.label}</span>
+        </button>
+      {/each}
+    </div>
   {/if}
 </li>
 
@@ -211,7 +285,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
-    transition: all 150ms ease;
+    transition: all 200ms ease;
     overflow: hidden;
     text-decoration: none;
     border: none;
@@ -221,7 +295,7 @@
 
   .account-item:hover {
     color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
   }
 
   .account-item.collapsed {
@@ -363,5 +437,56 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* Expandable account chevron */
+  .account-chevron {
+    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    transition: all 200ms ease;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .account-chevron.rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  /* Account subroutes */
+  .account-subroutes {
+    margin-left: 2.5rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .subroute-item {
+    padding: 0.375rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    cursor: pointer;
+    border-radius: 0.375rem;
+    transition: all 200ms ease;
+    overflow: hidden;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+  }
+
+  .subroute-item:hover {
+    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+  }
+
+  .subroute-item.active {
+    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    font-weight: 500;
   }
 </style>

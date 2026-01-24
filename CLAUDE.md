@@ -28,7 +28,8 @@ jera/
 │       ├── forms/            # Input, Select, Checkbox, Switch
 │       ├── feedback/         # Toast, Skeleton, ProgressBar, Spinner
 │       ├── overlays/         # Modal, Popover
-│       └── navigation/       # Tabs, Accordion, AccordionItem
+│       ├── navigation/       # Tabs, Accordion, Sidebar
+│       └── docs/             # CodeBlock, PropsTable, SplitPane, DocSection
 ├── llms.txt                  # AI documentation index
 ├── CLAUDE.md                 # This file
 └── package.json
@@ -83,47 +84,49 @@ export const componentStyles = cv({
 
 ### Naming Conventions
 - Components: PascalCase (`Button.svelte`)
-- Utilities: camelCase (`createThemeContext`)
+- Utilities: camelCase (`getTheme`)
 - CSS tokens: kebab-case (`--color-primary`)
 - Actions: camelCase (`clickOutside`)
 
 ---
 
-## Miozu Color System
+## Miozu Base16 Color System
 
-### Base Colors (Grayscale)
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--base0` | #232733 | Darkest background |
-| `--base1` | #2C3040 | Default dark bg |
-| `--base2` | #3E4359 | Selection, hover |
-| `--base3` | #565E78 | Comments, subtle |
-| `--base4` | #737E99 | Muted text |
-| `--base5` | #D0D2DB | Default text |
-| `--base6` | #F3F4F7 | Light text |
-| `--base7` | #FAFDFB | Lightest/white |
+Uses standard Base16 naming: `base00`-`base0F` (hex digits, NOT decimal).
 
-### Accent Colors
-| Token | Hex | Usage |
-|-------|-----|-------|
-| `--magenta` | #C974E6 | Primary brand |
-| `--blue` | #83D2FC | Info, links |
-| `--green` | #6DD672 | Success |
-| `--yellow` | #E8D176 | Warning |
-| `--red` | #EB3137 | Error |
-| `--cyan` | #40FFE2 | Accent |
-| `--orange` | #FF9837 | Attention |
-| `--peach` | #FF9982 | Warm accent |
+### Grayscale (base00-base07)
+| Token | Dark Theme | Light Theme | Usage |
+|-------|------------|-------------|-------|
+| `--color-base00` | #0f1419 | #ffffff | Primary background |
+| `--color-base01` | #1a1f26 | #f8f9fa | Surface/card |
+| `--color-base02` | #242a33 | #f1f3f5 | Selection/hover |
+| `--color-base03` | #4a5568 | #adb5bd | Muted/disabled |
+| `--color-base04` | #a0aec0 | #6c757d | Secondary text |
+| `--color-base05` | #e2e8f0 | #212529 | Primary text |
+| `--color-base06` | #f7fafc | #1a1d20 | High emphasis |
+| `--color-base07` | #ffffff | #0d0f10 | Maximum contrast |
+
+### Accents (base08-base0F)
+| Token | Color | Usage |
+|-------|-------|-------|
+| `--color-base08` | Red | Error |
+| `--color-base09` | Orange | Warning |
+| `--color-base0A` | Yellow | Highlight |
+| `--color-base0B` | Green | Success |
+| `--color-base0C` | Cyan | Info |
+| `--color-base0D` | Blue | Primary |
+| `--color-base0E` | Purple | Accent |
+| `--color-base0F` | Brown/Orange | Secondary accent |
 
 ### Semantic Mappings
 ```css
---color-bg: var(--base0);
---color-surface: var(--base1);
---color-text: var(--base5);
---color-text-strong: var(--base7);
---color-primary: var(--magenta);
---color-success: var(--green);
---color-error: var(--red);
+--color-bg: var(--color-base00);
+--color-surface: var(--color-base01);
+--color-text: var(--color-base05);
+--color-text-strong: var(--color-base07);
+--color-primary: var(--color-base0D);
+--color-success: var(--color-base0B);
+--color-error: var(--color-base08);
 ```
 
 ---
@@ -344,6 +347,72 @@ Props: `tabs` (array), `active`, `variant` (default/underline/pills), `size` (sm
 Accordion props: `expanded` (array of ids), `multiple`
 AccordionItem props: `id`, `title`, `disabled`
 
+### CodeBlock
+```svelte
+<script>
+  import { CodeBlock } from '@miozu/jera';
+</script>
+
+<CodeBlock
+  code={`const greeting = "Hello";`}
+  lang="javascript"
+  filename="example.js"
+  showLineNumbers
+/>
+```
+
+Props: `code`, `lang` (default: javascript), `filename`, `showLineNumbers`, `class`
+
+**Requires:** `shiki` package for syntax highlighting.
+
+### PropsTable
+```svelte
+<script>
+  import { PropsTable } from '@miozu/jera';
+</script>
+
+<PropsTable props={[
+  { name: 'variant', type: 'string', default: '"default"', description: 'Visual style' },
+  { name: 'onclick', type: 'function', required: true, description: 'Click handler' }
+]} />
+```
+
+Props: `props` (array of PropDef), `class`
+
+PropDef: `{ name, type, default?, description, required? }`
+
+### SplitPane
+```svelte
+<script>
+  import { SplitPane, CodeBlock } from '@miozu/jera';
+</script>
+
+<SplitPane ratio="1:1" gap="2rem" stickyRight>
+  {#snippet left()}
+    <h2>Description</h2>
+    <p>Explanation of the feature...</p>
+  {/snippet}
+  {#snippet right()}
+    <CodeBlock code={exampleCode} lang="javascript" />
+  {/snippet}
+</SplitPane>
+```
+
+Props: `left` (snippet), `right` (snippet), `ratio` (e.g., '1:1', '2:1'), `gap`, `minHeight`, `stickyRight`, `class`
+
+### DocSection
+```svelte
+<script>
+  import { DocSection, CodeBlock } from '@miozu/jera';
+</script>
+
+<DocSection id="installation" title="Installation" description="How to install">
+  <CodeBlock code="npm install @miozu/jera" lang="bash" />
+</DocSection>
+```
+
+Props: `id`, `title`, `description`, `level` (2-6), `showAnchor`, `children`, `class`
+
 ---
 
 ## Actions Reference
@@ -386,32 +455,49 @@ AccordionItem props: `id`, `title`, `disabled`
 2. Use semantic naming
 3. Add light theme variant if applicable
 
-### Theme Switching
-```javascript
-// System preference detection
-const theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-document.documentElement.setAttribute('data-theme', theme);
+### Theme Switching (Singleton Pattern)
 
-// Or use ThemeState class
-import { createThemeContext } from '@miozu/jera';
-const theme = createThemeContext();
-theme.init(); // Reads from localStorage/system
-theme.toggle();
+jera uses a singleton pattern for global theme state. Storage key: `miozu-theme`.
+
+```javascript
+// In root +layout.svelte
+import { getTheme } from '@miozu/jera';
+import { onMount } from 'svelte';
+
+const theme = getTheme();
+onMount(() => theme.init());
 ```
 
-### Supported Theme Selectors
-jera supports multiple theme attribute values for flexibility:
+```javascript
+// Anywhere in your app
+import { getTheme } from '@miozu/jera';
 
-| Theme | Selectors |
-|-------|-----------|
-| Dark | `[data-theme="dark"]`, `[data-theme="miozu-dark"]`, `.dark` |
-| Light | `[data-theme="light"]`, `[data-theme="miozu-light"]`, `.light` |
-| High Contrast | `[data-theme="high-contrast"]` |
+const theme = getTheme();
+theme.toggle();              // Toggle dark/light
+theme.set('dark');           // Set to dark
+theme.set('light');          // Set to light
+theme.set('system');         // Follow system preference
 
-This allows jera to integrate with any theming system. For example:
-- Selify apps use `miozu-dark` / `miozu-light`
-- Generic apps can use `dark` / `light`
-- Class-based theming via `.dark` / `.light`
+// Reactive properties
+theme.current;    // 'light' | 'dark' | 'system'
+theme.resolved;   // 'light' | 'dark' (actual resolved value)
+theme.dataTheme;  // 'miozu-light' | 'miozu-dark'
+theme.isDark;     // boolean
+theme.isLight;    // boolean
+```
+
+### Theme Data Attributes
+
+| Theme | data-theme value |
+|-------|------------------|
+| Dark | `miozu-dark` |
+| Light | `miozu-light` |
+
+CSS selectors should use:
+```css
+[data-theme='miozu-dark'] { /* dark styles */ }
+[data-theme='miozu-light'] { /* light styles */ }
+```
 
 ---
 

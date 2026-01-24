@@ -19,7 +19,7 @@
 -->
 <script>
   import { getContext } from 'svelte';
-  import { slide, fade } from 'svelte/transition';
+  import { slide, fade, fly } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
 
@@ -79,8 +79,8 @@
       <Icon size={18} class="nav-icon" />
     {/if}
     {#if !isCollapsed}
-      <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
-      <span class="expand-icon-wrapper" transition:fade={{ duration: 150 }}>
+      <span class="nav-label" transition:fly={{ x: -20, duration: 200, delay: 50 }}>{label}</span>
+      <span class="expand-icon-wrapper" transition:fly={{ x: -15, duration: 200, delay: 75 }}>
         <svg
           class="expand-icon {expanded ? 'rotate-180' : ''}"
           xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +134,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
-    transition: all 150ms ease;
+    transition: all 200ms ease;
     overflow: hidden;
     border: none;
     background: transparent;
@@ -144,7 +144,7 @@
 
   .nav-item:hover {
     color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
   }
 
   .nav-item.collapsed {
@@ -201,14 +201,14 @@
     color: var(--color-text-muted, var(--color-base05, #D0D2DB));
     text-decoration: none;
     border-radius: 0.375rem;
-    transition: all 150ms ease;
+    transition: all 200ms ease;
     cursor: pointer;
     text-align: left;
   }
 
   .subnav-item:hover {
     color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
   }
 
   .subnav-item.active {

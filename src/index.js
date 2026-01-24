@@ -90,7 +90,7 @@ export { default as Tabs } from './components/navigation/Tabs.svelte';
 export { default as Accordion } from './components/navigation/Accordion.svelte';
 export { default as AccordionItem } from './components/navigation/AccordionItem.svelte';
 
-// Sidebar Components
+// Sidebar Components (Legacy - Enhanced)
 export { default as Sidebar } from './components/navigation/Sidebar.svelte';
 export { default as SidebarSection } from './components/navigation/SidebarSection.svelte';
 export { default as SidebarItem } from './components/navigation/SidebarItem.svelte';
@@ -98,9 +98,32 @@ export { default as SidebarGroup } from './components/navigation/SidebarGroup.sv
 export { default as SidebarPopover } from './components/navigation/SidebarPopover.svelte';
 export { default as SidebarAccountItem } from './components/navigation/SidebarAccountItem.svelte';
 export { default as SidebarToggle } from './components/navigation/SidebarToggle.svelte';
+export { default as SidebarSearch } from './components/navigation/SidebarSearch.svelte';
+export { default as SidebarGroupSwitcher } from './components/navigation/SidebarGroupSwitcher.svelte';
+export { default as SidebarAccountGroup } from './components/navigation/SidebarAccountGroup.svelte';
+
+// Enterprise Navigation System
+export { default as NavigationContainer } from './components/navigation/NavigationContainer.svelte';
+export { default as SidebarNavigationItem } from './components/navigation/SidebarNavigationItem.svelte';
+
+// Navigation Blocks
+export { default as NavigationSearch } from './components/navigation/blocks/NavigationSearch.svelte';
+export { default as NavigationSection } from './components/navigation/blocks/NavigationSection.svelte';
+export { default as NavigationAccountGroup } from './components/navigation/blocks/NavigationAccountGroup.svelte';
+export { default as NavigationGroupSwitcher } from './components/navigation/blocks/NavigationGroupSwitcher.svelte';
+export { default as NavigationCustomBlock } from './components/navigation/blocks/NavigationCustomBlock.svelte';
 
 // Enterprise Components
 export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.svelte';
+
+// ============================================
+// COMPONENTS - Documentation
+// ============================================
+
+export { default as CodeBlock } from './components/docs/CodeBlock.svelte';
+export { default as PropsTable } from './components/docs/PropsTable.svelte';
+export { default as SplitPane } from './components/docs/SplitPane.svelte';
+export { default as DocSection } from './components/docs/DocSection.svelte';
 
 // ============================================
 // UTILITIES - Class Composition
@@ -116,8 +139,8 @@ export {
   createReactive,
   createDerived,
   ThemeState,
-  createThemeContext,
-  getThemeContext,
+  getTheme,
+  resetTheme,
   createComponentState,
   createIdGenerator,
   generateId
@@ -128,6 +151,20 @@ export {
   createSidebarState,
   SIDEBAR_CONTEXT_KEY
 } from './utils/sidebar.svelte.js';
+
+// Enterprise Navigation State Management
+export {
+  NavigationState,
+  createNavigationState,
+  NAVIGATION_CONTEXT_KEY
+} from './utils/navigation.svelte.js';
+
+// Code Highlighting
+export {
+  getHighlighter,
+  highlightCode,
+  DEFAULT_LANGUAGES
+} from './utils/highlighter.js';
 
 // ============================================
 // ACTIONS

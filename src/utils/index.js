@@ -9,8 +9,8 @@ export {
   createReactive,
   createDerived,
   ThemeState,
-  createThemeContext,
-  getThemeContext,
+  getTheme,
+  resetTheme,
   createComponentState,
   createIdGenerator,
   generateId

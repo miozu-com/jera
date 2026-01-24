@@ -5,8 +5,6 @@
  * Uses Svelte 5 runes ($state, $derived, $effect) internally.
  */
 
-import { getContext, setContext, onMount } from 'svelte';
-
 /**
  * Create a reactive store-like object with Svelte 5 runes
  * Unlike stores, these work seamlessly with runes and don't need $ prefix
@@ -58,15 +56,20 @@ export function createDerived(fn) {
 }
 
 /**
- * Theme Context Key
- */
-const THEME_KEY = Symbol('jera-theme');
-
-/**
- * Theme Reactive State Class
+ * Theme Reactive State Class (Singleton Pattern)
  *
  * Manages theme state with persistence and SSR support.
- * Uses class-based reactive state pattern.
+ * Uses singleton pattern for global app-level state.
+ *
+ * Storage key: 'miozu-theme'
+ * Data-theme values: 'miozu-dark' | 'miozu-light'
+ *
+ * @example
+ * import { getTheme } from '@miozu/jera';
+ * const theme = getTheme();
+ * theme.init(); // Call once in root layout onMount
+ * theme.toggle(); // Toggle dark/light
+ * theme.set('system'); // Use system preference
  */
 export class ThemeState {
   /** @type {'light' | 'dark' | 'system'} */
@@ -75,8 +78,17 @@ export class ThemeState {
   /** @type {'light' | 'dark'} */
   resolved = $derived.by(() => this.#resolveTheme());
 
+  /** @type {'miozu-light' | 'miozu-dark'} */
+  dataTheme = $derived.by(() => this.resolved === 'dark' ? 'miozu-dark' : 'miozu-light');
+
   /** @type {boolean} */
-  #mounted = false;
+  isDark = $derived.by(() => this.resolved === 'dark');
+
+  /** @type {boolean} */
+  isLight = $derived.by(() => this.resolved === 'light');
+
+  /** @type {boolean} */
+  #initialized = false;
 
   /** @type {MediaQueryList | null} */
   #mediaQuery = null;
@@ -90,66 +102,81 @@ export class ThemeState {
 
   #resolveTheme() {
     if (this.current === 'system') {
-      // SSR-safe: default to light if no window
-      if (typeof window === 'undefined') return 'light';
+      // SSR-safe: default to dark if no window (miozu default)
+      if (typeof window === 'undefined') return 'dark';
       return this.#mediaQuery?.matches ? 'dark' : 'light';
     }
     return this.current;
   }
 
   /**
-   * Initialize theme - call in onMount
+   * Initialize theme - call once in root layout onMount
+   * Loads from storage and sets up system preference listener
    */
   init() {
     if (typeof window === 'undefined') return;
+    if (this.#initialized) return; // Prevent double init
 
     // Load from storage
-    const stored = localStorage.getItem('jera-theme');
+    const stored = localStorage.getItem('miozu-theme');
     if (stored && ['light', 'dark', 'system'].includes(stored)) {
       this.current = stored;
     }
 
-    // Setup media query listener
+    // Setup media query listener for system preference
     this.#mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     this.#mediaQueryHandler = () => {
-      // Trigger re-resolution by reassigning
-      this.current = this.current;
+      // Force re-resolution when system preference changes
+      if (this.current === 'system') {
+        this.#apply();
+      }
     };
     this.#mediaQuery.addEventListener('change', this.#mediaQueryHandler);
 
-    this.#mounted = true;
+    this.#initialized = true;
     this.#apply();
   }
 
   /**
-   * Cleanup - call in onDestroy to prevent memory leaks
+   * Cleanup media query listener
+   * Call in onDestroy if needed (usually not necessary for singleton)
    */
   cleanup() {
     if (this.#mediaQuery && this.#mediaQueryHandler) {
       this.#mediaQuery.removeEventListener('change', this.#mediaQueryHandler);
       this.#mediaQueryHandler = null;
     }
-    this.#mounted = false;
+    this.#initialized = false;
   }
 
   /**
-   * Set theme and persist
+   * Set theme preference and persist
    * @param {'light' | 'dark' | 'system'} theme
    */
   set(theme) {
-    this.current = theme;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('jera-theme', theme);
-      document.cookie = `jera-theme=${theme};path=/;max-age=31536000`;
+    if (!['light', 'dark', 'system'].includes(theme)) {
+      console.warn(`Invalid theme: ${theme}`);
+      return;
     }
+    this.current = theme;
+    this.#persist();
     this.#apply();
   }
 
   /**
-   * Toggle between light and dark
+   * Toggle between light and dark (skips system)
    */
   toggle() {
     this.set(this.resolved === 'light' ? 'dark' : 'light');
+  }
+
+  /**
+   * Persist to localStorage and cookie
+   */
+  #persist() {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem('miozu-theme', this.current);
+    document.cookie = `miozu-theme=${this.current};path=/;max-age=31536000;SameSite=Lax`;
   }
 
   /**
@@ -157,27 +184,51 @@ export class ThemeState {
    */
   #apply() {
     if (typeof document === 'undefined') return;
-    document.documentElement.setAttribute('data-theme', this.resolved);
+    document.documentElement.setAttribute('data-theme', this.dataTheme);
+    document.documentElement.style.colorScheme = this.resolved;
   }
 }
 
+// ============================================
+// SINGLETON INSTANCE
+// ============================================
+
+/** @type {ThemeState | null} */
+let themeInstance = null;
+
 /**
- * Create and provide theme context
- * @param {'light' | 'dark' | 'system'} [initial]
+ * Get the global theme singleton
+ * Creates instance on first call (lazy initialization)
+ *
+ * @param {'light' | 'dark' | 'system'} [initial] - Initial theme (only used on first call)
  * @returns {ThemeState}
+ *
+ * @example
+ * // In root +layout.svelte
+ * import { getTheme } from '@miozu/jera';
+ * const theme = getTheme();
+ * onMount(() => theme.init());
+ *
+ * // Anywhere else
+ * import { getTheme } from '@miozu/jera';
+ * const theme = getTheme();
+ * theme.toggle();
  */
-export function createThemeContext(initial = 'system') {
-  const theme = new ThemeState(initial);
-  setContext(THEME_KEY, theme);
-  return theme;
+export function getTheme(initial = 'system') {
+  if (!themeInstance) {
+    themeInstance = new ThemeState(initial);
+  }
+  return themeInstance;
 }
 
 /**
- * Get theme from context
- * @returns {ThemeState}
+ * Reset theme singleton (for testing)
  */
-export function getThemeContext() {
-  return getContext(THEME_KEY);
+export function resetTheme() {
+  if (themeInstance) {
+    themeInstance.cleanup();
+    themeInstance = null;
+  }
 }
 
 /**
