@@ -459,28 +459,34 @@ Props: `id`, `title`, `description`, `level` (2-6), `showAnchor`, `children`, `c
 
 jera uses a singleton pattern for global theme state. Storage key: `miozu-theme`.
 
-**Best Practice:** Call `getTheme()` ONCE in your root layout, then pass it down via props to child components. This provides explicit data flow and better testability.
+#### SvelteKit Execution Order (from source code analysis)
 
+Understanding when code runs helps choose the right pattern:
+
+| Phase | File | Server | Client | Notes |
+|-------|------|--------|--------|-------|
+| 1 | +layout.server.js | ✓ | - | Server-only data |
+| 2 | +layout.js | ✓ | ✓ | Universal load, runs on EVERY navigation |
+| 3 | +layout.svelte `<script>` | ✓ | ✓ | Component script, runs once on mount |
+| 4 | +layout.svelte `onMount()` | - | ✓ | Client-only, after hydration |
+
+**Key insight from SvelteKit source (`client.js:684`):**
 ```javascript
-// +layout.js (or +layout.svelte) - SINGLE initialization point
-import { getTheme } from '@miozu/jera';
-
-const themeState = getTheme();
-
-// In SvelteKit +layout.js, return it in data:
-return { themeState, ...otherData };
-
-// Or in +layout.svelte, pass to children as props:
-// <Sidebar {themeState} />
+data = { ...data, ...node.data };  // Parent data cascades to children
 ```
 
+#### Recommended Pattern: +layout.svelte (for singletons like theme)
+
+For global singleton state that doesn't need server context:
+
 ```svelte
-<!-- +layout.svelte - Initialize and pass down -->
+<!-- +layout.svelte - Initialize ONCE, pass via props -->
 <script>
   import { getTheme } from '@miozu/jera';
   import { onMount } from 'svelte';
   import { Sidebar } from '$components';
 
+  // Call singleton once in root layout
   const themeState = getTheme();
 
   onMount(() => {
@@ -507,6 +513,32 @@ return { themeState, ...otherData };
 </script>
 ```
 
+#### Alternative Pattern: +layout.js (for data-heavy state)
+
+For state that needs server context or async initialization:
+
+```javascript
+// +layout.js - Universal load
+export const load = async ({ data, fetch }) => {
+  // Can fetch data, access parent(), etc.
+  const someData = await fetch('/api/data').then(r => r.json());
+
+  return {
+    ...data,
+    someData
+  };
+};
+```
+
+**When to use which:**
+
+| Use +layout.svelte | Use +layout.js |
+|-------------------|----------------|
+| Singletons (theme, toast) | Fetched data |
+| Client-only initialization | Async operations |
+| No server context needed | Needs `parent()` data |
+| Runs once per mount | Needs invalidation support |
+
 **ThemeState API:**
 ```javascript
 themeState.toggle();         // Toggle dark/light
@@ -526,7 +558,7 @@ themeState.isLight;    // boolean
 1. **Explicit data flow** - You see what state each component depends on
 2. **Better testing** - Can inject mock state easily
 3. **Single initialization** - Clear where state originates
-4. **SSR-safe** - Server can pass initial value cleanly
+4. **Efficiency** - Singleton runs once, not on every navigation
 
 ### Theme Data Attributes
 

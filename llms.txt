@@ -57,24 +57,41 @@ const button = cv({
 ```
 
 ### Theme Usage Pattern (Single Source of Truth)
-```javascript
-import { getTheme } from '@miozu/jera';
 
-// In root layout - call ONCE, pass to children via props
-const themeState = getTheme();
-onMount(() => {
-  themeState.sync();   // Hydrate from DOM
-  themeState.init();   // Setup listener
-});
+**SvelteKit Execution Order:**
+1. +layout.server.js (server only)
+2. +layout.js (server + client, runs on EVERY navigation)
+3. +layout.svelte script (runs once on mount)
+4. onMount() (client only, after hydration)
 
-// Pass to child components as props
+**Recommended: Initialize in +layout.svelte** (for singletons):
+```svelte
+<!-- +layout.svelte -->
+<script>
+  import { getTheme } from '@miozu/jera';
+  import { onMount } from 'svelte';
+
+  const themeState = getTheme();  // Call ONCE
+  onMount(() => {
+    themeState.sync();   // Hydrate from DOM
+    themeState.init();   // Setup media query listener
+  });
+</script>
+
+<!-- Pass to children as props -->
 <Sidebar {themeState} />
-
-// Child component receives as prop (don't call getTheme())
-let { themeState } = $props();
-themeState.toggle();      // Switch light/dark
-themeState.set('system'); // Follow system preference
-themeState.isDark;        // Reactive boolean
 ```
+
+**Child components receive as prop:**
+```javascript
+let { themeState } = $props();  // DON'T call getTheme()
+themeState.toggle();            // Switch light/dark
+themeState.isDark;              // Reactive boolean
+```
+
+**Why +layout.svelte over +layout.js for singletons?**
+- Runs once per mount (not on every navigation)
+- onMount clearly separates SSR from client code
+- More efficient for global state that doesn't change
 
 Storage key: `miozu-theme`. Data-theme values: `miozu-dark` | `miozu-light`.
