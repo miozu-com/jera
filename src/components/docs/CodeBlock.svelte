@@ -15,7 +15,6 @@
 -->
 <script>
   import {getHighlighter} from '../../utils/highlighter.js';
-  import {Copy, Check} from '@lucide/svelte';
 
   let {
     /** The code to display */
@@ -82,9 +81,11 @@
       aria-label={copied ? 'Copied!' : 'Copy code'}
     >
       {#if copied}
-        <Check size={16} />
+        <!-- Check icon (inline SVG - no external dependency) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       {:else}
-        <Copy size={16} />
+        <!-- Copy icon (inline SVG - no external dependency) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
       {/if}
     </button>
 
