@@ -26,8 +26,8 @@
     "CLAUDE.md"
   ],
   "peerDependencies": {
-    "svelte": "^5.0.0",
-    "shiki": "^3.0.0"
+    "shiki": "^3.0.0",
+    "svelte": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "shiki": {
@@ -56,5 +56,8 @@
   "homepage": "https://miozu.com",
   "bugs": {
     "url": "https://github.com/miozu-com/jera/issues"
+  },
+  "dependencies": {
+    "@miozu/jera": "0.4.3"
   }
 }
