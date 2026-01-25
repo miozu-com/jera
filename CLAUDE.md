@@ -573,6 +573,109 @@ CSS selectors should use:
 [data-theme='miozu-light'] { /* light styles */ }
 ```
 
+### Migration Guide: Custom Theme → Jera Singleton
+
+If you have a custom `theme.svelte.js` or similar, follow these steps:
+
+#### Step 1: Update app.html
+Replace custom theme script with unified storage key:
+```javascript
+// CRITICAL: Prevent FOUC - runs before any CSS
+(function () {
+  try {
+    let pref = localStorage.getItem('miozu-theme');
+
+    // Migrate from old keys if needed
+    if (!pref || !['light', 'dark', 'system'].includes(pref)) {
+      const oldTheme = localStorage.getItem('theme'); // or your old key
+      if (oldTheme === 'miozu-dark' || oldTheme === 'dark') pref = 'dark';
+      else if (oldTheme === 'miozu-light' || oldTheme === 'light') pref = 'light';
+    }
+
+    // Resolve theme
+    let theme;
+    if (pref === 'light') theme = 'miozu-light';
+    else if (pref === 'dark') theme = 'miozu-dark';
+    else {
+      theme = window.matchMedia?.('(prefers-color-scheme: dark)').matches
+        ? 'miozu-dark' : 'miozu-light';
+      pref = 'system';
+    }
+
+    // Apply and persist
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.style.colorScheme = theme === 'miozu-dark' ? 'dark' : 'light';
+    localStorage.setItem('miozu-theme', pref);
+    document.cookie = 'miozu-theme=' + pref + '; path=/; max-age=31536000; SameSite=Lax';
+
+    // Clean up old keys
+    localStorage.removeItem('theme');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'miozu-dark');
+  }
+})();
+```
+
+#### Step 2: Update +layout.svelte
+```svelte
+<script>
+  import { getTheme } from '@miozu/jera';
+  import { onMount } from 'svelte';
+
+  const themeState = getTheme();
+
+  onMount(() => {
+    themeState.sync();
+    themeState.init();
+  });
+</script>
+```
+
+#### Step 3: Update +layout.js
+Remove any theme initialization - it should NOT be in +layout.js:
+```javascript
+// REMOVE these lines:
+// import { ThemeReactiveState } from '$lib/reactiveStates/theme.svelte.js';
+// const themeState = new ThemeReactiveState();
+// return { themeState, ... };
+```
+
+#### Step 4: Update components using theme
+```svelte
+<script>
+  // OLD (remove):
+  // import { getThemeState } from '$lib/reactiveStates/theme.svelte.js';
+  // const themeState = getThemeState();
+
+  // NEW:
+  import { getTheme } from '@miozu/jera';
+  const themeState = getTheme();
+
+  let isDark = $derived(themeState.isDark);
+</script>
+```
+
+#### Step 5: Delete old theme file
+```bash
+rm src/lib/reactiveStates/theme.svelte.js
+```
+
+#### Step 6: Verify no old imports remain
+```bash
+grep -r "theme.svelte.js\|getThemeState\|ThemeReactiveState" src/
+# Should return no matches
+```
+
+### Apps Using Jera Theme (Proof of Concept)
+
+| App | Status | Storage Key |
+|-----|--------|-------------|
+| dash.selify.ai | ✓ Migrated | `miozu-theme` |
+| admin.selify.ai | ✓ Migrated | `miozu-theme` |
+| miozu.com | ✓ Migrated | `miozu-theme` |
+
+All three apps share the same theme preference via unified `miozu-theme` localStorage key.
+
 ---
 
 ## Integration with dash.selify.ai
