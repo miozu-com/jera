@@ -116,6 +116,14 @@ export { default as NavigationCustomBlock } from './components/navigation/blocks
 // Enterprise Components
 export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.svelte';
 
+// LeftBar Components (Admin-style sidebar)
+export { default as LeftBar } from './components/navigation/LeftBar.svelte';
+export { default as LeftBarSection } from './components/navigation/LeftBarSection.svelte';
+export { default as LeftBarItem } from './components/navigation/LeftBarItem.svelte';
+export { default as LeftBarToggle } from './components/navigation/LeftBarToggle.svelte';
+export { default as LeftBarPopover } from './components/navigation/LeftBarPopover.svelte';
+export { default as DropdownContainer } from './components/navigation/DropdownContainer.svelte';
+
 // ============================================
 // COMPONENTS - Documentation
 // ============================================
