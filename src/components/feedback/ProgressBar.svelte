@@ -52,6 +52,7 @@
   <div
     class="progress progress-{size}"
     role="progressbar"
+    aria-label={label || 'Progress'}
     aria-valuenow={indeterminate ? undefined : value}
     aria-valuemin="0"
     aria-valuemax={max}
