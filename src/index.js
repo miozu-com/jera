@@ -120,6 +120,7 @@ export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.
 export { default as LeftBar } from './components/navigation/LeftBar.svelte';
 export { default as LeftBarSection } from './components/navigation/LeftBarSection.svelte';
 export { default as LeftBarItem } from './components/navigation/LeftBarItem.svelte';
+export { default as LeftBarGroup } from './components/navigation/LeftBarGroup.svelte';
 export { default as LeftBarToggle } from './components/navigation/LeftBarToggle.svelte';
 export { default as LeftBarPopover } from './components/navigation/LeftBarPopover.svelte';
 export { default as DropdownContainer } from './components/navigation/DropdownContainer.svelte';
@@ -164,6 +165,7 @@ export {
 export {
   NavigationState,
   createNavigationState,
+  createActiveChecker,
   NAVIGATION_CONTEXT_KEY
 } from './utils/navigation.svelte.js';
 

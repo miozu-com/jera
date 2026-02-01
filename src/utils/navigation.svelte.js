@@ -421,3 +421,35 @@ export function createNavigationState(options = {}) {
  * Navigation context key for Svelte context
  */
 export const NAVIGATION_CONTEXT_KEY = 'navigation-state';
+
+/**
+ * Create an active route checker function for use with LeftBar/Sidebar components.
+ * Works with SvelteKit's page store or any path string.
+ *
+ * @example With SvelteKit page store
+ * import { page } from '$app/stores';
+ * const isActive = createActiveChecker(() => $page.url.pathname);
+ *
+ * <LeftBarItem active={isActive('/dashboard')} />
+ * <LeftBarItem active={isActive('/settings', 'exact')} />
+ *
+ * @example With reactive path
+ * let currentPath = $state('/dashboard');
+ * const isActive = createActiveChecker(() => currentPath);
+ *
+ * @param {() => string} getPathname - Function that returns current pathname
+ * @returns {(path: string, matchType?: 'prefix' | 'exact') => boolean}
+ */
+export function createActiveChecker(getPathname) {
+  return function isActive(path, matchType = 'prefix') {
+    const currentPath = getPathname();
+    // Normalize paths by removing trailing slashes
+    const normalizedCurrent = currentPath.replace(/\/$/, '') || '/';
+    const normalizedPath = path.replace(/\/$/, '') || '/';
+
+    if (matchType === 'exact') {
+      return normalizedCurrent === normalizedPath;
+    }
+    return normalizedCurrent.startsWith(normalizedPath);
+  };
+}
