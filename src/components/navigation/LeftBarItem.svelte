@@ -34,6 +34,7 @@
     subroutes = [],
     badge = null,
     preload = true,
+    variant = 'default',
     onclick = null,
     isActiveRoute = () => false,
     class: className = '',
@@ -74,6 +75,7 @@
       class="nav-item {className}"
       class:active
       class:collapsed={isCollapsed}
+      data-variant={variant}
       title={isCollapsed ? label : null}
       data-sveltekit-preload-data={preloadAttr}
     >
@@ -94,16 +96,22 @@
     <button
       class="nav-item expandable {className}"
       class:collapsed={isCollapsed}
+      data-variant={variant}
       onclick={handleClick}
       onmouseenter={handleMouseEnter}
       onmouseleave={handleMouseLeave}
       title={isCollapsed ? label : null}
     >
+      {@render leading?.()}
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+        {#if badge != null}
+          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+        {/if}
+        {@render trailing?.()}
         <span transition:fade={{ duration: 150 }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +130,7 @@
           </svg>
         </span>
       {/if}
+      {@render children?.()}
     </button>
     {#if expanded && !isCollapsed && subroutes.length > 0}
       <ul class="subnav-list" transition:slide={{ duration: 200, easing: cubicOut }}>
@@ -143,6 +152,7 @@
       class="nav-item {className}"
       class:active
       class:collapsed={isCollapsed}
+      data-variant={variant}
       onclick={handleClick}
       title={isCollapsed ? label : null}
     >
@@ -294,5 +304,45 @@
     color: var(--color-base0D);
     font-weight: 500;
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  }
+
+  /* Variants */
+  .nav-item[data-variant="warning"] {
+    color: var(--color-base0A);
+  }
+
+  .nav-item[data-variant="warning"]:hover {
+    color: var(--color-base0A);
+    background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+  }
+
+  .nav-item[data-variant="warning"] :global(svg) {
+    color: var(--color-base0A);
+  }
+
+  .nav-item[data-variant="danger"] {
+    color: var(--color-base08);
+  }
+
+  .nav-item[data-variant="danger"]:hover {
+    color: var(--color-base08);
+    background-color: color-mix(in srgb, var(--color-base08) 10%, transparent);
+  }
+
+  .nav-item[data-variant="danger"] :global(svg) {
+    color: var(--color-base08);
+  }
+
+  .nav-item[data-variant="success"] {
+    color: var(--color-base0B);
+  }
+
+  .nav-item[data-variant="success"]:hover {
+    color: var(--color-base0B);
+    background-color: color-mix(in srgb, var(--color-base0B) 10%, transparent);
+  }
+
+  .nav-item[data-variant="success"] :global(svg) {
+    color: var(--color-base0B);
   }
 </style>

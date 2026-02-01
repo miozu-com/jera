@@ -73,7 +73,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    font: inherit;
+    font-family: inherit;
   }
 
   .collapse-toggle:hover {
