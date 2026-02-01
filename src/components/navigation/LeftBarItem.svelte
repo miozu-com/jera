@@ -155,7 +155,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    /* font-size and line-height MUST come after font-family to not be overwritten */
+    font-family: inherit;
     font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--color-base06);
     cursor: pointer;
     border-radius: 0.375rem;
@@ -166,7 +169,6 @@
     overflow: hidden;
     background: transparent;
     border: none;
-    font: inherit;
     text-align: left;
   }
 
@@ -243,6 +245,7 @@
     display: block;
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--color-base05);
     transition: all 150ms;
     width: 100%;
