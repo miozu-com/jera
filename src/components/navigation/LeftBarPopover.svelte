@@ -2,7 +2,7 @@
   @component LeftBarPopover
 
   Hover popover for collapsed LeftBar showing subroutes.
-  Exact 1:1 match with admin.selify.ai AdminSidebar hover-popover styles.
+  Exact 1:1 match with dash.selify.ai WorkspaceSidebar hover-popover styles.
 
   @example
   <LeftBarPopover
@@ -91,6 +91,7 @@
     color: var(--color-base06);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 20%, transparent);
     background-color: color-mix(in srgb, var(--color-base01) 50%, transparent);
   }
 
