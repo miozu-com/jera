@@ -4,7 +4,15 @@
  * Reusable navigation components including sidebars, tabs, and accordions.
  */
 
-// Sidebar Components
+// LeftBar Components (simpler, lightweight)
+export { default as LeftBar } from './LeftBar.svelte';
+export { default as LeftBarItem } from './LeftBarItem.svelte';
+export { default as LeftBarSection } from './LeftBarSection.svelte';
+export { default as LeftBarGroup } from './LeftBarGroup.svelte';
+export { default as LeftBarPopover } from './LeftBarPopover.svelte';
+export { default as LeftBarToggle } from './LeftBarToggle.svelte';
+
+// Sidebar Components (feature-rich)
 export { default as Sidebar } from './Sidebar.svelte';
 export { default as SidebarSection } from './SidebarSection.svelte';
 export { default as SidebarItem } from './SidebarItem.svelte';

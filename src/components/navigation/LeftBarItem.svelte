@@ -32,11 +32,18 @@
     expandable = false,
     expanded = $bindable(false),
     subroutes = [],
+    badge = null,
+    preload = true,
     onclick = null,
     isActiveRoute = () => false,
     class: className = '',
+    leading,
+    trailing,
     children
   } = $props();
+
+  // Preload attribute for SvelteKit
+  const preloadAttr = preload ? 'hover' : undefined;
 
   const leftbar = getContext('leftbar');
   const isCollapsed = $derived(leftbar?.collapsed ?? false);
@@ -68,12 +75,18 @@
       class:active
       class:collapsed={isCollapsed}
       title={isCollapsed ? label : null}
+      data-sveltekit-preload-data={preloadAttr}
     >
+      {@render leading?.()}
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+        {#if badge != null}
+          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+        {/if}
+        {@render trailing?.()}
       {/if}
       {@render children?.()}
     </a>
@@ -133,11 +146,16 @@
       onclick={handleClick}
       title={isCollapsed ? label : null}
     >
+      {@render leading?.()}
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+        {#if badge != null}
+          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+        {/if}
+        {@render trailing?.()}
       {/if}
       {@render children?.()}
     </button>
@@ -215,6 +233,16 @@
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  .nav-badge {
+    padding: 0.125rem 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    color: var(--color-base0D);
+    border-radius: 9999px;
+    flex-shrink: 0;
   }
 
   .expand-icon {

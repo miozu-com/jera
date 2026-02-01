@@ -1,49 +1,135 @@
 # @miozu/jera
 
-> A minimal, reactive component library for Svelte 5. Provides design tokens (Miozu Base16 color system), utility functions (cn, cv), Svelte actions, and accessible components. Designed for AI-assisted development with clear, predictable APIs.
+> A zero-dependency, AI-first component library for Svelte 5. Uses W3C Design Tokens (DTCG), pure modern CSS, and Svelte 5 native runes. Built on the Miozu Base16 color system.
 
 ## Quick Start
 - [Installation](#installation): `pnpm add @miozu/jera`
 - [Basic Usage](#usage): Import components and tokens
+- [Architecture](./ARCHITECTURE.md): Zero-dependency, AI-first design
 
-## Design Tokens
-- [Colors](/src/tokens/colors.css): Miozu Base16 palette with dark/light themes
+## Design Tokens (Base16)
+- [Colors](/src/tokens/colors.css): Miozu Base16 palette (base00-base0F)
 - [Spacing](/src/tokens/spacing.css): 4px-based spacing scale
 - [Typography](/src/tokens/typography.css): Font scales and weights
 - [Effects](/src/tokens/effects.css): Shadows, radius, transitions, z-index
 
+## Base16 Color Tokens
+| Token | Dark | Light | Usage |
+|-------|------|-------|-------|
+| base00 | #0f1419 | #ffffff | Primary background |
+| base01 | #1a1f26 | #f8f9fa | Surface/card |
+| base05 | #e2e8f0 | #212529 | Primary text |
+| base07 | #ffffff | #0d0f10 | Maximum contrast |
+| base08 | #e06c75 | #dc3545 | Error/red |
+| base0B | #98c379 | #28a745 | Success/green |
+| base0D | #61afef | #007bff | Primary/blue |
+
 ## Utilities
 - [cn()](/src/utils/cn.svelte.js): Class name concatenation with falsy filtering
 - [cv()](/src/utils/cn.svelte.js): Class variants for type-safe variant composition
-- [ThemeState](/src/utils/reactive.svelte.js): SSR-safe theme management
+- [ThemeState](/src/utils/reactive.svelte.js): SSR-safe theme management singleton
 
 ## Components
-- [Button](/src/components/primitives/Button.svelte): Polymorphic button with 6 variants, 5 sizes
-- [Input](/src/components/forms/Input.svelte): Text input with validation support
-- [Select](/src/components/forms/Select.svelte): Accessible dropdown with keyboard navigation
+
+### Primitives
+- [Button](/src/components/primitives/Button.svelte): 6 variants, 5 sizes, polymorphic (a/button)
 - [Badge](/src/components/primitives/Badge.svelte): Status tags with semantic variants
-- [Checkbox](/src/components/forms/Checkbox.svelte): Checkbox input
+- [Avatar](/src/components/primitives/Avatar.svelte): User avatar with status indicators
+- [Card](/src/components/primitives/Card.svelte): Surface container
+- [Stat](/src/components/primitives/Stat.svelte): Metric display with optional bar
+
+### Forms
+- [Input](/src/components/forms/Input.svelte): Text input with validation
+- [Select](/src/components/forms/Select.svelte): Dropdown with keyboard navigation
+- [Checkbox](/src/components/forms/Checkbox.svelte): Checkbox with label
 - [Switch](/src/components/forms/Switch.svelte): Toggle switch
-- [Toast](/src/components/feedback/Toast.svelte): Notification system
+- [Textarea](/src/components/forms/Textarea.svelte): Multiline text input
+- [SearchInput](/src/components/forms/SearchInput.svelte): Search with icon
+- [PinInput](/src/components/forms/PinInput.svelte): Code/PIN entry
+
+### Feedback
+- [Toast](/src/components/feedback/Toast.svelte): Notification system with context
+- [Alert](/src/components/feedback/Alert.svelte): Inline alerts
+- [Spinner](/src/components/feedback/Spinner.svelte): Loading indicator
+- [ProgressBar](/src/components/feedback/ProgressBar.svelte): Progress indicator
+- [Skeleton](/src/components/feedback/Skeleton.svelte): Loading placeholders
+
+### Overlays
+- [Modal](/src/components/overlays/Modal.svelte): Dialog with variants
+- [Popover](/src/components/overlays/Popover.svelte): Tooltip/popover
+- [Dropdown](/src/components/overlays/Dropdown.svelte): Menu dropdown
+- [ConfirmDialog](/src/components/overlays/ConfirmDialog.svelte): Confirmation modal
+
+### Navigation
+- [Tabs](/src/components/navigation/Tabs.svelte): Tab navigation
+- [Accordion](/src/components/navigation/Accordion.svelte): Collapsible sections
+- [Sidebar](/src/components/navigation/Sidebar.svelte): App sidebar
+
+#### LeftBar System (1:1 match with dash.selify.ai WorkspaceSidebar)
+- [LeftBar](/src/components/navigation/LeftBar.svelte): Collapsible sidebar container with context
+- [LeftBarSection](/src/components/navigation/LeftBarSection.svelte): Grouped navigation with optional title
+- [LeftBarItem](/src/components/navigation/LeftBarItem.svelte): Nav item with subroutes support
+- [LeftBarPopover](/src/components/navigation/LeftBarPopover.svelte): Hover popover for collapsed state
+
+## LeftBar API (v0.6.2+)
+
+```svelte
+<LeftBar bind:collapsed persistKey="my-sidebar">
+  {#snippet header()}
+    <DropdownContainer {themeState} />
+  {/snippet}
+  {#snippet navigation()}
+    <LeftBarSection title="Main">
+      <LeftBarItem href="/" icon={Home} label="Dashboard" active={true} />
+      <LeftBarItem
+        label="Services"
+        icon={Server}
+        expandable
+        bind:expanded={servicesOpen}
+        subroutes={[
+          { label: 'Overview', href: '/services' },
+          { label: 'Errors', href: '/errors' }
+        ]}
+      />
+    </LeftBarSection>
+  {/snippet}
+  {#snippet footer()}
+    <LeftBarToggle />
+  {/snippet}
+</LeftBar>
+```
+
+Context API (provided by LeftBar):
+- `collapsed`: boolean - Current collapsed state
+- `toggle()`: Toggle collapsed state
+- `showPopover(id, event)`: Show hover popover (collapsed mode)
+- `hidePopover()`: Hide popover with delay
+- `keepPopoverOpen()`: Cancel hide delay (on popover enter)
 
 ## Actions
 - [clickOutside](/src/actions/index.js): Detect clicks outside element
 - [focusTrap](/src/actions/index.js): Trap focus within element
-- [portal](/src/actions/index.js): Render element in different DOM location
+- [portal](/src/actions/index.js): Render in different DOM location
 - [escapeKey](/src/actions/index.js): Handle escape key press
 
 ## API Patterns
 
-### Component Props Pattern
-All components accept these common props:
-- `class`: Additional CSS classes (always merged)
-- `disabled`: Boolean to disable interaction
-- Event handlers: `onclick`, `onchange`, etc.
+### Theme Usage (Singleton)
+```javascript
+// +layout.svelte
+import { getTheme } from '@miozu/jera';
+const themeState = getTheme();
+onMount(() => { themeState.sync(); themeState.init(); });
 
-### Class Variants Pattern
+// Child: receive as prop, don't call getTheme()
+let { themeState } = $props();
+themeState.toggle(); // Switch light/dark
+themeState.isDark;   // Reactive boolean
+```
+
+### Class Variants (cv)
 ```javascript
 import { cv } from '@miozu/jera';
-
 const button = cv({
   base: 'inline-flex items-center',
   variants: {
@@ -52,46 +138,12 @@ const button = cv({
   },
   defaults: { variant: 'primary', size: 'md' }
 });
-
 // Usage: button({ variant: 'secondary', size: 'sm' })
 ```
 
-### Theme Usage Pattern (Single Source of Truth)
-
-**SvelteKit Execution Order:**
-1. +layout.server.js (server only)
-2. +layout.js (server + client, runs on EVERY navigation)
-3. +layout.svelte script (runs once on mount)
-4. onMount() (client only, after hydration)
-
-**Recommended: Initialize in +layout.svelte** (for singletons):
-```svelte
-<!-- +layout.svelte -->
-<script>
-  import { getTheme } from '@miozu/jera';
-  import { onMount } from 'svelte';
-
-  const themeState = getTheme();  // Call ONCE
-  onMount(() => {
-    themeState.sync();   // Hydrate from DOM
-    themeState.init();   // Setup media query listener
-  });
-</script>
-
-<!-- Pass to children as props -->
-<Sidebar {themeState} />
-```
-
-**Child components receive as prop:**
-```javascript
-let { themeState } = $props();  // DON'T call getTheme()
-themeState.toggle();            // Switch light/dark
-themeState.isDark;              // Reactive boolean
-```
-
-**Why +layout.svelte over +layout.js for singletons?**
-- Runs once per mount (not on every navigation)
-- onMount clearly separates SSR from client code
-- More efficient for global state that doesn't change
-
-Storage key: `miozu-theme`. Data-theme values: `miozu-dark` | `miozu-light`.
+## Rules for AI
+1. Use Svelte 5 runes ($state, $derived, $props) - no legacy stores
+2. Single $props() call per component
+3. Use semantic colors (--color-primary) not hex values
+4. Zero external dependencies
+5. Theme-agnostic: components work in both themes automatically

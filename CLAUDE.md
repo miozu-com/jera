@@ -1,8 +1,31 @@
 # @miozu/jera - AI Context File
 
 **Package:** @miozu/jera
-**Purpose:** Minimal, reactive component library for Svelte 5
+**Purpose:** Zero-dependency, AI-first component library for Svelte 5
 **Author:** Nicholas Glazer <glazer.nicholas@gmail.com>
+**Last Updated:** February 2026
+
+---
+
+## Architecture Overview
+
+jera follows a **5-layer architecture** designed for portability and AI-assisted development:
+
+1. **W3C Design Tokens (DTCG)** - `tokens.json` as single source of truth
+2. **CSS Custom Properties** - Generated from tokens, used by all styles
+3. **Pure Modern CSS** - Framework-agnostic component styles
+4. **Svelte 5 Wrappers** - Thin components using native runes
+5. **AI Documentation** - llms.txt standard for AI assistants
+
+**Full architecture documentation:** [ARCHITECTURE.md](./ARCHITECTURE.md)
+
+### Key Design Principles
+
+- **CSS is the library** - Pure CSS is 100% portable across frameworks
+- **Zero dependencies** - No runtime external dependencies
+- **Browser-native** - Modern CSS features over JS polyfills
+- **Theme-agnostic** - Components work in both themes automatically
+- **AI-first** - Documentation optimized for AI assistants
 
 ---
 
@@ -346,6 +369,107 @@ Props: `tabs` (array), `active`, `variant` (default/underline/pills), `size` (sm
 
 Accordion props: `expanded` (array of ids), `multiple`
 AccordionItem props: `id`, `title`, `disabled`
+
+### LeftBar (Sidebar Navigation)
+
+A lightweight, collapsible sidebar for admin-style navigation.
+
+```svelte
+<script>
+  import { LeftBar, LeftBarSection, LeftBarItem, LeftBarGroup, LeftBarToggle, createActiveChecker } from '@miozu/jera';
+  import { page } from '$app/stores';
+  import { Home, Settings, Users, Building2 } from 'lucide-svelte';
+
+  let collapsed = $state(false);
+  const isActive = createActiveChecker(() => $page.url.pathname);
+</script>
+
+<LeftBar bind:collapsed persistKey="my-sidebar">
+  {#snippet header()}
+    <div class="logo">MyApp</div>
+  {/snippet}
+
+  {#snippet navigation()}
+    <LeftBarSection>
+      <LeftBarItem href="/" icon={Home} label="Dashboard" active={isActive('/', 'exact')} />
+      <LeftBarItem href="/users" icon={Users} label="Users" badge={5} active={isActive('/users')} />
+    </LeftBarSection>
+
+    <LeftBarSection title="Management">
+      <LeftBarItem
+        label="Organization"
+        icon={Building2}
+        expandable
+        subroutes={[
+          { label: 'Members', href: '/org/members' },
+          { label: 'Settings', href: '/org/settings' }
+        ]}
+      />
+    </LeftBarSection>
+
+    <!-- Generic group for accounts, projects, workspaces, etc. -->
+    <LeftBarGroup
+      title="Connected Accounts"
+      items={accounts}
+      bind:expanded={accountsExpanded}
+      onItemClick={(account) => goto(`/account/${account.id}`)}
+      onAddClick={() => showConnectModal = true}
+      addLabel="Connect account"
+    />
+  {/snippet}
+
+  {#snippet footer()}
+    <LeftBarToggle />
+  {/snippet}
+</LeftBar>
+```
+
+**LeftBar** props: `collapsed` (bindable), `persistKey`, `header` (snippet), `navigation` (snippet), `footer` (snippet)
+
+**LeftBarSection** props: `title`, `class`
+
+**LeftBarItem** props:
+- `href` - Link destination (renders as `<a>`)
+- `label` - Display text
+- `icon` - Lucide icon component
+- `active` - Boolean for active state
+- `badge` - Number/string for badge count
+- `expandable` - Enable expand/collapse
+- `expanded` - Bindable expansion state
+- `subroutes` - Array of `{ label, href }` for expandable items
+- `preload` - Boolean for SvelteKit preload-data (default: true)
+- `leading` - Snippet for content before icon
+- `trailing` - Snippet for content after label (custom badges, etc.)
+- `isActiveRoute` - Function to check subroute active state
+
+**LeftBarGroup** props (generic collection for accounts, projects, etc.):
+- `title` - Section header
+- `items` - Array of items to display
+- `expanded` - Bindable expansion state
+- `expandedItems` - Object tracking which items are expanded
+- `expandable` - Enable item-level expansion
+- `showAdd` - Show add button
+- `addLabel` - Add button text
+- `showCount` - Show item count badge
+- `onItemClick` - Item click handler
+- `onAddClick` - Add button handler
+- `getItemId`, `getItemName`, `getItemAvatar`, `getItemPlatform` - Item accessors
+- `getSubroutes` - Function returning subroutes for an item
+- `isItemActive`, `isSubrouteActive` - Active state checkers
+- `item` - Custom item rendering snippet
+
+**createActiveChecker** utility:
+```javascript
+import { createActiveChecker } from '@miozu/jera';
+import { page } from '$app/stores';
+
+// Create checker with current pathname
+const isActive = createActiveChecker(() => $page.url.pathname);
+
+// Use in components
+<LeftBarItem active={isActive('/dashboard')} />           // prefix match
+<LeftBarItem active={isActive('/dashboard', 'exact')} />  // exact match
+```
 
 ### CodeBlock
 ```svelte
