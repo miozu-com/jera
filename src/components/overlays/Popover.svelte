@@ -1,7 +1,8 @@
 <!--
   @component Popover
 
-  A tooltip/popover component with smart positioning and hover interaction.
+  A tooltip/popover component with CSS Anchor Positioning (with JS fallback).
+  Uses native popover API for top-layer rendering.
 
   @example
   <Popover content="This is helpful information" position="top">
@@ -28,13 +29,21 @@
     class: className = ''
   } = $props();
 
+  // Feature detection for CSS Anchor Positioning
+  const supportsAnchor = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--test');
+
   let visible = $state(false);
   let timeoutId = $state(null);
   let popoverEl = $state(null);
   let triggerEl = $state(null);
   let isHoveringPopover = $state(false);
+
+  // Only needed for JS fallback
   let windowWidth = $state(0);
   let windowHeight = $state(0);
+
+  // Generate unique anchor name for this instance
+  const anchorName = `--popover-anchor-${Math.random().toString(36).slice(2, 9)}`;
 
   // Animation configs based on position
   const animations = {
@@ -51,11 +60,14 @@
     triggerEl = event.currentTarget;
     timeoutId = setTimeout(() => {
       visible = true;
-      requestAnimationFrame(() => {
+      // For JS fallback, position after render
+      if (!supportsAnchor) {
         requestAnimationFrame(() => {
-          positionPopover();
+          requestAnimationFrame(() => {
+            positionPopover();
+          });
         });
-      });
+      }
     }, delay.show);
   }
 
@@ -78,8 +90,9 @@
     handleMouseLeave();
   }
 
+  // JS fallback positioning (only used when CSS Anchor not supported)
   function positionPopover() {
-    if (!popoverEl || !triggerEl) return;
+    if (!popoverEl || !triggerEl || supportsAnchor) return;
 
     const triggerRect = triggerEl.getBoundingClientRect();
     const popoverWidth = popoverEl.offsetWidth;
@@ -138,21 +151,25 @@
   }
 
   function handleScroll() {
-    if (visible && triggerEl && popoverEl) {
+    if (visible && triggerEl && popoverEl && !supportsAnchor) {
       requestAnimationFrame(positionPopover);
     }
   }
 </script>
 
-<svelte:window
-  bind:innerWidth={windowWidth}
-  bind:innerHeight={windowHeight}
-  onscroll={visible ? handleScroll : undefined}
-  onresize={visible ? handleScroll : undefined}
-/>
+<!-- Only bind window for JS fallback -->
+{#if !supportsAnchor}
+  <svelte:window
+    bind:innerWidth={windowWidth}
+    bind:innerHeight={windowHeight}
+    onscroll={visible ? handleScroll : undefined}
+    onresize={visible ? handleScroll : undefined}
+  />
+{/if}
 
 <div
   class="popover-wrapper {className}"
+  style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
   onmouseenter={handleMouseEnter}
   onmouseleave={handleMouseLeave}
 >
@@ -161,6 +178,10 @@
   {#if visible}
     <div
       class="popover"
+      class:popover-anchor={supportsAnchor}
+      class:popover-js={!supportsAnchor}
+      data-position={position}
+      style={supportsAnchor ? `position-anchor: ${anchorName}; --offset: ${offset}px;` : ''}
       role="tooltip"
       in:fly={anim.in}
       out:fly={anim.out}
@@ -186,8 +207,6 @@
   }
 
   .popover {
-    position: fixed;
-    z-index: 9999;
     min-width: 8rem;
     max-width: 18rem;
     width: max-content;
@@ -202,5 +221,45 @@
     pointer-events: auto;
     word-wrap: break-word;
     hyphens: auto;
+  }
+
+  /* CSS Anchor Positioning (Chrome 125+) */
+  .popover-anchor {
+    position: absolute;
+    inset: unset;
+
+    /* Position based on data-position attribute */
+    &[data-position='top'] {
+      bottom: calc(anchor(top) + var(--offset));
+      left: anchor(center);
+      translate: -50% 0;
+    }
+
+    &[data-position='bottom'] {
+      top: calc(anchor(bottom) + var(--offset));
+      left: anchor(center);
+      translate: -50% 0;
+    }
+
+    &[data-position='left'] {
+      right: calc(anchor(left) + var(--offset));
+      top: anchor(center);
+      translate: 0 -50%;
+    }
+
+    &[data-position='right'] {
+      left: calc(anchor(right) + var(--offset));
+      top: anchor(center);
+      translate: 0 -50%;
+    }
+
+    /* Auto-flip when near viewport edges */
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+  }
+
+  /* JS Fallback positioning */
+  .popover-js {
+    position: fixed;
+    z-index: 9999;
   }
 </style>
