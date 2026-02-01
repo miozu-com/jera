@@ -2,7 +2,7 @@
   @component LeftBarSection
 
   A section within LeftBar with optional title.
-  Exact 1:1 match with admin.selify.ai AdminSidebar section styles.
+  Exact 1:1 match with dash.selify.ai WorkspaceSidebar section styles.
 
   @example
   <LeftBarSection title="Administration">
@@ -27,6 +27,8 @@
 <div class="nav-section {className}">
   {#if title && !isCollapsed}
     <div class="section-header" transition:fade={{ duration: 150 }}>{title}</div>
+  {:else if title && isCollapsed}
+    <div class="section-divider"></div>
   {/if}
   <ul class="nav-list">
     {@render children?.()}
@@ -40,17 +42,20 @@
   }
 
   .section-header {
-    padding: 0.75rem 0.75rem 0.25rem 0.75rem;
+    padding: 0.25rem 0.75rem;
     margin-bottom: 0.25rem;
-    margin-top: 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-base04);
+    color: var(--color-base05);
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  .section-divider {
+    margin: 0 0.75rem 0.5rem 0.75rem;
   }
 
   .nav-list {

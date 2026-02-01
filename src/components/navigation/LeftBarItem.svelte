@@ -2,7 +2,7 @@
   @component LeftBarItem
 
   A navigation item within LeftBar.
-  Exact 1:1 match with admin.selify.ai AdminSidebar nav-item styles.
+  Exact 1:1 match with dash.selify.ai WorkspaceSidebar nav-item styles.
 
   @example Basic
   <LeftBarItem href="/dashboard" icon={Home} label="Dashboard" active={isActive('/dashboard')} />
@@ -216,7 +216,7 @@
   }
 
   .expand-icon {
-    color: var(--color-base04);
+    color: var(--color-base05);
     flex-shrink: 0;
     margin-left: auto;
     transition: all 200ms;
@@ -243,8 +243,8 @@
     display: block;
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
-    color: var(--color-base04);
-    transition: color 150ms;
+    color: var(--color-base05);
+    transition: all 150ms;
     width: 100%;
     text-align: left;
     cursor: pointer;

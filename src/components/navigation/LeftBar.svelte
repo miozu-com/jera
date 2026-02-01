@@ -2,7 +2,7 @@
   @component LeftBar
 
   A collapsible left sidebar with navigation sections, expandable groups, and hover popovers.
-  Exact 1:1 match with admin.selify.ai AdminSidebar styles.
+  Exact 1:1 match with dash.selify.ai WorkspaceSidebar styles.
 
   @example Basic usage
   <LeftBar
@@ -149,6 +149,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--color-base00);
+    border-right: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     height: 100vh;
     position: fixed;
     left: 0;
