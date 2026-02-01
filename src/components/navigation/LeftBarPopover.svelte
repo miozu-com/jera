@@ -87,6 +87,7 @@
   .popover-header {
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
+    line-height: 1rem;
     font-weight: 600;
     color: var(--color-base06);
     text-transform: uppercase;
@@ -105,6 +106,7 @@
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--color-base06);
     transition: all 150ms;
     cursor: pointer;

@@ -45,6 +45,7 @@
     padding: 0.25rem 0.75rem;
     margin-bottom: 0.25rem;
     font-size: 0.75rem;
+    line-height: 1rem;
     font-weight: 600;
     color: var(--color-base05);
     text-align: left;
