@@ -1,7 +1,8 @@
 <!--
   @component Toast
 
-  A toast notification system with stacking, auto-dismiss, and animations.
+  A toast notification system using native popover for top-layer rendering.
+  Provides stacking, auto-dismiss, and animations without z-index conflicts.
 
   @example
   // In your root layout
@@ -86,9 +87,10 @@
 
 <script>
   import { cn } from '../../utils/cn.svelte.js';
-  import { portal } from '../../actions/index.js';
 
   const toast = getToastContext();
+
+  let containerEl = $state(null);
 
   const icons = {
     info: `<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>`,
@@ -105,52 +107,82 @@
     'bottom-center': 'toast-bottom-center',
     'bottom-right': 'toast-bottom-right'
   }[toast.position]);
+
+  // Show/hide popover based on toast count
+  $effect(() => {
+    if (!containerEl) return;
+
+    if (toast.toasts.length > 0 && !containerEl.matches(':popover-open')) {
+      containerEl.showPopover();
+    } else if (toast.toasts.length === 0 && containerEl.matches(':popover-open')) {
+      containerEl.hidePopover();
+    }
+  });
 </script>
 
-{#if toast.toasts.length > 0}
-  <div use:portal class={cn('toast-container', positionClass)} role="region" aria-label="Notifications">
-    {#each toast.toasts as item (item.id)}
-      {@const remaining = item.duration - (Date.now() - item.createdAt)}
-      <div
-        class={cn('toast-item', `toast-${item.type}`)}
-        role="alert"
-        aria-live="polite"
-        onmouseenter={() => toast.pause(item.id)}
-        onmouseleave={() => toast.resume(item.id)}
-      >
-        <span class="toast-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            {@html icons[item.type]}
-          </svg>
-        </span>
-        <div class="toast-content">
-          {#if item.title}
-            <p class="toast-title">{item.title}</p>
-          {/if}
-          <p class={cn('toast-message', item.title && 'has-title')}>{item.message}</p>
-        </div>
-        <button type="button" class="toast-close" onclick={() => toast.dismiss(item.id)} aria-label="Dismiss">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-          </svg>
-        </button>
-        {#if item.duration > 0 && !item.pausedAt}
-          {@const _ = setTimeout(() => toast.dismiss(item.id), remaining)}
+<!--
+  Using popover="manual" for:
+  - Automatic top-layer placement (no z-index wars)
+  - No portal action needed
+  - Native browser rendering optimization
+-->
+<div
+  bind:this={containerEl}
+  popover="manual"
+  class={cn('toast-container', positionClass)}
+  role="region"
+  aria-label="Notifications"
+>
+  {#each toast.toasts as item (item.id)}
+    {@const remaining = item.duration - (Date.now() - item.createdAt)}
+    <div
+      class={cn('toast-item', `toast-${item.type}`)}
+      role="alert"
+      aria-live="polite"
+      onmouseenter={() => toast.pause(item.id)}
+      onmouseleave={() => toast.resume(item.id)}
+    >
+      <span class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          {@html icons[item.type]}
+        </svg>
+      </span>
+      <div class="toast-content">
+        {#if item.title}
+          <p class="toast-title">{item.title}</p>
         {/if}
+        <p class={cn('toast-message', item.title && 'has-title')}>{item.message}</p>
       </div>
-    {/each}
-  </div>
-{/if}
+      <button type="button" class="toast-close" onclick={() => toast.dismiss(item.id)} aria-label="Dismiss">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+        </svg>
+      </button>
+      {#if item.duration > 0 && !item.pausedAt}
+        {@const _ = setTimeout(() => toast.dismiss(item.id), remaining)}
+      {/if}
+    </div>
+  {/each}
+</div>
 
 <style>
+  /* Popover container - in top-layer, no z-index needed */
   .toast-container {
     position: fixed;
-    z-index: 9999;
     display: flex;
     gap: 0.5rem;
     pointer-events: none;
+    /* Reset popover defaults */
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    /* Remove default popover positioning */
+    inset: unset;
   }
 
+  /* Position variants */
   .toast-top-left { top: 1rem; left: 1rem; flex-direction: column; }
   .toast-top-center { top: 1rem; left: 50%; transform: translateX(-50%); flex-direction: column; }
   .toast-top-right { top: 1rem; right: 1rem; flex-direction: column; }

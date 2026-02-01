@@ -1,7 +1,8 @@
 <!--
   @component Modal
 
-  A flexible modal dialog component with backdrop, focus trap, and escape key support.
+  A flexible modal dialog component using native <dialog> element.
+  Provides built-in focus trap, ESC handling, backdrop, and accessibility.
 
   @example
   <Modal bind:open={showModal} title="Confirm Action">
@@ -13,9 +14,6 @@
   </Modal>
 -->
 <script>
-  import { focusTrap, escapeKey, portal } from '../../actions/index.js';
-  import { cv } from '../../utils/cn.svelte.js';
-
   let {
     open = $bindable(false),
     title = '',
@@ -31,6 +29,8 @@
     class: className = ''
   } = $props();
 
+  let dialogEl = $state(null);
+
   // Variant styles for the icon container
   const iconVariants = {
     default: { bg: 'var(--color-base02)', color: 'var(--color-base05)' },
@@ -42,118 +42,170 @@
 
   const iconStyle = $derived(iconVariants[variant] || iconVariants.default);
 
-  function close() {
+  // Sync open state with native dialog
+  $effect(() => {
+    if (!dialogEl) return;
+
+    if (open && !dialogEl.open) {
+      dialogEl.showModal();
+    } else if (!open && dialogEl.open) {
+      dialogEl.close();
+    }
+  });
+
+  // Handle native close event (ESC key, form[method=dialog], etc.)
+  function handleClose() {
     open = false;
     onclose();
   }
 
-  function handleBackdropClick(e) {
-    if (closeOnBackdrop && e.target === e.currentTarget) {
-      close();
+  // Handle cancel event (ESC key) - can be prevented
+  function handleCancel(e) {
+    if (!closeOnEscape) {
+      e.preventDefault();
     }
   }
 
-  function handleEscape() {
-    if (closeOnEscape) {
-      close();
+  // Handle backdrop click (click on dialog element itself, not content)
+  function handleBackdropClick(e) {
+    if (closeOnBackdrop && e.target === dialogEl) {
+      dialogEl.close();
+    }
+  }
+
+  function close() {
+    if (dialogEl?.open) {
+      dialogEl.close();
     }
   }
 </script>
 
-{#if open}
-  <div
-    class="modal-backdrop"
-    onclick={handleBackdropClick}
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby={title ? 'modal-title' : undefined}
-    use:portal={'body'}
-    use:focusTrap={{ enabled: open }}
-    use:escapeKey={handleEscape}
-  >
-    <div class="modal modal-{size} {className}">
-      <!-- Close button -->
-      {#if showClose}
-        <button
-          class="modal-close"
-          onclick={close}
-          aria-label="Close modal"
-          type="button"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      {/if}
+<dialog
+  bind:this={dialogEl}
+  class="modal modal-{size} {className}"
+  aria-labelledby={title ? 'modal-title' : undefined}
+  onclose={handleClose}
+  oncancel={handleCancel}
+  onclick={handleBackdropClick}
+>
+  <!-- Close button -->
+  {#if showClose}
+    <button
+      class="modal-close"
+      onclick={close}
+      aria-label="Close modal"
+      type="button"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  {/if}
 
-      <!-- Content -->
-      <div class="modal-content">
-        {#if icon || title}
-          <div class="modal-header">
-            {#if icon}
-              <div class="modal-icon" style="background: {iconStyle.bg}; color: {iconStyle.color};">
-                {@render icon()}
-              </div>
-            {/if}
-
-            {#if title || children}
-              <div class="modal-text">
-                {#if title}
-                  <h3 id="modal-title" class="modal-title">{title}</h3>
-                {/if}
-                {#if children}
-                  <div class="modal-body">
-                    {@render children()}
-                  </div>
-                {/if}
-              </div>
-            {/if}
-          </div>
-        {:else if children}
-          <div class="modal-body">
-            {@render children()}
+  <!-- Content -->
+  <div class="modal-content">
+    {#if icon || title}
+      <div class="modal-header">
+        {#if icon}
+          <div class="modal-icon" style="background: {iconStyle.bg}; color: {iconStyle.color};">
+            {@render icon()}
           </div>
         {/if}
 
-        {#if footer}
-          <div class="modal-footer">
-            {@render footer()}
+        {#if title || children}
+          <div class="modal-text">
+            {#if title}
+              <h3 id="modal-title" class="modal-title">{title}</h3>
+            {/if}
+            {#if children}
+              <div class="modal-body">
+                {@render children()}
+              </div>
+            {/if}
           </div>
         {/if}
       </div>
-    </div>
+    {:else if children}
+      <div class="modal-body">
+        {@render children()}
+      </div>
+    {/if}
+
+    {#if footer}
+      <div class="modal-footer">
+        {@render footer()}
+      </div>
+    {/if}
   </div>
-{/if}
+</dialog>
 
 <style>
-  .modal-backdrop {
+  /* Native dialog element - automatically in top-layer */
+  dialog.modal {
     position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--color-base01);
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid var(--color-base03);
+    padding: 0;
+    margin: auto;
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+  }
+
+  /* Size variants */
+  dialog.modal-sm { width: 100%; max-width: 20rem; }
+  dialog.modal-md { width: 100%; max-width: 28rem; }
+  dialog.modal-lg { width: 100%; max-width: 36rem; }
+  dialog.modal-xl { width: 100%; max-width: 48rem; }
+  dialog.modal-full { width: calc(100vw - 2rem); max-width: calc(100vw - 2rem); }
+
+  /* Native backdrop - automatically handled by browser */
+  dialog.modal::backdrop {
     background: color-mix(in srgb, var(--color-base00) 80%, transparent);
     backdrop-filter: blur(4px);
   }
 
-  .modal {
-    position: relative;
-    background: var(--color-base01);
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-2xl);
-    border: 1px solid var(--color-base03);
-    margin: 1rem;
-    animation: modal-enter 0.2s ease-out;
+  /* Entry/exit animations using @starting-style */
+  dialog.modal[open] {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 
-  /* Size variants */
-  .modal-sm { width: 100%; max-width: 20rem; }
-  .modal-md { width: 100%; max-width: 28rem; }
-  .modal-lg { width: 100%; max-width: 36rem; }
-  .modal-xl { width: 100%; max-width: 48rem; }
-  .modal-full { width: 100%; max-width: calc(100vw - 2rem); max-height: calc(100vh - 2rem); }
+  @starting-style {
+    dialog.modal[open] {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+  }
+
+  dialog.modal[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog.modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  /* Transitions for smooth open/close */
+  dialog.modal {
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.2s ease-out,
+      overlay 0.2s ease-out allow-discrete,
+      display 0.2s ease-out allow-discrete;
+  }
+
+  dialog.modal::backdrop {
+    transition:
+      opacity 0.2s ease-out,
+      overlay 0.2s ease-out allow-discrete,
+      display 0.2s ease-out allow-discrete;
+  }
 
   .modal-close {
     position: absolute;
@@ -166,6 +218,7 @@
     color: var(--color-base05);
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
+    z-index: 1;
   }
 
   .modal-close:hover {
@@ -217,16 +270,5 @@
     gap: 0.75rem;
     margin-top: 1.5rem;
     justify-content: flex-end;
-  }
-
-  @keyframes modal-enter {
-    from {
-      opacity: 0;
-      transform: scale(0.95) translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
   }
 </style>
