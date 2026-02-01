@@ -157,15 +157,13 @@
   }
 </script>
 
-<!-- Only bind window for JS fallback -->
-{#if !supportsAnchor}
-  <svelte:window
-    bind:innerWidth={windowWidth}
-    bind:innerHeight={windowHeight}
-    onscroll={visible ? handleScroll : undefined}
-    onresize={visible ? handleScroll : undefined}
-  />
-{/if}
+<!-- Window bindings for JS fallback (always rendered, handlers conditional) -->
+<svelte:window
+  bind:innerWidth={windowWidth}
+  bind:innerHeight={windowHeight}
+  onscroll={!supportsAnchor && visible ? handleScroll : undefined}
+  onresize={!supportsAnchor && visible ? handleScroll : undefined}
+/>
 
 <div
   class="popover-wrapper {className}"
