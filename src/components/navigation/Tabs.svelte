@@ -1,7 +1,7 @@
 <!--
   @component Tabs
 
-  Tabbed navigation component.
+  Tabbed navigation component with keyboard navigation.
 
   @example Basic usage
   <Tabs
@@ -13,7 +13,7 @@
     bind:active={activeTab}
   />
 
-  @example With icons
+  @example With icons (component reference)
   <Tabs
     tabs={[
       { id: 'home', label: 'Home', icon: HomeIcon },
@@ -64,7 +64,6 @@
     const nextTab = tabs[nextIndex];
     if (!nextTab.disabled) {
       selectTab(nextTab);
-      // Focus the next tab button
       const buttons = e.currentTarget.parentElement.querySelectorAll('[role="tab"]');
       buttons[nextIndex]?.focus();
     }
@@ -90,8 +89,9 @@
       onkeydown={(e) => handleKeydown(e, tab, index)}
     >
       {#if tab.icon}
+        {@const Icon = tab.icon}
         <span class="tab-icon">
-          <svelte:component this={tab.icon} size={16} />
+          <Icon size={16} />
         </span>
       {/if}
       {#if tab.label}
@@ -107,10 +107,10 @@
 <style>
   .tabs {
     display: inline-flex;
-    gap: 0.25rem;
+    gap: var(--space-1);
     background: var(--color-base01);
-    border-radius: 0.5rem;
-    padding: 0.25rem;
+    border-radius: var(--radius-lg);
+    padding: var(--space-1);
   }
 
   .tabs-full-width {
@@ -126,12 +126,12 @@
   .tab {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
     background: transparent;
     border: none;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-base05);
     cursor: pointer;
@@ -141,13 +141,13 @@
 
   /* Size variants */
   .tabs-sm .tab {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
   }
 
   .tabs-lg .tab {
-    padding: 0.625rem 1.25rem;
-    font-size: 1rem;
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-base);
   }
 
   .tab:hover:not(.tab-disabled) {
@@ -180,12 +180,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.25rem;
-    height: 1.25rem;
-    padding: 0 0.375rem;
+    min-width: var(--space-5);
+    height: var(--space-5);
+    padding: 0 var(--space-1);
     background: var(--color-base03);
     border-radius: 9999px;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     font-weight: 600;
   }
 
@@ -224,7 +224,7 @@
   .tabs-pills {
     background: transparent;
     padding: 0;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .tabs-pills .tab {
