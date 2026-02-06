@@ -21,9 +21,9 @@
  * import '@miozu/jera/tokens';
  */
 
-// ============================================
+// --------------------------------------------
 // COMPONENTS - Primitives
-// ============================================
+// --------------------------------------------
 
 export { default as Button } from './components/primitives/Button.svelte';
 export { default as Badge } from './components/primitives/Badge.svelte';
@@ -33,11 +33,19 @@ export { default as Avatar } from './components/primitives/Avatar.svelte';
 export { default as Card } from './components/primitives/Card.svelte';
 export { default as Stat } from './components/primitives/Stat.svelte';
 export { default as Link } from './components/primitives/Link.svelte';
+export { default as LinkCard } from './components/primitives/LinkCard.svelte';
 export { default as LazyImage } from './components/primitives/LazyImage.svelte';
+export { default as MetricCard } from './components/primitives/MetricCard.svelte';
+export { default as FilterChip } from './components/primitives/FilterChip.svelte';
+export { default as StatusLine } from './components/primitives/StatusLine.svelte';
+export { default as Tooltip } from './components/primitives/Tooltip.svelte';
+export { default as MemberCard } from './components/primitives/MemberCard.svelte';
+export { default as ThemeToggle } from './components/primitives/ThemeToggle.svelte';
+export { default as ThemeSelect } from './components/primitives/ThemeSelect.svelte';
 
-// ============================================
+// --------------------------------------------
 // COMPONENTS - Forms
-// ============================================
+// --------------------------------------------
 
 export { default as Input } from './components/forms/Input.svelte';
 export { default as IconInput } from './components/forms/IconInput.svelte';
@@ -54,9 +62,9 @@ export { default as SearchInput } from './components/forms/SearchInput.svelte';
 export { default as PinInput } from './components/forms/PinInput.svelte';
 export { default as Dropzone } from './components/forms/Dropzone.svelte';
 
-// ============================================
+// --------------------------------------------
 // COMPONENTS - Feedback
-// ============================================
+// --------------------------------------------
 
 export {
   default as Toast,
@@ -71,9 +79,9 @@ export { default as Spinner } from './components/feedback/Spinner.svelte';
 export { default as EmptyState } from './components/feedback/EmptyState.svelte';
 export { default as Alert } from './components/feedback/Alert.svelte';
 
-// ============================================
+// --------------------------------------------
 // COMPONENTS - Overlays
-// ============================================
+// --------------------------------------------
 
 export { default as Modal } from './components/overlays/Modal.svelte';
 export { default as Popover } from './components/overlays/Popover.svelte';
@@ -82,11 +90,13 @@ export { default as DropdownItem } from './components/overlays/DropdownItem.svel
 export { default as DropdownDivider } from './components/overlays/DropdownDivider.svelte';
 export { default as ConfirmDialog } from './components/overlays/ConfirmDialog.svelte';
 
-// ============================================
+// --------------------------------------------
 // COMPONENTS - Navigation
-// ============================================
+// --------------------------------------------
 
 export { default as Tabs } from './components/navigation/Tabs.svelte';
+export { default as TabNav } from './components/navigation/TabNav.svelte';
+export { default as ScrollNav } from './components/navigation/ScrollNav.svelte';
 export { default as Accordion } from './components/navigation/Accordion.svelte';
 export { default as AccordionItem } from './components/navigation/AccordionItem.svelte';
 
@@ -125,24 +135,32 @@ export { default as LeftBarToggle } from './components/navigation/LeftBarToggle.
 export { default as LeftBarPopover } from './components/navigation/LeftBarPopover.svelte';
 export { default as DropdownContainer } from './components/navigation/DropdownContainer.svelte';
 
-// ============================================
+// --------------------------------------------
+// COMPONENTS - Layout
+// --------------------------------------------
+
+export { default as PageHeader } from './components/layout/PageHeader.svelte';
+export { default as SettingCard } from './components/layout/SettingCard.svelte';
+export { default as SettingItem } from './components/layout/SettingItem.svelte';
+
+// --------------------------------------------
 // COMPONENTS - Documentation
-// ============================================
+// --------------------------------------------
 
 export { default as CodeBlock } from './components/docs/CodeBlock.svelte';
 export { default as PropsTable } from './components/docs/PropsTable.svelte';
 export { default as SplitPane } from './components/docs/SplitPane.svelte';
 export { default as DocSection } from './components/docs/DocSection.svelte';
 
-// ============================================
+// --------------------------------------------
 // UTILITIES - Class Composition
-// ============================================
+// --------------------------------------------
 
 export { cn, rcn, cv, mergeClasses, when, match } from './utils/cn.svelte.js';
 
-// ============================================
+// --------------------------------------------
 // UTILITIES - Reactive State
-// ============================================
+// --------------------------------------------
 
 export {
   createReactive,
@@ -176,9 +194,9 @@ export {
   DEFAULT_LANGUAGES
 } from './utils/highlighter.js';
 
-// ============================================
+// --------------------------------------------
 // ACTIONS
-// ============================================
+// --------------------------------------------
 
 export {
   clickOutside,
