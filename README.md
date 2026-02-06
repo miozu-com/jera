@@ -176,23 +176,68 @@ button({ variant: 'secondary' }); // => "inline-flex items-center bg-surface h-1
 
 Dark theme is default. Uses singleton pattern with `miozu-theme` storage key.
 
-```javascript
-// In root +layout.svelte
-import { getTheme } from '@miozu/jera';
-import { onMount } from 'svelte';
+### Setup
 
-const theme = getTheme();
-onMount(() => theme.init());
+```svelte
+<!-- +layout.svelte -->
+<script>
+  import { getTheme } from '@miozu/jera';
+  import { onMount } from 'svelte';
+
+  const theme = getTheme();
+  onMount(() => theme.init());
+</script>
 ```
 
+### ThemeToggle
+
+Accessible toggle button with animated sun/moon icons.
+
+```svelte
+<script>
+  import { ThemeToggle } from '@miozu/jera';
+</script>
+
+<ThemeToggle />
+<ThemeToggle size="sm" variant="outline" />
+<ThemeToggle size="lg" variant="subtle" />
+```
+
+Props: `size` (sm|md|lg), `variant` (ghost|outline|subtle), `themeState` (optional)
+
+### ThemeSelect
+
+Three-option selector for light/dark/system preference.
+
+```svelte
+<script>
+  import { ThemeSelect } from '@miozu/jera';
+</script>
+
+<!-- Segmented control (default) -->
+<ThemeSelect />
+
+<!-- Dropdown -->
+<ThemeSelect variant="dropdown" />
+
+<!-- Custom labels -->
+<ThemeSelect labels={{ light: 'Light', dark: 'Dark', system: 'Auto' }} />
+```
+
+Props: `variant` (segmented|dropdown), `size` (sm|md|lg), `labels`, `showIcons`
+
+### ThemeState API
+
 ```javascript
-// Anywhere in your app
 import { getTheme } from '@miozu/jera';
 
 const theme = getTheme();
 theme.toggle();        // Switch between light/dark
 theme.set('system');   // Follow system preference
-theme.isDark;          // boolean reactive property
+theme.isDark;          // boolean - resolved dark mode
+theme.isLight;         // boolean - resolved light mode
+theme.current;         // 'light' | 'dark' | 'system'
+theme.dataTheme;       // 'miozu-light' | 'miozu-dark'
 ```
 
 Data-theme values: `miozu-dark` (default) or `miozu-light`.
