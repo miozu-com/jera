@@ -125,21 +125,21 @@
     transform: scale(0.98);
   }
 
-  /* Secondary - Gray background, secondary actions */
+  /* Secondary - Light tinted, mirrors primary pattern */
   .secondary {
-    background-color: color-mix(in srgb, var(--color-base02, #504945) 30%, transparent);
-    color: var(--color-base06, #ebdbb2);
-    border: 1px solid var(--color-base03, #665c54);
+    background-color: color-mix(in srgb, var(--color-base03, #665c54) 10%, transparent);
+    color: var(--color-base05, #d5c4a1);
+    border: 1px solid color-mix(in srgb, var(--color-base03, #665c54) 30%, transparent);
   }
 
   .secondary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 40%, transparent);
-    border-color: var(--color-base03, #665c54);
+    background-color: color-mix(in srgb, var(--color-base03, #665c54) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base03, #665c54) 50%, transparent);
   }
 
   .secondary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 50%, transparent);
-    border-color: var(--color-base04, #7c6f64);
+    background-color: color-mix(in srgb, var(--color-base03, #665c54) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base04, #7c6f64) 60%, transparent);
     transform: scale(0.98);
   }
 
@@ -169,12 +169,12 @@
   }
 
   .ghost:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base02, #504945) 30%, transparent);
+    background-color: var(--color-base01, #3c3836);
     color: var(--color-base06, #ebdbb2);
   }
 
   .ghost:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base02, #504945) 40%, transparent);
+    background-color: var(--color-base02, #504945);
     color: var(--color-base06, #ebdbb2);
     transform: scale(0.98);
   }
@@ -212,6 +212,42 @@
   .danger:active:not(:disabled) {
     background-color: color-mix(in srgb, var(--color-base08, #fb4934) 30%, transparent);
     border-color: color-mix(in srgb, var(--color-base08, #fb4934) 60%, transparent);
+    transform: scale(0.98);
+  }
+
+  /* Warning - Yellow/amber accent */
+  .warning {
+    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 10%, transparent);
+    color: var(--color-base0A, #fabd2f);
+    border: 1px solid color-mix(in srgb, var(--color-base0A, #fabd2f) 40%, transparent);
+  }
+
+  .warning:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 60%, transparent);
+  }
+
+  .warning:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 80%, transparent);
+    transform: scale(0.98);
+  }
+
+  /* Info - Cyan accent */
+  .info {
+    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 10%, transparent);
+    color: var(--color-base0C, #8ec07c);
+    border: 1px solid color-mix(in srgb, var(--color-base0C, #8ec07c) 40%, transparent);
+  }
+
+  .info:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 60%, transparent);
+  }
+
+  .info:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 80%, transparent);
     transform: scale(0.98);
   }
 

@@ -34,7 +34,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 ## Component API Quick Reference
 
-**Button:** `variant` (primary|secondary|ghost|outline|danger|success), `size` (xs-xl), `disabled`, `loading`, `href`
+**Button:** `variant` (primary|secondary|ghost|outline|danger|success|warning|info), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
 
 **Input:** `bind:value`, `type`, `placeholder`, `disabled`, `required`
 
