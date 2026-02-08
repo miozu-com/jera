@@ -180,10 +180,10 @@
   .main-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     flex: 1;
     overflow-y: auto;
-    padding-top: 0.5rem;
+    padding-top: 0;
     padding-bottom: 0;
   }
 
