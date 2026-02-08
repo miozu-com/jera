@@ -29,10 +29,12 @@
   import { setContext, onMount } from 'svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
+  import LeftBarPopover from './LeftBarPopover.svelte';
 
   let {
     collapsed = $bindable(false),
     persistKey = null,
+    popoverMap = {},
     class: className = '',
     header,
     navigation,
@@ -144,6 +146,16 @@
   {/if}
 </div>
 
+<!-- Hover popover — rendered outside sidebar to avoid overflow:hidden + will-change clipping -->
+{#if isCollapsed && hoverPopover.item && popoverMap[hoverPopover.item]}
+  <LeftBarPopover
+    visible={true}
+    position={hoverPopover.position}
+    title={hoverPopover.item}
+    items={popoverMap[hoverPopover.item]}
+  />
+{/if}
+
 <style>
   .workspace-sidebar {
     display: flex;
@@ -166,6 +178,11 @@
   }
 
   .main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    flex: 1;
+    overflow-y: auto;
     padding-top: 0;
     padding-bottom: 0;
   }

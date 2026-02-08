@@ -1,8 +1,9 @@
 {
   "name": "@miozu/jera",
-  "version": "0.8.3",
+  "version": "0.8.6",
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "type": "module",
+  "sideEffects": false,
   "scripts": {
     "prepublishOnly": "echo 'Publishing @miozu/jera...' && test -f src/index.js"
   },
@@ -11,6 +12,42 @@
     ".": {
       "svelte": "./src/index.js",
       "default": "./src/index.js"
+    },
+    "./components/primitives/*": {
+      "svelte": "./src/components/primitives/*.svelte",
+      "default": "./src/components/primitives/*.svelte"
+    },
+    "./components/forms/*": {
+      "svelte": "./src/components/forms/*.svelte",
+      "default": "./src/components/forms/*.svelte"
+    },
+    "./components/feedback/*": {
+      "svelte": "./src/components/feedback/*.svelte",
+      "default": "./src/components/feedback/*.svelte"
+    },
+    "./components/feedback/Toast": {
+      "svelte": "./src/components/feedback/Toast.svelte",
+      "default": "./src/components/feedback/Toast.svelte"
+    },
+    "./components/overlays/*": {
+      "svelte": "./src/components/overlays/*.svelte",
+      "default": "./src/components/overlays/*.svelte"
+    },
+    "./components/navigation/*": {
+      "svelte": "./src/components/navigation/*.svelte",
+      "default": "./src/components/navigation/*.svelte"
+    },
+    "./components/navigation/blocks/*": {
+      "svelte": "./src/components/navigation/blocks/*.svelte",
+      "default": "./src/components/navigation/blocks/*.svelte"
+    },
+    "./components/layout/*": {
+      "svelte": "./src/components/layout/*.svelte",
+      "default": "./src/components/layout/*.svelte"
+    },
+    "./components/docs/*": {
+      "svelte": "./src/components/docs/*.svelte",
+      "default": "./src/components/docs/*.svelte"
     },
     "./tokens": "./src/tokens/index.css",
     "./tokens/colors": "./src/tokens/colors.css",

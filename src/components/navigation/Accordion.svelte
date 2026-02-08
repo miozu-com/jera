@@ -1,21 +1,18 @@
 <!--
   @component Accordion
 
-  Collapsible content sections.
+  Group container for collapsible sections. Controls shared expand/collapse state.
 
-  @example Single item
+  @example Single-open (default)
   <Accordion>
-    <AccordionItem title="Section 1">
-      Content for section 1
-    </AccordionItem>
-    <AccordionItem title="Section 2">
-      Content for section 2
-    </AccordionItem>
+    <AccordionItem title="Section 1">Content</AccordionItem>
+    <AccordionItem title="Section 2">Content</AccordionItem>
   </Accordion>
 
-  @example Controlled
-  <Accordion bind:expanded={openSections} multiple>
-    ...
+  @example Multiple open
+  <Accordion bind:expanded={openIds} multiple>
+    <AccordionItem id="a" title="First">Content</AccordionItem>
+    <AccordionItem id="b" title="Second" badge="3">Content</AccordionItem>
   </Accordion>
 -->
 <script>
@@ -30,18 +27,12 @@
 
   function toggle(id) {
     if (multiple) {
-      if (expanded.includes(id)) {
-        expanded = expanded.filter(i => i !== id);
-      } else {
-        expanded = [...expanded, id];
-      }
+      expanded = expanded.includes(id)
+        ? expanded.filter(i => i !== id)
+        : [...expanded, id];
     } else {
       expanded = expanded.includes(id) ? [] : [id];
     }
-  }
-
-  function isExpanded(id) {
-    return expanded.includes(id);
   }
 
   setContext('accordion', {
@@ -50,16 +41,16 @@
   });
 </script>
 
-<div class="accordion {className}">
+<div class="jera-accordion {className}">
   {@render children?.()}
 </div>
 
 <style>
-  .accordion {
+  .jera-accordion {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-base03);
     border-radius: 0.5rem;
     overflow: hidden;
+    background: color-mix(in srgb, var(--color-base01) 60%, transparent);
   }
 </style>
