@@ -60,6 +60,9 @@
 - [Dropdown](/src/components/overlays/Dropdown.svelte): Menu dropdown
 - [ConfirmDialog](/src/components/overlays/ConfirmDialog.svelte): Confirmation modal
 
+### Layout
+- [PageHeader](/src/components/layout/PageHeader.svelte): Flexible page header with icon, title, description, stats, actions, search, and filter slots. Sizes: default, compact, large.
+
 ### Navigation
 - [Tabs](/src/components/navigation/Tabs.svelte): Tab navigation
 - [Accordion](/src/components/navigation/Accordion.svelte): Collapsible sections
@@ -105,6 +108,42 @@ Context API (provided by LeftBar):
 - `showPopover(id, event)`: Show hover popover (collapsed mode)
 - `hidePopover()`: Hide popover with delay
 - `keepPopoverOpen()`: Cancel hide delay (on popover enter)
+
+## PageHeader API
+
+```svelte
+<PageHeader
+  title="Team Members"
+  description="Manage your workspace team"
+  size="default"
+  stats={[
+    {label: "Members", value: 12},
+    {label: "Active", value: 11, variant: "success"}
+  ]}
+>
+  {#snippet icon()}
+    <Users size={20} />
+  {/snippet}
+  {#snippet actions()}
+    <Button variant="primary" size="sm">Add Member</Button>
+  {/snippet}
+  {#snippet search()}
+    <Input placeholder="Search members..." />
+  {/snippet}
+  {#snippet filters()}
+    <Select options={roleOptions} placeholder="Role" />
+  {/snippet}
+</PageHeader>
+```
+
+Props:
+- `title`: string - Page title (required)
+- `description`: string - Subtitle text
+- `stats`: array of `{label, value, variant?, icon?}` - Header stats
+- `size`: 'default' | 'compact' | 'large' - Size variant
+- `class`: string - Additional CSS classes
+
+Snippets: `icon`, `actions`, `search`, `filters`
 
 ## Actions
 - [clickOutside](/src/actions/index.js): Detect clicks outside element
