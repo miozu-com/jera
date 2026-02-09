@@ -187,6 +187,7 @@
     font-family: inherit;
     font-size: 0.875rem;
     line-height: 1.25rem;
+    font-weight: 500;
     color: var(--color-base06);
     cursor: pointer;
     border-radius: 0.375rem;

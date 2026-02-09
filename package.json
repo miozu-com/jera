@@ -1,6 +1,6 @@
 {
   "name": "@miozu/jera",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "type": "module",
   "sideEffects": false,
