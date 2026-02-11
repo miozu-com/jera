@@ -40,6 +40,8 @@ export { default as FilterChip } from './components/primitives/FilterChip.svelte
 export { default as StatusLine } from './components/primitives/StatusLine.svelte';
 export { default as Tooltip } from './components/primitives/Tooltip.svelte';
 export { default as MemberCard } from './components/primitives/MemberCard.svelte';
+export { default as DashCard } from './components/primitives/DashCard.svelte';
+export { default as DistributionBar } from './components/primitives/DistributionBar.svelte';
 export { default as ThemeToggle } from './components/primitives/ThemeToggle.svelte';
 export { default as ThemeSelect } from './components/primitives/ThemeSelect.svelte';
 
@@ -125,6 +127,9 @@ export { default as NavigationCustomBlock } from './components/navigation/blocks
 
 // Enterprise Components
 export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.svelte';
+
+// NavBar (Horizontal mega-menu)
+export { default as NavBar } from './components/navigation/NavBar.svelte';
 
 // LeftBar Components (Admin-style sidebar)
 export { default as LeftBar } from './components/navigation/LeftBar.svelte';

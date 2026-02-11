@@ -33,7 +33,9 @@
 
   let {
     collapsed = $bindable(false),
+    initialCollapsed = undefined,
     persistKey = null,
+    cookieKey = null,
     popoverMap = {},
     class: className = '',
     header,
@@ -42,37 +44,50 @@
     children
   } = $props();
 
-  // Internal collapsed state
-  let isCollapsed = $state(collapsed);
+  // Internal collapsed state — prefer SSR-provided initialCollapsed (cookie-based)
+  let isCollapsed = $state(initialCollapsed !== undefined ? initialCollapsed : collapsed);
 
-  // Sync states
+  // Sync parent → internal (only when not SSR-initialized)
   $effect(() => {
-    isCollapsed = collapsed;
+    if (initialCollapsed === undefined) {
+      isCollapsed = collapsed;
+    }
   });
 
+  // Sync internal → parent
   $effect(() => {
     collapsed = isCollapsed;
   });
 
-  // Toggle sidebar
+  // Persist to localStorage + cookie on toggle
   function toggle() {
     isCollapsed = !isCollapsed;
-    if (persistKey && typeof localStorage !== 'undefined') {
-      try {
-        localStorage.setItem(persistKey, String(isCollapsed));
-      } catch (e) {}
+    if (typeof localStorage !== 'undefined') {
+      // Persist to localStorage
+      if (persistKey) {
+        try { localStorage.setItem(persistKey, String(isCollapsed)); } catch {}
+      }
+      // Persist to cookie for SSR (30 day expiry)
+      if (cookieKey || persistKey) {
+        try {
+          const key = cookieKey || persistKey;
+          document.cookie = `${key}=${isCollapsed ? '1' : '0'};path=/;max-age=${60*60*24*30};SameSite=Lax`;
+        } catch {}
+      }
     }
   }
 
-  // Load saved state
+  // Load saved state from localStorage on mount (fallback for non-cookie scenarios)
   onMount(() => {
+    // If SSR already provided the correct state via cookie, skip localStorage
+    if (initialCollapsed !== undefined) return;
     if (persistKey && typeof localStorage !== 'undefined') {
       try {
         const saved = localStorage.getItem(persistKey);
         if (saved !== null) {
           isCollapsed = saved === 'true';
         }
-      } catch (e) {}
+      } catch {}
     }
   });
 

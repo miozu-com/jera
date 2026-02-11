@@ -295,6 +295,13 @@
     opacity: 0;
   }
 
+  /* Ensure children span inherits flex layout so icon + text inline correctly */
+  .jera-btn > span {
+    display: inline-flex;
+    align-items: center;
+    gap: inherit;
+  }
+
   @keyframes spin {
     to {
       transform: rotate(360deg);
