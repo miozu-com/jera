@@ -213,7 +213,7 @@
     color: var(--color-base07);
     font-size: 0.875rem;
     line-height: 1.5;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-default);
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--color-base03);
     pointer-events: auto;
@@ -258,6 +258,6 @@
   /* JS Fallback positioning */
   .popover-js {
     position: fixed;
-    z-index: 9999;
+    z-index: var(--z-popover);
   }
 </style>

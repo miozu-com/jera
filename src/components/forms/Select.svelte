@@ -250,7 +250,7 @@
 
   .select-dropdown {
     position: absolute;
-    z-index: 50;
+    z-index: var(--z-dropdown);
     width: 100%;
     margin-top: 0.25rem;
     max-height: 15rem;

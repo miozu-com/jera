@@ -183,9 +183,10 @@
     top: 0;
     z-index: 40;
     width: 240px;
-    transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
     will-change: width;
     overflow: hidden;
+    user-select: none;
   }
 
   .workspace-sidebar.collapsed {

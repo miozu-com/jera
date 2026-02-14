@@ -199,6 +199,7 @@
     background: transparent;
     border: none;
     text-align: left;
+    white-space: nowrap;
   }
 
   .nav-item:hover {

@@ -74,7 +74,7 @@
 
   .dropdown-content {
     position: absolute;
-    z-index: 50;
+    z-index: var(--z-dropdown);
     min-width: 10rem;
     padding: var(--space-1);
     background: var(--color-base00);

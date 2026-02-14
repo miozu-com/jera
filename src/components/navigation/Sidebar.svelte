@@ -296,12 +296,12 @@
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 40;
+    z-index: var(--z-modal-backdrop);
   }
 
   .sidebar.mobile-overlay {
     position: fixed;
-    z-index: 50;
+    z-index: var(--z-modal);
     height: 100vh;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }

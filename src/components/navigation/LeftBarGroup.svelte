@@ -297,6 +297,8 @@
   .group-title {
     flex: 1;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .group-count {
@@ -492,6 +494,8 @@
     border: 1px solid color-mix(in srgb, var(--color-base0D) 30%, transparent);
     background: transparent;
     font-family: inherit;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .add-item-btn:hover {

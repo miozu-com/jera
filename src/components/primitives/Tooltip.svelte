@@ -102,7 +102,7 @@
 
   .tooltip {
     position: absolute;
-    z-index: 50;
+    z-index: var(--z-tooltip);
     pointer-events: none;
     animation: tooltip-enter 0.15s ease-out;
   }

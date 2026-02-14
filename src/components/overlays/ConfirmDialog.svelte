@@ -2,6 +2,7 @@
   @component ConfirmDialog
 
   A confirmation dialog with semantic variants.
+  Uses native <dialog> element for top-layer rendering (no z-index needed).
 
   @example Danger confirmation
   <ConfirmDialog
@@ -32,7 +33,6 @@
 -->
 <script>
   import Button from '../primitives/Button.svelte';
-  import { escapeKey } from '../../actions/index.js';
 
   let {
     open = $bindable(false),
@@ -46,6 +46,8 @@
     onconfirm,
     oncancel
   } = $props();
+
+  let dialogEl = $state(null);
 
   const variantConfig = $derived({
     danger: {
@@ -74,136 +76,164 @@
     buttonVariant: 'primary'
   });
 
+  // Sync open state with native dialog
+  $effect(() => {
+    if (!dialogEl) return;
+
+    if (open && !dialogEl.open) {
+      dialogEl.showModal();
+    } else if (!open && dialogEl.open) {
+      dialogEl.close();
+    }
+  });
+
+  function handleClose() {
+    open = false;
+    oncancel?.();
+  }
+
+  function handleCancel(e) {
+    // Allow ESC to close
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === dialogEl) {
+      handleClose();
+    }
+  }
+
   function handleConfirm() {
     onconfirm?.();
     open = false;
   }
-
-  function handleCancel() {
-    oncancel?.();
-    open = false;
-  }
-
-  function handleBackdropClick(e) {
-    if (e.target === e.currentTarget) {
-      handleCancel();
-    }
-  }
 </script>
 
-{#if open}
-  <div
-    class="confirm-backdrop {className}"
-    onclick={handleBackdropClick}
-    use:escapeKey={handleCancel}
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="confirm-title"
+<dialog
+  bind:this={dialogEl}
+  class="confirm-dialog {className}"
+  aria-labelledby="confirm-title"
+  onclose={handleClose}
+  oncancel={handleCancel}
+  onclick={handleBackdropClick}
+>
+  <button
+    type="button"
+    class="confirm-close"
+    onclick={handleClose}
+    aria-label="Close"
   >
-    <div class="confirm-dialog">
-      <button
-        type="button"
-        class="confirm-close"
-        onclick={handleCancel}
-        aria-label="Close"
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <div class="confirm-content">
+    <div class="confirm-header">
+      <div
+        class="confirm-icon"
+        style="background: {variantConfig.iconBg}; color: {variantConfig.iconColor};"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+        {#if icon}
+          {@render icon()}
+        {:else if variant === 'danger'}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        {:else if variant === 'warning'}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        {:else if variant === 'success'}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        {:else}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        {/if}
+      </div>
 
-      <div class="confirm-content">
-        <div class="confirm-header">
-          <div
-            class="confirm-icon"
-            style="background: {variantConfig.iconBg}; color: {variantConfig.iconColor};"
-          >
-            {#if icon}
-              {@render icon()}
-            {:else if variant === 'danger'}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-            {:else if variant === 'warning'}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                <line x1="12" y1="9" x2="12" y2="13"></line>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-            {:else if variant === 'success'}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-            {:else}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-            {/if}
-          </div>
-
-          <div class="confirm-text">
-            <h3 id="confirm-title" class="confirm-title">{title}</h3>
-            <p class="confirm-message">{message}</p>
-          </div>
-        </div>
-
-        <div class="confirm-actions">
-          <Button variant="ghost" size="sm" onclick={handleCancel}>
-            {cancelText}
-          </Button>
-          <Button variant={variantConfig.buttonVariant} size="sm" onclick={handleConfirm}>
-            {confirmText}
-          </Button>
-        </div>
+      <div class="confirm-text">
+        <h3 id="confirm-title" class="confirm-title">{title}</h3>
+        <p class="confirm-message">{message}</p>
       </div>
     </div>
+
+    <div class="confirm-actions">
+      <Button variant="ghost" size="sm" onclick={handleClose}>
+        {cancelText}
+      </Button>
+      <Button variant={variantConfig.buttonVariant} size="sm" onclick={handleConfirm}>
+        {confirmText}
+      </Button>
+    </div>
   </div>
-{/if}
+</dialog>
 
 <style>
-  .confirm-backdrop {
+  /* Native dialog element - automatically in top-layer, no z-index needed */
+  dialog.confirm-dialog {
     position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: none;
+    border-radius: var(--radius-default);
+    background: var(--color-base01);
+    border: 1px solid var(--color-base02);
+    box-shadow: var(--shadow-2xl);
+    padding: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 28rem;
   }
 
-  .confirm-backdrop::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+  dialog.confirm-dialog::backdrop {
     background: color-mix(in srgb, var(--color-base00) 80%, transparent);
     backdrop-filter: blur(8px);
   }
 
-  .confirm-dialog {
-    position: relative;
-    background: var(--color-base01);
-    border: 1px solid var(--color-base02);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-2xl);
-    width: 100%;
-    max-width: 28rem;
-    margin: var(--space-4);
-    animation: dialog-enter 0.2s ease-out;
+  /* Entry animation using @starting-style */
+  dialog.confirm-dialog[open] {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 
-  @keyframes dialog-enter {
-    from {
+  @starting-style {
+    dialog.confirm-dialog[open] {
       opacity: 0;
       transform: scale(0.95) translateY(10px);
     }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
+  }
+
+  dialog.confirm-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog.confirm-dialog[open]::backdrop {
+      opacity: 0;
     }
+  }
+
+  dialog.confirm-dialog {
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.2s ease-out,
+      overlay 0.2s ease-out allow-discrete,
+      display 0.2s ease-out allow-discrete;
+  }
+
+  dialog.confirm-dialog::backdrop {
+    transition:
+      opacity 0.2s ease-out,
+      overlay 0.2s ease-out allow-discrete,
+      display 0.2s ease-out allow-discrete;
   }
 
   .confirm-close {
@@ -217,6 +247,7 @@
     color: var(--color-base04);
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
+    z-index: 1;
   }
 
   .confirm-close:hover {
@@ -241,7 +272,7 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-default);
   }
 
   .confirm-text {

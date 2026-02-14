@@ -363,7 +363,7 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: var(--radius-default);
     background: linear-gradient(to bottom right, color-mix(in srgb, var(--color-base0D) 20%, transparent), color-mix(in srgb, var(--color-base0E) 20%, transparent));
   }
 
@@ -443,7 +443,7 @@
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     overflow-y: auto;
     max-height: calc(100vh - 120px);
-    z-index: 9999;
+    z-index: var(--z-dropdown);
     animation: dropdown-appear 0.15s ease-out;
   }
 
@@ -491,7 +491,7 @@
     padding: 0.125rem 0.5rem;
     font-size: 0.625rem;
     font-weight: 500;
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
     text-transform: capitalize;
   }
 

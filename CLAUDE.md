@@ -34,7 +34,13 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 ## Component API Quick Reference
 
-**Button:** `variant` (primary|secondary|ghost|outline|danger|success|warning|info), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
+**Button:** `variant` (solid|primary|secondary|ghost|outline|danger|success|warning|info|solid-danger|solid-success), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
+
+- **solid** — Opaque blue background, use for prominent CTAs (Create, Publish, Save)
+- **solid-danger** — Opaque red background, use for destructive CTAs (Delete, Remove)
+- **solid-success** — Opaque green background, use for confirm CTAs (Approve, Complete)
+- **primary** — Tinted blue (10% bg), default for most buttons
+- **ghost** — Transparent, no border
 
 **Input:** `bind:value`, `type`, `placeholder`, `disabled`, `required`
 
@@ -104,7 +110,7 @@ export const buttonStyles = cv({
   base: 'inline-flex items-center justify-center rounded-lg font-medium',
   variants: {
     variant: {
-      primary: 'bg-base0D text-white',
+      primary: 'bg-base0D text-base07',
       ghost: 'bg-transparent text-base05 hover:bg-base02'
     },
     size: { sm: 'h-8 px-3 text-sm', md: 'h-10 px-4' }
