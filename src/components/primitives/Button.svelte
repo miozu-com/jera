@@ -233,6 +233,60 @@
     transform: scale(0.98);
   }
 
+  /* Solid - Opaque background for prominent CTAs */
+  .solid {
+    background-color: var(--color-base0D, #83a598);
+    color: var(--color-base00, #1d2021);
+    border: 1px solid var(--color-base0D, #83a598);
+  }
+
+  .solid:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D, #83a598) 85%, white);
+    border-color: color-mix(in srgb, var(--color-base0D, #83a598) 85%, white);
+  }
+
+  .solid:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D, #83a598) 70%, white);
+    border-color: color-mix(in srgb, var(--color-base0D, #83a598) 70%, white);
+    transform: scale(0.98);
+  }
+
+  /* Solid Danger - Red opaque for destructive CTAs */
+  .solid-danger {
+    background-color: var(--color-base08, #fb4934);
+    color: var(--color-base00, #1d2021);
+    border: 1px solid var(--color-base08, #fb4934);
+  }
+
+  .solid-danger:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base08, #fb4934) 85%, white);
+    border-color: color-mix(in srgb, var(--color-base08, #fb4934) 85%, white);
+  }
+
+  .solid-danger:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base08, #fb4934) 70%, white);
+    border-color: color-mix(in srgb, var(--color-base08, #fb4934) 70%, white);
+    transform: scale(0.98);
+  }
+
+  /* Solid Success - Green opaque for confirm CTAs */
+  .solid-success {
+    background-color: var(--color-base0B, #b8bb26);
+    color: var(--color-base00, #1d2021);
+    border: 1px solid var(--color-base0B, #b8bb26);
+  }
+
+  .solid-success:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 85%, white);
+    border-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 85%, white);
+  }
+
+  .solid-success:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 70%, white);
+    border-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 70%, white);
+    transform: scale(0.98);
+  }
+
   /* Info - Cyan accent */
   .info {
     background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 10%, transparent);

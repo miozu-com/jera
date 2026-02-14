@@ -135,7 +135,7 @@
   }
 
   .accordion-item-solo {
-    border-radius: 0.5rem;
+    border-radius: var(--radius-default);
     overflow: hidden;
     background: color-mix(in srgb, var(--color-base01) 60%, transparent);
     border-bottom: none;
@@ -194,7 +194,7 @@
     font-weight: 600;
     color: var(--color-base04);
     background: color-mix(in srgb, var(--color-base04) 10%, transparent);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
   }
 
   /* Indicator (chevron wrapper) */

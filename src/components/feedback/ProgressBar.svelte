@@ -91,7 +91,7 @@
   .progress {
     width: 100%;
     background: var(--color-base02);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
     overflow: hidden;
   }
 
@@ -101,7 +101,7 @@
 
   .progress-bar {
     height: 100%;
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
     transition: width 0.3s ease-out;
   }
 

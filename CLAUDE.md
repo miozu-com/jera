@@ -52,7 +52,12 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Toast:** Use `createToastContext()` in root, `getToastContext()` anywhere
 
-**Tabs:** `tabs=[{id, label, badge?}]`, `bind:active`, `variant` (default|underline|pills)
+**Tabs:** `tabs=[{id, label, badge?, icon?, panelId?}]`, `bind:active`, `variant` (default|segment|underline|pills), `size` (sm|md|lg), `fullWidth`, `onchange`
+- **default** — Pill bg indicator slides between tabs
+- **segment** — iOS-style segmented control with capsule shadow (use for compact sidebar tabs)
+- **underline** — Bottom border slides between tabs
+- **pills** — Outlined pills, no sliding indicator
+- Sliding indicator animates via CSS transitions + ResizeObserver; respects `prefers-reduced-motion`
 
 **LeftBar:** `bind:collapsed`, `persistKey`, snippets: `header`, `navigation`, `footer`
 

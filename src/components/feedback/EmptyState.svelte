@@ -91,7 +91,7 @@
     width: 4rem;
     height: 4rem;
     margin-bottom: var(--space-6);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
     background: var(--color-base01);
     color: var(--color-base04);
     transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;

@@ -119,14 +119,14 @@
     width: 100%;
     height: 100%;
     background: var(--color-base02);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
     pointer-events: none;
   }
 
   .slider-fill {
     height: 100%;
     background: var(--color-base0D);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
   }
 
   /* Webkit (Chrome, Safari, Edge) */

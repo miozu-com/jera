@@ -208,11 +208,11 @@
   }
 
   .number-btn-decrement {
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    border-radius: var(--radius-default) 0 0 var(--radius-default);
   }
 
   .number-btn-increment {
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
   }
 
   .number-input-error .number-field {

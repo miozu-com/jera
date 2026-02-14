@@ -151,7 +151,7 @@
     font-weight: 600;
     background: var(--color-base02);
     color: var(--color-base05);
-    border-radius: 9999px;
+    border-radius: var(--radius-default);
   }
 
   .filter-chip.active .chip-count {

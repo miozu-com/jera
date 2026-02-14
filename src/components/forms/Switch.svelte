@@ -90,7 +90,7 @@
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-default);
     background-color: var(--color-base03);
     transition: var(--transition-colors);
   }
@@ -107,7 +107,7 @@
   .switch-thumb {
     position: absolute;
     left: 2px;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-default);
     background-color: white;
     box-shadow: var(--shadow-sm);
     transition: transform var(--duration-fast) var(--ease-out);

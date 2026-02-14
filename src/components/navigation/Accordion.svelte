@@ -49,7 +49,7 @@
   .jera-accordion {
     display: flex;
     flex-direction: column;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-default);
     overflow: hidden;
     background: color-mix(in srgb, var(--color-base01) 60%, transparent);
   }

@@ -145,7 +145,7 @@
   dialog.modal {
     position: fixed;
     border: none;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-default);
     background: var(--color-base01);
     box-shadow: var(--shadow-2xl);
     border: 1px solid var(--color-base03);
@@ -243,7 +243,7 @@
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-default);
   }
 
   .modal-text {

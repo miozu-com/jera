@@ -32,15 +32,15 @@ export function clickOutside(node, callback) {
     }
   }
 
-  // Use mousedown for better UX (fires before focus changes)
-  document.addEventListener('mousedown', handleClick, true);
+  // Use mousedown in bubble phase so trigger buttons can stopPropagation
+  document.addEventListener('mousedown', handleClick, false);
 
   return {
     update(newCallback) {
       handler = newCallback;
     },
     destroy() {
-      document.removeEventListener('mousedown', handleClick, true);
+      document.removeEventListener('mousedown', handleClick, false);
     }
   };
 }

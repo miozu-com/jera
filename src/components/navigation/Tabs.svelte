@@ -1,7 +1,7 @@
 <!--
   @component Tabs
 
-  Tabbed navigation component with keyboard navigation.
+  Tabbed navigation component with keyboard navigation and sliding indicator.
 
   @example Basic usage
   <Tabs
@@ -13,6 +13,15 @@
     bind:active={activeTab}
   />
 
+  @example Segment variant (iOS-style)
+  <Tabs
+    tabs={[...]}
+    bind:active={activeTab}
+    variant="segment"
+    size="sm"
+    fullWidth
+  />
+
   @example With icons (component reference)
   <Tabs
     tabs={[
@@ -22,6 +31,8 @@
   />
 -->
 <script>
+  import { generateId } from '../../utils/reactive.svelte.js';
+
   let {
     tabs = [],
     active = $bindable(null),
@@ -32,11 +43,42 @@
     class: className = ''
   } = $props();
 
+  const componentId = generateId();
+  let tablistEl = $state(null);
+  let indicatorStyle = $state('');
+
   // Initialize active to first tab if not set
   $effect(() => {
     if (active === null && tabs.length > 0) {
       active = tabs[0].id;
     }
+  });
+
+  // Sliding indicator: measure active tab position and animate
+  $effect(() => {
+    if (!tablistEl || !active) return;
+
+    // Find the active tab button by data attribute
+    const activeBtn = tablistEl.querySelector(`[data-tab-id="${active}"]`);
+    if (!activeBtn) {
+      indicatorStyle = 'opacity: 0;';
+      return;
+    }
+
+    const left = activeBtn.offsetLeft;
+    const width = activeBtn.offsetWidth;
+    indicatorStyle = `--indicator-left: ${left}px; --indicator-width: ${width}px; opacity: 1;`;
+
+    // Observe layout changes (resize, font load, etc.)
+    const ro = new ResizeObserver(() => {
+      const btn = tablistEl?.querySelector(`[data-tab-id="${active}"]`);
+      if (btn) {
+        indicatorStyle = `--indicator-left: ${btn.offsetLeft}px; --indicator-width: ${btn.offsetWidth}px; opacity: 1;`;
+      }
+    });
+    ro.observe(tablistEl);
+
+    return () => ro.disconnect();
   });
 
   function selectTab(tab) {
@@ -68,13 +110,25 @@
       buttons[nextIndex]?.focus();
     }
   }
+
+  const showIndicator = $derived(variant !== 'pills');
 </script>
 
 <div
   class="tabs tabs-{variant} tabs-{size} {className}"
   class:tabs-full-width={fullWidth}
   role="tablist"
+  bind:this={tablistEl}
 >
+  {#if showIndicator}
+    <span
+      class="tabs-indicator"
+      class:tabs-indicator-underline={variant === 'underline'}
+      style={indicatorStyle}
+      aria-hidden="true"
+    ></span>
+  {/if}
+
   {#each tabs as tab, index}
     <button
       type="button"
@@ -84,7 +138,9 @@
       class:tab-disabled={tab.disabled}
       aria-selected={active === tab.id}
       aria-disabled={tab.disabled}
+      aria-controls={tab.panelId || `${componentId}-panel-${tab.id}`}
       tabindex={active === tab.id ? 0 : -1}
+      data-tab-id={tab.id}
       onclick={() => selectTab(tab)}
       onkeydown={(e) => handleKeydown(e, tab, index)}
     >
@@ -107,6 +163,7 @@
 <style>
   .tabs {
     display: inline-flex;
+    position: relative;
     gap: var(--space-1);
     background: var(--color-base01);
     border-radius: var(--radius-lg);
@@ -123,7 +180,51 @@
     justify-content: center;
   }
 
+  /* ---- Sliding Indicator ---- */
+  .tabs-indicator {
+    position: absolute;
+    left: var(--indicator-left, 0);
+    width: var(--indicator-width, 0);
+    top: var(--space-1);
+    bottom: var(--space-1);
+    background: var(--color-base02);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    pointer-events: none;
+    z-index: 0;
+    transition: left var(--duration-base) var(--ease-out),
+                width var(--duration-base) var(--ease-out),
+                opacity var(--duration-fast) var(--ease-out);
+    opacity: 0;
+  }
+
+  /* Segment variant indicator */
+  .tabs-segment .tabs-indicator {
+    background: var(--color-base00);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+  }
+
+  /* Underline variant indicator */
+  .tabs-indicator-underline {
+    top: auto;
+    bottom: 0;
+    height: 2px;
+    background: var(--color-base0D);
+    border-radius: var(--radius-full);
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tabs-indicator {
+      transition: none;
+    }
+  }
+
+  /* ---- Tab button ---- */
   .tab {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
@@ -135,7 +236,7 @@
     font-weight: 500;
     color: var(--color-base05);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: color var(--duration-fast) var(--ease-out);
     white-space: nowrap;
   }
 
@@ -152,7 +253,6 @@
 
   .tab:hover:not(.tab-disabled) {
     color: var(--color-base07);
-    background: var(--color-base02);
   }
 
   .tab:focus-visible {
@@ -161,9 +261,7 @@
   }
 
   .tab-active {
-    background: var(--color-base02);
     color: var(--color-base07);
-    box-shadow: var(--shadow-sm);
   }
 
   .tab-disabled {
@@ -194,7 +292,20 @@
     color: var(--color-base07);
   }
 
-  /* Underline variant */
+  /* ---- Segment variant ---- */
+  .tabs-segment {
+    background: var(--color-base01);
+    border-radius: var(--radius-lg);
+    padding: var(--space-1);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
+  }
+
+  .tabs-segment .tab-active {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* ---- Underline variant ---- */
   .tabs-underline {
     background: transparent;
     padding: 0;
@@ -205,22 +316,19 @@
   .tabs-underline .tab {
     border-radius: 0;
     margin-bottom: -1px;
-    border-bottom: 2px solid transparent;
   }
 
   .tabs-underline .tab-active {
     background: transparent;
     box-shadow: none;
-    border-bottom-color: var(--color-base0D);
     color: var(--color-base0D);
   }
 
   .tabs-underline .tab:hover:not(.tab-disabled) {
     background: transparent;
-    border-bottom-color: var(--color-base03);
   }
 
-  /* Pills variant */
+  /* ---- Pills variant ---- */
   .tabs-pills {
     background: transparent;
     padding: 0;
