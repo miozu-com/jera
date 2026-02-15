@@ -34,13 +34,15 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 ## Component API Quick Reference
 
-**Button:** `variant` (solid|primary|secondary|ghost|outline|danger|success|warning|info|solid-danger|solid-success), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
+**Button:** `variant` (primary|secondary|ghost|outline|danger|success|warning|info), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
 
-- **solid** — Opaque blue background, use for prominent CTAs (Create, Publish, Save)
-- **solid-danger** — Opaque red background, use for destructive CTAs (Delete, Remove)
-- **solid-success** — Opaque green background, use for confirm CTAs (Approve, Complete)
-- **primary** — Tinted blue (10% bg), default for most buttons
-- **ghost** — Transparent, no border
+- **primary** — Tinted blue (10% bg), main CTAs (Create, Save, Publish)
+- **secondary** — Tinted gray, neutral actions
+- **outline** — Bordered, secondary actions (Edit, View)
+- **ghost** — Transparent, no border, minimal
+- **success** — Tinted green, confirm actions
+- **danger** — Tinted red, destructive actions
+- **warning** — Tinted yellow, caution actions
 
 **Input:** `bind:value`, `type`, `placeholder`, `disabled`, `required`
 

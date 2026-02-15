@@ -165,9 +165,9 @@
     display: inline-flex;
     position: relative;
     gap: var(--space-1);
-    background: var(--color-base01);
-    border-radius: var(--radius-lg);
-    padding: var(--space-1);
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
   }
 
   .tabs-full-width {
@@ -185,11 +185,10 @@
     position: absolute;
     left: var(--indicator-left, 0);
     width: var(--indicator-width, 0);
-    top: var(--space-1);
-    bottom: var(--space-1);
-    background: var(--color-base02);
+    top: 0;
+    bottom: 0;
+    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
     pointer-events: none;
     z-index: 0;
     transition: left var(--duration-base) var(--ease-out),
@@ -252,7 +251,9 @@
   }
 
   .tab:hover:not(.tab-disabled) {
-    color: var(--color-base07);
+    color: var(--color-base06);
+    background: color-mix(in srgb, var(--color-base02) 50%, transparent);
+    border-radius: var(--radius-md);
   }
 
   .tab:focus-visible {
@@ -261,7 +262,7 @@
   }
 
   .tab-active {
-    color: var(--color-base07);
+    color: var(--color-base0D);
   }
 
   .tab-disabled {
