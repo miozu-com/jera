@@ -24,6 +24,9 @@ export { default as SidebarToggle } from './SidebarToggle.svelte';
 // Enterprise Components
 export { default as WorkspaceMenu } from './WorkspaceMenu.svelte';
 
+// Inline Navigation
+export { default as ChipNav } from './ChipNav.svelte';
+
 // Other Navigation Components
 export { default as Tabs } from './Tabs.svelte';
 export { default as Accordion } from './Accordion.svelte';

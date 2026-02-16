@@ -98,6 +98,7 @@ export { default as ConfirmDialog } from './components/overlays/ConfirmDialog.sv
 
 export { default as Tabs } from './components/navigation/Tabs.svelte';
 export { default as TabNav } from './components/navigation/TabNav.svelte';
+export { default as ChipNav } from './components/navigation/ChipNav.svelte';
 export { default as ScrollNav } from './components/navigation/ScrollNav.svelte';
 export { default as Accordion } from './components/navigation/Accordion.svelte';
 export { default as AccordionItem } from './components/navigation/AccordionItem.svelte';

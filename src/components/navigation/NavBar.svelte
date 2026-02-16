@@ -6,7 +6,21 @@
   hover reveals a breadcrumb trail + description panel (distinct from
   the section dropdowns which show navigation links).
 
-  @example
+  Props:
+    brand     - Current page context (label, icon, description, breadcrumbs)
+    sections  - Dropdown menu sections (replaced by subnavItems when provided)
+    subnavItems - Array of {id, label, href, badge?, icon?} for route-specific ChipNav
+    activeSubnav - ID of the currently active subnav item
+    sticky    - Pin to top on scroll with frosted-glass backdrop (default: false)
+    subnav    - Snippet slot: fallback for custom subnav content
+    actions   - Snippet slot: right-side action buttons
+    renderIcon - Snippet: (name, size) => renders an icon component
+    isActive  - Function: (href) => boolean for active state
+
+  @example With subnav data props (replaces dropdown sections)
+  <NavBar brand={...} subnavItems={[{id:'specs', label:'Specs', href:'/tests/specs'}]} activeSubnav="specs" />
+
+  @example With dropdown sections
   <NavBar
     brand={{ label: 'Wardrobe', description: 'Product catalog & garment library', breadcrumbs: [{label: 'Home', href: '/'}, {label: 'Wardrobe'}] }}
     sections={[
@@ -24,17 +38,31 @@
   </NavBar>
 -->
 <script>
+  import ChipNav from './ChipNav.svelte';
+
   let {
     brand = { label: 'Home', description: '', breadcrumbs: [] },
     sections = [],
+    subnavItems = [],
+    activeSubnav = null,
+    sticky = false,
     actions,
+    subnav,
     renderIcon,
     isActive = () => false
   } = $props();
 
   let activeDropdown = $state(null);
   let brandHover = $state(false);
+  let sectionsExpanded = $state(false);
   let closeTimer = null;
+
+  function toggleSections() {
+    sectionsExpanded = !sectionsExpanded;
+    if (!sectionsExpanded) {
+      activeDropdown = null;
+    }
+  }
 
   function openDropdown(id) {
     clearTimer();
@@ -67,7 +95,7 @@
   }
 </script>
 
-<nav class="navbar">
+<nav class="navbar" class:navbar--sticky={sticky}>
   <div class="navbar-inner">
     <!-- Brand — current page context, hover for breadcrumbs -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -121,68 +149,94 @@
       {/if}
     </div>
 
-    <!-- Section triggers -->
-    <div class="navbar-sections">
-      {#each sections as section}
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
-        <div
-          class="navbar-dropdown"
-          onmouseenter={() => openDropdown(section.id)}
-          onmouseleave={scheduleClose}
-        >
-          <button
-            class="navbar-trigger"
-            class:active={activeDropdown === section.id || sectionIsActive(section)}
-            aria-expanded={activeDropdown === section.id}
-            aria-haspopup="true"
-          >
-            <span>{section.label}</span>
-            <svg
-              class="trigger-chevron"
-              class:rotated={activeDropdown === section.id}
-              width="10"
-              height="10"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"><path d="M6 9l6 6 6-6" /></svg
-            >
-          </button>
+    <!-- Section toggle — compact trigger for dropdown navigation -->
+    {#if !subnavItems.length && !subnav && sections.length}
+      <button
+        class="navbar-nav-toggle"
+        class:expanded={sectionsExpanded}
+        onclick={toggleSections}
+        aria-expanded={sectionsExpanded}
+        aria-label={sectionsExpanded ? 'Collapse navigation' : 'Expand navigation'}
+      >
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <circle cx="4.5" cy="4.5" r="1.6" />
+          <circle cx="11.5" cy="4.5" r="1.6" />
+          <circle cx="4.5" cy="11.5" r="1.6" />
+          <circle cx="11.5" cy="11.5" r="1.6" />
+        </svg>
+      </button>
+    {/if}
 
-          {#if activeDropdown === section.id}
-            <div class="dropdown-panel">
-              <div class="dropdown-grid">
-                {#each section.items as item}
-                  <a href={item.href} class="dropdown-card" class:active={isActive(item.href)}>
-                    <span class="card-icon">
-                      {#if renderIcon}
-                        {@render renderIcon(item.icon, 16)}
-                      {/if}
-                    </span>
-                    <span class="card-body">
-                      <span class="card-title">
-                        {item.title}
-                        {#if item.isNew}
-                          <span class="badge-new">new</span>
+    <!-- Subnav (data props or snippet) OR section triggers -->
+    {#if subnavItems.length > 0}
+      <ChipNav items={subnavItems} active={activeSubnav} {renderIcon} />
+    {:else if subnav}
+      <div class="navbar-subnav-slot">
+        {@render subnav()}
+      </div>
+    {:else if sectionsExpanded}
+      <div class="navbar-sections">
+        {#each sections as section}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <div
+            class="navbar-dropdown"
+            onmouseenter={() => openDropdown(section.id)}
+            onmouseleave={scheduleClose}
+          >
+            <button
+              class="navbar-trigger"
+              class:active={activeDropdown === section.id || sectionIsActive(section)}
+              aria-expanded={activeDropdown === section.id}
+              aria-haspopup="true"
+            >
+              <span>{section.label}</span>
+              <svg
+                class="trigger-chevron"
+                class:rotated={activeDropdown === section.id}
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"><path d="M6 9l6 6 6-6" /></svg
+              >
+            </button>
+
+            {#if activeDropdown === section.id}
+              <div class="dropdown-panel">
+                <div class="dropdown-grid">
+                  {#each section.items as item}
+                    <a href={item.href} class="dropdown-card" class:active={isActive(item.href)}>
+                      <span class="card-icon">
+                        {#if renderIcon}
+                          {@render renderIcon(item.icon, 16)}
                         {/if}
                       </span>
-                      <span class="card-desc">{item.desc}</span>
-                    </span>
-                  </a>
-                {/each}
-              </div>
-              {#if section.badge}
-                <div class="dropdown-footer">
-                  <span class="footer-badge" data-color={section.badgeColor}>{section.badge}</span>
-                  <span class="footer-count">{section.items.length} items</span>
+                      <span class="card-body">
+                        <span class="card-title">
+                          {item.title}
+                          {#if item.isNew}
+                            <span class="badge-new">new</span>
+                          {/if}
+                        </span>
+                        <span class="card-desc">{item.desc}</span>
+                      </span>
+                    </a>
+                  {/each}
                 </div>
-              {/if}
-            </div>
-          {/if}
-        </div>
-      {/each}
-    </div>
+                {#if section.badge}
+                  <div class="dropdown-footer">
+                    <span class="footer-badge" data-color={section.badgeColor}>{section.badge}</span>
+                    <span class="footer-count">{section.items.length} items</span>
+                  </div>
+                {/if}
+              </div>
+            {/if}
+          </div>
+        {/each}
+      </div>
+    {/if}
 
     <!-- Right side actions -->
     <div class="navbar-actions">
@@ -196,15 +250,21 @@
   .navbar {
     background: var(--color-base01);
     border-bottom: var(--border-width-thin) solid var(--color-base02);
+  }
+
+  .navbar--sticky {
     position: sticky;
     top: 0;
     z-index: var(--z-fixed);
+    background: color-mix(in srgb, var(--color-base01) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .navbar-inner {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-1-5);
     padding: 0 var(--space-4);
     height: var(--space-11); /* 44px */
   }
@@ -212,7 +272,6 @@
   /* ── Brand ───────────────────────────── */
   .navbar-brand-wrap {
     position: relative;
-    margin-right: var(--space-2);
   }
 
   .navbar-brand {
@@ -306,12 +365,72 @@
     margin: 0;
   }
 
+  /* ── Section toggle trigger ─────────────── */
+  .navbar-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: var(--border-width-thin) solid transparent;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-base04);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default),
+                border-color var(--duration-fast) var(--ease-default);
+  }
+
+  .navbar-nav-toggle:hover {
+    color: var(--color-base06);
+    background-color: var(--color-base02);
+  }
+
+  .navbar-nav-toggle.expanded {
+    color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0D) 20%, transparent);
+  }
+
+  /* ── Subnav (ChipNav or snippet slot) ─── */
+  .navbar :global(.chip-nav) {
+    flex: 1;
+  }
+
+  .navbar-subnav-slot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .navbar-subnav-slot::-webkit-scrollbar {
+    display: none;
+  }
+
   /* ── Section triggers row ────────────── */
   .navbar-sections {
     display: flex;
     align-items: center;
     gap: 2px;
     flex: 1;
+    animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes navSectionsIn {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .navbar-dropdown {
@@ -531,7 +650,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-1);
-    padding: 5px var(--space-2);
+    padding: var(--space-1-5) var(--space-2-5);
     border: none;
     border-radius: var(--radius-md);
     background: transparent;
