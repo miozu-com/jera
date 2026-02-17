@@ -51,19 +51,18 @@
   />
 
   <span class={checkboxClass}>
-    {#if checked}
-      <svg
-        class="checkbox-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M20 6 9 17l-5-5" />
-      </svg>
-    {/if}
+    <svg
+      class="checkbox-icon"
+      class:checkbox-icon-visible={checked}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
   </span>
 
   {#if children}
@@ -103,9 +102,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--color-base03);
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 1px solid var(--color-base02);
     border-radius: var(--radius-default);
     background-color: var(--color-base00);
     transition: var(--transition-all);
@@ -126,18 +125,27 @@
   }
 
   .checkbox-input:focus-visible + .checkbox-box {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    border-color: var(--color-base0D);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
   }
 
   .checkbox-input:focus-visible + .checkbox-error {
-    outline-color: var(--color-base08);
+    border-color: var(--color-base08);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base08) 20%, transparent);
   }
 
   .checkbox-icon {
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
     color: white;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 150ms, transform 150ms;
+  }
+
+  .checkbox-icon-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .checkbox-label {

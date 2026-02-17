@@ -24,6 +24,7 @@
     placeholder = 'Select...',
     labelKey = 'label',
     valueKey = 'value',
+    size = 'md',
     disabled = false,
     error = false,
     class: className = '',
@@ -123,7 +124,7 @@
     bind:this={triggerRef}
     id={triggerId}
     type="button"
-    class={cn('select-trigger', isOpen && 'select-open', error && 'select-error', hasValue && 'has-value')}
+    class={cn('select-trigger', `select-${size}`, isOpen && 'select-open', error && 'select-error', hasValue && 'has-value')}
     {disabled}
     aria-haspopup="listbox"
     aria-expanded={isOpen}
@@ -145,7 +146,7 @@
       role="listbox"
       tabindex="-1"
       aria-labelledby={triggerId}
-      class="select-dropdown"
+      class={cn('select-dropdown', `select-dropdown-${size}`)}
       onkeydown={handleKeydown}
     >
       {#if options.length === 0}
@@ -183,6 +184,8 @@
   }
 
   .select-trigger {
+    appearance: none;
+    -webkit-appearance: none;
     position: relative;
     width: 100%;
     display: flex;
@@ -191,18 +194,19 @@
     gap: 0.5rem;
     height: 2.5rem;
     padding: 0 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--color-base03);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-base02);
     background-color: var(--color-base00);
     color: var(--color-base04);
     font-size: 0.875rem;
+    font-family: inherit;
     text-align: left;
     cursor: pointer;
     transition: border-color 150ms, box-shadow 150ms;
   }
 
   .select-trigger:hover:not(:disabled) {
-    border-color: var(--color-base04);
+    border-color: var(--color-base03);
   }
 
   .select-trigger:focus-visible {
@@ -227,6 +231,40 @@
 
   .select-trigger.select-error {
     border-color: var(--color-base08);
+  }
+
+  /* Size variants — match Button/SearchInput scale */
+  .select-xs {
+    height: 1.625rem;
+    padding: 0 0.375rem;
+    font-size: 0.75rem;
+    border-radius: var(--radius-default);
+    gap: 0.25rem;
+  }
+
+  .select-xs .select-chevron {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .select-sm {
+    height: 2rem;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    border-radius: var(--radius-md);
+    gap: 0.25rem;
+  }
+
+  .select-sm .select-chevron {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .select-lg {
+    height: 3rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    border-radius: var(--radius-lg);
   }
 
   .select-value {
@@ -256,8 +294,8 @@
     max-height: 15rem;
     overflow: auto;
     background-color: var(--color-base01);
-    border: 1px solid var(--color-base03);
-    border-radius: 0.5rem;
+    border: 1px solid var(--color-base02);
+    border-radius: var(--radius-md);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
     padding: 0.25rem 0;
     animation: dropdown-in 150ms ease-out;
@@ -271,12 +309,15 @@
   }
 
   .select-option {
+    appearance: none;
+    -webkit-appearance: none;
     width: 100%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
+    font-family: inherit;
     text-align: left;
     color: var(--color-base05);
     background: transparent;
@@ -309,6 +350,47 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  /* Dropdown size variants */
+  .select-dropdown-xs {
+    border-radius: var(--radius-default);
+  }
+
+  .select-dropdown-xs .select-option {
+    padding: 0.25rem 0.375rem;
+    font-size: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .select-dropdown-xs .select-check {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .select-dropdown-xs .select-empty {
+    padding: 0.25rem 0.375rem;
+    font-size: 0.75rem;
+  }
+
+  .select-dropdown-sm {
+    border-radius: var(--radius-default);
+  }
+
+  .select-dropdown-sm .select-option {
+    padding: 0.3125rem 0.5rem;
+    font-size: 0.75rem;
+    gap: 0.25rem;
+  }
+
+  .select-dropdown-sm .select-check {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .select-dropdown-sm .select-empty {
+    padding: 0.3125rem 0.5rem;
+    font-size: 0.75rem;
   }
 
   @keyframes dropdown-in {

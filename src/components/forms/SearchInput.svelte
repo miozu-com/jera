@@ -115,15 +115,29 @@
     color: var(--color-base07);
     background: var(--color-base00);
     border: 1px solid var(--color-base02);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
     transition: var(--transition-colors);
   }
 
   .search-input-sm .search-field {
-    padding: var(--space-1) var(--space-2);
-    padding-left: 2rem;
-    padding-right: 2rem;
+    height: 2rem;
+    padding: 0 var(--space-2);
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
     font-size: var(--text-xs);
+  }
+
+  .search-input-sm .search-icon {
+    left: 0.5rem;
+  }
+
+  .search-input-sm .search-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .search-input-sm .search-clear {
+    right: 0.25rem;
   }
 
   .search-input-lg .search-field {

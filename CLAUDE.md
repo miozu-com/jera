@@ -30,7 +30,7 @@ jera/
 
 Uses Base16 naming: `base00`-`base0F` (hex digits).
 
-**Full reference:** `docs/ai-context/base16-colors.md`
+**Full reference:** `knowledge/curated/ai-context/base16-colors.md`
 
 ## Component API Quick Reference
 
@@ -46,7 +46,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Input:** `bind:value`, `type`, `placeholder`, `disabled`, `required`
 
-**Select:** `options=[{value, label}]`, `bind:value`, `placeholder`
+**Select:** `options=[{value, label}]`, `bind:value`, `placeholder`, `size` (xs|sm|md|lg), `onchange(option)`
 
 **Badge:** `variant` (default|primary|success|warning|error), `size` (sm|md|lg)
 
@@ -61,15 +61,42 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 - **pills** — Outlined pills, no sliding indicator
 - Sliding indicator animates via CSS transitions + ResizeObserver; respects `prefers-reduced-motion`
 
+**Checkbox:** `bind:checked`, `disabled`, `error`, `name`, `onchange`, children snippet for label
+
 **LeftBar:** `bind:collapsed`, `persistKey`, snippets: `header`, `navigation`, `footer`
 
 **LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
+
+## Form Component Border Standard (CRITICAL)
+
+All form components (Input, Select, SearchInput, Checkbox) share identical border rendering:
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Border width | `1px` | — |
+| Border color | `var(--color-base02)` | base02 |
+| Border radius | `var(--radius-md)` (6px) | radius-md |
+| Background | `var(--color-base00)` | base00 |
+| Hover border | `var(--color-base03)` | base03 |
+| Focus ring | `box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent)` | base0D |
+| Error border | `var(--color-base08)` | base08 |
+| Checkbox box | `1.125rem` (18px), `var(--radius-default)` (4px) | — |
+
+**Size scale** (Select, SearchInput):
+| Size | Height | Font | Radius |
+|------|--------|------|--------|
+| xs | 1.625rem (26px) | 0.75rem | radius-default (4px) |
+| sm | 2rem (32px) | 0.75rem | radius-md (6px) |
+| md | 2.5rem (40px) | 0.875rem | radius-md (6px) |
+| lg | 3rem (48px) | 1rem | radius-lg (8px) |
+
+**Anti-pattern:** Never wrap jera form components in a div that has its own `border`, `background`, or `padding`. This creates double borders. Jera components handle their own chrome.
 
 ## Theme Management
 
 Singleton pattern with `miozu-theme` storage key.
 
-**Full reference:** `docs/ai-context/theme-management.md`
+**Full reference:** `knowledge/curated/ai-context/theme-management.md`
 
 **ThemeToggle:** Accessible toggle with animated sun/moon icons
 ```svelte
@@ -97,7 +124,7 @@ theme.isDark;        // boolean reactive property
 
 ## Svelte 5 Patterns
 
-**Full reference:** `docs/ai-context/svelte5-patterns.md`
+**Full reference:** `knowledge/curated/ai-context/svelte5-patterns.md`
 
 ```svelte
 <script>
