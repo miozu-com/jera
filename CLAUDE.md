@@ -50,7 +50,8 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Badge:** `variant` (default|primary|success|warning|error), `size` (sm|md|lg)
 
-**Modal:** `bind:open`, `title`, `size` (sm-xl), `variant`, `footer` (snippet)
+**Modal:** `bind:open`, `title`, `size` (sm-xl), `variant`, `fill`, `footer` (snippet)
+- **fill** — Anchors dialog to stable height (80dvh). Prevents collapse when content changes (empty states, search results). Uses flex column: header/footer pinned, body stretches + scrolls.
 
 **Toast:** Use `createToastContext()` in root, `getToastContext()` anywhere
 

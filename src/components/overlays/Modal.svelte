@@ -4,12 +4,24 @@
   A flexible modal dialog component using native <dialog> element.
   Provides built-in focus trap, ESC handling, backdrop, and accessibility.
 
+  @prop fill — Anchors the dialog to a stable height so content changes
+    (empty states, search results) don't cause layout jumps. Uses flex
+    column internally: header/footer stay pinned, body stretches and scrolls.
+
   @example
   <Modal bind:open={showModal} title="Confirm Action">
     <p>Are you sure you want to proceed?</p>
     {#snippet footer()}
       <Button variant="ghost" onclick={() => showModal = false}>Cancel</Button>
       <Button variant="primary" onclick={handleConfirm}>Confirm</Button>
+    {/snippet}
+  </Modal>
+
+  @example fill mode (stable height, internal scroll)
+  <Modal bind:open={show} title="Select Item" size="xl" fill>
+    <div class="scrollable-content">...</div>
+    {#snippet footer()}
+      <Button onclick={() => show = false}>Done</Button>
     {/snippet}
   </Modal>
 -->
@@ -22,6 +34,7 @@
     closeOnBackdrop = true,
     closeOnEscape = true,
     showClose = true,
+    fill = false,
     children,
     footer,
     icon,
@@ -82,7 +95,7 @@
 
 <dialog
   bind:this={dialogEl}
-  class="modal modal-{size} {className}"
+  class="modal modal-{size} {fill ? 'modal-fill' : ''} {className}"
   aria-labelledby={title ? 'modal-title' : undefined}
   onclose={handleClose}
   oncancel={handleCancel}
@@ -161,6 +174,58 @@
   dialog.modal-lg { width: 100%; max-width: 36rem; }
   dialog.modal-xl { width: 100%; max-width: 48rem; }
   dialog.modal-full { width: calc(100vw - 2rem); max-width: calc(100vw - 2rem); }
+
+  /*
+   * Fill mode — stable height frame.
+   * Dialog anchors to a fixed height so content changes (empty states,
+   * filtered results) don't cause the modal to collapse or jump.
+   * Uses dvh with vh fallback for mobile address bar stability.
+   * Internally: flex column → header/footer pinned, body stretches + scrolls.
+   */
+  dialog.modal-fill {
+    height: min(80vh, calc(100vh - 2rem));
+    height: min(80dvh, calc(100dvh - 2rem));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  dialog.modal-fill > .modal-content {
+    flex: 1 1 0%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* When title+icon are present: header is a row (icon | text).
+     Make it stretch in the column, and make text a column so body fills. */
+  dialog.modal-fill .modal-header {
+    flex: 1 1 0%;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  dialog.modal-fill .modal-text {
+    flex: 1 1 0%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+  }
+
+  dialog.modal-fill .modal-title {
+    flex-shrink: 0;
+  }
+
+  dialog.modal-fill .modal-body {
+    flex: 1 1 0%;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  dialog.modal-fill .modal-footer {
+    flex-shrink: 0;
+  }
 
   /* Native backdrop - automatically handled by browser */
   dialog.modal::backdrop {
