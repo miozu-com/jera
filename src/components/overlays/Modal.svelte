@@ -182,7 +182,11 @@
    * Uses dvh with vh fallback for mobile address bar stability.
    * Internally: flex column → header/footer pinned, body stretches + scrolls.
    */
-  dialog.modal-fill {
+  dialog.modal-fill:not([open]) {
+    display: none;
+  }
+
+  dialog.modal-fill[open] {
     height: min(80vh, calc(100vh - 2rem));
     height: min(80dvh, calc(100dvh - 2rem));
     overflow: hidden;

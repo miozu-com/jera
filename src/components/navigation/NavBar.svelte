@@ -47,6 +47,7 @@
     activeSubnav = null,
     sticky = false,
     actions,
+    center,
     subnav,
     renderIcon,
     isActive = () => false
@@ -149,8 +150,8 @@
       {/if}
     </div>
 
-    <!-- Section toggle — compact trigger for dropdown navigation -->
-    {#if !subnavItems.length && !subnav && sections.length}
+    <!-- Section toggle — always visible when sections exist -->
+    {#if sections.length}
       <button
         class="navbar-nav-toggle"
         class:expanded={sectionsExpanded}
@@ -167,14 +168,8 @@
       </button>
     {/if}
 
-    <!-- Subnav (data props or snippet) OR section triggers -->
-    {#if subnavItems.length > 0}
-      <ChipNav items={subnavItems} active={activeSubnav} {renderIcon} />
-    {:else if subnav}
-      <div class="navbar-subnav-slot">
-        {@render subnav()}
-      </div>
-    {:else if sectionsExpanded}
+    <!-- Section triggers (expanded via toggle) -->
+    {#if sectionsExpanded && sections.length}
       <div class="navbar-sections">
         {#each sections as section}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -235,6 +230,22 @@
             {/if}
           </div>
         {/each}
+      </div>
+    {/if}
+
+    <!-- Route-specific subnav (coexists with section toggle) -->
+    {#if subnavItems.length > 0}
+      <ChipNav items={subnavItems} active={activeSubnav} {renderIcon} />
+    {:else if subnav}
+      <div class="navbar-subnav-slot">
+        {@render subnav()}
+      </div>
+    {/if}
+
+    <!-- Center slot (contextual info chips, stats, etc.) -->
+    {#if center}
+      <div class="navbar-center">
+        {@render center()}
       </div>
     {/if}
 
@@ -418,7 +429,6 @@
     display: flex;
     align-items: center;
     gap: 2px;
-    flex: 1;
     animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -635,6 +645,22 @@
   .footer-count {
     font-size: 0.6875rem;
     color: var(--color-base04);
+  }
+
+  /* ── Center slot ────────────────────── */
+  .navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .navbar-center::-webkit-scrollbar {
+    display: none;
   }
 
   /* ── Right side actions ──────────────── */
