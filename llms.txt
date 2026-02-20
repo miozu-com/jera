@@ -1,188 +1,164 @@
 # @miozu/jera
 
-> A zero-dependency, AI-first component library for Svelte 5. Uses W3C Design Tokens (DTCG), pure modern CSS, and Svelte 5 native runes. Built on the Miozu Base16 color system.
+> Zero-dependency, AI-first component library for Svelte 5. Pure modern CSS with Base16 design tokens. 85 components across 7 categories. Works in both Tailwind and non-Tailwind environments.
 
 ## Quick Start
-- [Installation](#installation): `pnpm add @miozu/jera`
-- [Basic Usage](#usage): Import components and tokens
-- [Architecture](./ARCHITECTURE.md): Zero-dependency, AI-first design
+
+```bash
+pnpm add @miozu/jera    # or link:../jera for monorepo
+```
+
+```svelte
+import { Button, Input, Modal, Tabs } from '@miozu/jera';
+import { getTheme } from '@miozu/jera';
+import { clickOutside } from '@miozu/jera/actions';
+import '@miozu/jera/tokens';
+```
+
+Full API reference: [llms-full.txt](./llms-full.txt) | Component manifest: [components.json](./components.json)
 
 ## Design Tokens (Base16)
-- [Colors](/src/tokens/colors.css): Miozu Base16 palette (base00-base0F)
-- [Spacing](/src/tokens/spacing.css): 4px-based spacing scale
-- [Typography](/src/tokens/typography.css): Font scales and weights
-- [Effects](/src/tokens/effects.css): Shadows, radius, transitions, z-index
 
-## Base16 Color Tokens
-| Token | Dark | Light | Usage |
-|-------|------|-------|-------|
-| base00 | #0f1419 | #ffffff | Primary background |
-| base01 | #1a1f26 | #f8f9fa | Surface/card |
-| base05 | #e2e8f0 | #212529 | Primary text |
-| base07 | #ffffff | #0d0f10 | Maximum contrast |
-| base08 | #e06c75 | #dc3545 | Error/red |
-| base0B | #98c379 | #28a745 | Success/green |
-| base0D | #61afef | #007bff | Primary/blue |
+- [Colors](./src/tokens/colors.css): Miozu Base16 palette (base00-base0F)
+- [Spacing](./src/tokens/spacing.css): 4px-based spacing scale
+- [Typography](./src/tokens/typography.css): Font scales and weights
+- [Effects](./src/tokens/effects.css): Shadows, radius, transitions, z-index
 
-## Utilities
-- [cn()](/src/utils/cn.svelte.js): Class name concatenation with falsy filtering
-- [cv()](/src/utils/cn.svelte.js): Class variants for type-safe variant composition
-- [ThemeState](/src/utils/reactive.svelte.js): SSR-safe theme management singleton
+| Token | Role | Dark | Light |
+|-------|------|------|-------|
+| base00 | Background | #0f1419 | #ffffff |
+| base01 | Surface | #1a1f26 | #f8f9fa |
+| base02 | Border/Selection | #2c3038 | #e9ecef |
+| base05 | Text | #e2e8f0 | #212529 |
+| base08 | Error/Red | #e06c75 | #dc3545 |
+| base0B | Success/Green | #98c379 | #28a745 |
+| base0D | Primary/Blue | #61afef | #007bff |
 
-## Components
+## Active Components
+
+Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 
 ### Primitives
-- [Button](/src/components/primitives/Button.svelte): 6 variants, 5 sizes, polymorphic (a/button)
-- [Badge](/src/components/primitives/Badge.svelte): Status tags with semantic variants
-- [Avatar](/src/components/primitives/Avatar.svelte): User avatar with status indicators
-- [Card](/src/components/primitives/Card.svelte): Surface container
-- [Stat](/src/components/primitives/Stat.svelte): Metric display with optional bar
+- [Button](./src/components/primitives/Button.svelte): 8 variants (primary|secondary|outline|ghost|success|danger|warning|info), 4 sizes, polymorphic (a/button), loading state
+- [Badge](./src/components/primitives/Badge.svelte): 7 variants, 3 sizes, optional click and icon slots
+- [StatusBadge](./src/components/primitives/StatusBadge.svelte): 15 semantic status variants (pending, approved, connected, error, etc.)
+- [Divider](./src/components/primitives/Divider.svelte): Horizontal/vertical with optional label
+- [Avatar](./src/components/primitives/Avatar.svelte): Image/initials with status indicator (online|offline|busy|away), 6 sizes
+- [Stat](./src/components/primitives/Stat.svelte): Metric display with optional progress bar and status coloring
+- [ThemeToggle](./src/components/primitives/ThemeToggle.svelte): Animated sun/moon theme switcher
+- [ThemeSelect](./src/components/primitives/ThemeSelect.svelte): Three-option theme selector (light/dark/system), segmented or dropdown
 
 ### Forms
-- [Input](/src/components/forms/Input.svelte): Text input with validation
-- [Select](/src/components/forms/Select.svelte): Dropdown with keyboard navigation
-- [Checkbox](/src/components/forms/Checkbox.svelte): Checkbox with label
-- [Switch](/src/components/forms/Switch.svelte): Toggle switch
-- [Textarea](/src/components/forms/Textarea.svelte): Multiline text input
-- [SearchInput](/src/components/forms/SearchInput.svelte): Search with icon
-- [PinInput](/src/components/forms/PinInput.svelte): Code/PIN entry
+- [Input](./src/components/forms/Input.svelte): Text input with bind:value, error state, unstyled mode
+- [Textarea](./src/components/forms/Textarea.svelte): Multiline with autoResize, bind:value
+- [Select](./src/components/forms/Select.svelte): Custom dropdown with keyboard navigation, 4 sizes, onchange(option)
+- [Checkbox](./src/components/forms/Checkbox.svelte): Checkbox with label snippet, bind:checked
+- [Switch](./src/components/forms/Switch.svelte): Toggle switch, 3 sizes, bind:checked
+- [SearchInput](./src/components/forms/SearchInput.svelte): Search with icon, clear button, loading state, 3 sizes
 
 ### Feedback
-- [Toast](/src/components/feedback/Toast.svelte): Notification system with context
-- [Alert](/src/components/feedback/Alert.svelte): Inline alerts
-- [Spinner](/src/components/feedback/Spinner.svelte): Loading indicator
-- [ProgressBar](/src/components/feedback/ProgressBar.svelte): Progress indicator
-- [Skeleton](/src/components/feedback/Skeleton.svelte): Loading placeholders
+- [Toast](./src/components/feedback/Toast.svelte): Notification system via context (createToastContext/getToastContext), 6 positions, auto-dismiss
+- [Alert](./src/components/feedback/Alert.svelte): Inline alert with icon, actions, dismissible, 4 variants
+- [Spinner](./src/components/feedback/Spinner.svelte): Loading spinner, 5 sizes
+- [EmptyState](./src/components/feedback/EmptyState.svelte): Empty data placeholder with icon and action slots
+- [Skeleton](./src/components/feedback/Skeleton.svelte): Loading placeholder (text|heading|circle|rect), multi-line
+- [ProgressBar](./src/components/feedback/ProgressBar.svelte): Determinate/indeterminate progress, 5 variants
 
 ### Overlays
-- [Modal](/src/components/overlays/Modal.svelte): Dialog with variants
-- [Popover](/src/components/overlays/Popover.svelte): Tooltip/popover
-- [Dropdown](/src/components/overlays/Dropdown.svelte): Menu dropdown
-- [ConfirmDialog](/src/components/overlays/ConfirmDialog.svelte): Confirmation modal
-
-### Layout
-- [PageHeader](/src/components/layout/PageHeader.svelte): Flexible page header with icon, title, description, stats, actions, search, and filter slots. Sizes: default, compact, large.
+- [Modal](./src/components/overlays/Modal.svelte): Dialog with 5 sizes (sm-full), variants, fill mode (80dvh pinned), footer snippet
+- [Popover](./src/components/overlays/Popover.svelte): CSS Anchor Positioning with JS fallback, auto-flip
+- [ConfirmDialog](./src/components/overlays/ConfirmDialog.svelte): Confirmation modal with onconfirm/oncancel, 4 variants
 
 ### Navigation
-- [Tabs](/src/components/navigation/Tabs.svelte): Tab navigation
-- [Accordion](/src/components/navigation/Accordion.svelte): Collapsible sections
-- [Sidebar](/src/components/navigation/Sidebar.svelte): App sidebar
+- [Tabs](./src/components/navigation/Tabs.svelte): 4 variants (default|segment|underline|pills), animated sliding indicator, bind:active
+- [Accordion](./src/components/navigation/Accordion.svelte): Expandable sections, single/multiple mode
+- [AccordionItem](./src/components/navigation/AccordionItem.svelte): Item with title, badge, custom indicator snippet
+- [NavBar](./src/components/navigation/NavBar.svelte): Horizontal mega-menu with brand, sections, subnav
+- [LeftBar](./src/components/navigation/LeftBar.svelte): Collapsible sidebar with context, cookie/localStorage persistence
+- [LeftBarSection](./src/components/navigation/LeftBarSection.svelte): Grouped navigation section with title
+- [LeftBarItem](./src/components/navigation/LeftBarItem.svelte): Nav item with icon, badge, expandable subroutes
+- [LeftBarGroup](./src/components/navigation/LeftBarGroup.svelte): Dynamic item group with search, add button, avatar support
+- [LeftBarToggle](./src/components/navigation/LeftBarToggle.svelte): Sidebar collapse toggle button
+- [DropdownContainer](./src/components/navigation/DropdownContainer.svelte): User menu with avatar, theme toggle, sign out
 
-#### LeftBar System (1:1 match with dash.selify.ai WorkspaceSidebar)
-- [LeftBar](/src/components/navigation/LeftBar.svelte): Collapsible sidebar container with context
-- [LeftBarSection](/src/components/navigation/LeftBarSection.svelte): Grouped navigation with optional title
-- [LeftBarItem](/src/components/navigation/LeftBarItem.svelte): Nav item with subroutes support
-- [LeftBarPopover](/src/components/navigation/LeftBarPopover.svelte): Hover popover for collapsed state
+### Layout
+- [PageHeader](./src/components/layout/PageHeader.svelte): Page header with title, description, stats, icon/actions/search/filters snippets
+- [SettingCard](./src/components/layout/SettingCard.svelte): Settings group card with title
+- [SettingItem](./src/components/layout/SettingItem.svelte): Setting row with label, description, action slot
+- [BottomPanel](./src/components/layout/BottomPanel.svelte): Slide-up panel with drag-to-resize, minimize, sidebar slot
 
-## LeftBar API (v0.6.2+)
+### Docs
+- [CodeBlock](./src/components/docs/CodeBlock.svelte): Syntax-highlighted code with Shiki, copy button, line numbers
 
-```svelte
-<LeftBar bind:collapsed persistKey="my-sidebar">
-  {#snippet header()}
-    <DropdownContainer {themeState} />
-  {/snippet}
-  {#snippet navigation()}
-    <LeftBarSection title="Main">
-      <LeftBarItem href="/" icon={Home} label="Dashboard" active={true} />
-      <LeftBarItem
-        label="Services"
-        icon={Server}
-        expandable
-        bind:expanded={servicesOpen}
-        subroutes={[
-          { label: 'Overview', href: '/services' },
-          { label: 'Errors', href: '/errors' }
-        ]}
-      />
-    </LeftBarSection>
-  {/snippet}
-  {#snippet footer()}
-    <LeftBarToggle />
-  {/snippet}
-</LeftBar>
-```
+## Ready Components
 
-Context API (provided by LeftBar):
-- `collapsed`: boolean - Current collapsed state
-- `toggle()`: Toggle collapsed state
-- `showPopover(id, event)`: Show hover popover (collapsed mode)
-- `hidePopover()`: Hide popover with delay
-- `keepPopoverOpen()`: Cancel hide delay (on popover enter)
+Built and tested but not yet used in production. Available for immediate adoption.
 
-## PageHeader API
+### Forms (Ready)
+- [IconInput](./src/components/forms/IconInput.svelte): Input with left/right icon slots, loading spinner, clearable
+- [NumberInput](./src/components/forms/NumberInput.svelte): Numeric input with +/- buttons, min/max/step
+- [Radio](./src/components/forms/Radio.svelte): Radio button (use inside RadioGroup)
+- [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group with vertical/horizontal layout, bind:value
+- [FileUpload](./src/components/forms/FileUpload.svelte): File upload with drag-drop, maxSize validation, multi-file
+- [RangeSlider](./src/components/forms/RangeSlider.svelte): Range input with labels, value display, format function
+- [PinInput](./src/components/forms/PinInput.svelte): PIN/code entry, auto-advance, paste support
+- [Dropzone](./src/components/forms/Dropzone.svelte): Drag-and-drop file zone with accept filter
 
-```svelte
-<PageHeader
-  title="Team Members"
-  description="Manage your workspace team"
-  size="default"
-  stats={[
-    {label: "Members", value: 12},
-    {label: "Active", value: 11, variant: "success"}
-  ]}
->
-  {#snippet icon()}
-    <Users size={20} />
-  {/snippet}
-  {#snippet actions()}
-    <Button variant="primary" size="sm">Add Member</Button>
-  {/snippet}
-  {#snippet search()}
-    <Input placeholder="Search members..." />
-  {/snippet}
-  {#snippet filters()}
-    <Select options={roleOptions} placeholder="Role" />
-  {/snippet}
-</PageHeader>
-```
+### Primitives (Ready)
+- [Tooltip](./src/components/primitives/Tooltip.svelte): Hover tooltip with position (top|bottom|left|right), delay, content snippet
+- [Card](./src/components/primitives/Card.svelte): Surface container
+- [Link](./src/components/primitives/Link.svelte): Styled link
+- [LinkCard](./src/components/primitives/LinkCard.svelte): Clickable card link
+- [LazyImage](./src/components/primitives/LazyImage.svelte): Image with lazy loading
+- [MetricCard](./src/components/primitives/MetricCard.svelte): Metric display card
+- [FilterChip](./src/components/primitives/FilterChip.svelte): Filterable chip/tag
+- [StatusLine](./src/components/primitives/StatusLine.svelte): Status indicator line
+- [MemberCard](./src/components/primitives/MemberCard.svelte): Team member card
+- [DashCard](./src/components/primitives/DashCard.svelte): Dashboard card
+- [DistributionBar](./src/components/primitives/DistributionBar.svelte): Segmented distribution visualization
 
-Props:
-- `title`: string - Page title (required)
-- `description`: string - Subtitle text
-- `stats`: array of `{label, value, variant?, icon?}` - Header stats
-- `size`: 'default' | 'compact' | 'large' - Size variant
-- `class`: string - Additional CSS classes
+### Overlays (Ready)
+- [Dropdown](./src/components/overlays/Dropdown.svelte): Menu dropdown
+- [DropdownItem](./src/components/overlays/DropdownItem.svelte): Dropdown menu item
+- [DropdownDivider](./src/components/overlays/DropdownDivider.svelte): Dropdown separator
 
-Snippets: `icon`, `actions`, `search`, `filters`
+### Docs (Ready)
+- [PropsTable](./src/components/docs/PropsTable.svelte): Props documentation table
+- [SplitPane](./src/components/docs/SplitPane.svelte): Side-by-side pane
+- [DocSection](./src/components/docs/DocSection.svelte): Documentation section wrapper
+
+## Legacy Components
+
+Previous implementations replaced by newer versions. Kept for backward compatibility.
+
+### Navigation (Legacy — replaced by LeftBar)
+- Sidebar, SidebarSection, SidebarItem, SidebarGroup, SidebarPopover, SidebarToggle, SidebarSearch, SidebarGroupSwitcher, SidebarAccountGroup, SidebarAccountItem
+
+### Navigation (Legacy — Enterprise Nav, unused)
+- NavigationContainer, SidebarNavigationItem, NavigationSearch, NavigationSection, NavigationAccountGroup, NavigationGroupSwitcher, NavigationCustomBlock, WorkspaceMenu
+
+### Navigation (Legacy)
+- TabNav, ChipNav (internal to NavBar), ScrollNav
+
+## Utilities
+- [cn()](./src/utils/cn.svelte.js): Class name concatenation with falsy filtering
+- [cv()](./src/utils/cn.svelte.js): Class variants for type-safe variant composition
+- [getTheme()](./src/utils/reactive.svelte.js): SSR-safe theme singleton — `getTheme().init()`, `.toggle()`, `.isDark`
+- [createActiveChecker()](./src/utils/navigation.svelte.js): Route matching utility for nav items
 
 ## Actions
-- [clickOutside](/src/actions/index.js): Detect clicks outside element
-- [focusTrap](/src/actions/index.js): Trap focus within element
-- [portal](/src/actions/index.js): Render in different DOM location
-- [escapeKey](/src/actions/index.js): Handle escape key press
-
-## API Patterns
-
-### Theme Usage (Singleton)
-```javascript
-// +layout.svelte
-import { getTheme } from '@miozu/jera';
-const themeState = getTheme();
-onMount(() => { themeState.sync(); themeState.init(); });
-
-// Child: receive as prop, don't call getTheme()
-let { themeState } = $props();
-themeState.toggle(); // Switch light/dark
-themeState.isDark;   // Reactive boolean
-```
-
-### Class Variants (cv)
-```javascript
-import { cv } from '@miozu/jera';
-const button = cv({
-  base: 'inline-flex items-center',
-  variants: {
-    variant: { primary: 'bg-primary', secondary: 'bg-surface' },
-    size: { sm: 'h-8 px-3', md: 'h-10 px-4' }
-  },
-  defaults: { variant: 'primary', size: 'md' }
-});
-// Usage: button({ variant: 'secondary', size: 'sm' })
-```
+- [clickOutside](./src/actions/index.js): Detect clicks outside element
+- [focusTrap](./src/actions/index.js): Trap focus within element
+- [escapeKey](./src/actions/index.js): Handle escape key press
+- [portal](./src/actions/index.js): Render in different DOM location
 
 ## Rules for AI
-1. Use Svelte 5 runes ($state, $derived, $props) - no legacy stores
+
+1. Svelte 5 runes only ($state, $derived, $props) — no legacy stores
 2. Single $props() call per component
-3. Use semantic colors (--color-primary) not hex values
-4. Zero external dependencies
-5. Theme-agnostic: components work in both themes automatically
+3. Use Base16 tokens (var(--color-baseXX)) — no hardcoded hex
+4. Zero external dependencies — only Svelte as devDep
+5. All styles are scoped CSS — no Tailwind in jera components
+6. Components must work in both Tailwind (dash) and pure CSS (admin) environments
+7. Forward rest props via {...rest} on the root element
+8. Use $bindable() for two-way binding props (value, checked, open, collapsed)

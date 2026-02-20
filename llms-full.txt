@@ -1,0 +1,887 @@
+# @miozu/jera — Full API Reference
+
+> Zero-dependency, AI-first component library for Svelte 5. 85 components, Base16 design tokens, pure modern CSS.
+
+---
+
+## Primitives
+
+### Button
+
+Primary action trigger. Polymorphic — renders as `<a>` when `href` is provided, `<button>` otherwise.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'success' \| 'danger' \| 'warning' \| 'info' | 'primary' | Visual style |
+| size | 'xs' \| 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| disabled | boolean | false | Prevents interaction |
+| loading | boolean | false | Shows spinner, disables button |
+| fullWidth | boolean | false | Stretches to container width |
+| href | string | undefined | Renders as link when provided |
+| type | string | 'button' | HTML button type |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`
+Events: `onclick`, `...restProps`
+
+```svelte
+<Button variant="primary">Create</Button>
+<Button variant="danger" size="sm" loading>Deleting...</Button>
+<Button href="/about" variant="ghost">About</Button>
+```
+
+---
+
+### Badge
+
+Status tag with semantic color variants.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'default' \| 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'info' | 'default' | Color scheme |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| clickable | boolean | false | Enables hover/click styles |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`, `iconLeft`, `iconRight`
+Events: `onclick`
+
+```svelte
+<Badge variant="success">Active</Badge>
+<Badge variant="error" size="sm">3 errors</Badge>
+```
+
+---
+
+### StatusBadge
+
+Predefined status indicator with 15 semantic variants. Falls back to rendering the variant name as text if no children provided.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'default' \| 'pending' \| 'approved' \| 'success' \| 'connected' \| 'rejected' \| 'error' \| 'disconnected' \| 'owner' \| 'primary' \| 'public' \| 'admin' \| 'member' \| 'private' \| 'info' | 'default' | Status type |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`
+
+```svelte
+<StatusBadge variant="connected" />  <!-- Renders "Connected" -->
+<StatusBadge variant="error">Offline</StatusBadge>
+```
+
+---
+
+### Divider
+
+Visual separator, horizontal or vertical.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| orientation | 'horizontal' \| 'vertical' | 'horizontal' | Direction |
+| thickness | string | '1px' | Line width |
+| spacing | string | '1rem' | Margin around divider |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (optional label text centered on the line)
+
+```svelte
+<Divider />
+<Divider>OR</Divider>
+<Divider orientation="vertical" />
+```
+
+---
+
+### Avatar
+
+User avatar with image, initials fallback, and optional status indicator.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| src | string | '' | Image URL |
+| alt | string | '' | Alt text |
+| name | string | '' | Used for initials fallback |
+| size | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' | 'md' | Dimensions |
+| status | null \| 'online' \| 'offline' \| 'busy' \| 'away' | null | Status dot |
+| class | string | '' | Additional CSS classes |
+
+```svelte
+<Avatar src="/photo.jpg" name="John Doe" size="lg" status="online" />
+<Avatar name="JD" />  <!-- Shows initials -->
+```
+
+---
+
+### Stat
+
+Metric display with optional progress bar.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | string \| number | required | Main value |
+| label | string | required | Description |
+| unit | string | '' | Unit suffix |
+| secondary | string | '' | Secondary info |
+| status | '' \| 'success' \| 'warning' \| 'error' \| 'info' | '' | Color accent |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| showBar | boolean | false | Show progress bar |
+| barValue | number | 0 | Progress value (0-max) |
+| max | number | 100 | Progress max |
+| href | string | '' | Makes stat clickable |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`
+
+---
+
+### ThemeToggle
+
+Animated sun/moon button for dark/light theme switching.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| themeState | ThemeState | singleton | Theme state instance |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| variant | 'ghost' \| 'outline' \| 'subtle' | 'ghost' | Button style |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `sunIcon`, `moonIcon`, `label`
+
+---
+
+### ThemeSelect
+
+Three-option theme selector (light/dark/system).
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| themeState | ThemeState | singleton | Theme state instance |
+| variant | 'segmented' \| 'dropdown' | 'segmented' | Selector style |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| labels | object | { light: 'Light', dark: 'Dark', system: 'System' } | Button labels |
+| showIcons | boolean | true | Show mode icons |
+| class | string | '' | Additional CSS classes |
+
+---
+
+## Forms
+
+### Input
+
+Text input with validation and error states.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | string | $bindable('') | Input value (two-way) |
+| ref | HTMLElement | $bindable() | DOM element reference |
+| type | string | 'text' | Input type |
+| placeholder | string | '' | Placeholder text |
+| disabled | boolean | false | Disabled state |
+| required | boolean | false | Required field |
+| name | string | '' | Form field name |
+| id | string | '' | Element ID |
+| error | boolean | false | Error border state |
+| unstyled | boolean | false | Remove all jera styling |
+| class | string | '' | Additional CSS classes |
+
+Events: `oninput`, `onchange`, `onkeydown`, `onfocus`, `onblur`, `...rest`
+
+```svelte
+<Input bind:value={name} placeholder="Enter name" required />
+<Input type="email" error={!isValid} />
+```
+
+---
+
+### Textarea
+
+Multiline text input with optional auto-resize.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | string | $bindable('') | Text value (two-way) |
+| ref | HTMLElement | $bindable() | DOM element reference |
+| placeholder | string | '' | Placeholder text |
+| disabled | boolean | false | Disabled state |
+| required | boolean | false | Required field |
+| rows | number | 3 | Visible rows |
+| autoResize | boolean | false | Auto-grow with content |
+| error | boolean | false | Error border state |
+| unstyled | boolean | false | Remove all jera styling |
+| class | string | '' | Additional CSS classes |
+
+Events: `oninput`, `onchange`, `onkeydown`, `onfocus`, `onblur`, `...rest`
+
+---
+
+### Select
+
+Custom dropdown with keyboard navigation.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| options | array | [] | Array of {value, label} or custom shape |
+| value | any | $bindable(null) | Selected value (two-way) |
+| placeholder | string | 'Select...' | Placeholder text |
+| labelKey | string | 'label' | Key for display text |
+| valueKey | string | 'value' | Key for option value |
+| size | 'xs' \| 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| disabled | boolean | false | Disabled state |
+| error | boolean | false | Error border state |
+| class | string | '' | Additional CSS classes |
+
+Events: `onchange(option)` — receives the full option object
+
+```svelte
+<Select
+  options={[{value: 'a', label: 'Option A'}, {value: 'b', label: 'Option B'}]}
+  bind:value={selected}
+  placeholder="Choose..."
+/>
+```
+
+---
+
+### Checkbox
+
+Checkbox with label via children snippet.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| checked | boolean | $bindable(false) | Checked state (two-way) |
+| disabled | boolean | false | Disabled state |
+| required | boolean | false | Required field |
+| error | boolean | false | Error state |
+| name | string | '' | Form field name |
+| id | string | auto-generated | Element ID |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (label text)
+Events: `onchange`, `...rest`
+
+```svelte
+<Checkbox bind:checked={agreed}>I agree to the terms</Checkbox>
+```
+
+---
+
+### Switch
+
+Toggle switch for boolean settings.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| checked | boolean | $bindable(false) | Toggle state (two-way) |
+| disabled | boolean | false | Disabled state |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| name | string | '' | Form field name |
+| id | string | auto-generated | Element ID |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (label text)
+Events: `onchange`, `...rest`
+
+---
+
+### SearchInput
+
+Search field with icon, clear button, and loading state.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | string | $bindable('') | Search value (two-way) |
+| placeholder | string | 'Search...' | Placeholder text |
+| disabled | boolean | false | Disabled state |
+| loading | boolean | false | Shows spinner |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| class | string | '' | Additional CSS classes |
+
+Events: `oninput`, `onchange`, `onclear`, `...rest`
+
+---
+
+## Feedback
+
+### Toast
+
+Notification system. Uses Svelte context for app-wide access.
+
+**Setup:**
+```svelte
+<!-- +layout.svelte -->
+<script>
+  import { Toast, createToastContext } from '@miozu/jera';
+  const toast = createToastContext();
+</script>
+<Toast />
+
+<!-- Any child component -->
+<script>
+  import { getToastContext } from '@miozu/jera';
+  const toast = getToastContext();
+  toast.success('Saved!');
+  toast.error('Failed', { duration: 6000 });
+</script>
+```
+
+**Controller API:**
+- `toast.info(message, opts?)` — Info notification
+- `toast.success(message, opts?)` — Success notification
+- `toast.warning(message, opts?)` — Warning notification
+- `toast.error(message, opts?)` — Error notification
+- `toast.show({type, message, title?, duration?})` — Custom notification
+- `toast.dismiss(id)` — Dismiss specific toast
+- `toast.dismissAll()` — Dismiss all
+
+**Controller Properties:**
+- `toast.position` — 'bottom-right' | 'bottom-left' | 'bottom-center' | 'top-right' | 'top-left' | 'top-center'
+- `toast.defaultDuration` — number (default: 4000ms)
+- `toast.maxToasts` — number (default: 5)
+
+---
+
+### Alert
+
+Inline alert with icon and optional actions.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'info' \| 'success' \| 'warning' \| 'error' | 'info' | Color scheme |
+| title | string | '' | Alert heading |
+| dismissible | boolean | false | Show close button |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (message body), `icon`, `actions`
+Events: `onclose`
+
+```svelte
+<Alert variant="warning" title="Rate Limited" dismissible>
+  You've hit the API rate limit. Please wait.
+  {#snippet actions()}
+    <Button variant="ghost" size="sm">Retry</Button>
+  {/snippet}
+</Alert>
+```
+
+---
+
+### Spinner
+
+Loading indicator.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| size | 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' | 'md' | Dimensions |
+| color | string | 'currentColor' | Spinner color |
+| label | string | 'Loading...' | Accessibility label |
+| class | string | '' | Additional CSS classes |
+
+---
+
+### EmptyState
+
+Placeholder for empty data states.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | string | 'No data found' | Heading |
+| description | string | '' | Subtext |
+| size | 'default' \| 'compact' \| 'large' | 'default' | Dimensions |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `icon`, `actions`
+
+```svelte
+<EmptyState title="No products" description="Connect your Shopify store to sync products.">
+  {#snippet actions()}
+    <Button variant="primary">Connect Store</Button>
+  {/snippet}
+</EmptyState>
+```
+
+---
+
+### Skeleton
+
+Loading placeholder shapes.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'text' \| 'heading' \| 'circle' \| 'rect' | 'text' | Shape |
+| width | string | '100%' | Width |
+| height | string | null | Height |
+| size | number | null | Circle diameter |
+| lines | number | 1 | Number of text lines |
+| animate | boolean | true | Pulse animation |
+| class | string | '' | Additional CSS classes |
+
+---
+
+### ProgressBar
+
+Progress indicator, determinate or indeterminate.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | number | 0 | Current progress |
+| max | number | 100 | Maximum value |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Bar height |
+| variant | 'primary' \| 'success' \| 'warning' \| 'error' \| 'info' | 'primary' | Color scheme |
+| showLabel | boolean | false | Show percentage text |
+| label | string | null | Custom label text |
+| indeterminate | boolean | false | Infinite animation |
+| class | string | '' | Additional CSS classes |
+
+---
+
+## Overlays
+
+### Modal
+
+Dialog overlay with variants and fill mode.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| open | boolean | $bindable(false) | Visibility (two-way) |
+| title | string | '' | Dialog heading |
+| size | 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full' | 'md' | Width |
+| variant | 'default' \| 'danger' \| 'warning' \| 'success' \| 'info' | 'default' | Color accent |
+| closeOnBackdrop | boolean | true | Close on backdrop click |
+| closeOnEscape | boolean | true | Close on Esc key |
+| showClose | boolean | true | Show X button |
+| fill | boolean | false | Pin to 80dvh, body scrolls internally |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (body), `footer`, `icon`
+Events: `onclose`
+
+```svelte
+<Modal bind:open={showDialog} title="Confirm Delete" variant="danger">
+  <p>This action cannot be undone.</p>
+  {#snippet footer()}
+    <Button variant="ghost" onclick={() => showDialog = false}>Cancel</Button>
+    <Button variant="danger" onclick={handleDelete}>Delete</Button>
+  {/snippet}
+</Modal>
+```
+
+---
+
+### Popover
+
+Hover/click popover with CSS Anchor Positioning and JS fallback.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| content | string | '' | Tooltip text |
+| position | 'top' \| 'bottom' \| 'left' \| 'right' | 'top' | Preferred position |
+| delay | object | { show: 100, hide: 100 } | Show/hide delay in ms |
+| offset | number | 8 | Distance from trigger |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (trigger element), `content` (rich content, overrides string prop)
+
+---
+
+### ConfirmDialog
+
+Pre-built confirmation modal.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| open | boolean | $bindable(false) | Visibility (two-way) |
+| title | string | 'Confirm Action' | Dialog heading |
+| message | string | 'Are you sure you want to proceed?' | Body text |
+| confirmText | string | 'Confirm' | Confirm button label |
+| cancelText | string | 'Cancel' | Cancel button label |
+| variant | 'danger' \| 'warning' \| 'success' \| 'info' | 'danger' | Color scheme |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `icon`
+Events: `onconfirm`, `oncancel`
+
+---
+
+## Navigation
+
+### Tabs
+
+Tab navigation with animated sliding indicator.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| tabs | array | [] | Array of {id, label?, badge?, icon?, panelId?, disabled?} |
+| active | string | $bindable(null) | Active tab ID (two-way) |
+| variant | 'default' \| 'segment' \| 'underline' \| 'pills' | 'default' | Visual style |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | Dimensions |
+| fullWidth | boolean | false | Stretch tabs to fill |
+| class | string | '' | Additional CSS classes |
+
+Events: `onchange(tab)` — receives the full tab object
+
+```svelte
+<Tabs
+  tabs={[{id: 'overview', label: 'Overview'}, {id: 'settings', label: 'Settings', badge: 3}]}
+  bind:active={currentTab}
+  variant="segment"
+/>
+```
+
+---
+
+### Accordion
+
+Collapsible content sections.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| expanded | array | $bindable([]) | Array of expanded item IDs |
+| multiple | boolean | false | Allow multiple items open |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (AccordionItem components)
+
+### AccordionItem
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| id | string | auto-generated | Unique identifier |
+| title | string | '' | Header text |
+| expanded | boolean | $bindable(false) | Open state (standalone mode) |
+| disabled | boolean | false | Prevents toggle |
+| badge | string \| number | null | Badge next to title |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children` (content), `leading`, `trailing`, `indicator(isOpen)`
+
+---
+
+### NavBar
+
+Horizontal navigation bar with mega-menu sections.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| brand | object | {label: 'Home', description: '', breadcrumbs: []} | Brand/logo area |
+| sections | array | [] | Array of {id, label, badge?, items: [{title, href, desc, icon?}]} |
+| subnavItems | array | [] | Secondary nav items {id, label, href, badge?, icon?} |
+| activeSubnav | string | null | Active subnav item ID |
+| sticky | boolean | false | Stick to top on scroll |
+| isActive | function | () => false | Route matching function |
+
+Snippets: `actions`, `center`, `subnav`, `renderIcon(name, size)`
+
+---
+
+### LeftBar
+
+Collapsible sidebar container providing context to children.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| collapsed | boolean | $bindable(false) | Collapsed state (two-way) |
+| initialCollapsed | boolean | undefined | SSR hydration value |
+| persistKey | string | null | localStorage persistence key |
+| cookieKey | string | null | Cookie persistence key |
+| popoverMap | object | {} | Label -> items map for collapsed popovers |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `header`, `navigation`, `footer`, `children`
+
+Context provided: `{ collapsed, toggle(), expand(), collapse(), showPopover(), hidePopover(), keepPopoverOpen() }`
+
+```svelte
+<LeftBar bind:collapsed persistKey="sidebar">
+  {#snippet header()}
+    <DropdownContainer user={data.user} {themeState} />
+  {/snippet}
+  {#snippet navigation()}
+    <LeftBarSection title="Main">
+      <LeftBarItem href="/" icon={Home} label="Dashboard" active />
+    </LeftBarSection>
+  {/snippet}
+  {#snippet footer()}
+    <LeftBarToggle />
+  {/snippet}
+</LeftBar>
+```
+
+---
+
+### LeftBarSection
+
+Grouped navigation section within LeftBar.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | string | '' | Section heading (hidden when collapsed) |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`
+
+---
+
+### LeftBarItem
+
+Navigation item with optional subroutes.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| href | string | null | Navigation URL |
+| label | string | '' | Display text |
+| icon | Component | null | Svelte component with `size` prop |
+| active | boolean | false | Highlight state |
+| expandable | boolean | false | Has expandable subroutes |
+| expanded | boolean | $bindable(false) | Subroutes visible |
+| subroutes | array | [] | Array of {label, href} |
+| badge | string \| number | null | Badge text/count |
+| variant | 'default' \| 'warning' \| 'danger' \| 'success' | 'default' | Color accent |
+| onclick | function | null | Click handler |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `leading`, `trailing`, `children`
+
+---
+
+### LeftBarGroup
+
+Dynamic item group with search, avatar support, and add button.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | string | '' | Group heading |
+| items | array | [] | Data items |
+| expanded | boolean | $bindable(false) | Group expanded |
+| searchable | boolean | false | Show search filter |
+| showAdd | boolean | true | Show add button |
+| showCount | boolean | true | Show item count |
+| addLabel | string | 'Add item' | Add button label |
+
+Accessor functions: `getItemId`, `getItemName`, `getItemAvatar`, `getItemInitial`, `getItemPlatform`, `getSubroutes`, `isItemActive`, `isSubrouteActive`
+Events: `onItemClick`, `onSubrouteClick`, `onAddClick`
+Snippets: `item(item, isExpanded)`, `children`
+
+---
+
+### LeftBarToggle
+
+Sidebar collapse toggle button. Reads LeftBar context automatically.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| class | string | '' | Additional CSS classes |
+
+---
+
+### DropdownContainer
+
+User account menu for sidebar headers.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| user | object | null | {full_name, avatar_url, role_name} |
+| title | string | '' | Optional title override |
+| isCollapsed | boolean | false | Sidebar collapsed state |
+| themeState | ThemeState | null | Theme state for toggle |
+| signOutLoading | boolean | false | Sign out loading state |
+| signOutAction | string | '/auth?/signout' | Sign out form action |
+| onSignOut | function | null | Sign out callback |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `userHeader`, `envSection`, `menuItems`, `footerContent`, `children`
+
+---
+
+## Layout
+
+### PageHeader
+
+Flexible page header with stats and action slots.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | string | '' | Page title |
+| description | string | '' | Subtitle |
+| stats | array | [] | Array of {label, value, variant?, icon?} |
+| size | 'default' \| 'compact' \| 'large' | 'default' | Dimensions |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `icon`, `actions`, `search`, `filters`
+
+---
+
+### SettingCard
+
+Settings group container.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | string | '' | Card heading |
+| variant | 'default' \| 'danger' | 'default' | Style |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `children`
+
+---
+
+### SettingItem
+
+Individual setting row.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| label | string | '' | Setting name |
+| description | string | '' | Help text |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `leading`, `action`
+
+---
+
+### BottomPanel
+
+Slide-up panel with drag-to-resize.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| open | boolean | $bindable(false) | Visibility (two-way) |
+| minimized | boolean | $bindable(false) | Minimized state (two-way) |
+| height | number | $bindable(280) | Panel height in px (two-way) |
+| minHeight | number | 120 | Minimum drag height |
+| maxHeight | number | viewport - 120 | Maximum drag height |
+| minimizedHeight | number | 28 | Height when minimized |
+| offsetLeft | number | 0 | Left offset (for sidebar) |
+| resizable | boolean | true | Enable drag-to-resize |
+| class | string | '' | Additional CSS classes |
+
+Snippets: `header` (always visible), `sidebar` (optional left column), `children` (main content)
+Events: `onresize(height)`
+
+---
+
+## Docs
+
+### CodeBlock
+
+Syntax-highlighted code display with copy button.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| code | string | '' | Code content |
+| lang | string | 'javascript' | Language for highlighting |
+| filename | string | '' | Optional filename header |
+| showLineNumbers | boolean | false | Show line numbers |
+| class | string | '' | Additional CSS classes |
+
+---
+
+## Ready Components (Built, Not Yet Active)
+
+### IconInput
+Input with left/right icon slots, loading spinner, clearable.
+Props: `value = $bindable('')`, `type = 'text'`, `placeholder`, `disabled`, `size = 'md'`, `loading`, `clearable`, `class`
+Snippets: `leftIcon`, `rightIcon`. Events: `oninput`, `onchange`, `onclear`
+
+### NumberInput
+Numeric input with increment/decrement buttons.
+Props: `value = $bindable(0)`, `min = -Infinity`, `max = Infinity`, `step = 1`, `placeholder`, `disabled`, `size = 'md'`, `error`, `class`
+
+### Radio
+Radio button (must be inside RadioGroup context).
+Props: `value` (required), `label`, `description`, `disabled`, `id`, `class`
+
+### RadioGroup
+Radio group container with vertical/horizontal layout.
+Props: `value = $bindable(null)`, `name`, `disabled`, `orientation = 'vertical'`, `class`
+Events: `onchange`
+
+### FileUpload
+File upload with drag-drop and validation.
+Props: `accept = '*'`, `multiple`, `disabled`, `maxSize`, `label`, `hint`, `class`
+Events: `onchange(files[])`, `onerror(errors[])`
+
+### RangeSlider
+Range input with labels and value display.
+Props: `value = $bindable(50)`, `min = 0`, `max = 100`, `step = 1`, `label`, `disabled`, `showValues`, `formatValue`, `size = 'md'`, `class`
+
+### PinInput
+PIN/code entry with auto-advance and paste support.
+Props: `value = $bindable('')`, `length = 4`, `masked`, `disabled`, `size = 'md'`, `class`
+Events: `oncomplete(value)`
+
+### Dropzone
+Drag-and-drop file zone.
+Props: `accept = '*/*'`, `placeholder`, `disabled`, `class`
+Events: `ondrop(file)`
+
+### Tooltip
+Hover tooltip.
+Props: `text`, `position = 'top'`, `delay = 50`, `disabled`, `class`
+Snippets: `children` (trigger), `content` (rich tooltip)
+
+### Dropdown / DropdownItem / DropdownDivider
+Menu dropdown system. Dropdown wraps items, DropdownItem is each option, DropdownDivider separates groups.
+
+### Card, Link, LinkCard, LazyImage, MetricCard, FilterChip, StatusLine, MemberCard, DashCard, DistributionBar
+Primitive components built but not yet adopted by consumer projects. See source files for API.
+
+### PropsTable, SplitPane, DocSection
+Documentation helper components for component library documentation sites.
+
+---
+
+## Utilities
+
+### getTheme()
+SSR-safe theme singleton. Call once in root layout.
+```javascript
+import { getTheme } from '@miozu/jera';
+const theme = getTheme();
+onMount(() => { theme.sync(); theme.init(); });
+theme.toggle();      // Switch dark/light
+theme.set('system'); // Follow OS
+theme.isDark;        // Reactive boolean
+```
+
+### cn(...args)
+Class name concatenation with falsy filtering.
+```javascript
+import { cn } from '@miozu/jera';
+cn('base', isActive && 'active', size === 'lg' && 'large')
+// => "base active" (when isActive=true, size!='lg')
+```
+
+### cv(config)
+Class variants for type-safe variant composition.
+```javascript
+import { cv } from '@miozu/jera';
+const button = cv({
+  base: 'btn',
+  variants: { variant: { primary: 'btn-primary' }, size: { sm: 'btn-sm' } },
+  defaults: { variant: 'primary', size: 'sm' }
+});
+button({ variant: 'primary' }) // => "btn btn-primary btn-sm"
+```
+
+### createActiveChecker(page)
+Route matching utility for navigation items.
+
+---
+
+## Actions
+
+```svelte
+<div use:clickOutside={() => isOpen = false}>
+<dialog use:focusTrap={{ enabled: isOpen }}>
+<div use:portal={'body'}>
+<div use:escapeKey={() => close()}>
+```
+
+| Action | Parameters | Description |
+|--------|-----------|-------------|
+| clickOutside | callback | Fires when click occurs outside element |
+| focusTrap | { enabled } | Traps focus within element |
+| escapeKey | callback | Fires on Escape key press |
+| portal | target selector | Moves element to target in DOM |

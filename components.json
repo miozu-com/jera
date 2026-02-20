@@ -1,0 +1,723 @@
+{
+  "schemaVersion": "1.0.0",
+  "library": "@miozu/jera",
+  "description": "Zero-dependency, AI-first component library for Svelte 5",
+  "framework": "svelte5",
+  "cssSystem": "scoped-css-base16",
+  "totalComponents": 85,
+  "components": [
+    {
+      "name": "Button",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/Button.svelte",
+      "description": "Primary action trigger, polymorphic (a/button)",
+      "props": {
+        "variant": { "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'", "default": "'primary'" },
+        "size": { "type": "'xs'|'sm'|'md'|'lg'", "default": "'md'" },
+        "disabled": { "type": "boolean", "default": "false" },
+        "loading": { "type": "boolean", "default": "false" },
+        "fullWidth": { "type": "boolean", "default": "false" },
+        "href": { "type": "string", "default": "undefined" },
+        "type": { "type": "string", "default": "'button'" }
+      },
+      "snippets": ["children"],
+      "events": ["onclick"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "Badge",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/Badge.svelte",
+      "description": "Status tag with semantic color variants",
+      "props": {
+        "variant": { "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'", "default": "'default'" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
+        "clickable": { "type": "boolean", "default": "false" }
+      },
+      "snippets": ["children", "iconLeft", "iconRight"],
+      "events": ["onclick"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "StatusBadge",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/StatusBadge.svelte",
+      "description": "15 semantic status variants (pending, approved, connected, error, etc.)",
+      "props": {
+        "variant": { "type": "'default'|'pending'|'approved'|'success'|'connected'|'rejected'|'error'|'disconnected'|'owner'|'primary'|'public'|'admin'|'member'|'private'|'info'", "default": "'default'" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+      },
+      "snippets": ["children"],
+      "consumers": ["dash"]
+    },
+    {
+      "name": "Divider",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/Divider.svelte",
+      "description": "Visual separator with optional label",
+      "props": {
+        "orientation": { "type": "'horizontal'|'vertical'", "default": "'horizontal'" },
+        "thickness": { "type": "string", "default": "'1px'" },
+        "spacing": { "type": "string", "default": "'1rem'" }
+      },
+      "snippets": ["children"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "Avatar",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/Avatar.svelte",
+      "description": "User avatar with image, initials fallback, and status indicator",
+      "props": {
+        "src": { "type": "string", "default": "''" },
+        "name": { "type": "string", "default": "''" },
+        "size": { "type": "'xs'|'sm'|'md'|'lg'|'xl'|'2xl'", "default": "'md'" },
+        "status": { "type": "null|'online'|'offline'|'busy'|'away'", "default": "null" }
+      },
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "Stat",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/Stat.svelte",
+      "description": "Metric display with optional progress bar",
+      "props": {
+        "value": { "type": "string|number", "required": true },
+        "label": { "type": "string", "required": true },
+        "status": { "type": "''|'success'|'warning'|'error'|'info'", "default": "''" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
+        "showBar": { "type": "boolean", "default": "false" }
+      },
+      "consumers": ["dash"]
+    },
+    {
+      "name": "ThemeToggle",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/ThemeToggle.svelte",
+      "description": "Animated sun/moon theme switcher",
+      "props": {
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
+        "variant": { "type": "'ghost'|'outline'|'subtle'", "default": "'ghost'" }
+      },
+      "consumers": ["miozu"]
+    },
+    {
+      "name": "ThemeSelect",
+      "category": "primitives",
+      "status": "active",
+      "path": "src/components/primitives/ThemeSelect.svelte",
+      "description": "Three-option theme selector (light/dark/system)",
+      "props": {
+        "variant": { "type": "'segmented'|'dropdown'", "default": "'segmented'" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+      },
+      "consumers": ["dash"]
+    },
+    {
+      "name": "Input",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/Input.svelte",
+      "description": "Text input with validation and error states",
+      "props": {
+        "value": { "type": "string", "default": "''", "bindable": true },
+        "type": { "type": "string", "default": "'text'" },
+        "placeholder": { "type": "string", "default": "''" },
+        "disabled": { "type": "boolean", "default": "false" },
+        "required": { "type": "boolean", "default": "false" },
+        "error": { "type": "boolean", "default": "false" },
+        "unstyled": { "type": "boolean", "default": "false" }
+      },
+      "events": ["oninput", "onchange", "onkeydown", "onfocus", "onblur"],
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "Textarea",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/Textarea.svelte",
+      "description": "Multiline text input with optional auto-resize",
+      "props": {
+        "value": { "type": "string", "default": "''", "bindable": true },
+        "rows": { "type": "number", "default": "3" },
+        "autoResize": { "type": "boolean", "default": "false" },
+        "error": { "type": "boolean", "default": "false" }
+      },
+      "events": ["oninput", "onchange"],
+      "consumers": ["admin"]
+    },
+    {
+      "name": "Select",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/Select.svelte",
+      "description": "Custom dropdown with keyboard navigation",
+      "props": {
+        "options": { "type": "array", "default": "[]" },
+        "value": { "type": "any", "default": "null", "bindable": true },
+        "placeholder": { "type": "string", "default": "'Select...'" },
+        "size": { "type": "'xs'|'sm'|'md'|'lg'", "default": "'md'" },
+        "disabled": { "type": "boolean", "default": "false" },
+        "error": { "type": "boolean", "default": "false" }
+      },
+      "events": ["onchange"],
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "Checkbox",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/Checkbox.svelte",
+      "description": "Checkbox with label via children snippet",
+      "props": {
+        "checked": { "type": "boolean", "default": "false", "bindable": true },
+        "disabled": { "type": "boolean", "default": "false" },
+        "error": { "type": "boolean", "default": "false" }
+      },
+      "snippets": ["children"],
+      "events": ["onchange"],
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "Switch",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/Switch.svelte",
+      "description": "Toggle switch for boolean settings",
+      "props": {
+        "checked": { "type": "boolean", "default": "false", "bindable": true },
+        "disabled": { "type": "boolean", "default": "false" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+      },
+      "snippets": ["children"],
+      "events": ["onchange"],
+      "consumers": ["dash", "admin"]
+    },
+    {
+      "name": "SearchInput",
+      "category": "forms",
+      "status": "active",
+      "path": "src/components/forms/SearchInput.svelte",
+      "description": "Search field with icon, clear button, loading state",
+      "props": {
+        "value": { "type": "string", "default": "''", "bindable": true },
+        "placeholder": { "type": "string", "default": "'Search...'" },
+        "loading": { "type": "boolean", "default": "false" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+      },
+      "events": ["oninput", "onchange", "onclear"],
+      "consumers": ["admin"]
+    },
+    {
+      "name": "Toast",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/Toast.svelte",
+      "description": "Notification system via context API",
+      "contextSetup": "createToastContext() in root, getToastContext() in children",
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "Alert",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/Alert.svelte",
+      "description": "Inline alert with icon and actions",
+      "props": {
+        "variant": { "type": "'info'|'success'|'warning'|'error'", "default": "'info'" },
+        "title": { "type": "string", "default": "''" },
+        "dismissible": { "type": "boolean", "default": "false" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+      },
+      "snippets": ["children", "icon", "actions"],
+      "events": ["onclose"],
+      "consumers": ["dash", "admin"]
+    },
+    {
+      "name": "Spinner",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/Spinner.svelte",
+      "description": "Loading indicator",
+      "props": {
+        "size": { "type": "'xs'|'sm'|'md'|'lg'|'xl'", "default": "'md'" },
+        "color": { "type": "string", "default": "'currentColor'" }
+      },
+      "consumers": ["admin"]
+    },
+    {
+      "name": "EmptyState",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/EmptyState.svelte",
+      "description": "Empty data placeholder",
+      "props": {
+        "title": { "type": "string", "default": "'No data found'" },
+        "description": { "type": "string", "default": "''" },
+        "size": { "type": "'default'|'compact'|'large'", "default": "'default'" }
+      },
+      "snippets": ["icon", "actions"],
+      "consumers": ["admin"]
+    },
+    {
+      "name": "Skeleton",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/Skeleton.svelte",
+      "description": "Loading placeholder shapes",
+      "props": {
+        "variant": { "type": "'text'|'heading'|'circle'|'rect'", "default": "'text'" },
+        "lines": { "type": "number", "default": "1" }
+      },
+      "consumers": ["miozu"]
+    },
+    {
+      "name": "ProgressBar",
+      "category": "feedback",
+      "status": "active",
+      "path": "src/components/feedback/ProgressBar.svelte",
+      "description": "Determinate/indeterminate progress indicator",
+      "props": {
+        "value": { "type": "number", "default": "0" },
+        "max": { "type": "number", "default": "100" },
+        "variant": { "type": "'primary'|'success'|'warning'|'error'|'info'", "default": "'primary'" },
+        "indeterminate": { "type": "boolean", "default": "false" }
+      },
+      "consumers": ["miozu"]
+    },
+    {
+      "name": "Modal",
+      "category": "overlays",
+      "status": "active",
+      "path": "src/components/overlays/Modal.svelte",
+      "description": "Dialog overlay with variants and fill mode",
+      "props": {
+        "open": { "type": "boolean", "default": "false", "bindable": true },
+        "title": { "type": "string", "default": "''" },
+        "size": { "type": "'sm'|'md'|'lg'|'xl'|'full'", "default": "'md'" },
+        "variant": { "type": "'default'|'danger'|'warning'|'success'|'info'", "default": "'default'" },
+        "fill": { "type": "boolean", "default": "false" },
+        "closeOnBackdrop": { "type": "boolean", "default": "true" },
+        "closeOnEscape": { "type": "boolean", "default": "true" }
+      },
+      "snippets": ["children", "footer", "icon"],
+      "events": ["onclose"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "Popover",
+      "category": "overlays",
+      "status": "active",
+      "path": "src/components/overlays/Popover.svelte",
+      "description": "Hover popover with CSS Anchor Positioning",
+      "props": {
+        "content": { "type": "string", "default": "''" },
+        "position": { "type": "'top'|'bottom'|'left'|'right'", "default": "'top'" },
+        "offset": { "type": "number", "default": "8" }
+      },
+      "snippets": ["children", "content"],
+      "consumers": ["miozu"]
+    },
+    {
+      "name": "ConfirmDialog",
+      "category": "overlays",
+      "status": "active",
+      "path": "src/components/overlays/ConfirmDialog.svelte",
+      "description": "Pre-built confirmation modal",
+      "props": {
+        "open": { "type": "boolean", "default": "false", "bindable": true },
+        "title": { "type": "string", "default": "'Confirm Action'" },
+        "message": { "type": "string", "default": "'Are you sure?'" },
+        "variant": { "type": "'danger'|'warning'|'success'|'info'", "default": "'danger'" }
+      },
+      "events": ["onconfirm", "oncancel"],
+      "consumers": ["dash"]
+    },
+    {
+      "name": "Tabs",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/Tabs.svelte",
+      "description": "Tab navigation with animated sliding indicator",
+      "props": {
+        "tabs": { "type": "array", "default": "[]" },
+        "active": { "type": "string", "default": "null", "bindable": true },
+        "variant": { "type": "'default'|'segment'|'underline'|'pills'", "default": "'default'" },
+        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
+        "fullWidth": { "type": "boolean", "default": "false" }
+      },
+      "events": ["onchange"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "Accordion",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/Accordion.svelte",
+      "description": "Collapsible content sections",
+      "props": {
+        "expanded": { "type": "array", "default": "[]", "bindable": true },
+        "multiple": { "type": "boolean", "default": "false" }
+      },
+      "snippets": ["children"],
+      "consumers": ["dash", "miozu"]
+    },
+    {
+      "name": "AccordionItem",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/AccordionItem.svelte",
+      "description": "Expandable item with title and custom indicator",
+      "props": {
+        "id": { "type": "string", "default": "auto" },
+        "title": { "type": "string", "default": "''" },
+        "expanded": { "type": "boolean", "default": "false", "bindable": true },
+        "disabled": { "type": "boolean", "default": "false" },
+        "badge": { "type": "string|number", "default": "null" }
+      },
+      "snippets": ["children", "leading", "trailing", "indicator"],
+      "consumers": ["dash", "miozu"]
+    },
+    {
+      "name": "NavBar",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/NavBar.svelte",
+      "description": "Horizontal mega-menu navigation bar",
+      "props": {
+        "brand": { "type": "object", "default": "{label:'Home'}" },
+        "sections": { "type": "array", "default": "[]" },
+        "subnavItems": { "type": "array", "default": "[]" },
+        "sticky": { "type": "boolean", "default": "false" }
+      },
+      "snippets": ["actions", "center", "subnav", "renderIcon"],
+      "consumers": ["dash", "admin"]
+    },
+    {
+      "name": "LeftBar",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/LeftBar.svelte",
+      "description": "Collapsible sidebar with context and persistence",
+      "props": {
+        "collapsed": { "type": "boolean", "default": "false", "bindable": true },
+        "persistKey": { "type": "string", "default": "null" },
+        "cookieKey": { "type": "string", "default": "null" }
+      },
+      "snippets": ["header", "navigation", "footer", "children"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "LeftBarSection",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/LeftBarSection.svelte",
+      "description": "Grouped navigation section with title",
+      "props": { "title": { "type": "string", "default": "''" } },
+      "snippets": ["children"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "LeftBarItem",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/LeftBarItem.svelte",
+      "description": "Nav item with icon, badge, expandable subroutes",
+      "props": {
+        "href": { "type": "string", "default": "null" },
+        "label": { "type": "string", "default": "''" },
+        "icon": { "type": "Component", "default": "null" },
+        "active": { "type": "boolean", "default": "false" },
+        "expandable": { "type": "boolean", "default": "false" },
+        "expanded": { "type": "boolean", "default": "false", "bindable": true },
+        "subroutes": { "type": "array", "default": "[]" },
+        "badge": { "type": "string|number", "default": "null" },
+        "variant": { "type": "'default'|'warning'|'danger'|'success'", "default": "'default'" }
+      },
+      "snippets": ["leading", "trailing", "children"],
+      "consumers": ["dash", "admin", "miozu"]
+    },
+    {
+      "name": "LeftBarGroup",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/LeftBarGroup.svelte",
+      "description": "Dynamic item group with search and avatar support",
+      "props": {
+        "title": { "type": "string", "default": "''" },
+        "items": { "type": "array", "default": "[]" },
+        "expanded": { "type": "boolean", "default": "false", "bindable": true },
+        "searchable": { "type": "boolean", "default": "false" },
+        "showAdd": { "type": "boolean", "default": "true" }
+      },
+      "snippets": ["item", "children"],
+      "consumers": ["dash"]
+    },
+    {
+      "name": "LeftBarToggle",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/LeftBarToggle.svelte",
+      "description": "Sidebar collapse toggle, reads LeftBar context",
+      "consumers": ["dash", "admin"]
+    },
+    {
+      "name": "DropdownContainer",
+      "category": "navigation",
+      "status": "active",
+      "path": "src/components/navigation/DropdownContainer.svelte",
+      "description": "User account menu with theme toggle and sign out",
+      "props": {
+        "user": { "type": "object", "default": "null" },
+        "themeState": { "type": "ThemeState", "default": "null" },
+        "isCollapsed": { "type": "boolean", "default": "false" }
+      },
+      "snippets": ["userHeader", "envSection", "menuItems", "footerContent", "children"],
+      "consumers": ["admin"]
+    },
+    {
+      "name": "PageHeader",
+      "category": "layout",
+      "status": "active",
+      "path": "src/components/layout/PageHeader.svelte",
+      "description": "Flexible page header with stats and action slots",
+      "props": {
+        "title": { "type": "string", "default": "''" },
+        "description": { "type": "string", "default": "''" },
+        "stats": { "type": "array", "default": "[]" },
+        "size": { "type": "'default'|'compact'|'large'", "default": "'default'" }
+      },
+      "snippets": ["icon", "actions", "search", "filters"],
+      "consumers": ["admin"]
+    },
+    {
+      "name": "SettingCard",
+      "category": "layout",
+      "status": "active",
+      "path": "src/components/layout/SettingCard.svelte",
+      "description": "Settings group card",
+      "props": {
+        "title": { "type": "string", "default": "''" },
+        "variant": { "type": "'default'|'danger'", "default": "'default'" }
+      },
+      "snippets": ["children"],
+      "consumers": ["dash"]
+    },
+    {
+      "name": "SettingItem",
+      "category": "layout",
+      "status": "active",
+      "path": "src/components/layout/SettingItem.svelte",
+      "description": "Individual setting row",
+      "props": {
+        "label": { "type": "string", "default": "''" },
+        "description": { "type": "string", "default": "''" }
+      },
+      "snippets": ["leading", "action"],
+      "consumers": ["dash"]
+    },
+    {
+      "name": "BottomPanel",
+      "category": "layout",
+      "status": "active",
+      "path": "src/components/layout/BottomPanel.svelte",
+      "description": "Slide-up panel with drag-to-resize",
+      "props": {
+        "open": { "type": "boolean", "default": "false", "bindable": true },
+        "minimized": { "type": "boolean", "default": "false", "bindable": true },
+        "height": { "type": "number", "default": "280", "bindable": true },
+        "minHeight": { "type": "number", "default": "120" },
+        "resizable": { "type": "boolean", "default": "true" },
+        "offsetLeft": { "type": "number", "default": "0" }
+      },
+      "snippets": ["header", "sidebar", "children"],
+      "events": ["onresize"],
+      "consumers": ["dash", "admin"]
+    },
+    {
+      "name": "CodeBlock",
+      "category": "docs",
+      "status": "active",
+      "path": "src/components/docs/CodeBlock.svelte",
+      "description": "Syntax-highlighted code with Shiki and copy button",
+      "props": {
+        "code": { "type": "string", "default": "''" },
+        "lang": { "type": "string", "default": "'javascript'" },
+        "filename": { "type": "string", "default": "''" },
+        "showLineNumbers": { "type": "boolean", "default": "false" }
+      },
+      "consumers": ["admin", "miozu"]
+    },
+    {
+      "name": "IconInput", "category": "forms", "status": "ready",
+      "path": "src/components/forms/IconInput.svelte",
+      "description": "Input with icon slots, loading, clearable"
+    },
+    {
+      "name": "NumberInput", "category": "forms", "status": "ready",
+      "path": "src/components/forms/NumberInput.svelte",
+      "description": "Numeric input with +/- buttons, min/max/step"
+    },
+    {
+      "name": "Radio", "category": "forms", "status": "ready",
+      "path": "src/components/forms/Radio.svelte",
+      "description": "Radio button (use inside RadioGroup)"
+    },
+    {
+      "name": "RadioGroup", "category": "forms", "status": "ready",
+      "path": "src/components/forms/RadioGroup.svelte",
+      "description": "Radio group with vertical/horizontal layout"
+    },
+    {
+      "name": "FileUpload", "category": "forms", "status": "ready",
+      "path": "src/components/forms/FileUpload.svelte",
+      "description": "File upload with drag-drop and maxSize validation"
+    },
+    {
+      "name": "RangeSlider", "category": "forms", "status": "ready",
+      "path": "src/components/forms/RangeSlider.svelte",
+      "description": "Range input with labels and value display"
+    },
+    {
+      "name": "PinInput", "category": "forms", "status": "ready",
+      "path": "src/components/forms/PinInput.svelte",
+      "description": "PIN/code entry with auto-advance and paste support"
+    },
+    {
+      "name": "Dropzone", "category": "forms", "status": "ready",
+      "path": "src/components/forms/Dropzone.svelte",
+      "description": "Drag-and-drop file zone with accept filter"
+    },
+    {
+      "name": "Tooltip", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/Tooltip.svelte",
+      "description": "Hover tooltip with position and delay"
+    },
+    {
+      "name": "Card", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/Card.svelte",
+      "description": "Surface container"
+    },
+    {
+      "name": "Link", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/Link.svelte",
+      "description": "Styled link component"
+    },
+    {
+      "name": "LinkCard", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/LinkCard.svelte",
+      "description": "Clickable card link"
+    },
+    {
+      "name": "LazyImage", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/LazyImage.svelte",
+      "description": "Image with lazy loading"
+    },
+    {
+      "name": "MetricCard", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/MetricCard.svelte",
+      "description": "Metric display card"
+    },
+    {
+      "name": "FilterChip", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/FilterChip.svelte",
+      "description": "Filterable chip/tag"
+    },
+    {
+      "name": "StatusLine", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/StatusLine.svelte",
+      "description": "Status indicator line"
+    },
+    {
+      "name": "MemberCard", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/MemberCard.svelte",
+      "description": "Team member card"
+    },
+    {
+      "name": "DashCard", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/DashCard.svelte",
+      "description": "Dashboard card"
+    },
+    {
+      "name": "DistributionBar", "category": "primitives", "status": "ready",
+      "path": "src/components/primitives/DistributionBar.svelte",
+      "description": "Segmented distribution visualization"
+    },
+    {
+      "name": "Dropdown", "category": "overlays", "status": "ready",
+      "path": "src/components/overlays/Dropdown.svelte",
+      "description": "Menu dropdown"
+    },
+    {
+      "name": "DropdownItem", "category": "overlays", "status": "ready",
+      "path": "src/components/overlays/DropdownItem.svelte",
+      "description": "Dropdown menu item"
+    },
+    {
+      "name": "DropdownDivider", "category": "overlays", "status": "ready",
+      "path": "src/components/overlays/DropdownDivider.svelte",
+      "description": "Dropdown separator"
+    },
+    {
+      "name": "PropsTable", "category": "docs", "status": "ready",
+      "path": "src/components/docs/PropsTable.svelte",
+      "description": "Props documentation table"
+    },
+    {
+      "name": "SplitPane", "category": "docs", "status": "ready",
+      "path": "src/components/docs/SplitPane.svelte",
+      "description": "Side-by-side pane for docs"
+    },
+    {
+      "name": "DocSection", "category": "docs", "status": "ready",
+      "path": "src/components/docs/DocSection.svelte",
+      "description": "Documentation section wrapper"
+    },
+    {
+      "name": "Sidebar", "category": "navigation", "status": "legacy",
+      "path": "src/components/navigation/Sidebar.svelte",
+      "description": "Legacy sidebar — replaced by LeftBar",
+      "replacedBy": "LeftBar"
+    },
+    {
+      "name": "NavigationContainer", "category": "navigation", "status": "legacy",
+      "path": "src/components/navigation/NavigationContainer.svelte",
+      "description": "Legacy enterprise nav — unused"
+    },
+    {
+      "name": "TabNav", "category": "navigation", "status": "legacy",
+      "path": "src/components/navigation/TabNav.svelte",
+      "description": "Legacy tab nav — use Tabs instead",
+      "replacedBy": "Tabs"
+    },
+    {
+      "name": "ScrollNav", "category": "navigation", "status": "legacy",
+      "path": "src/components/navigation/ScrollNav.svelte",
+      "description": "Legacy scroll wrapper — unused"
+    },
+    {
+      "name": "WorkspaceMenu", "category": "navigation", "status": "legacy",
+      "path": "src/components/navigation/WorkspaceMenu.svelte",
+      "description": "Legacy workspace switcher — unused"
+    }
+  ],
+  "utilities": [
+    { "name": "cn", "status": "active", "description": "Class name concatenation with falsy filtering" },
+    { "name": "cv", "status": "active", "description": "Class variants for type-safe variant composition" },
+    { "name": "getTheme", "status": "active", "description": "SSR-safe theme singleton" },
+    { "name": "createActiveChecker", "status": "active", "description": "Route matching utility" }
+  ],
+  "actions": [
+    { "name": "clickOutside", "status": "active", "description": "Detect clicks outside element" },
+    { "name": "focusTrap", "status": "active", "description": "Trap focus within element" },
+    { "name": "escapeKey", "status": "active", "description": "Handle Escape key press" },
+    { "name": "portal", "status": "active", "description": "Render in different DOM location" }
+  ]
+}
