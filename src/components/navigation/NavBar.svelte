@@ -410,6 +410,11 @@
     flex: 1;
   }
 
+  .navbar :global(.chip-nav .chip) {
+    padding: var(--space-1-5) var(--space-2-5);
+    font-size: 0.8125rem;
+  }
+
   .navbar-subnav-slot {
     display: flex;
     align-items: center;
