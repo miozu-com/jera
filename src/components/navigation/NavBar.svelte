@@ -293,6 +293,7 @@
     border-radius: var(--radius-md);
     font-weight: 600;
     font-size: var(--text-sm);
+    line-height: 1.2;
     color: var(--color-base05);
     white-space: nowrap;
     cursor: default;
@@ -464,6 +465,7 @@
     font-family: inherit;
     font-size: 0.8125rem;
     font-weight: 500;
+    line-height: 1.2;
     cursor: pointer;
     white-space: nowrap;
     transition: color var(--duration-fast) var(--ease-default),
@@ -688,6 +690,7 @@
     font-family: inherit;
     font-size: var(--text-xs);
     font-weight: 500;
+    line-height: 1.2;
     color: var(--color-base04);
     cursor: pointer;
     transition: color var(--duration-fast) var(--ease-default),

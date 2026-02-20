@@ -84,6 +84,7 @@
     background: transparent;
     font-family: inherit;
     font-weight: 500;
+    line-height: 1.2;
     letter-spacing: 0.01em;
     color: var(--color-base04);
     text-decoration: none;
@@ -94,8 +95,8 @@
   }
 
   .chip:hover {
-    color: var(--color-base0D);
-    background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
+    color: var(--color-base06);
+    background-color: color-mix(in srgb, var(--color-base02) 50%, transparent);
   }
 
   .chip.active {

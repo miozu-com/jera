@@ -148,6 +148,7 @@ export { default as DropdownContainer } from './components/navigation/DropdownCo
 export { default as PageHeader } from './components/layout/PageHeader.svelte';
 export { default as SettingCard } from './components/layout/SettingCard.svelte';
 export { default as SettingItem } from './components/layout/SettingItem.svelte';
+export { default as BottomPanel } from './components/layout/BottomPanel.svelte';
 
 // --------------------------------------------
 // COMPONENTS - Documentation

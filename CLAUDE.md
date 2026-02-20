@@ -68,6 +68,12 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
 
+**BottomPanel:** `bind:open`, `bind:minimized`, `bind:height`, `minHeight`, `maxHeight`, `minimizedHeight`, `offsetLeft`, `resizable`, `onresize`
+- Fixed bottom slide-up panel with drag-to-resize
+- Snippets: `header` (always visible), `sidebar` (optional left column), `children` (main content)
+- Consumer provides close/minimize buttons in header snippet
+- Stateless — no persistence, consumer manages state
+
 ## Form Component Border Standard (CRITICAL)
 
 All form components (Input, Select, SearchInput, Checkbox) share identical border rendering:
