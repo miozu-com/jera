@@ -13,17 +13,53 @@
       "path": "src/components/primitives/Button.svelte",
       "description": "Primary action trigger, polymorphic (a/button)",
       "props": {
-        "variant": { "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'", "default": "'primary'" },
-        "size": { "type": "'xs'|'sm'|'md'|'lg'", "default": "'md'" },
-        "disabled": { "type": "boolean", "default": "false" },
-        "loading": { "type": "boolean", "default": "false" },
-        "fullWidth": { "type": "boolean", "default": "false" },
-        "href": { "type": "string", "default": "undefined" },
-        "type": { "type": "string", "default": "'button'" }
+        "variant": {
+          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'",
+          "default": "'primary'",
+          "description": "Visual style variant"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Button size"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable interactions"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show loading spinner"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Expand to full container width"
+        },
+        "href": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Renders as <a> tag when set"
+        },
+        "type": {
+          "type": "string",
+          "default": "'button'",
+          "description": "HTML button type attribute"
+        }
       },
-      "snippets": ["children"],
-      "events": ["onclick"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Badge",
@@ -32,13 +68,35 @@
       "path": "src/components/primitives/Badge.svelte",
       "description": "Status tag with semantic color variants",
       "props": {
-        "variant": { "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'", "default": "'default'" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
-        "clickable": { "type": "boolean", "default": "false" }
+        "variant": {
+          "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'",
+          "default": "'default'",
+          "description": "Color variant"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Badge size"
+        },
+        "clickable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Makes badge interactive"
+        }
       },
-      "snippets": ["children", "iconLeft", "iconRight"],
-      "events": ["onclick"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "children",
+        "iconLeft",
+        "iconRight"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "StatusBadge",
@@ -47,11 +105,23 @@
       "path": "src/components/primitives/StatusBadge.svelte",
       "description": "15 semantic status variants (pending, approved, connected, error, etc.)",
       "props": {
-        "variant": { "type": "'default'|'pending'|'approved'|'success'|'connected'|'rejected'|'error'|'disconnected'|'owner'|'primary'|'public'|'admin'|'member'|'private'|'info'", "default": "'default'" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+        "variant": {
+          "type": "'default'|'pending'|'approved'|'success'|'connected'|'rejected'|'error'|'disconnected'|'owner'|'primary'|'public'|'admin'|'member'|'private'|'info'",
+          "default": "'default'",
+          "description": "Semantic status variant"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Badge size"
+        }
       },
-      "snippets": ["children"],
-      "consumers": ["dash"]
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "Divider",
@@ -60,12 +130,30 @@
       "path": "src/components/primitives/Divider.svelte",
       "description": "Visual separator with optional label",
       "props": {
-        "orientation": { "type": "'horizontal'|'vertical'", "default": "'horizontal'" },
-        "thickness": { "type": "string", "default": "'1px'" },
-        "spacing": { "type": "string", "default": "'1rem'" }
+        "orientation": {
+          "type": "'horizontal'|'vertical'",
+          "default": "'horizontal'",
+          "description": "Divider direction"
+        },
+        "thickness": {
+          "type": "string",
+          "default": "'1px'",
+          "description": "Line thickness"
+        },
+        "spacing": {
+          "type": "string",
+          "default": "'1rem'",
+          "description": "Margin around divider"
+        }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Avatar",
@@ -74,12 +162,31 @@
       "path": "src/components/primitives/Avatar.svelte",
       "description": "User avatar with image, initials fallback, and status indicator",
       "props": {
-        "src": { "type": "string", "default": "''" },
-        "name": { "type": "string", "default": "''" },
-        "size": { "type": "'xs'|'sm'|'md'|'lg'|'xl'|'2xl'", "default": "'md'" },
-        "status": { "type": "null|'online'|'offline'|'busy'|'away'", "default": "null" }
+        "src": {
+          "type": "string",
+          "default": "''",
+          "description": "Image URL"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Used for initials fallback"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'|'xl'|'2xl'",
+          "default": "'md'",
+          "description": "Avatar size"
+        },
+        "status": {
+          "type": "null|'online'|'offline'|'busy'|'away'",
+          "default": "null",
+          "description": "Status indicator dot"
+        }
       },
-      "consumers": ["admin", "miozu"]
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Stat",
@@ -88,13 +195,35 @@
       "path": "src/components/primitives/Stat.svelte",
       "description": "Metric display with optional progress bar",
       "props": {
-        "value": { "type": "string|number", "required": true },
-        "label": { "type": "string", "required": true },
-        "status": { "type": "''|'success'|'warning'|'error'|'info'", "default": "''" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
-        "showBar": { "type": "boolean", "default": "false" }
+        "value": {
+          "type": "string|number",
+          "required": true,
+          "description": "Metric value"
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "description": "Metric label"
+        },
+        "status": {
+          "type": "''|'success'|'warning'|'error'|'info'",
+          "default": "''",
+          "description": "Status color"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Display size"
+        },
+        "showBar": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show progress bar below value"
+        }
       },
-      "consumers": ["dash"]
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "ThemeToggle",
@@ -103,10 +232,20 @@
       "path": "src/components/primitives/ThemeToggle.svelte",
       "description": "Animated sun/moon theme switcher",
       "props": {
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
-        "variant": { "type": "'ghost'|'outline'|'subtle'", "default": "'ghost'" }
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Toggle button size"
+        },
+        "variant": {
+          "type": "'ghost'|'outline'|'subtle'",
+          "default": "'ghost'",
+          "description": "Button style"
+        }
       },
-      "consumers": ["miozu"]
+      "consumers": [
+        "miozu"
+      ]
     },
     {
       "name": "ThemeSelect",
@@ -115,10 +254,20 @@
       "path": "src/components/primitives/ThemeSelect.svelte",
       "description": "Three-option theme selector (light/dark/system)",
       "props": {
-        "variant": { "type": "'segmented'|'dropdown'", "default": "'segmented'" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+        "variant": {
+          "type": "'segmented'|'dropdown'",
+          "default": "'segmented'",
+          "description": "Selector style"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Control size"
+        }
       },
-      "consumers": ["dash"]
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "Input",
@@ -127,16 +276,54 @@
       "path": "src/components/forms/Input.svelte",
       "description": "Text input with validation and error states",
       "props": {
-        "value": { "type": "string", "default": "''", "bindable": true },
-        "type": { "type": "string", "default": "'text'" },
-        "placeholder": { "type": "string", "default": "''" },
-        "disabled": { "type": "boolean", "default": "false" },
-        "required": { "type": "boolean", "default": "false" },
-        "error": { "type": "boolean", "default": "false" },
-        "unstyled": { "type": "boolean", "default": "false" }
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Input value (bindable)"
+        },
+        "type": {
+          "type": "string",
+          "default": "'text'",
+          "description": "HTML input type"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark as required"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        },
+        "unstyled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Remove default styling"
+        }
       },
-      "events": ["oninput", "onchange", "onkeydown", "onfocus", "onblur"],
-      "consumers": ["admin", "miozu"]
+      "events": [
+        "oninput",
+        "onchange",
+        "onkeydown",
+        "onfocus",
+        "onblur"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Textarea",
@@ -145,13 +332,35 @@
       "path": "src/components/forms/Textarea.svelte",
       "description": "Multiline text input with optional auto-resize",
       "props": {
-        "value": { "type": "string", "default": "''", "bindable": true },
-        "rows": { "type": "number", "default": "3" },
-        "autoResize": { "type": "boolean", "default": "false" },
-        "error": { "type": "boolean", "default": "false" }
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Textarea value (bindable)"
+        },
+        "rows": {
+          "type": "number",
+          "default": "3",
+          "description": "Number of visible rows"
+        },
+        "autoResize": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Auto-grow with content"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
       },
-      "events": ["oninput", "onchange"],
-      "consumers": ["admin"]
+      "events": [
+        "oninput",
+        "onchange"
+      ],
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "Select",
@@ -160,15 +369,45 @@
       "path": "src/components/forms/Select.svelte",
       "description": "Custom dropdown with keyboard navigation",
       "props": {
-        "options": { "type": "array", "default": "[]" },
-        "value": { "type": "any", "default": "null", "bindable": true },
-        "placeholder": { "type": "string", "default": "'Select...'" },
-        "size": { "type": "'xs'|'sm'|'md'|'lg'", "default": "'md'" },
-        "disabled": { "type": "boolean", "default": "false" },
-        "error": { "type": "boolean", "default": "false" }
+        "options": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {value, label} objects"
+        },
+        "value": {
+          "type": "any",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected value (bindable)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Select...'",
+          "description": "Placeholder when no selection"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Dropdown size"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable selection"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
       },
-      "events": ["onchange"],
-      "consumers": ["admin", "miozu"]
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Checkbox",
@@ -177,13 +416,33 @@
       "path": "src/components/forms/Checkbox.svelte",
       "description": "Checkbox with label via children snippet",
       "props": {
-        "checked": { "type": "boolean", "default": "false", "bindable": true },
-        "disabled": { "type": "boolean", "default": "false" },
-        "error": { "type": "boolean", "default": "false" }
+        "checked": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Checked state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable checkbox"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
       },
-      "snippets": ["children"],
-      "events": ["onchange"],
-      "consumers": ["admin", "miozu"]
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Switch",
@@ -192,13 +451,33 @@
       "path": "src/components/forms/Switch.svelte",
       "description": "Toggle switch for boolean settings",
       "props": {
-        "checked": { "type": "boolean", "default": "false", "bindable": true },
-        "disabled": { "type": "boolean", "default": "false" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+        "checked": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Toggle state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable toggle"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Switch size"
+        }
       },
-      "snippets": ["children"],
-      "events": ["onchange"],
-      "consumers": ["dash", "admin"]
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ]
     },
     {
       "name": "SearchInput",
@@ -207,13 +486,36 @@
       "path": "src/components/forms/SearchInput.svelte",
       "description": "Search field with icon, clear button, loading state",
       "props": {
-        "value": { "type": "string", "default": "''", "bindable": true },
-        "placeholder": { "type": "string", "default": "'Search...'" },
-        "loading": { "type": "boolean", "default": "false" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Search value (bindable)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Search...'",
+          "description": "Placeholder text"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show loading spinner"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Input size"
+        }
       },
-      "events": ["oninput", "onchange", "onclear"],
-      "consumers": ["admin"]
+      "events": [
+        "oninput",
+        "onchange",
+        "onclear"
+      ],
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "Toast",
@@ -222,7 +524,10 @@
       "path": "src/components/feedback/Toast.svelte",
       "description": "Notification system via context API",
       "contextSetup": "createToastContext() in root, getToastContext() in children",
-      "consumers": ["admin", "miozu"]
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Alert",
@@ -231,14 +536,39 @@
       "path": "src/components/feedback/Alert.svelte",
       "description": "Inline alert with icon and actions",
       "props": {
-        "variant": { "type": "'info'|'success'|'warning'|'error'", "default": "'info'" },
-        "title": { "type": "string", "default": "''" },
-        "dismissible": { "type": "boolean", "default": "false" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" }
+        "variant": {
+          "type": "'info'|'success'|'warning'|'error'",
+          "default": "'info'",
+          "description": "Alert color and icon"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Alert title"
+        },
+        "dismissible": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show close button"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Alert size"
+        }
       },
-      "snippets": ["children", "icon", "actions"],
-      "events": ["onclose"],
-      "consumers": ["dash", "admin"]
+      "snippets": [
+        "children",
+        "icon",
+        "actions"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ]
     },
     {
       "name": "Spinner",
@@ -247,10 +577,20 @@
       "path": "src/components/feedback/Spinner.svelte",
       "description": "Loading indicator",
       "props": {
-        "size": { "type": "'xs'|'sm'|'md'|'lg'|'xl'", "default": "'md'" },
-        "color": { "type": "string", "default": "'currentColor'" }
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'|'xl'",
+          "default": "'md'",
+          "description": "Spinner size"
+        },
+        "color": {
+          "type": "string",
+          "default": "'currentColor'",
+          "description": "Spinner color"
+        }
       },
-      "consumers": ["admin"]
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "EmptyState",
@@ -259,12 +599,29 @@
       "path": "src/components/feedback/EmptyState.svelte",
       "description": "Empty data placeholder",
       "props": {
-        "title": { "type": "string", "default": "'No data found'" },
-        "description": { "type": "string", "default": "''" },
-        "size": { "type": "'default'|'compact'|'large'", "default": "'default'" }
+        "title": {
+          "type": "string",
+          "default": "'No data found'",
+          "description": "Title text"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Description text"
+        },
+        "size": {
+          "type": "'default'|'compact'|'large'",
+          "default": "'default'",
+          "description": "Display size"
+        }
       },
-      "snippets": ["icon", "actions"],
-      "consumers": ["admin"]
+      "snippets": [
+        "icon",
+        "actions"
+      ],
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "Skeleton",
@@ -273,10 +630,20 @@
       "path": "src/components/feedback/Skeleton.svelte",
       "description": "Loading placeholder shapes",
       "props": {
-        "variant": { "type": "'text'|'heading'|'circle'|'rect'", "default": "'text'" },
-        "lines": { "type": "number", "default": "1" }
+        "variant": {
+          "type": "'text'|'heading'|'circle'|'rect'",
+          "default": "'text'",
+          "description": "Shape variant"
+        },
+        "lines": {
+          "type": "number",
+          "default": "1",
+          "description": "Number of lines (text variant)"
+        }
       },
-      "consumers": ["miozu"]
+      "consumers": [
+        "miozu"
+      ]
     },
     {
       "name": "ProgressBar",
@@ -285,12 +652,30 @@
       "path": "src/components/feedback/ProgressBar.svelte",
       "description": "Determinate/indeterminate progress indicator",
       "props": {
-        "value": { "type": "number", "default": "0" },
-        "max": { "type": "number", "default": "100" },
-        "variant": { "type": "'primary'|'success'|'warning'|'error'|'info'", "default": "'primary'" },
-        "indeterminate": { "type": "boolean", "default": "false" }
+        "value": {
+          "type": "number",
+          "default": "0",
+          "description": "Current progress value"
+        },
+        "max": {
+          "type": "number",
+          "default": "100",
+          "description": "Maximum value"
+        },
+        "variant": {
+          "type": "'primary'|'success'|'warning'|'error'|'info'",
+          "default": "'primary'",
+          "description": "Color variant"
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show indeterminate animation"
+        }
       },
-      "consumers": ["miozu"]
+      "consumers": [
+        "miozu"
+      ]
     },
     {
       "name": "Modal",
@@ -299,17 +684,56 @@
       "path": "src/components/overlays/Modal.svelte",
       "description": "Dialog overlay with variants and fill mode",
       "props": {
-        "open": { "type": "boolean", "default": "false", "bindable": true },
-        "title": { "type": "string", "default": "''" },
-        "size": { "type": "'sm'|'md'|'lg'|'xl'|'full'", "default": "'md'" },
-        "variant": { "type": "'default'|'danger'|'warning'|'success'|'info'", "default": "'default'" },
-        "fill": { "type": "boolean", "default": "false" },
-        "closeOnBackdrop": { "type": "boolean", "default": "true" },
-        "closeOnEscape": { "type": "boolean", "default": "true" }
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Modal visibility (bindable)"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Modal title"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'|'xl'|'full'",
+          "default": "'md'",
+          "description": "Dialog width"
+        },
+        "variant": {
+          "type": "'default'|'danger'|'warning'|'success'|'info'",
+          "default": "'default'",
+          "description": "Title color variant"
+        },
+        "fill": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Anchor to stable height (80dvh)"
+        },
+        "closeOnBackdrop": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close when clicking backdrop"
+        },
+        "closeOnEscape": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close on Escape key"
+        }
       },
-      "snippets": ["children", "footer", "icon"],
-      "events": ["onclose"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "children",
+        "footer",
+        "icon"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Popover",
@@ -318,12 +742,29 @@
       "path": "src/components/overlays/Popover.svelte",
       "description": "Hover popover with CSS Anchor Positioning",
       "props": {
-        "content": { "type": "string", "default": "''" },
-        "position": { "type": "'top'|'bottom'|'left'|'right'", "default": "'top'" },
-        "offset": { "type": "number", "default": "8" }
+        "content": {
+          "type": "string",
+          "default": "''",
+          "description": "Popover text content"
+        },
+        "position": {
+          "type": "'top'|'bottom'|'left'|'right'",
+          "default": "'top'",
+          "description": "Popover position"
+        },
+        "offset": {
+          "type": "number",
+          "default": "8",
+          "description": "Distance from trigger (px)"
+        }
       },
-      "snippets": ["children", "content"],
-      "consumers": ["miozu"]
+      "snippets": [
+        "children",
+        "content"
+      ],
+      "consumers": [
+        "miozu"
+      ]
     },
     {
       "name": "ConfirmDialog",
@@ -332,13 +773,35 @@
       "path": "src/components/overlays/ConfirmDialog.svelte",
       "description": "Pre-built confirmation modal",
       "props": {
-        "open": { "type": "boolean", "default": "false", "bindable": true },
-        "title": { "type": "string", "default": "'Confirm Action'" },
-        "message": { "type": "string", "default": "'Are you sure?'" },
-        "variant": { "type": "'danger'|'warning'|'success'|'info'", "default": "'danger'" }
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Dialog visibility (bindable)"
+        },
+        "title": {
+          "type": "string",
+          "default": "'Confirm Action'",
+          "description": "Dialog title"
+        },
+        "message": {
+          "type": "string",
+          "default": "'Are you sure?'",
+          "description": "Confirmation message"
+        },
+        "variant": {
+          "type": "'danger'|'warning'|'success'|'info'",
+          "default": "'danger'",
+          "description": "Color variant"
+        }
       },
-      "events": ["onconfirm", "oncancel"],
-      "consumers": ["dash"]
+      "events": [
+        "onconfirm",
+        "oncancel"
+      ],
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "Tabs",
@@ -347,14 +810,41 @@
       "path": "src/components/navigation/Tabs.svelte",
       "description": "Tab navigation with animated sliding indicator",
       "props": {
-        "tabs": { "type": "array", "default": "[]" },
-        "active": { "type": "string", "default": "null", "bindable": true },
-        "variant": { "type": "'default'|'segment'|'underline'|'pills'", "default": "'default'" },
-        "size": { "type": "'sm'|'md'|'lg'", "default": "'md'" },
-        "fullWidth": { "type": "boolean", "default": "false" }
+        "tabs": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {id, label, badge?, icon?}"
+        },
+        "active": {
+          "type": "string",
+          "default": "null",
+          "bindable": true,
+          "description": "Active tab id (bindable)"
+        },
+        "variant": {
+          "type": "'default'|'segment'|'underline'|'pills'",
+          "default": "'default'",
+          "description": "Tab style variant"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Tab size"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Stretch to fill container"
+        }
       },
-      "events": ["onchange"],
-      "consumers": ["dash", "admin", "miozu"]
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "Accordion",
@@ -363,11 +853,25 @@
       "path": "src/components/navigation/Accordion.svelte",
       "description": "Collapsible content sections",
       "props": {
-        "expanded": { "type": "array", "default": "[]", "bindable": true },
-        "multiple": { "type": "boolean", "default": "false" }
+        "expanded": {
+          "type": "array",
+          "default": "[]",
+          "bindable": true,
+          "description": "Array of expanded item ids (bindable)"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Allow multiple items open"
+        }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "miozu"]
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ]
     },
     {
       "name": "AccordionItem",
@@ -376,14 +880,43 @@
       "path": "src/components/navigation/AccordionItem.svelte",
       "description": "Expandable item with title and custom indicator",
       "props": {
-        "id": { "type": "string", "default": "auto" },
-        "title": { "type": "string", "default": "''" },
-        "expanded": { "type": "boolean", "default": "false", "bindable": true },
-        "disabled": { "type": "boolean", "default": "false" },
-        "badge": { "type": "string|number", "default": "null" }
+        "id": {
+          "type": "string",
+          "default": "auto",
+          "description": "Unique item identifier"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Item header text"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable toggle"
+        },
+        "badge": {
+          "type": "string|number",
+          "default": "null",
+          "description": "Badge text in header"
+        }
       },
-      "snippets": ["children", "leading", "trailing", "indicator"],
-      "consumers": ["dash", "miozu"]
+      "snippets": [
+        "children",
+        "leading",
+        "trailing",
+        "indicator"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ]
     },
     {
       "name": "NavBar",
@@ -392,13 +925,37 @@
       "path": "src/components/navigation/NavBar.svelte",
       "description": "Horizontal mega-menu navigation bar",
       "props": {
-        "brand": { "type": "object", "default": "{label:'Home'}" },
-        "sections": { "type": "array", "default": "[]" },
-        "subnavItems": { "type": "array", "default": "[]" },
-        "sticky": { "type": "boolean", "default": "false" }
+        "brand": {
+          "type": "object",
+          "default": "{label:'Home'}",
+          "description": "Brand config: {icon, label, description, breadcrumbs}"
+        },
+        "sections": {
+          "type": "array",
+          "default": "[]",
+          "description": "Menu sections with items"
+        },
+        "subnavItems": {
+          "type": "array",
+          "default": "[]",
+          "description": "Sub-navigation items"
+        },
+        "sticky": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Stick to top of viewport"
+        }
       },
-      "snippets": ["actions", "center", "subnav", "renderIcon"],
-      "consumers": ["dash", "admin"]
+      "snippets": [
+        "actions",
+        "center",
+        "subnav",
+        "renderIcon"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ]
     },
     {
       "name": "LeftBar",
@@ -407,12 +964,34 @@
       "path": "src/components/navigation/LeftBar.svelte",
       "description": "Collapsible sidebar with context and persistence",
       "props": {
-        "collapsed": { "type": "boolean", "default": "false", "bindable": true },
-        "persistKey": { "type": "string", "default": "null" },
-        "cookieKey": { "type": "string", "default": "null" }
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Sidebar collapsed state (bindable)"
+        },
+        "persistKey": {
+          "type": "string",
+          "default": "null",
+          "description": "LocalStorage key for persistence"
+        },
+        "cookieKey": {
+          "type": "string",
+          "default": "null",
+          "description": "Cookie key for SSR persistence"
+        }
       },
-      "snippets": ["header", "navigation", "footer", "children"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "header",
+        "navigation",
+        "footer",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "LeftBarSection",
@@ -420,9 +999,21 @@
       "status": "active",
       "path": "src/components/navigation/LeftBarSection.svelte",
       "description": "Grouped navigation section with title",
-      "props": { "title": { "type": "string", "default": "''" } },
-      "snippets": ["children"],
-      "consumers": ["dash", "admin", "miozu"]
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Section title"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "LeftBarItem",
@@ -431,18 +1022,63 @@
       "path": "src/components/navigation/LeftBarItem.svelte",
       "description": "Nav item with icon, badge, expandable subroutes",
       "props": {
-        "href": { "type": "string", "default": "null" },
-        "label": { "type": "string", "default": "''" },
-        "icon": { "type": "Component", "default": "null" },
-        "active": { "type": "boolean", "default": "false" },
-        "expandable": { "type": "boolean", "default": "false" },
-        "expanded": { "type": "boolean", "default": "false", "bindable": true },
-        "subroutes": { "type": "array", "default": "[]" },
-        "badge": { "type": "string|number", "default": "null" },
-        "variant": { "type": "'default'|'warning'|'danger'|'success'", "default": "'default'" }
+        "href": {
+          "type": "string",
+          "default": "null",
+          "description": "Navigation URL"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Item label"
+        },
+        "icon": {
+          "type": "Component",
+          "default": "null",
+          "description": "Svelte icon component"
+        },
+        "active": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Active state"
+        },
+        "expandable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show expand arrow"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "subroutes": {
+          "type": "array",
+          "default": "[]",
+          "description": "Sub-navigation items"
+        },
+        "badge": {
+          "type": "string|number",
+          "default": "null",
+          "description": "Badge text"
+        },
+        "variant": {
+          "type": "'default'|'warning'|'danger'|'success'",
+          "default": "'default'",
+          "description": "Color variant"
+        }
       },
-      "snippets": ["leading", "trailing", "children"],
-      "consumers": ["dash", "admin", "miozu"]
+      "snippets": [
+        "leading",
+        "trailing",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ]
     },
     {
       "name": "LeftBarGroup",
@@ -451,14 +1087,40 @@
       "path": "src/components/navigation/LeftBarGroup.svelte",
       "description": "Dynamic item group with search and avatar support",
       "props": {
-        "title": { "type": "string", "default": "''" },
-        "items": { "type": "array", "default": "[]" },
-        "expanded": { "type": "boolean", "default": "false", "bindable": true },
-        "searchable": { "type": "boolean", "default": "false" },
-        "showAdd": { "type": "boolean", "default": "true" }
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Group title"
+        },
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "Group items"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "searchable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Enable search filter"
+        },
+        "showAdd": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show add button"
+        }
       },
-      "snippets": ["item", "children"],
-      "consumers": ["dash"]
+      "snippets": [
+        "item",
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "LeftBarToggle",
@@ -466,7 +1128,10 @@
       "status": "active",
       "path": "src/components/navigation/LeftBarToggle.svelte",
       "description": "Sidebar collapse toggle, reads LeftBar context",
-      "consumers": ["dash", "admin"]
+      "consumers": [
+        "dash",
+        "admin"
+      ]
     },
     {
       "name": "DropdownContainer",
@@ -475,12 +1140,29 @@
       "path": "src/components/navigation/DropdownContainer.svelte",
       "description": "User account menu with theme toggle and sign out",
       "props": {
-        "user": { "type": "object", "default": "null" },
-        "themeState": { "type": "ThemeState", "default": "null" },
-        "isCollapsed": { "type": "boolean", "default": "false" }
+        "user": {
+          "type": "object",
+          "default": "null"
+        },
+        "themeState": {
+          "type": "ThemeState",
+          "default": "null"
+        },
+        "isCollapsed": {
+          "type": "boolean",
+          "default": "false"
+        }
       },
-      "snippets": ["userHeader", "envSection", "menuItems", "footerContent", "children"],
-      "consumers": ["admin"]
+      "snippets": [
+        "userHeader",
+        "envSection",
+        "menuItems",
+        "footerContent",
+        "children"
+      ],
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "PageHeader",
@@ -489,13 +1171,36 @@
       "path": "src/components/layout/PageHeader.svelte",
       "description": "Flexible page header with stats and action slots",
       "props": {
-        "title": { "type": "string", "default": "''" },
-        "description": { "type": "string", "default": "''" },
-        "stats": { "type": "array", "default": "[]" },
-        "size": { "type": "'default'|'compact'|'large'", "default": "'default'" }
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Page title"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Page description"
+        },
+        "stats": {
+          "type": "array",
+          "default": "[]",
+          "description": "Stat items: {label, value, variant?}"
+        },
+        "size": {
+          "type": "'default'|'compact'|'large'",
+          "default": "'default'",
+          "description": "Header size"
+        }
       },
-      "snippets": ["icon", "actions", "search", "filters"],
-      "consumers": ["admin"]
+      "snippets": [
+        "icon",
+        "actions",
+        "search",
+        "filters"
+      ],
+      "consumers": [
+        "admin"
+      ]
     },
     {
       "name": "SettingCard",
@@ -504,11 +1209,23 @@
       "path": "src/components/layout/SettingCard.svelte",
       "description": "Settings group card",
       "props": {
-        "title": { "type": "string", "default": "''" },
-        "variant": { "type": "'default'|'danger'", "default": "'default'" }
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Card title"
+        },
+        "variant": {
+          "type": "'default'|'danger'",
+          "default": "'default'",
+          "description": "Card color variant"
+        }
       },
-      "snippets": ["children"],
-      "consumers": ["dash"]
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "SettingItem",
@@ -517,11 +1234,24 @@
       "path": "src/components/layout/SettingItem.svelte",
       "description": "Individual setting row",
       "props": {
-        "label": { "type": "string", "default": "''" },
-        "description": { "type": "string", "default": "''" }
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Setting label"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Setting description"
+        }
       },
-      "snippets": ["leading", "action"],
-      "consumers": ["dash"]
+      "snippets": [
+        "leading",
+        "action"
+      ],
+      "consumers": [
+        "dash"
+      ]
     },
     {
       "name": "BottomPanel",
@@ -530,16 +1260,52 @@
       "path": "src/components/layout/BottomPanel.svelte",
       "description": "Slide-up panel with drag-to-resize",
       "props": {
-        "open": { "type": "boolean", "default": "false", "bindable": true },
-        "minimized": { "type": "boolean", "default": "false", "bindable": true },
-        "height": { "type": "number", "default": "280", "bindable": true },
-        "minHeight": { "type": "number", "default": "120" },
-        "resizable": { "type": "boolean", "default": "true" },
-        "offsetLeft": { "type": "number", "default": "0" }
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Panel visibility (bindable)"
+        },
+        "minimized": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Minimized state (bindable)"
+        },
+        "height": {
+          "type": "number",
+          "default": "280",
+          "bindable": true,
+          "description": "Panel height in px (bindable)"
+        },
+        "minHeight": {
+          "type": "number",
+          "default": "120",
+          "description": "Minimum height"
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Enable drag-to-resize"
+        },
+        "offsetLeft": {
+          "type": "number",
+          "default": "0",
+          "description": "Left offset for sidebar clearance"
+        }
       },
-      "snippets": ["header", "sidebar", "children"],
-      "events": ["onresize"],
-      "consumers": ["dash", "admin"]
+      "snippets": [
+        "header",
+        "sidebar",
+        "children"
+      ],
+      "events": [
+        "onresize"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ]
     },
     {
       "name": "CodeBlock",
@@ -548,176 +1314,283 @@
       "path": "src/components/docs/CodeBlock.svelte",
       "description": "Syntax-highlighted code with Shiki and copy button",
       "props": {
-        "code": { "type": "string", "default": "''" },
-        "lang": { "type": "string", "default": "'javascript'" },
-        "filename": { "type": "string", "default": "''" },
-        "showLineNumbers": { "type": "boolean", "default": "false" }
+        "code": {
+          "type": "string",
+          "default": "''"
+        },
+        "lang": {
+          "type": "string",
+          "default": "'javascript'"
+        },
+        "filename": {
+          "type": "string",
+          "default": "''"
+        },
+        "showLineNumbers": {
+          "type": "boolean",
+          "default": "false"
+        }
       },
-      "consumers": ["admin", "miozu"]
+      "consumers": [
+        "admin",
+        "miozu"
+      ]
     },
     {
-      "name": "IconInput", "category": "forms", "status": "ready",
+      "name": "IconInput",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/IconInput.svelte",
       "description": "Input with icon slots, loading, clearable"
     },
     {
-      "name": "NumberInput", "category": "forms", "status": "ready",
+      "name": "NumberInput",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/NumberInput.svelte",
       "description": "Numeric input with +/- buttons, min/max/step"
     },
     {
-      "name": "Radio", "category": "forms", "status": "ready",
+      "name": "Radio",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/Radio.svelte",
       "description": "Radio button (use inside RadioGroup)"
     },
     {
-      "name": "RadioGroup", "category": "forms", "status": "ready",
+      "name": "RadioGroup",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/RadioGroup.svelte",
       "description": "Radio group with vertical/horizontal layout"
     },
     {
-      "name": "FileUpload", "category": "forms", "status": "ready",
+      "name": "FileUpload",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/FileUpload.svelte",
       "description": "File upload with drag-drop and maxSize validation"
     },
     {
-      "name": "RangeSlider", "category": "forms", "status": "ready",
+      "name": "RangeSlider",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/RangeSlider.svelte",
       "description": "Range input with labels and value display"
     },
     {
-      "name": "PinInput", "category": "forms", "status": "ready",
+      "name": "PinInput",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/PinInput.svelte",
       "description": "PIN/code entry with auto-advance and paste support"
     },
     {
-      "name": "Dropzone", "category": "forms", "status": "ready",
+      "name": "Dropzone",
+      "category": "forms",
+      "status": "ready",
       "path": "src/components/forms/Dropzone.svelte",
       "description": "Drag-and-drop file zone with accept filter"
     },
     {
-      "name": "Tooltip", "category": "primitives", "status": "ready",
+      "name": "Tooltip",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/Tooltip.svelte",
       "description": "Hover tooltip with position and delay"
     },
     {
-      "name": "Card", "category": "primitives", "status": "ready",
+      "name": "Card",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/Card.svelte",
       "description": "Surface container"
     },
     {
-      "name": "Link", "category": "primitives", "status": "ready",
+      "name": "Link",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/Link.svelte",
       "description": "Styled link component"
     },
     {
-      "name": "LinkCard", "category": "primitives", "status": "ready",
+      "name": "LinkCard",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/LinkCard.svelte",
       "description": "Clickable card link"
     },
     {
-      "name": "LazyImage", "category": "primitives", "status": "ready",
+      "name": "LazyImage",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/LazyImage.svelte",
       "description": "Image with lazy loading"
     },
     {
-      "name": "MetricCard", "category": "primitives", "status": "ready",
+      "name": "MetricCard",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/MetricCard.svelte",
       "description": "Metric display card"
     },
     {
-      "name": "FilterChip", "category": "primitives", "status": "ready",
+      "name": "FilterChip",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Filterable chip/tag"
     },
     {
-      "name": "StatusLine", "category": "primitives", "status": "ready",
+      "name": "StatusLine",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/StatusLine.svelte",
       "description": "Status indicator line"
     },
     {
-      "name": "MemberCard", "category": "primitives", "status": "ready",
+      "name": "MemberCard",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/MemberCard.svelte",
       "description": "Team member card"
     },
     {
-      "name": "DashCard", "category": "primitives", "status": "ready",
+      "name": "DashCard",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/DashCard.svelte",
       "description": "Dashboard card"
     },
     {
-      "name": "DistributionBar", "category": "primitives", "status": "ready",
+      "name": "DistributionBar",
+      "category": "primitives",
+      "status": "ready",
       "path": "src/components/primitives/DistributionBar.svelte",
       "description": "Segmented distribution visualization"
     },
     {
-      "name": "Dropdown", "category": "overlays", "status": "ready",
+      "name": "Dropdown",
+      "category": "overlays",
+      "status": "ready",
       "path": "src/components/overlays/Dropdown.svelte",
       "description": "Menu dropdown"
     },
     {
-      "name": "DropdownItem", "category": "overlays", "status": "ready",
+      "name": "DropdownItem",
+      "category": "overlays",
+      "status": "ready",
       "path": "src/components/overlays/DropdownItem.svelte",
       "description": "Dropdown menu item"
     },
     {
-      "name": "DropdownDivider", "category": "overlays", "status": "ready",
+      "name": "DropdownDivider",
+      "category": "overlays",
+      "status": "ready",
       "path": "src/components/overlays/DropdownDivider.svelte",
       "description": "Dropdown separator"
     },
     {
-      "name": "PropsTable", "category": "docs", "status": "ready",
+      "name": "PropsTable",
+      "category": "docs",
+      "status": "ready",
       "path": "src/components/docs/PropsTable.svelte",
       "description": "Props documentation table"
     },
     {
-      "name": "SplitPane", "category": "docs", "status": "ready",
+      "name": "SplitPane",
+      "category": "docs",
+      "status": "ready",
       "path": "src/components/docs/SplitPane.svelte",
       "description": "Side-by-side pane for docs"
     },
     {
-      "name": "DocSection", "category": "docs", "status": "ready",
+      "name": "DocSection",
+      "category": "docs",
+      "status": "ready",
       "path": "src/components/docs/DocSection.svelte",
       "description": "Documentation section wrapper"
     },
     {
-      "name": "Sidebar", "category": "navigation", "status": "legacy",
+      "name": "Sidebar",
+      "category": "navigation",
+      "status": "legacy",
       "path": "src/components/navigation/Sidebar.svelte",
       "description": "Legacy sidebar — replaced by LeftBar",
       "replacedBy": "LeftBar"
     },
     {
-      "name": "NavigationContainer", "category": "navigation", "status": "legacy",
+      "name": "NavigationContainer",
+      "category": "navigation",
+      "status": "legacy",
       "path": "src/components/navigation/NavigationContainer.svelte",
       "description": "Legacy enterprise nav — unused"
     },
     {
-      "name": "TabNav", "category": "navigation", "status": "legacy",
+      "name": "TabNav",
+      "category": "navigation",
+      "status": "legacy",
       "path": "src/components/navigation/TabNav.svelte",
       "description": "Legacy tab nav — use Tabs instead",
       "replacedBy": "Tabs"
     },
     {
-      "name": "ScrollNav", "category": "navigation", "status": "legacy",
+      "name": "ScrollNav",
+      "category": "navigation",
+      "status": "legacy",
       "path": "src/components/navigation/ScrollNav.svelte",
       "description": "Legacy scroll wrapper — unused"
     },
     {
-      "name": "WorkspaceMenu", "category": "navigation", "status": "legacy",
+      "name": "WorkspaceMenu",
+      "category": "navigation",
+      "status": "legacy",
       "path": "src/components/navigation/WorkspaceMenu.svelte",
       "description": "Legacy workspace switcher — unused"
     }
   ],
   "utilities": [
-    { "name": "cn", "status": "active", "description": "Class name concatenation with falsy filtering" },
-    { "name": "cv", "status": "active", "description": "Class variants for type-safe variant composition" },
-    { "name": "getTheme", "status": "active", "description": "SSR-safe theme singleton" },
-    { "name": "createActiveChecker", "status": "active", "description": "Route matching utility" }
+    {
+      "name": "cn",
+      "status": "active",
+      "description": "Class name concatenation with falsy filtering"
+    },
+    {
+      "name": "cv",
+      "status": "active",
+      "description": "Class variants for type-safe variant composition"
+    },
+    {
+      "name": "getTheme",
+      "status": "active",
+      "description": "SSR-safe theme singleton"
+    },
+    {
+      "name": "createActiveChecker",
+      "status": "active",
+      "description": "Route matching utility"
+    }
   ],
   "actions": [
-    { "name": "clickOutside", "status": "active", "description": "Detect clicks outside element" },
-    { "name": "focusTrap", "status": "active", "description": "Trap focus within element" },
-    { "name": "escapeKey", "status": "active", "description": "Handle Escape key press" },
-    { "name": "portal", "status": "active", "description": "Render in different DOM location" }
+    {
+      "name": "clickOutside",
+      "status": "active",
+      "description": "Detect clicks outside element"
+    },
+    {
+      "name": "focusTrap",
+      "status": "active",
+      "description": "Trap focus within element"
+    },
+    {
+      "name": "escapeKey",
+      "status": "active",
+      "description": "Handle Escape key press"
+    },
+    {
+      "name": "portal",
+      "status": "active",
+      "description": "Render in different DOM location"
+    }
   ]
 }

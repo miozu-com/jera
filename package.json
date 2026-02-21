@@ -55,10 +55,12 @@
     "./tokens/typography": "./src/tokens/typography.css",
     "./tokens/effects": "./src/tokens/effects.css",
     "./utils": "./src/utils/index.js",
-    "./actions": "./src/actions/index.js"
+    "./actions": "./src/actions/index.js",
+    "./meta": "./src/meta/index.js"
   },
   "files": [
     "src",
+    "components.json",
     "llms.txt",
     "CLAUDE.md",
     "ARCHITECTURE.md"
