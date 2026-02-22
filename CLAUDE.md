@@ -177,3 +177,40 @@ export const buttonStyles = cv({
 4. Semantic colors from Base16
 5. Accessibility first (ARIA, keyboard)
 6. Pure JavaScript (no TypeScript)
+
+## Component Lifecycle
+
+Components progress through maturity stages tracked in `components.json` (v2 schema).
+
+### Stage Definitions
+
+| Stage | Meaning | Agent Behavior |
+|-------|---------|----------------|
+| `draft` | Under development, API may change | ASK USER before using in any consumer |
+| `beta` | Functional, not yet in production consumers | Use freely, add `<!-- beta: ComponentName -->` comment |
+| `stable` | Production-ready, used by consumers | Use directly, no caveats |
+| `deprecated` | Replaced, will be removed | NEVER use. Check `replacedBy` for the replacement |
+
+### When Editing a Component
+
+1. Bump `revision` in `components.json`
+2. Update `lastReviewed` to today's date
+3. If props changed, update the `props` object in `components.json`
+4. If breaking change, add entry to `breaking` array
+5. Run `node scripts/audit.js` to verify no drift
+
+### When Creating a Component
+
+1. Add entry to `components.json` with `stage: "draft"`
+2. Export from `src/index.js`
+3. Run `node scripts/audit.js` to verify
+4. Create docs page only after promoting to `beta`
+
+### Doc Level Requirements
+
+| Stage | Min docLevel | Required Sections |
+|-------|-------------|-------------------|
+| `stable` | `standard` | Playground, header, variants, props, usage examples |
+| `beta` | `minimal` | Playground, header, props |
+| `draft` | `none` | No docs page required |
+| `deprecated` | `none` | Remove docs if exists |
