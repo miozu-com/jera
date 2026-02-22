@@ -10,9 +10,6 @@
  *
  * USAGE:
  * @import '@miozu/jera/tokens/colors.css';
- *
- * Or with Tailwind 4:
- * @import '@miozu/jera/tokens/colors.css' theme(static);
  */
 
 :root {

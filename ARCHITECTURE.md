@@ -562,39 +562,6 @@ Theme switching is handled entirely via CSS custom property values:
 
 ---
 
-## Integration with Tailwind (Consumer Apps)
-
-While jera itself uses pure CSS, consumer apps can use Tailwind alongside jera:
-
-### Tailwind 4 Configuration
-
-```css
-/* app.css in consumer app */
-@import '@miozu/jera/tokens';
-
-@theme {
-  /* Extend Tailwind with jera tokens */
-  --color-base00: var(--color-base00);
-  --color-base01: var(--color-base01);
-  /* ... */
-}
-```
-
-### Using jera Components with Tailwind
-
-```svelte
-<script>
-  import { Button } from '@miozu/jera';
-</script>
-
-<!-- jera component with Tailwind utility classes -->
-<Button variant="primary" class="mt-4 shadow-lg">
-  Click me
-</Button>
-```
-
----
-
 ## Performance Considerations
 
 1. **CSS-first** - Styles load before JS, preventing FOUC
@@ -621,13 +588,6 @@ For older browser support, consider using CSS polyfills or fallbacks.
 ---
 
 ## Migration Guide
-
-### From Tailwind-Only Components
-
-1. Extract design tokens to `tokens.json`
-2. Generate CSS custom properties
-3. Replace Tailwind classes with semantic tokens
-4. Keep Tailwind for utility classes in consumer apps
 
 ### From CSS-in-JS
 

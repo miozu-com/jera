@@ -1,6 +1,6 @@
 # @miozu/jera
 
-> Zero-dependency, AI-first component library for Svelte 5. Pure modern CSS with Base16 design tokens. 85 components across 7 categories. Works in both Tailwind and non-Tailwind environments.
+> Zero-dependency, AI-first component library for Svelte 5. Pure modern CSS with Base16 design tokens. 85 components across 7 categories.
 
 ## Quick Start
 
@@ -158,7 +158,7 @@ Previous implementations replaced by newer versions. Kept for backward compatibi
 2. Single $props() call per component
 3. Use Base16 tokens (var(--color-baseXX)) — no hardcoded hex
 4. Zero external dependencies — only Svelte as devDep
-5. All styles are scoped CSS — no Tailwind in jera components
-6. Components must work in both Tailwind (dash) and pure CSS (admin) environments
+5. All styles are scoped pure CSS — no Tailwind, no CSS frameworks
+6. Components must work in any pure CSS environment
 7. Forward rest props via {...rest} on the root element
 8. Use $bindable() for two-way binding props (value, checked, open, collapsed)

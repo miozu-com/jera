@@ -81,10 +81,8 @@
       aria-label={copied ? 'Copied!' : 'Copy code'}
     >
       {#if copied}
-        <!-- Check icon (inline SVG - no external dependency) -->
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
       {:else}
-        <!-- Copy icon (inline SVG - no external dependency) -->
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
       {/if}
     </button>
@@ -100,8 +98,9 @@
     position: relative;
     border-radius: var(--radius-md, 0.5rem);
     overflow: hidden;
-    background: var(--color-base1, var(--base1, #1a1f26));
-    border: 1px solid var(--color-border, var(--base2, #2d3748));
+    background: var(--color-base00);
+    border: 1px solid var(--color-base02);
+    border-left: 2px solid color-mix(in srgb, var(--color-base0E) 60%, var(--color-base02));
   }
 
   .code-header {
@@ -109,21 +108,26 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background: var(--color-base0, var(--base0, #0f1419));
-    border-bottom: 1px solid var(--color-border, var(--base2, #2d3748));
+    background: var(--color-base00);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     font-size: 0.75rem;
   }
 
   .code-filename {
-    color: var(--color-base5, var(--base5, #e2e8f0));
+    color: var(--color-base0E);
     font-family: var(--font-mono, monospace);
   }
 
   .code-lang {
-    color: var(--color-base4, var(--base4, #a0aec0));
+    color: var(--color-base04);
     text-transform: uppercase;
     font-size: 0.625rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    font-family: var(--font-mono, monospace);
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--color-base03) 20%, transparent);
   }
 
   .code-container {
@@ -138,8 +142,8 @@
     padding: 0.5rem;
     border: none;
     border-radius: var(--radius-sm, 0.25rem);
-    background: var(--color-base2, var(--base2, #242a33));
-    color: var(--color-base4, var(--base4, #a0aec0));
+    background: var(--color-base02);
+    color: var(--color-base04);
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.15s, background 0.15s, color 0.15s;
@@ -150,8 +154,8 @@
   }
 
   .copy-btn:hover {
-    background: var(--color-base3, var(--base3, #4a5568));
-    color: var(--color-base6, var(--base6, #f7fafc));
+    background: var(--color-base03);
+    color: var(--color-base06);
   }
 
   .code-content {
@@ -171,19 +175,19 @@
     font-family: inherit;
   }
 
-  /* Shiki CSS variables theme - compatible with both jera and selify themes */
+  /* Shiki CSS variables theme — mapped to base16 tokens */
   .code-content {
-    --shiki-color-text: var(--color-base5, var(--base5, #e2e8f0));
+    --shiki-color-text: var(--color-base05);
     --shiki-color-background: transparent;
-    --shiki-token-constant: var(--blue, #83d2fc);
-    --shiki-token-string: var(--green, #6dd672);
-    --shiki-token-comment: var(--base3, #565e78);
-    --shiki-token-keyword: var(--magenta, #c974e6);
-    --shiki-token-parameter: var(--peach, #ff9982);
-    --shiki-token-function: var(--blue, #83d2fc);
-    --shiki-token-string-expression: var(--green, #6dd672);
-    --shiki-token-punctuation: var(--color-base4, var(--base4, #a0aec0));
-    --shiki-token-link: var(--blue, #83d2fc);
+    --shiki-token-constant: var(--color-base0D);
+    --shiki-token-string: var(--color-base0B);
+    --shiki-token-comment: var(--color-base03);
+    --shiki-token-keyword: var(--color-base0E);
+    --shiki-token-parameter: var(--color-base09);
+    --shiki-token-function: var(--color-base0D);
+    --shiki-token-string-expression: var(--color-base0B);
+    --shiki-token-punctuation: var(--color-base04);
+    --shiki-token-link: var(--color-base0C);
   }
 
   /* Line numbers */
@@ -198,7 +202,7 @@
     width: 2rem;
     margin-right: 1rem;
     text-align: right;
-    color: var(--color-base3, var(--base3, #4a5568));
+    color: var(--color-base03);
     user-select: none;
   }
 </style>

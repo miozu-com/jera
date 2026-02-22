@@ -2,7 +2,6 @@
  * Miozu Design Tokens
  *
  * A complete design token system for building consistent interfaces.
- * Works standalone or with Tailwind CSS.
  *
  * @package @miozu/jera
  * @author Nicholas Glazer <glazer.nicholas@gmail.com>
@@ -16,9 +15,6 @@
  * 2. Import individual token sets:
  *    @import '@miozu/jera/tokens/colors.css';
  *    @import '@miozu/jera/tokens/spacing.css';
- *
- * 3. With Tailwind 4:
- *    @import '@miozu/jera/tokens' theme(static);
  *
  * THEMING:
  *

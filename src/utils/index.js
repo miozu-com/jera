@@ -20,3 +20,9 @@ export {
   createSidebarState,
   SIDEBAR_CONTEXT_KEY
 } from './sidebar.svelte.js';
+
+export {
+  generateAvatar,
+  generateAvatarDataURL,
+  generateAvatarBlob
+} from './avatar.js';

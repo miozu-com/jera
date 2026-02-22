@@ -69,7 +69,7 @@
 <style>
   .jera-props-table {
     overflow-x: auto;
-    border: 1px solid var(--color-border, var(--base2, #2d3748));
+    border: 1px solid var(--color-base02, #2d3748);
     border-radius: var(--radius-md, 0.5rem);
   }
 
@@ -82,16 +82,16 @@
   th {
     text-align: left;
     padding: 0.75rem 1rem;
-    background: var(--color-base1, var(--base1, #1a1f26));
-    border-bottom: 1px solid var(--color-border, var(--base2, #2d3748));
+    background: var(--color-base01, #1a1f26);
+    border-bottom: 1px solid var(--color-base02, #2d3748);
     font-weight: 500;
-    color: var(--color-base5, var(--base5, #e2e8f0));
+    color: var(--color-base05, #e2e8f0);
     white-space: nowrap;
   }
 
   td {
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--color-border, var(--base2, #2d3748));
+    border-bottom: 1px solid var(--color-base02, #2d3748);
     vertical-align: top;
   }
 
@@ -102,19 +102,19 @@
   .prop-name code {
     font-family: var(--font-mono, monospace);
     font-weight: 500;
-    color: var(--color-primary, var(--magenta, #c974e6));
+    color: var(--color-base0E, #c974e6);
   }
 
   .required {
-    color: var(--color-error, var(--red, #eb3137));
+    color: var(--color-base08, #eb3137);
     margin-left: 0.25rem;
   }
 
   .prop-type code {
     font-family: var(--font-mono, monospace);
     font-size: 0.8125rem;
-    color: var(--color-base4, var(--base4, #a0aec0));
-    background: var(--color-base1, var(--base1, #1a1f26));
+    color: var(--color-base04, #a0aec0);
+    background: var(--color-base01, #1a1f26);
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
   }
@@ -122,15 +122,15 @@
   .prop-default code {
     font-family: var(--font-mono, monospace);
     font-size: 0.8125rem;
-    color: var(--color-success, var(--green, #6dd672));
+    color: var(--color-base0B, #6dd672);
   }
 
   .muted {
-    color: var(--color-base3, var(--base3, #4a5568));
+    color: var(--color-base03, #4a5568);
   }
 
   .prop-desc {
-    color: var(--color-base4, var(--base4, #a0aec0));
+    color: var(--color-base04, #a0aec0);
     line-height: 1.5;
   }
 </style>

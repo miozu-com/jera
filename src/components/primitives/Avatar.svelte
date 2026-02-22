@@ -1,26 +1,31 @@
 <!--
   @component Avatar
 
-  User avatar with image, initials fallback, and status indicator.
+  User avatar with image, algorithmic fallback, initials, and status indicator.
 
   @example With image
-  <Avatar src="/user.jpg" alt="John Doe" />
+  <Avatar src="/user.jpg" name="John Doe" />
 
-  @example With initials fallback
-  <Avatar name="John Doe" />
+  @example With algorithmic fallback
+  <Avatar seed="user-uuid" size="lg" />
+
+  @example Custom border radius
+  <Avatar seed="user-uuid" radius={12} />
 
   @example With status
-  <Avatar src="/user.jpg" status="online" />
+  <Avatar src="/user.jpg" status="online" size="md" />
 -->
 <script>
-  import { cv } from '../../utils/cn.svelte.js';
+  import { generateAvatarDataURL } from '../../utils/avatar.js';
 
   let {
     src = '',
+    seed = '',
     alt = '',
     name = '',
     size = 'md',
     status = null,
+    radius = 4,
     class: className = ''
   } = $props();
 
@@ -34,7 +39,7 @@
     return parts[0].slice(0, 2).toUpperCase();
   });
 
-  // Generate consistent color from name
+  // Generate consistent base16 bg color from name for initials fallback
   const bgColor = $derived.by(() => {
     if (!name) return 'var(--color-base03)';
     let hash = 0;
@@ -42,33 +47,70 @@
       hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
     const colors = [
-      'var(--color-base08)',     // red
-      'var(--orange)',          // orange
-      'var(--color-base0B)',   // green
-      'var(--color-base0A)',   // yellow
-      'var(--color-base0D)',      // blue
-      'var(--color-base0D)',   // magenta
-      'var(--peach)',           // peach
-      'var(--color-base0E)'     // cyan
+      'var(--color-base08)',
+      'var(--color-base09)',
+      'var(--color-base0A)',
+      'var(--color-base0B)',
+      'var(--color-base0C)',
+      'var(--color-base0D)',
+      'var(--color-base0E)',
+      'var(--color-base0F)'
     ];
     return colors[Math.abs(hash) % colors.length];
   });
 
+  // Algorithmic avatar data URL (generated once per seed)
+  const algorithmicSrc = $derived(
+    seed ? generateAvatarDataURL(seed, { size: 128 }) : ''
+  );
+
   let imgError = $state(false);
+
+  // Reset error state when src changes
+  $effect(() => {
+    src;
+    imgError = false;
+  });
+
+  // Rendering chain:
+  // 1. src truthy + no error → <img> with src
+  // 2. src failed or empty, seed truthy → algorithmic avatar
+  // 3. neither → initials from name
+  // 4. nothing → placeholder icon
   const showImage = $derived(src && !imgError);
+  const showAlgorithmic = $derived(!showImage && !!algorithmicSrc);
+  const showInitials = $derived(!showImage && !showAlgorithmic && !!initials);
+
+  // Normalize radius: numbers become px, strings pass through (e.g. '50%')
+  const borderRadius = $derived(
+    typeof radius === 'number' ? `${radius}px` : radius
+  );
 </script>
 
-<div class="avatar avatar-{size} {className}">
+<div class="avatar avatar-{size} {className}" style="border-radius: {borderRadius};">
   {#if showImage}
     <img
       {src}
-      alt={alt || name}
+      alt={alt || name || 'Avatar'}
       class="avatar-image"
       onerror={() => imgError = true}
     />
-  {:else}
+  {:else if showAlgorithmic}
+    <img
+      src={algorithmicSrc}
+      alt={alt || name || 'Avatar'}
+      class="avatar-image"
+    />
+  {:else if showInitials}
     <span class="avatar-initials" style="background: {bgColor};">
       {initials}
+    </span>
+  {:else}
+    <span class="avatar-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="avatar-placeholder-icon">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
     </span>
   {/if}
 
@@ -83,7 +125,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -111,6 +152,21 @@
     color: white;
     font-weight: 600;
     letter-spacing: 0.02em;
+  }
+
+  .avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--color-base03, #3b3b3b);
+    color: var(--color-base05, #999);
+  }
+
+  .avatar-placeholder-icon {
+    width: 60%;
+    height: 60%;
   }
 
   .avatar-status {
