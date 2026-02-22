@@ -27,7 +27,6 @@
 
 export { default as Button } from './components/primitives/Button.svelte';
 export { default as Badge } from './components/primitives/Badge.svelte';
-export { default as StatusBadge } from './components/primitives/StatusBadge.svelte';
 export { default as Divider } from './components/primitives/Divider.svelte';
 export { default as Avatar } from './components/primitives/Avatar.svelte';
 export { default as Card } from './components/primitives/Card.svelte';

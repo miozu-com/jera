@@ -1,65 +1,64 @@
 <!--
   @component Badge
 
-  A versatile badge/tag component for status, labels, and counts.
+  Status tag with semantic color variants, optional indicator dot, and icon support.
 
-  @example
+  @example Basic
   <Badge>Default</Badge>
   <Badge variant="success">Active</Badge>
-  <Badge variant="error" size="sm">Error</Badge>
+  <Badge variant="error" size="sm">3 failed</Badge>
 
-  @example With icon
+  @example With label shorthand
+  <Badge variant="warning" label="Pending" />
+
+  @example With indicator dot
+  <Badge variant="success" indicator>Connected</Badge>
+
+  @example With inline icon
   <Badge variant="primary">
-    {#snippet iconLeft()}<CheckIcon size={12} />{/snippet}
-    Verified
+    <CheckIcon size={12} /> Verified
   </Badge>
-
-  @example Clickable
-  <Badge onclick={() => filter('active')} clickable>Active</Badge>
 -->
 <script>
   let {
     children,
-    iconLeft,
-    iconRight,
+    label = '',
     variant = 'default',
     size = 'md',
-    clickable = false,
+    indicator = false,
     class: className = '',
     onclick,
     ...rest
   } = $props();
 
-  const isClickable = $derived(clickable || !!onclick);
+  const isInteractive = $derived(!!onclick);
 </script>
 
-{#if isClickable}
+{#if isInteractive}
   <button
     type="button"
-    class="jera-badge {variant} size-{size} clickable {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} {className}"
     {onclick}
     {...rest}
   >
-    {#if iconLeft}
-      <span class="badge-icon">{@render iconLeft()}</span>
+    {#if indicator}
+      <span class="badge-indicator"></span>
     {/if}
     {#if children}
       {@render children()}
-    {/if}
-    {#if iconRight}
-      <span class="badge-icon">{@render iconRight()}</span>
+    {:else if label}
+      {label}
     {/if}
   </button>
 {:else}
-  <span class="jera-badge {variant} size-{size} {className}" {...rest}>
-    {#if iconLeft}
-      <span class="badge-icon">{@render iconLeft()}</span>
+  <span class="jera-badge jera-badge-{variant} jera-badge-{size} {className}" {...rest}>
+    {#if indicator}
+      <span class="badge-indicator"></span>
     {/if}
     {#if children}
       {@render children()}
-    {/if}
-    {#if iconRight}
-      <span class="badge-icon">{@render iconRight()}</span>
+    {:else if label}
+      {label}
     {/if}
   </span>
 {/if}
@@ -71,76 +70,117 @@
     justify-content: center;
     gap: 0.25rem;
     font-weight: 500;
-    border-radius: 9999px;
-    border: none;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .badge-icon {
-    display: inline-flex;
-    flex-shrink: 0;
+    border-radius: var(--radius-default);
+    border: 1px solid;
+    white-space: nowrap;
+    line-height: 1;
+    transition: background 0.15s ease, border-color 0.15s ease;
   }
 
   /* Sizes */
-  .size-sm {
+  .jera-badge-xs {
+    padding: 0.0625rem 0.375rem;
+    font-size: 0.625rem;
+  }
+
+  .jera-badge-sm {
     padding: 0.125rem 0.5rem;
     font-size: 0.75rem;
   }
 
-  .size-md {
-    padding: 0.25rem 0.625rem;
+  .jera-badge-md {
+    padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
   }
 
-  .size-lg {
+  .jera-badge-lg {
     padding: 0.375rem 0.75rem;
     font-size: 0.875rem;
   }
 
-  /* Variants */
-  .default {
-    background: var(--color-base02);
-    color: var(--color-base05);
+  /* Variants — 10% bg, 30% border */
+  .jera-badge-default {
+    background: color-mix(in srgb, var(--color-base04) 10%, transparent);
+    color: var(--color-base04);
+    border-color: color-mix(in srgb, var(--color-base04) 30%, transparent);
   }
 
-  .primary {
-    background: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  .jera-badge-primary {
+    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
+    border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
   }
 
-  .secondary {
-    background: color-mix(in srgb, var(--color-base0C) 15%, transparent);
+  .jera-badge-secondary {
+    background: color-mix(in srgb, var(--color-base0C) 10%, transparent);
     color: var(--color-base0C);
+    border-color: color-mix(in srgb, var(--color-base0C) 30%, transparent);
   }
 
-  .success {
-    background: color-mix(in srgb, var(--color-base0B) 15%, transparent);
+  .jera-badge-success {
+    background: color-mix(in srgb, var(--color-base0B) 10%, transparent);
     color: var(--color-base0B);
+    border-color: color-mix(in srgb, var(--color-base0B) 30%, transparent);
   }
 
-  .warning {
-    background: color-mix(in srgb, var(--color-base0A) 15%, transparent);
+  .jera-badge-warning {
+    background: color-mix(in srgb, var(--color-base0A) 10%, transparent);
     color: var(--color-base0A);
+    border-color: color-mix(in srgb, var(--color-base0A) 30%, transparent);
   }
 
-  .error {
-    background: color-mix(in srgb, var(--color-base08) 15%, transparent);
+  .jera-badge-error {
+    background: color-mix(in srgb, var(--color-base08) 10%, transparent);
     color: var(--color-base08);
+    border-color: color-mix(in srgb, var(--color-base08) 30%, transparent);
   }
 
-  .info {
-    background: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  .jera-badge-info {
+    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
+    border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
   }
 
-  /* Clickable */
-  .clickable {
+  /* Indicator dot */
+  .badge-indicator {
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+
+  .jera-badge-xs .badge-indicator {
+    width: 5px;
+    height: 5px;
+  }
+
+  .jera-badge-sm .badge-indicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  .jera-badge-md .badge-indicator {
+    width: 7px;
+    height: 7px;
+  }
+
+  .jera-badge-lg .badge-indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Interactive (button) */
+  button.jera-badge {
     cursor: pointer;
-    background: inherit;
     font: inherit;
   }
 
-  .clickable:hover {
-    opacity: 0.8;
+  button.jera-badge:hover {
+    opacity: 0.85;
+  }
+
+  button.jera-badge:focus-visible {
+    outline: 2px solid var(--color-base0D);
+    outline-offset: 2px;
   }
 </style>

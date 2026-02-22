@@ -4,11 +4,25 @@
   A polymorphic button component with variants, sizes, and loading states.
   Styled with transparent backgrounds and colored borders (Miozu design language).
 
-  @example
+  @example Basic
   <Button>Click me</Button>
   <Button variant="secondary" size="lg">Large Secondary</Button>
+
+  @example As link
   <Button href="/about">Link Button</Button>
-  <Button loading>Loading...</Button>
+
+  @example Simple loading (boolean)
+  <Button loading>Saving...</Button>
+
+  @example Rich loader (custom icon + text)
+  {#snippet spinner()}<Spinner size={14} />{/snippet}
+  <Button loader={{active: saving, icon: spinner, text: 'Saving...', position: 'left'}}>
+    Save
+  </Button>
+
+  @example Icon prop
+  {#snippet plusIcon()}<Icon name="plus" size={14} />{/snippet}
+  <Button icon={{icon: plusIcon, position: 'left'}}>Add item</Button>
 -->
 <script>
   let {
@@ -17,6 +31,8 @@
     size = 'md',
     disabled = false,
     loading = false,
+    loader = null,
+    icon = null,
     fullWidth = false,
     href,
     type = 'button',
@@ -26,12 +42,53 @@
   } = $props();
 
   const isLink = $derived(!!href);
-  const isDisabled = $derived(disabled || loading);
+  const isLoaderActive = $derived(loader?.active ?? false);
+  const isDisabled = $derived(disabled || loading || isLoaderActive);
 
   const spinnerSize = $derived({
     xs: 12, sm: 14, md: 16, lg: 18
   }[size] || 16);
 </script>
+
+{#snippet defaultSpinner()}
+  <svg class="btn-spinner" width={spinnerSize} height={spinnerSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="10" opacity="0.25" />
+    <path d="M12 2a10 10 0 0 1 10 10" opacity="0.75" />
+  </svg>
+{/snippet}
+
+{#snippet buttonContent()}
+  {#if isLoaderActive}
+    <!-- Loader mode: replaces all content with custom icon + text -->
+    {#if loader.position !== 'right'}
+      <span class="btn-icon {loader.style || ''}">
+        {#if loader.icon}{@render loader.icon()}{:else}{@render defaultSpinner()}{/if}
+      </span>
+    {/if}
+    {#if loader.text}
+      <span class="btn-text">{loader.text}</span>
+    {/if}
+    {#if loader.position === 'right'}
+      <span class="btn-icon {loader.style || ''}">
+        {#if loader.icon}{@render loader.icon()}{:else}{@render defaultSpinner()}{/if}
+      </span>
+    {/if}
+  {:else}
+    <!-- Normal mode -->
+    {#if loading}
+      {@render defaultSpinner()}
+    {/if}
+    {#if icon && icon.position !== 'right'}
+      <span class="btn-icon">{@render icon.icon()}</span>
+    {/if}
+    {#if children}
+      {@render children()}
+    {/if}
+    {#if icon?.position === 'right'}
+      <span class="btn-icon">{@render icon.icon()}</span>
+    {/if}
+  {/if}
+{/snippet}
 
 {#if isLink}
   <a
@@ -41,34 +98,18 @@
     role="button"
     {...restProps}
   >
-    {#if loading}
-      <svg class="btn-spinner" width={spinnerSize} height={spinnerSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10" opacity="0.25" />
-        <path d="M12 2a10 10 0 0 1 10 10" opacity="0.75" />
-      </svg>
-    {/if}
-    {#if children}
-      <span class={loading ? 'btn-content-loading' : ''}>{@render children()}</span>
-    {/if}
+    {@render buttonContent()}
   </a>
 {:else}
   <button
     {type}
     class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {className}"
     disabled={isDisabled}
-    aria-busy={loading || undefined}
+    aria-busy={loading || isLoaderActive || undefined}
     {onclick}
     {...restProps}
   >
-    {#if loading}
-      <svg class="btn-spinner" width={spinnerSize} height={spinnerSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="12" cy="12" r="10" opacity="0.25" />
-        <path d="M12 2a10 10 0 0 1 10 10" opacity="0.75" />
-      </svg>
-    {/if}
-    {#if children}
-      <span class={loading ? 'btn-content-loading' : ''}>{@render children()}</span>
-    {/if}
+    {@render buttonContent()}
   </button>
 {/if}
 
@@ -101,6 +142,20 @@
     cursor: not-allowed;
     pointer-events: none;
     filter: saturate(0.5);
+  }
+
+  /* Icon + text wrappers */
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .btn-text {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
   }
 
   /* ============================================
@@ -289,17 +344,6 @@
   .btn-spinner {
     animation: spin 1s linear infinite;
     flex-shrink: 0;
-  }
-
-  .btn-content-loading {
-    opacity: 0;
-  }
-
-  /* Ensure children span inherits flex layout so icon + text inline correctly */
-  .jera-btn > span {
-    display: inline-flex;
-    align-items: center;
-    gap: inherit;
   }
 
   @keyframes spin {

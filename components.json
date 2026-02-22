@@ -42,7 +42,17 @@
         "loading": {
           "type": "boolean",
           "default": "false",
-          "description": "Show loading spinner"
+          "description": "Show default spinner (simple mode)"
+        },
+        "loader": {
+          "type": "{active, icon?, text?, style?, position?}",
+          "default": "null",
+          "description": "Rich loading state — replaces content with custom icon/text. icon is a snippet, position is 'left'|'right'"
+        },
+        "icon": {
+          "type": "{icon, position?}",
+          "default": "null",
+          "description": "Structured icon placement — icon is a snippet, position is 'left'|'right' (default left)"
         },
         "fullWidth": {
           "type": "boolean",
@@ -81,7 +91,7 @@
       "name": "Badge",
       "category": "primitives",
       "path": "src/components/primitives/Badge.svelte",
-      "description": "Status tag with semantic color variants",
+      "description": "Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 4px radius).",
       "props": {
         "variant": {
           "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'",
@@ -89,20 +99,23 @@
           "description": "Color variant"
         },
         "size": {
-          "type": "'sm'|'md'|'lg'",
+          "type": "'xs'|'sm'|'md'|'lg'",
           "default": "'md'",
           "description": "Badge size"
         },
-        "clickable": {
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Convenience text content (used when no children)"
+        },
+        "indicator": {
           "type": "boolean",
           "default": "false",
-          "description": "Makes badge interactive"
+          "description": "Show colored dot matching variant color"
         }
       },
       "snippets": [
-        "children",
-        "iconLeft",
-        "iconRight"
+        "children"
       ],
       "events": [
         "onclick"
@@ -113,39 +126,12 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
+      "revision": 2,
       "lastReviewed": "2026-02-22",
-      "breaking": [],
-      "docLevel": "minimal"
-    },
-    {
-      "name": "StatusBadge",
-      "category": "primitives",
-      "path": "src/components/primitives/StatusBadge.svelte",
-      "description": "15 semantic status variants (pending, approved, connected, error, etc.)",
-      "props": {
-        "variant": {
-          "type": "'default'|'pending'|'approved'|'success'|'connected'|'rejected'|'error'|'disconnected'|'owner'|'primary'|'public'|'admin'|'member'|'private'|'info'",
-          "default": "'default'",
-          "description": "Semantic status variant"
-        },
-        "size": {
-          "type": "'sm'|'md'|'lg'",
-          "default": "'md'",
-          "description": "Badge size"
-        }
-      },
-      "snippets": [
-        "children"
+      "breaking": [
+        "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border."
       ],
-      "consumers": [
-        "dash"
-      ],
-      "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Divider",
