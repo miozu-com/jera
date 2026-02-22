@@ -181,7 +181,7 @@
       "revision": 1,
       "lastReviewed": "2026-02-22",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Avatar",
