@@ -1,7 +1,8 @@
 <!--
   @component Dropdown
 
-  An action menu dropdown component.
+  Portaled action menu with viewport-aware positioning, keyboard navigation,
+  and ARIA attributes. Content renders at body level to avoid clipping.
 
   @example
   <Dropdown>
@@ -24,9 +25,13 @@
     class: className = ''
   } = $props();
 
-  let dropdownEl = $state(null);
+  let triggerEl = $state(null);
+  let contentEl = $state(null);
+  let floatingStyle = $state('');
+  let resolvedPosition = $state(position);
 
-  function toggle() {
+  function toggle(e) {
+    e.stopPropagation();
     open = !open;
   }
 
@@ -34,33 +39,127 @@
     open = false;
   }
 
-  // Position classes
-  const positionMap = {
-    'bottom-start': 'dropdown-bottom-start',
-    'bottom-end': 'dropdown-bottom-end',
-    'bottom-center': 'dropdown-bottom-center',
-    'top-start': 'dropdown-top-start',
-    'top-end': 'dropdown-top-end',
-    'top-center': 'dropdown-top-center'
-  };
+  function updatePosition() {
+    if (!triggerEl || !contentEl) return;
+
+    const rect = triggerEl.getBoundingClientRect();
+    const contentRect = contentEl.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const viewportW = window.innerWidth;
+    const gap = 4;
+
+    // Determine vertical placement
+    let preferBottom = position.startsWith('bottom');
+    const spaceBelow = viewportH - rect.bottom - gap;
+    const spaceAbove = rect.top - gap;
+
+    // Auto-flip if not enough space
+    if (preferBottom && spaceBelow < contentRect.height && spaceAbove > spaceBelow) {
+      preferBottom = false;
+    } else if (!preferBottom && spaceAbove < contentRect.height && spaceBelow > spaceAbove) {
+      preferBottom = true;
+    }
+
+    let top;
+    if (preferBottom) {
+      top = rect.bottom + gap;
+      resolvedPosition = position.replace('top', 'bottom');
+    } else {
+      top = rect.top - contentRect.height - gap;
+      resolvedPosition = position.replace('bottom', 'top');
+    }
+
+    // Determine horizontal placement
+    let left;
+    const align = position.split('-')[1] || 'start';
+
+    if (align === 'end') {
+      left = rect.right - contentRect.width;
+    } else if (align === 'center') {
+      left = rect.left + (rect.width - contentRect.width) / 2;
+    } else {
+      left = rect.left;
+    }
+
+    // Clamp to viewport edges
+    if (left + contentRect.width > viewportW - 8) {
+      left = viewportW - contentRect.width - 8;
+    }
+    if (left < 8) left = 8;
+    if (top < 8) top = 8;
+
+    floatingStyle = `top:${top}px;left:${left}px`;
+  }
+
+  // Keyboard navigation within items
+  function handleContentKeydown(e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const items = Array.from(contentEl.querySelectorAll('[role="menuitem"]:not([disabled])'));
+      if (items.length === 0) return;
+
+      const current = items.indexOf(document.activeElement);
+      let next;
+
+      if (e.key === 'ArrowDown') {
+        next = current < items.length - 1 ? current + 1 : 0;
+      } else {
+        next = current > 0 ? current - 1 : items.length - 1;
+      }
+
+      items[next]?.focus();
+    } else if (e.key === 'Tab') {
+      close();
+    }
+  }
+
+  $effect(() => {
+    if (open && triggerEl) {
+      // Wait for content to mount, then position
+      requestAnimationFrame(() => {
+        updatePosition();
+        // Focus first item
+        const firstItem = contentEl?.querySelector('[role="menuitem"]:not([disabled])');
+        firstItem?.focus();
+      });
+    }
+  });
 </script>
 
 <div
   class={cn('dropdown', className)}
-  bind:this={dropdownEl}
-  use:clickOutside={close}
-  use:escapeKey={close}
+  bind:this={triggerEl}
 >
-  <div class="dropdown-trigger" onclick={toggle}>
+  <div
+    class="dropdown-trigger"
+    onclick={toggle}
+    aria-haspopup="true"
+    aria-expanded={open}
+  >
     {@render trigger?.()}
   </div>
+</div>
 
-  {#if open}
-    <div class="dropdown-content {positionMap[position] || positionMap['bottom-start']}">
+{#if open}
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div
+    class="dropdown-portal-backdrop"
+    onclick={close}
+    onkeydown={handleContentKeydown}
+  >
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <div
+      class="dropdown-content"
+      class:dropdown-enter-up={resolvedPosition.startsWith('top')}
+      bind:this={contentEl}
+      style={floatingStyle}
+      role="menu"
+      onclick={e => e.stopPropagation()}
+    >
       {@render children?.()}
     </div>
-  {/if}
-</div>
+  </div>
+{/if}
 
 <style>
   .dropdown {
@@ -72,82 +171,49 @@
     display: inline-flex;
   }
 
+  .dropdown-portal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-popover);
+  }
+
   .dropdown-content {
-    position: absolute;
-    z-index: var(--z-dropdown);
-    min-width: 10rem;
+    position: fixed;
+    z-index: var(--z-popover);
+    min-width: 8rem;
     padding: var(--space-1);
-    background: var(--color-base00);
-    border: 1px solid var(--color-base03);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    animation: dropdown-enter 0.15s ease-out;
+    background: var(--color-base01);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
+    border-radius: var(--radius-md);
+    box-shadow:
+      0 4px 12px -4px rgb(0 0 0 / 0.15),
+      0 1px 3px -1px rgb(0 0 0 / 0.08);
+    animation: dropdown-enter 0.12s var(--ease-out);
   }
 
-  /* Position variants */
-  .dropdown-bottom-start {
-    top: 100%;
-    left: 0;
-    margin-top: var(--space-1);
-  }
-
-  .dropdown-bottom-end {
-    top: 100%;
-    right: 0;
-    margin-top: var(--space-1);
-  }
-
-  .dropdown-bottom-center {
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: var(--space-1);
-  }
-
-  .dropdown-top-start {
-    bottom: 100%;
-    left: 0;
-    margin-bottom: var(--space-1);
-  }
-
-  .dropdown-top-end {
-    bottom: 100%;
-    right: 0;
-    margin-bottom: var(--space-1);
-  }
-
-  .dropdown-top-center {
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: var(--space-1);
+  .dropdown-enter-up {
+    animation-name: dropdown-enter-up;
   }
 
   @keyframes dropdown-enter {
     from {
       opacity: 0;
-      transform: translateY(-4px);
+      transform: translateY(-4px) scale(0.97);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
-  }
-
-  .dropdown-top-start,
-  .dropdown-top-end,
-  .dropdown-top-center {
-    animation-name: dropdown-enter-up;
   }
 
   @keyframes dropdown-enter-up {
     from {
       opacity: 0;
-      transform: translateY(4px);
+      transform: translateY(4px) scale(0.97);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
   }
 </style>

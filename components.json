@@ -2279,7 +2279,7 @@
       "name": "Dropdown",
       "category": "overlays",
       "path": "src/components/overlays/Dropdown.svelte",
-      "description": "Toggle-based action menu with click-outside dismissal and position variants",
+      "description": "Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA",
       "props": {
         "open": {
           "type": "boolean",
@@ -2290,7 +2290,7 @@
         "position": {
           "type": "'bottom-start'|'bottom-end'|'bottom-center'|'top-start'|'top-end'|'top-center'",
           "default": "'bottom-start'",
-          "description": "Menu position"
+          "description": "Preferred menu position (auto-flips if near viewport edge)"
         }
       },
       "snippets": [
@@ -2298,16 +2298,18 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "breaking": [],
+      "revision": 2,
+      "lastReviewed": "2026-02-26",
+      "breaking": [
+        "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
+      ],
       "docLevel": "minimal"
     },
     {
       "name": "DropdownItem",
       "category": "overlays",
       "path": "src/components/overlays/DropdownItem.svelte",
-      "description": "Menu item button with optional icon and danger variant",
+      "description": "Menu item with role=menuitem, keyboard support, icon and danger variant",
       "props": {
         "variant": {
           "type": "'default'|'danger'",
@@ -2328,8 +2330,8 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-26",
       "breaking": [],
       "docLevel": "minimal"
     },
