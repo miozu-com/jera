@@ -116,7 +116,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
@@ -129,8 +129,8 @@
   }
 
   .nav-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .nav-item.collapsed {
@@ -141,8 +141,8 @@
   }
 
   .nav-item.active {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 15%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+    color: var(--color-primary);
     font-weight: 500;
   }
 
@@ -154,22 +154,22 @@
 
   /* Variant: warning */
   .nav-item.variant-warning {
-    color: var(--color-warning, var(--color-base0A, #E8D176));
+    color: var(--color-warning, var(--color-base0A));
   }
 
   .nav-item.variant-warning:hover {
-    color: var(--color-warning, var(--color-base0A, #E8D176));
-    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 15%, transparent);
+    color: var(--color-warning, var(--color-base0A));
+    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A)) 15%, transparent);
   }
 
   /* Variant: danger */
   .nav-item.variant-danger {
-    color: var(--color-error, var(--color-base08, #EB3137));
+    color: var(--color-error, var(--color-base08));
   }
 
   .nav-item.variant-danger:hover {
-    color: var(--color-error, var(--color-base08, #EB3137));
-    background-color: color-mix(in srgb, var(--color-error, var(--color-base08, #EB3137)) 15%, transparent);
+    color: var(--color-error, var(--color-base08));
+    background-color: color-mix(in srgb, var(--color-error, var(--color-base08)) 15%, transparent);
   }
 
   .nav-icon {
@@ -189,22 +189,22 @@
     font-size: 0.625rem;
     font-weight: 600;
     border-radius: 9999px;
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    color: var(--color-primary);
   }
 
   .nav-badge.badge-success {
-    background-color: color-mix(in srgb, var(--color-success, var(--color-base0B, #6DD672)) 10%, transparent);
-    color: var(--color-success, var(--color-base0B, #6DD672));
+    background-color: color-mix(in srgb, var(--color-success, var(--color-base0B)) 10%, transparent);
+    color: var(--color-success, var(--color-base0B));
   }
 
   .nav-badge.badge-warning {
-    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 10%, transparent);
-    color: var(--color-warning, var(--color-base0A, #E8D176));
+    background-color: color-mix(in srgb, var(--color-warning, var(--color-base0A)) 10%, transparent);
+    color: var(--color-warning, var(--color-base0A));
   }
 
   .nav-badge.badge-danger {
-    background-color: color-mix(in srgb, var(--color-error, var(--color-base08, #EB3137)) 10%, transparent);
-    color: var(--color-error, var(--color-base08, #EB3137));
+    background-color: color-mix(in srgb, var(--color-error, var(--color-base08)) 10%, transparent);
+    color: var(--color-error, var(--color-base08));
   }
 </style>

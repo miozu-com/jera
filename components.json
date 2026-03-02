@@ -82,8 +82,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -91,7 +91,7 @@
       "name": "Badge",
       "category": "primitives",
       "path": "src/components/primitives/Badge.svelte",
-      "description": "Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 4px radius).",
+      "description": "Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 2px radius).",
       "props": {
         "variant": {
           "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'",
@@ -112,6 +112,11 @@
           "type": "boolean",
           "default": "false",
           "description": "Show colored dot matching variant color"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the badge element"
         }
       },
       "snippets": [
@@ -126,10 +131,11 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-02-22",
+      "revision": 3,
+      "lastReviewed": "2026-03-02",
       "breaking": [
-        "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border."
+        "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
+        "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
       ],
       "docLevel": "standard"
     },
@@ -256,14 +262,19 @@
           "type": "boolean",
           "default": "false",
           "description": "Show progress bar below value"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Description text below the value (alias for secondary, takes priority)"
         }
       },
       "consumers": [
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "minimal"
     },
@@ -514,7 +525,7 @@
       "name": "Switch",
       "category": "forms",
       "path": "src/components/forms/Switch.svelte",
-      "description": "Toggle switch for boolean settings",
+      "description": "Accessible toggle switch for boolean values with smooth CSS transitions",
       "props": {
         "checked": {
           "type": "boolean",
@@ -531,6 +542,31 @@
           "type": "'sm'|'md'|'lg'",
           "default": "'md'",
           "description": "Switch size"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form input name attribute"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id (auto-generated if omitted)"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Label text displayed next to the switch (alternative to children snippet)"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Secondary description text below the label"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the wrapper label"
         }
       },
       "snippets": [
@@ -544,10 +580,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 4,
+      "lastReviewed": "2026-03-02",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "SearchInput",
@@ -917,12 +953,12 @@
       "name": "Tabs",
       "category": "navigation",
       "path": "src/components/navigation/Tabs.svelte",
-      "description": "Tab navigation with animated sliding indicator",
+      "description": "Tab navigation with animated sliding indicator and configurable accent color",
       "props": {
         "tabs": {
           "type": "array",
           "default": "[]",
-          "description": "Array of {id, label, badge?, icon?}"
+          "description": "Array of {id, label, badge?, icon?, disabled?, panelId?}"
         },
         "active": {
           "type": "string",
@@ -933,17 +969,27 @@
         "variant": {
           "type": "'default'|'segment'|'underline'|'pills'",
           "default": "'default'",
-          "description": "Tab style variant"
+          "description": "Visual style variant"
         },
         "size": {
           "type": "'sm'|'md'|'lg'",
           "default": "'md'",
           "description": "Tab size"
         },
+        "color": {
+          "type": "'primary'|'danger'|'warning'|'success'|'info'",
+          "default": "'primary'",
+          "description": "Accent color for indicator, focus ring, and active badge"
+        },
         "fullWidth": {
           "type": "boolean",
           "default": "false",
-          "description": "Stretch to fill container"
+          "description": "Stretch tabs to fill container width"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the tabs container"
         }
       },
       "events": [
@@ -955,10 +1001,12 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "breaking": [],
-      "docLevel": "minimal"
+      "revision": 3,
+      "lastReviewed": "2026-03-02",
+      "breaking": [
+        "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb."
+      ],
+      "docLevel": "standard"
     },
     {
       "name": "Accordion",
@@ -987,7 +1035,7 @@
       ],
       "stage": "stable",
       "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "minimal"
     },
@@ -1036,7 +1084,7 @@
       ],
       "stage": "stable",
       "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "minimal"
     },
@@ -2097,6 +2145,16 @@
           "type": "string|null",
           "default": "null",
           "description": "Makes card clickable link"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "''",
+          "description": "Secondary label (alias for sublabel, takes priority)"
+        },
+        "trend": {
+          "type": "string",
+          "default": "''",
+          "description": "Trend indicator (e.g. '+12%', '-3%'). Auto-colors: + green, - red, else muted"
         }
       },
       "snippets": [
@@ -2107,8 +2165,8 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "minimal"
     },
@@ -2118,10 +2176,43 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-27",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "minimal",
+      "props": {
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Chip label text"
+        },
+        "active": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Active/selected state"
+        },
+        "count": {
+          "type": "number|null",
+          "default": "null",
+          "description": "Optional count badge"
+        },
+        "variant": {
+          "type": "'default'|'error'|'warning'|'success'|'info'",
+          "default": "'default'",
+          "description": "Active state color variant"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable interaction"
+        }
+      },
+      "snippets": [
+        "icon"
+      ],
+      "events": [
+        "onclick"
+      ]
     },
     {
       "name": "StatusLine",
@@ -2234,16 +2325,22 @@
           "type": "'default'|'accent'",
           "default": "'default'",
           "description": "Card style"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "''",
+          "description": "Subtitle text below the card title"
         }
       },
       "snippets": [
         "icon",
         "linkLabel",
-        "children"
+        "children",
+        "actions"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-02-27",
       "breaking": [],
       "docLevel": "minimal"
     },

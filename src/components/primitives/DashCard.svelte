@@ -18,28 +18,39 @@
 <script>
   let {
     title = '',
+    subtitle = '',
     href = '',
     icon,
     linkLabel,
+    actions,
     index = 0,
     variant = 'default',
     class: className = '',
-    children
+    children,
+    ...rest
   } = $props();
 </script>
 
 <div
   class="dash-card {variant !== 'default' ? `dash-card--${variant}` : ''} {className}"
   style="--index: {index}"
+  {...rest}
 >
   <div class="dash-card-header">
     <div class="dash-card-title">
       {#if icon}
         <span class="dash-card-icon">{@render icon()}</span>
       {/if}
-      <h3>{title}</h3>
+      <div class="dash-card-title-group">
+        <h3>{title}</h3>
+        {#if subtitle}
+          <p class="dash-card-subtitle">{subtitle}</p>
+        {/if}
+      </div>
     </div>
-    {#if href && linkLabel}
+    {#if actions}
+      <div class="dash-card-actions">{@render actions()}</div>
+    {:else if href && linkLabel}
       <a {href} class="dash-card-link">{@render linkLabel()}</a>
     {/if}
   </div>
@@ -52,7 +63,7 @@
 
 <style>
   .dash-card {
-    border-radius: 0.75rem;
+    border-radius: var(--radius-sm);
     padding: 1.25rem;
     border: 1px solid var(--color-base02);
     transition: border-color 200ms ease;
@@ -101,6 +112,28 @@
     color: var(--color-base04);
     display: flex;
     align-items: center;
+  }
+
+  .dash-card-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .dash-card-subtitle {
+    font-size: 0.75rem;
+    color: var(--color-base04);
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    margin: 0;
+  }
+
+  .dash-card-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-shrink: 0;
   }
 
   .dash-card-link {

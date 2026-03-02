@@ -201,7 +201,7 @@
 <style>
   .nav-search-block {
     padding: var(--nav-search-block-padding, 0.5rem);
-    border-bottom: var(--nav-search-border, 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
+    border-bottom: var(--nav-search-border, 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent));
   }
 
   .search-toggle {
@@ -242,7 +242,7 @@
   .search-icon {
     position: absolute;
     left: 1.25rem;
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     pointer-events: none;
     z-index: 10;
   }
@@ -250,8 +250,8 @@
   .search-input {
     width: 100%;
     padding: 0.5rem 2.25rem 0.5rem 2.25rem;
-    background: var(--color-surface-alt, var(--color-base02, #3E4359));
-    border: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 40%, transparent);
+    background: var(--color-surface-alt, var(--color-base02));
+    border: 1px solid color-mix(in srgb, var(--color-base03) 40%, transparent);
     border-radius: var(--nav-item-border-radius);
     font-size: 0.875rem;
     color: var(--nav-item-color);
@@ -260,7 +260,7 @@
   }
 
   .search-input::placeholder {
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
   }
 
   .search-input:focus {
@@ -275,7 +275,7 @@
     right: 1.25rem;
     padding: 0.25rem;
     border-radius: 0.25rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border: none;
     background: transparent;
@@ -283,14 +283,14 @@
   }
 
   .search-clear:hover {
-    background: color-mix(in srgb, var(--color-base03, #565E78) 50%, transparent);
+    background: color-mix(in srgb, var(--color-base03) 50%, transparent);
     color: var(--nav-item-color);
   }
 
   .search-results-summary {
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     text-align: center;
   }
 

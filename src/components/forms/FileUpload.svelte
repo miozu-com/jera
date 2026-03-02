@@ -168,9 +168,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     width: 100%;
-    padding: var(--space-6) var(--space-4);
+    padding: var(--space-12) var(--space-8);
     background: var(--color-base00);
     border: 2px dashed var(--color-base03);
     border-radius: var(--radius-lg);
@@ -214,18 +214,18 @@
 
   .file-list {
     list-style: none;
-    margin: var(--space-3) 0 0;
+    margin: var(--space-6) 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .file-item {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
     background: var(--color-base01);
     border: 1px solid var(--color-base02);
     border-radius: var(--radius-md);
@@ -250,7 +250,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-1);
+    padding: var(--space-2);
     background: transparent;
     border: none;
     border-radius: var(--radius-sm);

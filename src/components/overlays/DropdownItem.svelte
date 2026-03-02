@@ -63,9 +63,9 @@
   .dropdown-item {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     width: 100%;
-    padding: var(--space-1-5, 0.375rem) var(--space-2);
+    padding: var(--space-3, 0.375rem) var(--space-4);
     font-size: var(--text-sm);
     text-align: left;
     color: var(--color-base05);

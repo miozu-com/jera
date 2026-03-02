@@ -181,7 +181,7 @@
     position: fixed;
     z-index: var(--z-popover);
     min-width: 8rem;
-    padding: var(--space-1);
+    padding: var(--space-2);
     background: var(--color-base01);
     border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
     border-radius: var(--radius-md);

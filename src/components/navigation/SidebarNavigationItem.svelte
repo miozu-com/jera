@@ -299,7 +299,7 @@
     margin: var(--nav-item-margin, 0 0.5rem 0.125rem 0.5rem);
     padding-left: calc(var(--nav-item-padding-left, 0.75rem) + var(--nav-item-indent, 0px));
     font-size: var(--nav-item-font-size, 0.875rem);
-    color: var(--nav-item-color, var(--color-text, var(--color-base06, #F3F4F7)));
+    color: var(--nav-item-color, var(--color-text, var(--color-base06)));
     background: var(--nav-item-background, transparent);
     border: var(--nav-item-border, none);
     border-radius: var(--nav-item-border-radius, 0.375rem);
@@ -313,24 +313,24 @@
   }
 
   .nav-item-recursive:hover {
-    color: var(--nav-item-hover-color, var(--color-primary, var(--color-base0D, #83D2FC)));
-    background: var(--nav-item-hover-background, color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-hover-opacity, 10%), transparent));
+    color: var(--nav-item-hover-color, var(--color-primary));
+    background: var(--nav-item-hover-background, color-mix(in srgb, var(--color-primary) var(--nav-hover-opacity, 10%), transparent));
   }
 
   .nav-item-recursive.active {
-    color: var(--nav-item-active-color, var(--color-primary, var(--color-base0D, #83D2FC)));
-    background: var(--nav-item-active-background, color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-active-opacity, 15%), transparent));
+    color: var(--nav-item-active-color, var(--color-primary));
+    background: var(--nav-item-active-background, color-mix(in srgb, var(--color-primary) var(--nav-active-opacity, 15%), transparent));
     font-weight: var(--nav-item-active-weight, 500);
   }
 
   .nav-item-recursive.in-active-path {
-    color: var(--nav-item-path-color, var(--color-primary, var(--color-base0D, #83D2FC)));
+    color: var(--nav-item-path-color, var(--color-primary));
     opacity: var(--nav-item-path-opacity, 0.8);
   }
 
   .nav-item-recursive.matches-search {
-    background: var(--nav-search-highlight-bg, color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 10%, transparent));
-    border: var(--nav-search-highlight-border, 1px solid color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 30%, transparent));
+    background: var(--nav-search-highlight-bg, color-mix(in srgb, var(--color-warning, var(--color-base0A)) 10%, transparent));
+    border: var(--nav-search-highlight-border, 1px solid color-mix(in srgb, var(--color-warning, var(--color-base0A)) 30%, transparent));
   }
 
   .nav-item-recursive.collapsed {
@@ -368,7 +368,7 @@
     padding: 0;
     border: none;
     background: transparent;
-    color: var(--nav-expand-button-color, var(--color-text-muted, var(--color-base05, #D0D2DB)));
+    color: var(--nav-expand-button-color, var(--color-text-muted, var(--color-base05)));
     cursor: pointer;
     border-radius: var(--nav-expand-button-radius, 0.25rem);
     transition: all var(--nav-transition-duration, 200ms) var(--nav-transition-easing, ease);
@@ -376,8 +376,8 @@
   }
 
   .expand-button:hover {
-    background: var(--nav-expand-button-hover-bg, color-mix(in srgb, var(--color-text-muted, var(--color-base05, #D0D2DB)) 10%, transparent));
-    color: var(--nav-expand-button-hover-color, var(--color-text, var(--color-base06, #F3F4F7)));
+    background: var(--nav-expand-button-hover-bg, color-mix(in srgb, var(--color-text-muted, var(--color-base05)) 10%, transparent));
+    color: var(--nav-expand-button-hover-color, var(--color-text, var(--color-base06)));
   }
 
   .expand-icon {
@@ -427,8 +427,8 @@
     padding: var(--nav-badge-padding, 0.125rem 0.375rem);
     font-size: var(--nav-badge-font-size, 0.625rem);
     font-weight: var(--nav-badge-weight, 600);
-    color: var(--nav-badge-color, var(--color-primary, var(--color-base0D, #83D2FC)));
-    background: var(--nav-badge-background, color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-badge-opacity, 10%), transparent));
+    color: var(--nav-badge-color, var(--color-primary));
+    background: var(--nav-badge-background, color-mix(in srgb, var(--color-primary) var(--nav-badge-opacity, 10%), transparent));
     border-radius: var(--nav-badge-radius, 9999px);
     min-width: var(--nav-badge-min-width, 1rem);
     height: var(--nav-badge-height, 1rem);
@@ -442,7 +442,7 @@
     transform: translateY(-50%);
     width: var(--nav-search-indicator-size, 0.375rem);
     height: var(--nav-search-indicator-size, 0.375rem);
-    background: var(--nav-search-indicator-color, var(--color-warning, var(--color-base0A, #E8D176)));
+    background: var(--nav-search-indicator-color, var(--color-warning, var(--color-base0A)));
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -452,7 +452,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    border-left: var(--nav-children-border, 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
+    border-left: var(--nav-children-border, 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent));
     margin-left: var(--nav-children-margin-left, calc(var(--nav-icon-container-size, 1.5rem) / 2));
     padding-left: var(--nav-children-padding-left, 0.5rem);
   }

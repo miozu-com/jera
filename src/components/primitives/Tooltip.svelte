@@ -123,7 +123,7 @@
   }
 
   .tooltip-content {
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-4) var(--space-6);
     font-size: var(--text-xs);
     font-weight: 500;
     color: var(--color-base06);
@@ -149,7 +149,7 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
   }
 
   .tooltip-top .tooltip-arrow {
@@ -165,7 +165,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: var(--space-2);
+    margin-top: var(--space-4);
   }
 
   .tooltip-bottom .tooltip-arrow {
@@ -181,7 +181,7 @@
     right: 100%;
     top: 50%;
     transform: translateY(-50%);
-    margin-right: var(--space-2);
+    margin-right: var(--space-4);
   }
 
   .tooltip-left .tooltip-arrow {
@@ -197,7 +197,7 @@
     left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: var(--space-2);
+    margin-left: var(--space-4);
   }
 
   .tooltip-right .tooltip-arrow {

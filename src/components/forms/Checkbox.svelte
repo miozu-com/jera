@@ -76,7 +76,7 @@
   .checkbox-wrapper {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     cursor: pointer;
     user-select: none;
   }

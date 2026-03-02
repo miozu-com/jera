@@ -38,10 +38,20 @@
     active = $bindable(null),
     variant = 'default',
     size = 'md',
+    color = 'primary',
     fullWidth = false,
     onchange = () => {},
     class: className = ''
   } = $props();
+
+  const accentMap = {
+    primary: 'var(--color-base0E)',
+    danger: 'var(--color-base08)',
+    warning: 'var(--color-base09)',
+    success: 'var(--color-base0B)',
+    info: 'var(--color-base0D)'
+  };
+  const accent = $derived(accentMap[color] || accentMap.primary);
 
   const componentId = generateId();
   let tablistEl = $state(null);
@@ -119,6 +129,7 @@
   class:tabs-full-width={fullWidth}
   role="tablist"
   bind:this={tablistEl}
+  style="--tabs-accent: {accent}"
 >
   {#if showIndicator}
     <span
@@ -187,8 +198,8 @@
     width: var(--indicator-width, 0);
     top: 0;
     bottom: 0;
-    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-    border-radius: var(--radius-md);
+    background: var(--color-base02);
+    border-radius: var(--radius-sm);
     pointer-events: none;
     z-index: 0;
     transition: left var(--duration-base) var(--ease-out),
@@ -199,17 +210,18 @@
 
   /* Segment variant indicator */
   .tabs-segment .tabs-indicator {
+    top: 1px;
+    bottom: 1px;
     background: var(--color-base00);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border: 1px solid var(--color-base02);
   }
 
   /* Underline variant indicator */
   .tabs-indicator-underline {
     top: auto;
     bottom: 0;
-    height: 2px;
-    background: var(--color-base0D);
+    height: var(--border-width-thick);
+    background: var(--tabs-accent);
     border-radius: var(--radius-full);
     box-shadow: none;
   }
@@ -227,13 +239,13 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-2) var(--space-6);
     background: transparent;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     font-size: var(--text-sm);
     font-weight: 500;
-    color: var(--color-base05);
+    color: var(--color-base04);
     cursor: pointer;
     transition: color var(--duration-fast) var(--ease-out);
     white-space: nowrap;
@@ -241,28 +253,27 @@
 
   /* Size variants */
   .tabs-sm .tab {
-    padding: var(--space-1) var(--space-3);
+    padding: var(--space-2) var(--space-4);
     font-size: var(--text-xs);
   }
 
   .tabs-lg .tab {
-    padding: var(--space-3) var(--space-5);
+    padding: var(--space-4) var(--space-8);
     font-size: var(--text-base);
   }
 
   .tab:hover:not(.tab-disabled) {
+    color: var(--color-base05);
+  }
+
+  .tab-active,
+  .tab-active:hover {
     color: var(--color-base06);
-    background: color-mix(in srgb, var(--color-base02) 50%, transparent);
-    border-radius: var(--radius-md);
   }
 
   .tab:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-base0D);
-  }
-
-  .tab-active {
-    color: var(--color-base0D);
+    box-shadow: 0 0 0 2px var(--tabs-accent);
   }
 
   .tab-disabled {
@@ -276,34 +287,32 @@
   }
 
   .tab-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--space-5);
-    height: var(--space-5);
-    padding: 0 var(--space-1);
-    background: var(--color-base03);
-    border-radius: 9999px;
     font-size: var(--text-xs);
     font-weight: 600;
+    color: var(--color-base04);
   }
 
   .tab-active .tab-badge {
-    background: var(--color-base0D);
-    color: var(--color-base07);
+    color: inherit;
   }
 
   /* ---- Segment variant ---- */
   .tabs-segment {
     background: var(--color-base01);
-    border-radius: var(--radius-lg);
-    padding: var(--space-1);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
+    border-radius: var(--radius-sm);
+    padding: 1px;
+    gap: 0;
+    border: 1px solid var(--color-base02);
+  }
+
+  .tabs-segment .tab {
+    color: var(--color-base04);
   }
 
   .tabs-segment .tab-active {
     background: transparent;
     box-shadow: none;
+    color: var(--color-base05);
   }
 
   /* ---- Underline variant ---- */
@@ -322,7 +331,7 @@
   .tabs-underline .tab-active {
     background: transparent;
     box-shadow: none;
-    color: var(--color-base0D);
+    color: var(--color-base06);
   }
 
   .tabs-underline .tab:hover:not(.tab-disabled) {
@@ -333,7 +342,7 @@
   .tabs-pills {
     background: transparent;
     padding: 0;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .tabs-pills .tab {
@@ -341,8 +350,8 @@
   }
 
   .tabs-pills .tab-active {
-    background: var(--color-base0D);
-    border-color: var(--color-base0D);
-    color: var(--color-base07);
+    background: var(--color-base02);
+    border-color: var(--color-base03);
+    color: var(--color-base06);
   }
 </style>

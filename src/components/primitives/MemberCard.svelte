@@ -132,20 +132,20 @@
   .member-card {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
+    gap: var(--space-6);
+    padding: var(--space-6);
     background: transparent;
     border-radius: var(--radius-lg);
     transition: background 0.15s ease;
   }
 
   .member-card-default {
-    padding: var(--space-4);
+    padding: var(--space-8);
   }
 
   .member-card-compact {
-    padding: var(--space-2);
-    gap: var(--space-2);
+    padding: var(--space-4);
+    gap: var(--space-4);
   }
 
   .member-card-clickable {
@@ -164,16 +164,16 @@
   .member-avatar {
     position: relative;
     flex-shrink: 0;
-    width: var(--space-10);
-    height: var(--space-10);
+    width: var(--space-20);
+    height: var(--space-20);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--color-base0D) 15%, transparent);
     overflow: hidden;
   }
 
   .member-card-compact .member-avatar {
-    width: var(--space-8);
-    height: var(--space-8);
+    width: var(--space-16);
+    height: var(--space-16);
     border-radius: var(--radius-md);
   }
 
@@ -202,8 +202,8 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: var(--space-3);
-    height: var(--space-3);
+    width: var(--space-6);
+    height: var(--space-6);
     border-radius: var(--radius-full);
     border: 2px solid var(--color-base00);
   }
@@ -253,8 +253,8 @@
   .member-meta {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    margin-top: var(--space-1);
+    gap: var(--space-4);
+    margin-top: var(--space-2);
   }
 
   .member-role {
@@ -269,7 +269,7 @@
 
   .member-timestamp::before {
     content: '·';
-    margin-right: var(--space-2);
+    margin-right: var(--space-4);
     color: var(--color-base03);
   }
 
@@ -280,7 +280,7 @@
   .member-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     opacity: 0;
     transition: opacity 0.15s ease;
   }

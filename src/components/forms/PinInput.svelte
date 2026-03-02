@@ -110,7 +110,7 @@
 <style>
   .pin-input {
     display: inline-flex;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .pin-field {

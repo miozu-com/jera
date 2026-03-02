@@ -66,7 +66,7 @@
   .radio-label {
     display: inline-flex;
     align-items: flex-start;
-    gap: var(--space-2);
+    gap: var(--space-4);
     cursor: pointer;
     user-select: none;
   }

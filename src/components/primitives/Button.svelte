@@ -128,11 +128,11 @@
     white-space: nowrap;
     transition: all 200ms ease-out;
     background: transparent;
-    border-radius: 0.25rem;   /* 4px default */
+    border-radius: var(--radius-sm);
   }
 
   .jera-btn:focus-visible {
-    outline: 2px solid var(--color-base0D, #83a598);
+    outline: 2px solid var(--color-base0D);
     outline-offset: 2px;
   }
 
@@ -164,145 +164,145 @@
 
   /* Primary - Blue accent, main CTAs */
   .primary {
-    background-color: color-mix(in srgb, var(--color-base0D, #83a598) 10%, transparent);
-    color: var(--color-base0D, #83a598);
-    border: 1px solid color-mix(in srgb, var(--color-base0D, #83a598) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    color: var(--color-base0D);
+    border: 1px solid color-mix(in srgb, var(--color-base0D) 40%, transparent);
   }
 
   .primary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0D, #83a598) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0D, #83a598) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0D) 60%, transparent);
   }
 
   .primary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0D, #83a598) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0D, #83a598) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0D) 80%, transparent);
     transform: scale(0.98);
   }
 
   /* Secondary - Light tinted, mirrors primary pattern */
   .secondary {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 10%, transparent);
-    color: var(--color-base05, #d5c4a1);
-    border: 1px solid color-mix(in srgb, var(--color-base03, #665c54) 30%, transparent);
+    background-color: color-mix(in srgb, var(--color-base03) 10%, transparent);
+    color: var(--color-base05);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
   }
 
   .secondary:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base03, #665c54) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-base03) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base03) 50%, transparent);
   }
 
   .secondary:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base04, #7c6f64) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base04) 60%, transparent);
     transform: scale(0.98);
   }
 
-  /* Outline - Transparent with visible border */
+  /* Outline - Transparent with subtle border */
   .outline {
     background-color: transparent;
-    color: var(--color-base06, #ebdbb2);
-    border: 1px solid var(--color-base03, #665c54);
+    color: var(--color-base05);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
   }
 
   .outline:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 20%, transparent);
-    border-color: var(--color-base03, #665c54);
+    background-color: color-mix(in srgb, var(--color-base03) 15%, transparent);
+    border-color: color-mix(in srgb, var(--color-base03) 70%, transparent);
   }
 
   .outline:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base03, #665c54) 30%, transparent);
-    border-color: var(--color-base04, #7c6f64);
+    background-color: color-mix(in srgb, var(--color-base03) 25%, transparent);
+    border-color: var(--color-base03);
     transform: scale(0.98);
   }
 
   /* Ghost - Minimal, no border */
   .ghost {
     background-color: transparent;
-    color: var(--color-base05, #d5c4a1);
+    color: var(--color-base05);
     border: 1px solid transparent;
   }
 
   .ghost:hover:not(:disabled) {
-    background-color: var(--color-base01, #3c3836);
-    color: var(--color-base06, #ebdbb2);
+    background-color: var(--color-base01);
+    color: var(--color-base06);
   }
 
   .ghost:active:not(:disabled) {
-    background-color: var(--color-base02, #504945);
-    color: var(--color-base06, #ebdbb2);
+    background-color: var(--color-base02);
+    color: var(--color-base06);
     transform: scale(0.98);
   }
 
   /* Success - Green accent */
   .success {
-    background-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 10%, transparent);
-    color: var(--color-base0B, #b8bb26);
-    border: 1px solid color-mix(in srgb, var(--color-base0B, #b8bb26) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0B) 10%, transparent);
+    color: var(--color-base0B);
+    border: 1px solid color-mix(in srgb, var(--color-base0B) 40%, transparent);
   }
 
   .success:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0B) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0B) 60%, transparent);
   }
 
   .success:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0B, #b8bb26) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0B) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0B) 80%, transparent);
     transform: scale(0.98);
   }
 
   /* Danger - Red accent */
   .danger {
-    background-color: color-mix(in srgb, var(--color-base08, #fb4934) 10%, transparent);
-    color: var(--color-base08, #fb4934);
-    border: 1px solid color-mix(in srgb, var(--color-base08, #fb4934) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-base08) 10%, transparent);
+    color: var(--color-base08);
+    border: 1px solid color-mix(in srgb, var(--color-base08) 20%, transparent);
   }
 
   .danger:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base08, #fb4934) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base08, #fb4934) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-base08) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base08) 40%, transparent);
   }
 
   .danger:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base08, #fb4934) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base08, #fb4934) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base08) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base08) 60%, transparent);
     transform: scale(0.98);
   }
 
   /* Warning - Yellow/amber accent */
   .warning {
-    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 10%, transparent);
-    color: var(--color-base0A, #fabd2f);
-    border: 1px solid color-mix(in srgb, var(--color-base0A, #fabd2f) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+    color: var(--color-base0A);
+    border: 1px solid color-mix(in srgb, var(--color-base0A) 40%, transparent);
   }
 
   .warning:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0A) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0A) 60%, transparent);
   }
 
   .warning:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0A, #fabd2f) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0A) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0A) 80%, transparent);
     transform: scale(0.98);
   }
 
   /* Info - Cyan accent */
   .info {
-    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 10%, transparent);
-    color: var(--color-base0C, #8ec07c);
-    border: 1px solid color-mix(in srgb, var(--color-base0C, #8ec07c) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0C) 10%, transparent);
+    color: var(--color-base0C);
+    border: 1px solid color-mix(in srgb, var(--color-base0C) 40%, transparent);
   }
 
   .info:hover:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 20%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0C) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0C) 60%, transparent);
   }
 
   .info:active:not(:disabled) {
-    background-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 30%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0C, #8ec07c) 80%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0C) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0C) 80%, transparent);
     transform: scale(0.98);
   }
 
@@ -312,25 +312,21 @@
   .xs {
     padding: 0.25rem 0.5rem;   /* py-1 px-2 */
     font-size: 0.75rem;        /* text-xs */
-    border-radius: 0.125rem;   /* 2px */
   }
 
   .sm {
     padding: 0.375rem 0.75rem; /* py-1.5 px-3 */
     font-size: 0.875rem;       /* text-sm */
-    border-radius: 0.125rem;   /* 2px */
   }
 
   .md {
     padding: 0.5rem 1rem;      /* py-2 px-4 */
     font-size: 1rem;           /* text-base */
-    border-radius: 0.25rem;    /* 4px */
   }
 
   .lg {
     padding: 0.75rem 1.25rem;  /* py-3 px-5 */
     font-size: 1.125rem;       /* text-lg */
-    border-radius: 0.375rem;   /* 6px */
   }
 
   /* ============================================

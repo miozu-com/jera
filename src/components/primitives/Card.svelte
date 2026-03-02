@@ -41,7 +41,7 @@
     background: transparent;
     border: 1px solid var(--color-base02);
     border-radius: var(--radius-xl);
-    padding: var(--space-6);
+    padding: var(--space-12);
     transition: border-color 0.2s ease;
   }
 
@@ -77,13 +77,13 @@
   }
 
   .card-title {
-    margin: 0 0 var(--space-5) 0;
+    margin: 0 0 var(--space-10) 0;
     font-size: var(--text-base);
     font-weight: 500;
     color: var(--color-base07);
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .card-danger .card-title {

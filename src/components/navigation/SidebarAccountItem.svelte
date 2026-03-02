@@ -281,7 +281,7 @@
     align-items: center;
     gap: 0.75rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
@@ -294,8 +294,8 @@
   }
 
   .account-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .account-item.collapsed {
@@ -306,24 +306,24 @@
   }
 
   .account-item.active {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 15%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+    color: var(--color-primary);
     font-weight: 500;
   }
 
   /* Connect account variant */
   .account-item.connect-account {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    color: var(--color-primary);
   }
 
   .account-item.connect-account:hover {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    color: var(--color-primary);
   }
 
   .account-item.collapsed-add {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 30%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
     width: 2rem;
     height: 2rem;
     margin: 0 auto;
@@ -333,8 +333,8 @@
   }
 
   .account-item.collapsed-add:hover {
-    background-color: var(--color-primary, var(--color-base0D, #83D2FC));
-    border-color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
@@ -410,7 +410,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    border: 1px solid var(--color-bg, var(--color-base00, #232733));
+    border: 1px solid var(--color-bg, var(--color-base00));
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
@@ -420,7 +420,7 @@
   }
 
   .platform-badge.shopify {
-    background-color: var(--color-success, var(--color-base0B, #6DD672));
+    background-color: var(--color-success, var(--color-base0B));
   }
 
   .platform-badge.twitter {
@@ -441,7 +441,7 @@
 
   /* Expandable account chevron */
   .account-chevron {
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     transition: all 200ms ease;
     flex-shrink: 0;
     margin-left: auto;
@@ -455,7 +455,7 @@
   .account-subroutes {
     margin-left: 2.5rem;
     padding-left: 0.5rem;
-    border-left: 2px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    border-left: 2px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
@@ -467,7 +467,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
@@ -480,13 +480,13 @@
   }
 
   .subroute-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);
   }
 
   .subroute-item.active {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
     font-weight: 500;
   }
 </style>

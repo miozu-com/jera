@@ -69,8 +69,8 @@
   .sidebar-popover {
     position: fixed;
     z-index: 50;
-    background-color: var(--color-bg, var(--color-base00, #232733));
-    border: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    background-color: var(--color-bg, var(--color-base00));
+    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     border-radius: 0.5rem;
     box-shadow:
       0 25px 50px -12px rgba(0, 0, 0, 0.25),
@@ -96,11 +96,11 @@
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 20%, transparent);
-    background-color: color-mix(in srgb, var(--color-surface, var(--color-base01, #2C3040)) 50%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface, var(--color-base01)) 50%, transparent);
   }
 
   .popover-list {
@@ -118,7 +118,7 @@
     width: 100%;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     text-decoration: none;
     text-align: left;
     background: transparent;
@@ -129,12 +129,12 @@
   }
 
   .popover-item:hover {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    color: var(--color-primary);
   }
 
   .popover-item:active {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 15%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
 
   .popover-item.disabled {

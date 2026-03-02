@@ -215,11 +215,11 @@
   }
 
   .workspace-trigger:hover {
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
+    background-color: var(--color-surface-alt, var(--color-base02));
   }
 
   .workspace-trigger.open {
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
+    background-color: var(--color-surface-alt, var(--color-base02));
   }
 
   .collapsed .workspace-trigger {
@@ -232,7 +232,7 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 0.5rem;
-    background: linear-gradient(135deg, var(--color-primary, #83D2FC), var(--color-info, #40FFE2));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-info));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -266,7 +266,7 @@
     gap: 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-text-strong, var(--color-base07, #FAFDFB));
+    color: var(--color-base07);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -282,23 +282,23 @@
   }
 
   .workspace-badge.badge-default {
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    background-color: var(--color-surface-alt, var(--color-base02));
+    color: var(--color-text-muted, var(--color-base05));
   }
 
   .workspace-badge.badge-primary {
-    background-color: color-mix(in srgb, var(--color-primary, #83D2FC) 20%, transparent);
-    color: var(--color-primary, #83D2FC);
+    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    color: var(--color-primary);
   }
 
   .workspace-badge.badge-success {
-    background-color: color-mix(in srgb, var(--color-success, #6DD672) 20%, transparent);
-    color: var(--color-success, #6DD672);
+    background-color: color-mix(in srgb, var(--color-success) 20%, transparent);
+    color: var(--color-success);
   }
 
   .user-subtitle {
     font-size: 0.75rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -307,7 +307,7 @@
   /* Chevron */
   .chevron {
     flex-shrink: 0;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     transition: transform 200ms ease;
   }
 
@@ -321,8 +321,8 @@
     z-index: 50;
     min-width: 280px;
     max-width: 320px;
-    background-color: var(--color-surface, var(--color-base01, #2C3040));
-    border: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03, #565E78) 40%, transparent));
+    background-color: var(--color-surface, var(--color-base01));
+    border: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 40%, transparent));
     border-radius: 0.75rem;
     box-shadow:
       0 20px 25px -5px rgba(0, 0, 0, 0.3),
@@ -368,15 +368,15 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem;
-    border-bottom: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
-    background-color: color-mix(in srgb, var(--color-surface-alt, var(--color-base02, #3E4359)) 50%, transparent);
+    border-bottom: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
+    background-color: color-mix(in srgb, var(--color-surface-alt, var(--color-base02)) 50%, transparent);
   }
 
   .user-avatar {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-primary, #83D2FC), var(--color-info, #40FFE2));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-info));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -398,12 +398,12 @@
   .user-name {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-text-strong, var(--color-base07, #FAFDFB));
+    color: var(--color-base07);
   }
 
   .user-email {
     font-size: 0.75rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -57,8 +57,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-4) 0;
+    gap: var(--space-8);
+    padding: var(--space-8) 0;
     border-bottom: 1px solid var(--color-base02);
   }
 
@@ -88,7 +88,7 @@
   }
 
   .setting-label {
-    margin: 0 0 var(--space-1);
+    margin: 0 0 var(--space-2);
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-base06);
@@ -110,7 +110,7 @@
     .setting-item:not(.has-leading) {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--space-3);
+      gap: var(--space-6);
     }
   }
 </style>

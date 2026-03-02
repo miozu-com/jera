@@ -275,9 +275,9 @@
   .navbar-inner {
     display: flex;
     align-items: center;
-    gap: var(--space-1-5);
-    padding: 0 var(--space-4);
-    height: var(--space-11); /* 44px */
+    gap: var(--space-3);
+    padding: 0 var(--space-8);
+    height: var(--space-22); /* 44px */
   }
 
   /* ── Brand ───────────────────────────── */
@@ -288,8 +288,8 @@
   .navbar-brand {
     display: flex;
     align-items: center;
-    gap: var(--space-1-5);
-    padding: var(--space-1-5) var(--space-2-5);
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-5);
     border-radius: var(--radius-md);
     font-weight: 600;
     font-size: var(--text-sm);
@@ -319,7 +319,7 @@
   /* ── Brand hover panel — breadcrumbs + description ── */
   .brand-panel {
     position: absolute;
-    top: calc(100% + var(--space-2));
+    top: calc(100% + var(--space-4));
     left: 0;
     min-width: 280px;
     max-width: 400px;
@@ -330,16 +330,16 @@
                 0 2px 8px color-mix(in srgb, var(--color-base00) 25%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    padding: var(--space-4);
+    padding: var(--space-8);
     animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .brand-breadcrumbs {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
     flex-wrap: wrap;
-    margin-bottom: var(--space-2-5);
+    margin-bottom: var(--space-5);
   }
 
   .crumb-sep {
@@ -352,7 +352,7 @@
     font-size: var(--text-xs);
     color: var(--color-base04);
     text-decoration: none;
-    padding: var(--space-0-5) var(--space-1-5);
+    padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-default);
     transition: color var(--duration-fast) var(--ease-default),
                 background-color var(--duration-fast) var(--ease-default);
@@ -367,7 +367,7 @@
     font-size: var(--text-xs);
     font-weight: 600;
     color: var(--color-base06);
-    padding: var(--space-0-5) var(--space-1-5);
+    padding: var(--space-1) var(--space-3);
   }
 
   .brand-desc {
@@ -412,14 +412,14 @@
   }
 
   .navbar :global(.chip-nav .chip) {
-    padding: var(--space-1-5) var(--space-2-5);
+    padding: var(--space-3) var(--space-5);
     font-size: 0.8125rem;
   }
 
   .navbar-subnav-slot {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
     flex: 1;
     min-width: 0;
     overflow-x: auto;
@@ -456,8 +456,8 @@
   .navbar-trigger {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-1-5) var(--space-2-5);
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
     border: none;
     border-radius: var(--radius-md);
     background: transparent;
@@ -490,7 +490,7 @@
   /* ── Dropdown panel ──────────────────── */
   .dropdown-panel {
     position: absolute;
-    top: calc(100% + var(--space-2));
+    top: calc(100% + var(--space-4));
     left: 0;
     min-width: 380px;
     max-width: 460px;
@@ -519,7 +519,7 @@
   .dropdown-grid {
     display: flex;
     flex-direction: column;
-    padding: var(--space-2);
+    padding: var(--space-4);
     gap: 2px;
   }
 
@@ -527,8 +527,8 @@
   .dropdown-card {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-2-5);
-    padding: var(--space-2) var(--space-2-5);
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-5);
     border-radius: var(--radius-lg);
     text-decoration: none;
     transition: background-color var(--duration-100) var(--ease-default);
@@ -546,8 +546,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--space-8);
-    height: var(--space-8);
+    width: var(--space-16);
+    height: var(--space-16);
     flex-shrink: 0;
     border-radius: var(--radius-md);
     background-color: var(--color-base02);
@@ -577,7 +577,7 @@
   .card-title {
     display: flex;
     align-items: center;
-    gap: var(--space-1-5);
+    gap: var(--space-3);
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-base06);
@@ -609,8 +609,8 @@
   .dropdown-footer {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-3);
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
     border-top: var(--border-width-thin) solid var(--color-base02);
     background-color: color-mix(in srgb, var(--color-base02) 30%, transparent);
   }
@@ -674,7 +674,7 @@
   .navbar-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-1-5);
+    gap: var(--space-3);
     margin-left: auto;
   }
 
@@ -682,8 +682,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-1);
-    padding: var(--space-1-5) var(--space-2-5);
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
     border: none;
     border-radius: var(--radius-md);
     background: transparent;

@@ -70,7 +70,7 @@
     justify-content: center;
     gap: 0.25rem;
     font-weight: 500;
-    border-radius: var(--radius-default);
+    border-radius: var(--radius-sm);
     border: 1px solid;
     white-space: nowrap;
     line-height: 1;

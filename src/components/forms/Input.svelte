@@ -85,7 +85,7 @@
 <style>
   .input-base {
     width: 100%;
-    padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    padding: var(--space-4, 0.5rem) var(--space-6, 0.75rem);
     font-size: var(--text-sm, 0.875rem);
     line-height: var(--leading-normal, 1.5);
     color: var(--color-base07);

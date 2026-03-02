@@ -150,7 +150,7 @@
     align-items: center;
     justify-content: center;
     min-height: 8rem;
-    padding: var(--space-4);
+    padding: var(--space-8);
     border: 2px dashed var(--color-base02);
     border-radius: var(--radius-lg);
     background: var(--color-base01);
@@ -197,9 +197,9 @@
   .dropzone-file {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-6);
     width: 100%;
-    padding: var(--space-3);
+    padding: var(--space-6);
     background: var(--color-base00);
     border: 1px solid var(--color-base02);
     border-radius: var(--radius-md);
@@ -221,7 +221,7 @@
   }
 
   .dropzone-file-meta {
-    margin: var(--space-1) 0 0 0;
+    margin: var(--space-2) 0 0 0;
     font-size: var(--text-xs);
     color: var(--color-base04);
   }
@@ -231,7 +231,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-1);
+    padding: var(--space-2);
     background: transparent;
     border: none;
     border-radius: var(--radius-sm);

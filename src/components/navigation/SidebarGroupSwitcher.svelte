@@ -152,7 +152,7 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
@@ -164,7 +164,7 @@
   }
 
   .section-header:hover {
-    color: var(--color-text, var(--color-base05, #D0D2DB));
+    color: var(--color-text, var(--color-base05));
   }
 
   .section-title {
@@ -175,14 +175,14 @@
   .section-count {
     padding: 0.125rem 0.375rem;
     font-size: 0.625rem;
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    background-color: var(--color-surface-alt, var(--color-base02));
+    color: var(--color-text-muted, var(--color-base05));
     border-radius: 9999px;
     flex-shrink: 0;
   }
 
   .section-chevron {
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     transition: all 200ms ease;
     flex-shrink: 0;
   }
@@ -205,7 +205,7 @@
     align-items: center;
     gap: 0.75rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
@@ -217,13 +217,13 @@
   }
 
   .group-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .group-item.active {
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 15%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+    color: var(--color-primary);
     font-weight: 500;
   }
 
@@ -245,18 +245,18 @@
     gap: 0.5rem;
     justify-content: center;
     font-size: 0.875rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
-    border: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     background: transparent;
     font-family: inherit;
   }
 
   .add-group:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 5%, transparent);
-    border-color: var(--color-primary, var(--color-base0D, #83D2FC));
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);
+    border-color: var(--color-primary);
   }
 </style>

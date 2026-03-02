@@ -17,7 +17,7 @@
 <style>
   .dropdown-divider {
     height: 1px;
-    margin: var(--space-1) 0;
+    margin: var(--space-2) 0;
     background: var(--color-base02);
   }
 </style>

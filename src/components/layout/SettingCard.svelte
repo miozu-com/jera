@@ -47,7 +47,7 @@
     background: transparent;
     border: 1px solid color-mix(in srgb, var(--color-base02) 60%, transparent);
     border-radius: var(--radius-xl);
-    padding: var(--space-6);
+    padding: var(--space-12);
     transition: border-color 0.15s ease;
   }
 
@@ -65,7 +65,7 @@
   }
 
   .card-title {
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
     font-size: var(--text-base);
     font-weight: 500;
     color: var(--color-base06);

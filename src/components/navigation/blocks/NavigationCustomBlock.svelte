@@ -53,21 +53,21 @@
   .custom-block-fallback {
     padding: 1rem 0.75rem;
     text-align: center;
-    border: 1px dashed var(--color-border, color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
+    border: 1px dashed var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
     border-radius: var(--nav-item-border-radius, 0.375rem);
-    background: var(--color-surface-alt, var(--color-base02, #3E4359));
+    background: var(--color-surface-alt, var(--color-base02));
   }
 
   .fallback-text {
     font-size: 0.875rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     margin: 0 0 0.5rem 0;
     font-weight: 500;
   }
 
   .fallback-details {
     font-size: 0.75rem;
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     margin: 0;
     font-family: monospace;
   }

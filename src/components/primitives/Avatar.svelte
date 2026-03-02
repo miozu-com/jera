@@ -160,8 +160,8 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: var(--color-base03, #3b3b3b);
-    color: var(--color-base05, #999);
+    background: var(--color-base03);
+    color: var(--color-base05);
   }
 
   .avatar-placeholder-icon {

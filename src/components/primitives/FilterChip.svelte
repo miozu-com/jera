@@ -71,8 +71,8 @@
   .filter-chip {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-1) var(--space-3);
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-6);
     font-size: var(--text-sm);
     font-weight: 500;
     background: transparent;
@@ -146,7 +146,7 @@
     justify-content: center;
     min-width: 1.25rem;
     height: 1.25rem;
-    padding: 0 var(--space-1);
+    padding: 0 var(--space-2);
     font-size: var(--text-xs);
     font-weight: 600;
     background: var(--color-base02);

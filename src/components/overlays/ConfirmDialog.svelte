@@ -238,9 +238,9 @@
 
   .confirm-close {
     position: absolute;
-    top: var(--space-4);
-    right: var(--space-4);
-    padding: var(--space-1);
+    top: var(--space-8);
+    right: var(--space-8);
+    padding: var(--space-2);
     background: transparent;
     border: none;
     border-radius: var(--radius-lg);
@@ -256,13 +256,13 @@
   }
 
   .confirm-content {
-    padding: var(--space-6);
+    padding: var(--space-12);
   }
 
   .confirm-header {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-4);
+    gap: var(--space-8);
   }
 
   .confirm-icon {
@@ -277,11 +277,11 @@
 
   .confirm-text {
     flex: 1;
-    padding-top: var(--space-1);
+    padding-top: var(--space-2);
   }
 
   .confirm-title {
-    margin: 0 0 var(--space-2) 0;
+    margin: 0 0 var(--space-4) 0;
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-base07);
@@ -296,8 +296,8 @@
 
   .confirm-actions {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-6);
     justify-content: flex-end;
-    margin-top: var(--space-6);
+    margin-top: var(--space-12);
   }
 </style>

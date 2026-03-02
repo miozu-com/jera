@@ -220,7 +220,7 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
@@ -232,7 +232,7 @@
   }
 
   .section-header:hover {
-    color: var(--color-text, var(--color-base05, #D0D2DB));
+    color: var(--color-text, var(--color-base05));
   }
 
   .section-title {

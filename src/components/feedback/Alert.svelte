@@ -109,22 +109,22 @@
   .alert {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-6);
     border-radius: var(--radius-lg);
     border: 1px solid;
   }
 
   /* Size variants */
   .alert-sm {
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-4) var(--space-6);
   }
 
   .alert-md {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-6) var(--space-8);
   }
 
   .alert-lg {
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-8) var(--space-10);
   }
 
   /* Variant colors */
@@ -179,7 +179,7 @@
   .alert-title {
     font-weight: 600;
     font-size: var(--text-sm);
-    margin-bottom: var(--space-1);
+    margin-bottom: var(--space-2);
   }
 
   .alert-info .alert-title { color: var(--color-base0D); }
@@ -199,8 +199,8 @@
 
   .alert-actions {
     display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-3);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
   }
 
   /* Close button */
@@ -212,7 +212,7 @@
     width: 24px;
     height: 24px;
     padding: 0;
-    margin: calc(var(--space-1) * -1);
+    margin: calc(var(--space-2) * -1);
     border: none;
     border-radius: var(--radius-md);
     background: transparent;

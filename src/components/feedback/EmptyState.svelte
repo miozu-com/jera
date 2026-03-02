@@ -65,15 +65,15 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: var(--space-16) var(--space-6);
+    padding: var(--space-32) var(--space-12);
   }
 
   .empty-state-compact {
-    padding: var(--space-8) var(--space-4);
+    padding: var(--space-16) var(--space-8);
   }
 
   .empty-state-large {
-    padding: var(--space-24) var(--space-6);
+    padding: var(--space-48) var(--space-12);
   }
 
   .empty-state-content {
@@ -90,7 +90,7 @@
     justify-content: center;
     width: 4rem;
     height: 4rem;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-12);
     border-radius: var(--radius-default);
     background: var(--color-base01);
     color: var(--color-base04);
@@ -100,13 +100,13 @@
   .empty-state-compact .empty-state-icon {
     width: 3rem;
     height: 3rem;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-8);
   }
 
   .empty-state-large .empty-state-icon {
     width: 5rem;
     height: 5rem;
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-16);
   }
 
   .empty-state:hover .empty-state-icon {
@@ -116,19 +116,19 @@
   }
 
   .empty-state-text {
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-12);
   }
 
   .empty-state-compact .empty-state-text {
-    margin-bottom: var(--space-4);
-  }
-
-  .empty-state-large .empty-state-text {
     margin-bottom: var(--space-8);
   }
 
+  .empty-state-large .empty-state-text {
+    margin-bottom: var(--space-16);
+  }
+
   .empty-state-title {
-    margin: 0 0 var(--space-2) 0;
+    margin: 0 0 var(--space-4) 0;
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-base07);
@@ -164,16 +164,16 @@
   .empty-state-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-6);
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .empty-state-compact .empty-state-actions {
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .empty-state-large .empty-state-actions {
-    gap: var(--space-4);
+    gap: var(--space-8);
   }
 </style>

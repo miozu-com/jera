@@ -148,7 +148,7 @@
   .number-field {
     flex: 1;
     min-width: 0;
-    padding: 0 var(--space-3);
+    padding: 0 var(--space-6);
     text-align: center;
     font-size: var(--text-sm);
     color: var(--color-base07);
@@ -189,7 +189,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 var(--space-3);
+    padding: 0 var(--space-6);
     color: var(--color-base04);
     background: var(--color-base01);
     border: 1px solid var(--color-base02);

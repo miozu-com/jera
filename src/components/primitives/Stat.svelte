@@ -24,6 +24,7 @@
     label,
     unit = '',
     secondary = '',
+    description = '',
     status = '',
     size = 'md',
     showBar = false,
@@ -34,6 +35,8 @@
     children
   } = $props();
 
+  // description is an alias for secondary (description takes priority)
+  const resolvedSecondary = $derived(description || secondary);
   const barPercent = $derived(Math.min((barValue || value) / max * 100, 100));
   const Tag = $derived(href ? 'a' : 'div');
 </script>
@@ -52,8 +55,8 @@
       {value}{#if unit}<span class="stat-unit">{unit}</span>{/if}
     </div>
 
-    {#if secondary}
-      <div class="stat-secondary">{secondary}</div>
+    {#if resolvedSecondary}
+      <div class="stat-secondary">{resolvedSecondary}</div>
     {/if}
 
     <div class="stat-label">{label}</div>
@@ -79,7 +82,7 @@
   .stat {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-4);
     text-decoration: none;
     color: inherit;
   }
@@ -98,7 +101,7 @@
   }
 
   .stat-sm .stat-label {
-    font-size: 10px;
+    font-size: var(--text-xs);
   }
 
   .stat-md .stat-value {
@@ -140,18 +143,18 @@
   .stat-secondary {
     font-size: var(--text-sm);
     color: var(--color-base04);
-    margin-top: var(--space-1);
+    margin-top: var(--space-2);
   }
 
   .stat-label {
     color: var(--color-base04);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-top: var(--space-1);
+    margin-top: var(--space-2);
   }
 
   .stat-extra {
-    margin-top: var(--space-2);
+    margin-top: var(--space-4);
   }
 
   /* Status dot */
@@ -161,8 +164,8 @@
     border-radius: 50%;
     flex-shrink: 0;
     position: absolute;
-    top: var(--space-3);
-    right: var(--space-3);
+    top: var(--space-6);
+    right: var(--space-6);
   }
 
   .stat-dot-success { background: var(--color-base0B); }
@@ -180,7 +183,7 @@
     height: 4px;
     background: var(--color-base02);
     border-radius: var(--radius-full);
-    margin-top: var(--space-3);
+    margin-top: var(--space-6);
     overflow: hidden;
   }
 

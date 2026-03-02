@@ -62,13 +62,13 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--space-4);
     color: var(--color-base04);
   }
 
   .status-line-sm {
     font-size: var(--text-xs);
-    gap: var(--space-1);
+    gap: var(--space-2);
   }
 
   .status-line-md {
@@ -77,7 +77,7 @@
 
   .status-line-lg {
     font-size: var(--text-base);
-    gap: var(--space-3);
+    gap: var(--space-6);
   }
 
   .status-separator {
@@ -88,7 +88,7 @@
   .status-item {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
   }
 
   .status-icon {

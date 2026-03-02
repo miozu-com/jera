@@ -106,34 +106,34 @@
   .page-header {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-6);
+    gap: var(--space-8);
+    padding: var(--space-12);
     background: var(--color-base00);
     border-bottom: 1px solid var(--color-base02);
   }
 
   .page-header-compact {
-    padding: var(--space-4);
-    gap: var(--space-3);
+    padding: var(--space-8);
+    gap: var(--space-6);
   }
 
   .page-header-large {
-    padding: var(--space-8);
-    gap: var(--space-6);
+    padding: var(--space-16);
+    gap: var(--space-12);
   }
 
   .header-main {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: var(--space-6);
+    gap: var(--space-12);
     flex-wrap: wrap;
   }
 
   .header-title-section {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-6);
     flex: 1;
     min-width: 0;
   }
@@ -142,8 +142,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--space-10);
-    height: var(--space-10);
+    width: var(--space-20);
+    height: var(--space-20);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
@@ -153,7 +153,7 @@
   .title-text {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: var(--space-2);
     min-width: 0;
   }
 
@@ -183,14 +183,14 @@
   .header-stats {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-12);
     flex-shrink: 0;
   }
 
   .header-stat {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .stat-icon {
@@ -238,7 +238,7 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-6);
     flex-shrink: 0;
   }
 
@@ -246,8 +246,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-3) var(--space-4);
+    gap: var(--space-8);
+    padding: var(--space-6) var(--space-8);
     background: var(--color-base01);
     border-radius: var(--radius-lg);
   }
@@ -261,7 +261,7 @@
   .toolbar-filters {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   /* Responsive */
@@ -273,7 +273,7 @@
 
     .header-stats {
       flex-wrap: wrap;
-      gap: var(--space-4);
+      gap: var(--space-8);
     }
 
     .header-actions {

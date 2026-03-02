@@ -239,8 +239,8 @@
   .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: var(--color-surface, var(--color-base01, #2C3040));
-    border-right: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
+    background-color: var(--color-surface, var(--color-base01));
+    border-right: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
     height: 100vh;
     width: var(--sidebar-width);
     transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -283,12 +283,12 @@
   }
 
   .sidebar-content::-webkit-scrollbar-thumb {
-    background: var(--color-base03, #565E78);
+    background: var(--color-base03);
     border-radius: 2px;
   }
 
   .sidebar-content::-webkit-scrollbar-thumb:hover {
-    background: var(--color-base04, #737E99);
+    background: var(--color-base04);
   }
 
   /* Mobile overlay styles */
@@ -319,7 +319,7 @@
   .mobile-close-btn {
     padding: 0.5rem;
     border-radius: 0.5rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border: none;
     background: transparent;
@@ -328,7 +328,7 @@
   }
 
   .mobile-close-btn:hover {
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    background-color: var(--color-surface-alt, var(--color-base02));
+    color: var(--color-text, var(--color-base06));
   }
 </style>

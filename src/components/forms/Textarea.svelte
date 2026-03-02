@@ -78,7 +78,7 @@
 <style>
   .textarea-base {
     width: 100%;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-4) var(--space-6);
     font-size: var(--text-sm);
     line-height: 1.5;
     color: var(--color-base07);

@@ -94,7 +94,7 @@
     margin-bottom: 0.25rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -116,7 +116,7 @@
   }
 
   .section-header.expandable:hover {
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
   }
 
   .section-title {
@@ -127,14 +127,14 @@
   .section-count {
     padding: 0.125rem 0.375rem;
     font-size: 0.625rem;
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    background-color: var(--color-surface-alt, var(--color-base02));
+    color: var(--color-text-muted, var(--color-base05));
     border-radius: 9999px;
     flex-shrink: 0;
   }
 
   .section-chevron {
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     transition: all 200ms ease;
     flex-shrink: 0;
   }
@@ -145,7 +145,7 @@
 
   .section-divider {
     margin: 0.5rem 0.75rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
   }
 
   .nav-list {

@@ -36,9 +36,19 @@
     active = $bindable(''),
     variant = 'default',
     size = 'md',
+    color = 'primary',
     class: className = '',
     onchange
   } = $props();
+
+  const accentMap = {
+    primary: 'var(--color-base0E)',
+    danger: 'var(--color-base08)',
+    warning: 'var(--color-base09)',
+    success: 'var(--color-base0B)',
+    info: 'var(--color-base0D)'
+  };
+  const accent = $derived(accentMap[color] || accentMap.primary);
 
   function handleTabClick(tab) {
     if (tab.disabled) return;
@@ -71,7 +81,7 @@
   }
 </script>
 
-<nav class="tab-nav tab-nav-{variant} tab-nav-{size} {className}" role="tablist">
+<nav class="tab-nav tab-nav-{variant} tab-nav-{size} {className}" role="tablist" style="--tabs-accent: {accent}">
   {#each tabs as tab, index}
     <button
       type="button"
@@ -111,48 +121,48 @@
   /* Default variant - subtle background */
   .tab-nav-default {
     padding: var(--space-1);
-    background: color-mix(in srgb, var(--color-base01) 70%, transparent);
-    border-radius: var(--radius-lg);
+    background: var(--color-base01);
+    border-radius: var(--radius-sm);
   }
 
   .tab-nav-default .tab-item {
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    border-radius: var(--radius-sm);
     background: transparent;
     border: none;
     color: var(--color-base04);
     font-size: var(--text-sm);
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: var(--transition-colors);
   }
 
   .tab-nav-default .tab-item:hover:not(.disabled) {
     color: var(--color-base05);
-    background: color-mix(in srgb, var(--color-base02) 50%, transparent);
+    background: var(--color-base02);
   }
 
   .tab-nav-default .tab-item.active {
     background: var(--color-base00);
     color: var(--color-base06);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-xs);
   }
 
   /* Pills variant */
   .tab-nav-pills {
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .tab-nav-pills .tab-item {
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-sm);
     background: transparent;
     border: 1px solid transparent;
     color: var(--color-base04);
     font-size: var(--text-sm);
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: var(--transition-colors);
   }
 
   .tab-nav-pills .tab-item:hover:not(.disabled) {
@@ -161,9 +171,9 @@
   }
 
   .tab-nav-pills .tab-item.active {
-    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
-    color: var(--color-base0D);
+    background: var(--color-base02);
+    border-color: var(--color-base03);
+    color: var(--color-base06);
   }
 
   /* Underline variant */
@@ -173,7 +183,7 @@
   }
 
   .tab-nav-underline .tab-item {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-6) var(--space-8);
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
@@ -182,7 +192,7 @@
     font-size: var(--text-sm);
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: var(--transition-colors);
   }
 
   .tab-nav-underline .tab-item:hover:not(.disabled) {
@@ -191,18 +201,18 @@
   }
 
   .tab-nav-underline .tab-item.active {
-    color: var(--color-base0D);
-    border-bottom-color: var(--color-base0D);
+    color: var(--color-base06);
+    border-bottom-color: var(--tabs-accent);
   }
 
   /* Sizes */
   .tab-nav-sm .tab-item {
-    padding: var(--space-1) var(--space-2);
+    padding: var(--space-2) var(--space-4);
     font-size: var(--text-xs);
   }
 
   .tab-nav-lg .tab-item {
-    padding: var(--space-3) var(--space-5);
+    padding: var(--space-6) var(--space-10);
     font-size: var(--text-base);
   }
 
@@ -210,7 +220,7 @@
   .tab-item {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     white-space: nowrap;
     flex-shrink: 0;
   }
@@ -221,7 +231,7 @@
   }
 
   .tab-item:focus-visible {
-    outline: 2px solid var(--color-base0D);
+    outline: 2px solid var(--tabs-accent);
     outline-offset: 2px;
   }
 
@@ -251,7 +261,7 @@
     justify-content: center;
     min-width: 1.25rem;
     height: 1.25rem;
-    padding: 0 var(--space-1);
+    padding: 0 var(--space-2);
     font-size: var(--text-xs);
     font-weight: 600;
     background: var(--color-base09);

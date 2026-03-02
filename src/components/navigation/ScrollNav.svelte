@@ -131,22 +131,22 @@
     left: 0;
     background: linear-gradient(to right, var(--color-base00), transparent);
     justify-content: flex-start;
-    padding-left: var(--space-1);
+    padding-left: var(--space-2);
   }
 
   .scroll-gradient-right {
     right: 0;
     background: linear-gradient(to left, var(--color-base00), transparent);
     justify-content: flex-end;
-    padding-right: var(--space-1);
+    padding-right: var(--space-2);
   }
 
   .scroll-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--space-8);
-    height: var(--space-8);
+    width: var(--space-16);
+    height: var(--space-16);
     padding: 0;
     background: var(--color-base01);
     border: 1px solid var(--color-base02);

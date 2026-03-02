@@ -63,7 +63,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     background: transparent;
     border: none;
     border-radius: 0.5rem;
@@ -72,8 +72,8 @@
   }
 
   .sidebar-toggle:hover {
-    color: var(--color-text, var(--color-base06, #F3F4F7));
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
+    color: var(--color-text, var(--color-base06));
+    background-color: var(--color-surface-alt, var(--color-base02));
   }
 
   .toggle-icon {

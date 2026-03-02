@@ -128,8 +128,8 @@
   .theme-select-segmented {
     display: inline-flex;
     align-items: center;
-    background-color: var(--color-base01, #282828);
-    border-radius: var(--radius-md, 0.375rem);
+    background-color: var(--color-base01);
+    border-radius: var(--radius-md);
     padding: 2px;
     gap: 2px;
   }
@@ -138,33 +138,33 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-1, 0.25rem);
-    padding: var(--space-1, 0.25rem) var(--space-3, 0.75rem);
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-6);
     border: none;
-    border-radius: calc(var(--radius-md, 0.375rem) - 2px);
+    border-radius: calc(var(--radius-md) - 2px);
     background-color: transparent;
-    color: var(--color-base04, #665c54);
-    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-base04);
+    font-size: var(--text-sm);
     font-weight: 500;
     cursor: pointer;
     transition:
-      background-color var(--duration-fast, 150ms) var(--ease-out, ease-out),
-      color var(--duration-fast, 150ms) var(--ease-out, ease-out);
+      background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
   }
 
   .theme-select-option:hover:not(.theme-select-option-active) {
-    color: var(--color-base05, #a89984);
+    color: var(--color-base05);
   }
 
   .theme-select-option:focus-visible {
-    outline: 2px solid var(--color-base0D, #83a598);
+    outline: 2px solid var(--color-base0D);
     outline-offset: -2px;
   }
 
   .theme-select-option-active {
-    background-color: var(--color-base02, #3c3836);
-    color: var(--color-base06, #d5c4a1);
-    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.1));
+    background-color: var(--color-base02);
+    color: var(--color-base06);
+    box-shadow: var(--shadow-sm);
   }
 
   .theme-select-icon {
@@ -181,18 +181,18 @@
      SIZES - SEGMENTED
      -------------------------------------------- */
   .theme-select-sm .theme-select-option {
-    padding: 2px var(--space-2, 0.5rem);
-    font-size: var(--text-xs, 0.75rem);
+    padding: 2px var(--space-4);
+    font-size: var(--text-xs);
   }
 
   .theme-select-md .theme-select-option {
-    padding: var(--space-1, 0.25rem) var(--space-3, 0.75rem);
-    font-size: var(--text-sm, 0.875rem);
+    padding: var(--space-2) var(--space-6);
+    font-size: var(--text-sm);
   }
 
   .theme-select-lg .theme-select-option {
-    padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
-    font-size: var(--text-base, 1rem);
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
   }
 
   /* --------------------------------------------
@@ -206,46 +206,46 @@
 
   .theme-select-native {
     appearance: none;
-    background-color: var(--color-base01, #282828);
-    border: 1px solid var(--color-base03, #504945);
-    border-radius: var(--radius-md, 0.375rem);
-    color: var(--color-base06, #d5c4a1);
-    font-size: var(--text-sm, 0.875rem);
-    padding: var(--space-2, 0.5rem) var(--space-8, 2rem) var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+    background-color: var(--color-base01);
+    border: 1px solid var(--color-base03);
+    border-radius: var(--radius-md);
+    color: var(--color-base06);
+    font-size: var(--text-sm);
+    padding: var(--space-4) var(--space-16) var(--space-4) var(--space-6);
     cursor: pointer;
     transition:
-      border-color var(--duration-fast, 150ms) var(--ease-out, ease-out),
-      background-color var(--duration-fast, 150ms) var(--ease-out, ease-out);
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
   }
 
   .theme-select-native:hover {
-    border-color: var(--color-base04, #665c54);
+    border-color: var(--color-base04);
   }
 
   .theme-select-native:focus {
     outline: none;
-    border-color: var(--color-base0D, #83a598);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-base0D, #83a598) 20%, transparent);
+    border-color: var(--color-base0D);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-base0D) 20%, transparent);
   }
 
   .theme-select-dropdown-icon {
     position: absolute;
-    right: var(--space-2, 0.5rem);
+    right: var(--space-4);
     pointer-events: none;
-    color: var(--color-base04, #665c54);
+    color: var(--color-base04);
   }
 
   /* --------------------------------------------
      SIZES - DROPDOWN
      -------------------------------------------- */
   .theme-select-dropdown.theme-select-sm .theme-select-native {
-    padding: var(--space-1, 0.25rem) var(--space-6, 1.5rem) var(--space-1, 0.25rem) var(--space-2, 0.5rem);
-    font-size: var(--text-xs, 0.75rem);
+    padding: var(--space-2) var(--space-12) var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
   }
 
   .theme-select-dropdown.theme-select-lg .theme-select-native {
-    padding: var(--space-3, 0.75rem) var(--space-10, 2.5rem) var(--space-3, 0.75rem) var(--space-4, 1rem);
-    font-size: var(--text-base, 1rem);
+    padding: var(--space-6) var(--space-20) var(--space-6) var(--space-8);
+    font-size: var(--text-base);
   }
 
   /* --------------------------------------------

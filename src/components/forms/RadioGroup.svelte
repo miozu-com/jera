@@ -51,12 +51,12 @@
 
   .radio-group-vertical {
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .radio-group-horizontal {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--space-4);
+    gap: var(--space-8);
   }
 </style>

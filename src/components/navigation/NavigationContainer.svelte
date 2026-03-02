@@ -181,9 +181,9 @@
     overflow-x: hidden;
 
     /* CSS Custom Properties for theming */
-    --nav-container-bg: var(--color-surface, var(--color-base01, #2C3040));
-    --nav-container-border: var(--color-border, color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent));
-    --nav-container-text: var(--color-text, var(--color-base06, #F3F4F7));
+    --nav-container-bg: var(--color-surface, var(--color-base01));
+    --nav-container-border: var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
+    --nav-container-text: var(--color-text, var(--color-base06));
 
     /* Spacing */
     --nav-block-spacing: 0.5rem;
@@ -197,19 +197,19 @@
     --nav-item-font-size: 0.875rem;
 
     /* Colors */
-    --nav-item-color: var(--color-text, var(--color-base06, #F3F4F7));
+    --nav-item-color: var(--color-text, var(--color-base06));
     --nav-item-background: transparent;
     --nav-item-border: none;
 
     /* Hover states */
     --nav-hover-opacity: 10%;
-    --nav-item-hover-color: var(--color-primary, var(--color-base0D, #83D2FC));
-    --nav-item-hover-background: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-hover-opacity), transparent);
+    --nav-item-hover-color: var(--color-primary);
+    --nav-item-hover-background: color-mix(in srgb, var(--color-primary) var(--nav-hover-opacity), transparent);
 
     /* Active states */
     --nav-active-opacity: 15%;
-    --nav-item-active-color: var(--color-primary, var(--color-base0D, #83D2FC));
-    --nav-item-active-background: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-active-opacity), transparent);
+    --nav-item-active-color: var(--color-primary);
+    --nav-item-active-background: color-mix(in srgb, var(--color-primary) var(--nav-active-opacity), transparent);
     --nav-item-active-weight: 500;
 
     /* Icons */
@@ -221,8 +221,8 @@
     --nav-badge-font-size: 0.625rem;
     --nav-badge-weight: 600;
     --nav-badge-opacity: 10%;
-    --nav-badge-color: var(--color-primary, var(--color-base0D, #83D2FC));
-    --nav-badge-background: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) var(--nav-badge-opacity), transparent);
+    --nav-badge-color: var(--color-primary);
+    --nav-badge-background: color-mix(in srgb, var(--color-primary) var(--nav-badge-opacity), transparent);
     --nav-badge-radius: 9999px;
     --nav-badge-min-width: 1rem;
     --nav-badge-height: 1rem;
@@ -230,9 +230,9 @@
     /* Expand buttons */
     --nav-expand-icon-size: 14px;
     --nav-expand-button-size: 1.25rem;
-    --nav-expand-button-color: var(--color-text-muted, var(--color-base05, #D0D2DB));
-    --nav-expand-button-hover-bg: color-mix(in srgb, var(--color-text-muted, var(--color-base05, #D0D2DB)) 10%, transparent);
-    --nav-expand-button-hover-color: var(--color-text, var(--color-base06, #F3F4F7));
+    --nav-expand-button-color: var(--color-text-muted, var(--color-base05));
+    --nav-expand-button-hover-bg: color-mix(in srgb, var(--color-text-muted, var(--color-base05)) 10%, transparent);
+    --nav-expand-button-hover-color: var(--color-text, var(--color-base06));
     --nav-expand-button-radius: 0.25rem;
 
     /* Transitions */
@@ -240,14 +240,14 @@
     --nav-transition-easing: ease;
 
     /* Search */
-    --nav-search-highlight-bg: color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 10%, transparent);
-    --nav-search-highlight-border: 1px solid color-mix(in srgb, var(--color-warning, var(--color-base0A, #E8D176)) 30%, transparent);
+    --nav-search-highlight-bg: color-mix(in srgb, var(--color-warning, var(--color-base0A)) 10%, transparent);
+    --nav-search-highlight-border: 1px solid color-mix(in srgb, var(--color-warning, var(--color-base0A)) 30%, transparent);
     --nav-search-indicator-size: 0.375rem;
-    --nav-search-indicator-color: var(--color-warning, var(--color-base0A, #E8D176));
+    --nav-search-indicator-color: var(--color-warning, var(--color-base0A));
     --nav-search-indicator-offset: 0.25rem;
 
     /* Children/nesting */
-    --nav-children-border: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    --nav-children-border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     --nav-children-margin-left: calc(var(--nav-icon-container-size) / 2);
     --nav-children-padding-left: 0.5rem;
 
@@ -277,19 +277,19 @@
 
   /* Theme variants */
   .nav-theme-enterprise-dark {
-    --nav-container-bg: #1a1b23;
-    --nav-item-color: #e4e4e7;
-    --nav-item-hover-color: #3b82f6;
-    --nav-item-active-color: #3b82f6;
+    --nav-container-bg: var(--gray-1);
+    --nav-item-color: var(--color-base05);
+    --nav-item-hover-color: var(--color-base0D);
+    --nav-item-active-color: var(--color-base0D);
     --nav-hover-opacity: 8%;
     --nav-active-opacity: 12%;
   }
 
   .nav-theme-enterprise-light {
-    --nav-container-bg: #ffffff;
-    --nav-item-color: #374151;
-    --nav-item-hover-color: #3b82f6;
-    --nav-item-active-color: #3b82f6;
+    --nav-container-bg: var(--gray-1);
+    --nav-item-color: var(--color-base05);
+    --nav-item-hover-color: var(--color-base0D);
+    --nav-item-active-color: var(--color-base0D);
     --nav-hover-opacity: 5%;
     --nav-active-opacity: 10%;
   }
@@ -302,9 +302,9 @@
   }
 
   .nav-theme-colorful {
-    --nav-item-hover-color: #10b981;
-    --nav-item-active-color: #059669;
-    --nav-badge-color: #f59e0b;
+    --nav-item-hover-color: var(--color-base0B);
+    --nav-item-active-color: var(--color-base0B);
+    --nav-badge-color: var(--color-base0A);
     --nav-hover-opacity: 12%;
     --nav-active-opacity: 18%;
   }
@@ -328,17 +328,17 @@
   }
 
   .navigation-container::-webkit-scrollbar-thumb {
-    background: var(--color-base03, #565E78);
+    background: var(--color-base03);
     border-radius: 2px;
   }
 
   .navigation-container::-webkit-scrollbar-thumb:hover {
-    background: var(--color-base04, #737E99);
+    background: var(--color-base04);
   }
 
   /* Firefox scrollbar */
   .navigation-container {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-base03, #565E78) transparent;
+    scrollbar-color: var(--color-base03) transparent;
   }
 </style>

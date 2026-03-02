@@ -71,13 +71,13 @@
     gap: 0.5rem;
     margin: 0 0 0.5rem 0;
     font-weight: 600;
-    color: var(--color-base6, var(--base6, #f3f4f7));
+    color: var(--color-base06);
   }
 
   h2.section-title {
     font-size: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border, var(--base2, #2d3748));
+    border-bottom: 1px solid var(--color-border, var(--color-base02));
   }
 
   h3.section-title {
@@ -95,7 +95,7 @@
 
   .anchor-link {
     opacity: 0;
-    color: var(--color-base4, var(--base4, #a0aec0));
+    color: var(--color-base04);
     transition: opacity 0.15s, color 0.15s;
   }
 
@@ -104,12 +104,12 @@
   }
 
   .anchor-link:hover {
-    color: var(--color-primary, var(--magenta, #c974e6));
+    color: var(--color-primary);
   }
 
   .section-description {
     margin: 0;
-    color: var(--color-base4, var(--base4, #a0aec0));
+    color: var(--color-base04);
     line-height: 1.6;
   }
 

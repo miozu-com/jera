@@ -108,7 +108,7 @@
 
   .search-field {
     width: 100%;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-4) var(--space-6);
     padding-left: 2.5rem;
     padding-right: 2.25rem;
     font-size: var(--text-sm);
@@ -121,7 +121,7 @@
 
   .search-input-sm .search-field {
     height: 2rem;
-    padding: 0 var(--space-2);
+    padding: 0 var(--space-4);
     padding-left: 1.75rem;
     padding-right: 1.75rem;
     font-size: var(--text-xs);
@@ -141,7 +141,7 @@
   }
 
   .search-input-lg .search-field {
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-6) var(--space-8);
     padding-left: 3rem;
     padding-right: 2.75rem;
     font-size: var(--text-base);

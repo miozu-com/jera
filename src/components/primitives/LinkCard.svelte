@@ -54,7 +54,7 @@
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-6) var(--space-8);
     border-radius: var(--radius-lg);
     background: var(--color-base01);
     border: 1px solid var(--color-base02);

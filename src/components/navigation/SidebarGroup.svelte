@@ -130,7 +130,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
@@ -143,8 +143,8 @@
   }
 
   .nav-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .nav-item.collapsed {
@@ -156,7 +156,7 @@
 
   .nav-item:hover .nav-icon,
   .nav-item:hover .expand-icon {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    color: var(--color-primary);
   }
 
   .nav-icon {
@@ -177,7 +177,7 @@
   }
 
   .expand-icon {
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     transition: all 200ms ease;
   }
 
@@ -198,7 +198,7 @@
     display: block;
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     text-decoration: none;
     border-radius: 0.375rem;
     transition: all 200ms ease;
@@ -207,14 +207,14 @@
   }
 
   .subnav-item:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .subnav-item.active {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    color: var(--color-primary);
     font-weight: 500;
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 15%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
 
   .subnav-badge {
@@ -224,7 +224,7 @@
     font-size: 0.625rem;
     font-weight: 600;
     border-radius: 9999px;
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    color: var(--color-primary);
   }
 </style>

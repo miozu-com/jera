@@ -175,7 +175,7 @@
   .workspace-sidebar {
     display: flex;
     flex-direction: column;
-    background-color: var(--color-base00);
+    background-color: var(--color-surface, var(--color-base01));
     border-right: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     height: 100vh;
     position: fixed;

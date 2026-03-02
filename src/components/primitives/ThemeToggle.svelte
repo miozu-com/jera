@@ -129,15 +129,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2, 0.5rem);
+    gap: var(--space-4);
     border: none;
-    border-radius: var(--radius-md, 0.375rem);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background-color var(--duration-fast, 150ms) var(--ease-out, ease-out);
+    transition: background-color var(--duration-fast) var(--ease-out);
   }
 
   .theme-toggle:focus-visible {
-    outline: 2px solid var(--color-base0D, #83a598);
+    outline: 2px solid var(--color-base0D);
     outline-offset: 2px;
   }
 
@@ -146,53 +146,53 @@
      -------------------------------------------- */
   .theme-toggle-ghost {
     background-color: transparent;
-    color: var(--color-base05, #a89984);
+    color: var(--color-base05);
   }
 
   .theme-toggle-ghost:hover {
-    background-color: var(--color-base02, #3c3836);
-    color: var(--color-base06, #d5c4a1);
+    background-color: var(--color-base02);
+    color: var(--color-base06);
   }
 
   .theme-toggle-outline {
     background-color: transparent;
-    color: var(--color-base05, #a89984);
-    border: 1px solid var(--color-base03, #504945);
+    color: var(--color-base05);
+    border: 1px solid var(--color-base03);
   }
 
   .theme-toggle-outline:hover {
-    background-color: var(--color-base02, #3c3836);
-    border-color: var(--color-base04, #665c54);
-    color: var(--color-base06, #d5c4a1);
+    background-color: var(--color-base02);
+    border-color: var(--color-base04);
+    color: var(--color-base06);
   }
 
   .theme-toggle-subtle {
-    background-color: var(--color-base01, #282828);
-    color: var(--color-base05, #a89984);
+    background-color: var(--color-base01);
+    color: var(--color-base05);
   }
 
   .theme-toggle-subtle:hover {
-    background-color: var(--color-base02, #3c3836);
-    color: var(--color-base06, #d5c4a1);
+    background-color: var(--color-base02);
+    color: var(--color-base06);
   }
 
   /* --------------------------------------------
      SIZES
      -------------------------------------------- */
   .theme-toggle-sm {
-    padding: var(--space-1, 0.25rem);
+    padding: var(--space-2);
     min-width: 1.75rem;
     min-height: 1.75rem;
   }
 
   .theme-toggle-md {
-    padding: var(--space-2, 0.5rem);
+    padding: var(--space-4);
     min-width: 2.25rem;
     min-height: 2.25rem;
   }
 
   .theme-toggle-lg {
-    padding: var(--space-3, 0.75rem);
+    padding: var(--space-6);
     min-width: 2.75rem;
     min-height: 2.75rem;
   }
@@ -215,8 +215,8 @@
     opacity: 0;
     transform: rotate(-90deg) scale(0.5);
     transition:
-      opacity var(--duration-normal, 200ms) var(--ease-out, ease-out),
-      transform var(--duration-normal, 200ms) var(--ease-out, ease-out);
+      opacity var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
   }
 
   .theme-toggle-icon-active {
@@ -227,12 +227,12 @@
 
   /* Sun specific - warm color when active */
   .theme-toggle-sun.theme-toggle-icon-active {
-    color: var(--color-base0A, #fabd2f);
+    color: var(--color-base0A);
   }
 
   /* Moon specific - cool color when active */
   .theme-toggle-moon.theme-toggle-icon-active {
-    color: var(--color-base0D, #83a598);
+    color: var(--color-base0D);
   }
 
   /* --------------------------------------------
@@ -240,7 +240,7 @@
      -------------------------------------------- */
   @media (prefers-reduced-motion: reduce) {
     .theme-toggle-icon {
-      transition: opacity var(--duration-fast, 150ms) var(--ease-out, ease-out);
+      transition: opacity var(--duration-fast) var(--ease-out);
       transform: none;
     }
 
@@ -253,11 +253,11 @@
      LABEL
      -------------------------------------------- */
   .theme-toggle-label {
-    font-size: var(--text-sm, 0.875rem);
-    color: var(--color-base05, #a89984);
+    font-size: var(--text-sm);
+    color: var(--color-base05);
   }
 
   .theme-toggle:hover .theme-toggle-label {
-    color: var(--color-base06, #d5c4a1);
+    color: var(--color-base06);
   }
 </style>

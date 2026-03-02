@@ -84,7 +84,7 @@
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-base05);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
   }
 
   .slider-wrapper {
@@ -200,7 +200,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: var(--space-2);
+    margin-top: var(--space-4);
     font-size: var(--text-xs);
     color: var(--color-base04);
   }

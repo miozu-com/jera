@@ -48,16 +48,29 @@
     value = 0,
     unit = '',
     sublabel = '',
+    subtitle = '',
+    trend = '',
     status = '',
     progress = null,
     href = null,
     class: className = '',
     icon,
     badge,
-    onclick
+    onclick,
+    ...rest
   } = $props();
 
   const isClickable = $derived(!!href || !!onclick);
+  // subtitle takes priority over sublabel for backward compat
+  const resolvedSublabel = $derived(subtitle || sublabel);
+  // Auto-detect trend direction from leading +/-
+  const trendDir = $derived.by(() => {
+    if (!trend) return '';
+    const s = String(trend).trim();
+    if (s.startsWith('+')) return 'up';
+    if (s.startsWith('-')) return 'down';
+    return 'neutral';
+  });
 
   const progressVariant = $derived.by(() => {
     if (progress === null) return '';
@@ -86,8 +99,11 @@
     <span class="metric-value {status ? `metric-value-${status}` : ''}">
       {value}{#if unit}<span class="metric-unit">{unit}</span>{/if}
     </span>
-    {#if sublabel}
-      <span class="metric-sublabel">{sublabel}</span>
+    {#if resolvedSublabel}
+      <span class="metric-sublabel">{resolvedSublabel}</span>
+    {/if}
+    {#if trend}
+      <span class="metric-trend metric-trend-{trendDir}">{trend}</span>
     {/if}
   </div>
 
@@ -102,6 +118,7 @@
   <a
     {href}
     class="metric-card {status ? `metric-card-${status}` : ''} metric-card-clickable {className}"
+    {...rest}
   >
     {@render cardContent()}
   </a>
@@ -111,6 +128,7 @@
     {onclick}
     role={onclick ? 'button' : undefined}
     tabindex={onclick ? 0 : undefined}
+    {...rest}
   >
     {@render cardContent()}
   </div>
@@ -120,11 +138,11 @@
   .metric-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
+    gap: var(--space-6);
+    padding: var(--space-10);
     background: var(--color-base01);
     border: 1px solid var(--color-base02);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     transition: all 0.15s ease;
   }
@@ -153,7 +171,7 @@
   .metric-header {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .metric-icon {
@@ -176,7 +194,7 @@
   .metric-body {
     display: flex;
     align-items: baseline;
-    gap: var(--space-2);
+    gap: var(--space-4);
   }
 
   .metric-value {
@@ -209,12 +227,22 @@
     color: var(--color-base04);
   }
 
+  .metric-trend {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .metric-trend-up { color: var(--color-base0B); }
+  .metric-trend-down { color: var(--color-base08); }
+  .metric-trend-neutral { color: var(--color-base04); }
+
   .metric-progress {
     height: 4px;
     background: var(--color-base02);
     border-radius: 2px;
     overflow: hidden;
-    margin-top: var(--space-1);
+    margin-top: var(--space-2);
   }
 
   .metric-progress-bar {

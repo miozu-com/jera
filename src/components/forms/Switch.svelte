@@ -19,20 +19,24 @@
     size = 'md',
     name = '',
     id,
+    label = '',
+    description = '',
     class: className = '',
     children,
     onchange,
     ...rest
   } = $props();
 
-  const inputId = id || generateId();
+  const fallbackId = generateId();
+  const inputId = $derived(id || fallbackId);
 
   // Size classes map to CSS classes defined below
   const sizeClass = $derived(`switch-${size}`);
+  const hasDescription = $derived(!!description);
 </script>
 
 <label
-  class={cn('switch-wrapper', disabled && 'switch-disabled', className)}
+  class={cn('switch-wrapper', disabled && 'switch-disabled', hasDescription && 'switch-wrapper-stacked', className)}
   for={inputId}
 >
   <input
@@ -52,9 +56,18 @@
     <span class={cn('switch-thumb', checked && 'switch-thumb-checked')} />
   </span>
 
-  {#if children}
-    <span class="switch-label">
-      {@render children()}
+  {#if children || label || description}
+    <span class="switch-label-group">
+      <span class="switch-label">
+        {#if children}
+          {@render children()}
+        {:else}
+          {label}
+        {/if}
+      </span>
+      {#if description}
+        <span class="switch-description">{description}</span>
+      {/if}
     </span>
   {/if}
 </label>
@@ -63,7 +76,7 @@
   .switch-wrapper {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     cursor: pointer;
     user-select: none;
   }
@@ -90,7 +103,7 @@
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;
-    border-radius: var(--radius-default);
+    border-radius: var(--radius-sm);
     background-color: var(--color-base03);
     transition: var(--transition-colors);
   }
@@ -106,16 +119,34 @@
 
   .switch-thumb {
     position: absolute;
+    top: 2px;
     left: 2px;
-    border-radius: var(--radius-default);
-    background-color: white;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-on-accent);
     box-shadow: var(--shadow-sm);
     transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .switch-wrapper-stacked {
+    align-items: flex-start;
+    padding-top: 0.125rem;
+  }
+
+  .switch-label-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
   }
 
   .switch-label {
     font-size: var(--text-sm);
     color: var(--color-base05);
+  }
+
+  .switch-description {
+    font-size: var(--text-xs);
+    color: var(--color-base04);
+    line-height: 1.4;
   }
 
   /* Size variants - Small */

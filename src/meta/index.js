@@ -65,7 +65,8 @@ export const categories = (() => {
     grouped[comp.category].push({
       name: comp.name,
       slug: comp.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(),
-      description: comp.description
+      description: comp.description,
+      docLevel: comp.docLevel || 'none'
     });
   }
 

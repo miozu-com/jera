@@ -65,7 +65,7 @@
   .chip-nav {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-2);
     min-width: 0;
     overflow-x: auto;
     scrollbar-width: none;
@@ -78,8 +78,8 @@
   .chip {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
-    padding: 0.25rem var(--space-2);
+    gap: var(--space-2);
+    padding: 0.25rem var(--space-4);
     border-radius: var(--radius-md);
     background: transparent;
     font-family: inherit;
@@ -107,12 +107,12 @@
   /* Sizes */
   .chip-nav-sm .chip {
     font-size: var(--text-xs);
-    padding: 0.1875rem var(--space-2);
+    padding: 0.1875rem var(--space-4);
   }
 
   .chip-nav-md .chip {
     font-size: var(--text-sm);
-    padding: 0.25rem var(--space-2-5);
+    padding: 0.25rem var(--space-5);
   }
 
   /* Badge */

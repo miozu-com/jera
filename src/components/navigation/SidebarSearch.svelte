@@ -148,7 +148,7 @@
 <style>
   .search-section {
     padding: 0.5rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 30%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
   }
 
   .search-toggle {
@@ -158,7 +158,7 @@
     gap: 0.75rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
@@ -169,8 +169,8 @@
   }
 
   .search-toggle:hover {
-    color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 10%, transparent);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   }
 
   .search-label {
@@ -189,7 +189,7 @@
   .search-icon {
     position: absolute;
     left: 1.25rem;
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
     pointer-events: none;
     z-index: 10;
   }
@@ -197,24 +197,24 @@
   .search-input {
     width: 100%;
     padding: 0.5rem 0.5rem 0.5rem 2.25rem;
-    background-color: var(--color-surface-alt, var(--color-base02, #3E4359));
-    border: 1px solid color-mix(in srgb, var(--color-base03, #565E78) 40%, transparent);
+    background-color: var(--color-surface-alt, var(--color-base02));
+    border: 1px solid color-mix(in srgb, var(--color-base03) 40%, transparent);
     border-radius: 0.375rem;
     font-size: 0.875rem;
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    color: var(--color-text, var(--color-base06));
     transition: all 200ms ease;
     font-family: inherit;
   }
 
   .search-input::placeholder {
-    color: var(--color-text-muted, var(--color-base04, #737E99));
+    color: var(--color-text-muted, var(--color-base04));
   }
 
   .search-input:focus {
     outline: none;
-    border-color: var(--color-primary, var(--color-base0D, #83D2FC));
-    background-color: var(--color-surface, var(--color-base01, #2C3040));
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary, var(--color-base0D, #83D2FC)) 20%, transparent);
+    border-color: var(--color-primary);
+    background-color: var(--color-surface, var(--color-base01));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
   .search-close {
@@ -222,7 +222,7 @@
     right: 1.25rem;
     padding: 0.25rem;
     border-radius: 0.25rem;
-    color: var(--color-text-muted, var(--color-base05, #D0D2DB));
+    color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border: none;
     background: transparent;
@@ -230,7 +230,7 @@
   }
 
   .search-close:hover {
-    background-color: color-mix(in srgb, var(--color-base03, #565E78) 50%, transparent);
-    color: var(--color-text, var(--color-base06, #F3F4F7));
+    background-color: color-mix(in srgb, var(--color-base03) 50%, transparent);
+    color: var(--color-text, var(--color-base06));
   }
 </style>
