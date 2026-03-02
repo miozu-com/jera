@@ -334,7 +334,7 @@
       "name": "Input",
       "category": "forms",
       "path": "src/components/forms/Input.svelte",
-      "description": "Text input with validation and error states",
+      "description": "Flexible text input with full browser feature control, error states, and aria-invalid accessibility",
       "props": {
         "value": {
           "type": "string",
@@ -342,10 +342,15 @@
           "bindable": true,
           "description": "Input value (bindable)"
         },
+        "ref": {
+          "type": "HTMLInputElement",
+          "bindable": true,
+          "description": "DOM element reference (bindable)"
+        },
         "type": {
           "type": "string",
           "default": "'text'",
-          "description": "HTML input type"
+          "description": "HTML input type (text, email, password, number, tel, url, search)"
         },
         "placeholder": {
           "type": "string",
@@ -365,12 +370,49 @@
         "error": {
           "type": "boolean",
           "default": "false",
-          "description": "Show error state"
+          "description": "Show error state with red border and aria-invalid"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form field name"
+        },
+        "id": {
+          "type": "string",
+          "default": "''",
+          "description": "Element ID"
+        },
+        "maxlength": {
+          "type": "number",
+          "description": "Maximum character count"
+        },
+        "minlength": {
+          "type": "number",
+          "description": "Minimum character count"
+        },
+        "inputmode": {
+          "type": "string",
+          "description": "Virtual keyboard hint (numeric, tel, email, url, search)"
+        },
+        "autocomplete": {
+          "type": "string",
+          "default": "'on'",
+          "description": "Browser autocomplete behavior"
+        },
+        "disableBrowserFeatures": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable autofill, autocorrect, autocapitalize, and spellcheck"
         },
         "unstyled": {
           "type": "boolean",
           "default": "false",
           "description": "Remove default styling"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes"
         }
       },
       "events": [
@@ -381,14 +423,15 @@
         "onblur"
       ],
       "consumers": [
+        "dash",
         "admin",
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-02",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Textarea",
