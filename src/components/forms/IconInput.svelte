@@ -31,6 +31,7 @@
     type = 'text',
     placeholder = '',
     disabled = false,
+    error = false,
     size = 'md',
     loading = false,
     clearable = false,
@@ -72,6 +73,7 @@
     bind:value
     {placeholder}
     {disabled}
+    {error}
     {size}
     class="icon-input-field"
     style="padding-left: {hasLeftIcon ? '2.5rem' : ''}; padding-right: {hasRightIcon ? '2.5rem' : ''};"

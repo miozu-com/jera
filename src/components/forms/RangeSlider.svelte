@@ -29,6 +29,7 @@
     size = 'md',
     class: className = '',
     id,
+    name = undefined,
     oninput,
     onchange,
     ...rest
@@ -52,6 +53,10 @@
       {max}
       {step}
       {disabled}
+      {name}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={value}
       class="slider"
       style="--percentage: {percentage}%"
       {oninput}

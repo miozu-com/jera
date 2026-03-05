@@ -90,9 +90,9 @@
     line-height: var(--leading-normal, 1.5);
     color: var(--color-base07);
     background-color: var(--color-base00);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-md, 0.375rem);
-    transition: border-color 150ms, box-shadow 150ms;
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
   }
 
   .input-base::placeholder {
@@ -102,7 +102,7 @@
   .input-base:focus {
     outline: none;
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .input-base:disabled {
@@ -116,6 +116,6 @@
 
   .input-error:focus {
     border-color: var(--color-base08);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base08) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow-error);
   }
 </style>

@@ -112,6 +112,7 @@
   bind:this={dialogEl}
   class="confirm-dialog {className}"
   aria-labelledby="confirm-title"
+  aria-modal="true"
   onclose={handleClose}
   oncancel={handleCancel}
   onclick={handleBackdropClick}
@@ -185,7 +186,7 @@
     border: none;
     border-radius: var(--radius-default);
     background: var(--color-base01);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     box-shadow: var(--shadow-2xl);
     padding: 0;
     margin: auto;
@@ -223,17 +224,17 @@
 
   dialog.confirm-dialog {
     transition:
-      opacity 0.2s ease-out,
-      transform 0.2s ease-out,
-      overlay 0.2s ease-out allow-discrete,
-      display 0.2s ease-out allow-discrete;
+      opacity var(--duration-base) ease-out,
+      transform var(--duration-base) ease-out,
+      overlay var(--duration-base) ease-out allow-discrete,
+      display var(--duration-base) ease-out allow-discrete;
   }
 
   dialog.confirm-dialog::backdrop {
     transition:
-      opacity 0.2s ease-out,
-      overlay 0.2s ease-out allow-discrete,
-      display 0.2s ease-out allow-discrete;
+      opacity var(--duration-base) ease-out,
+      overlay var(--duration-base) ease-out allow-discrete,
+      display var(--duration-base) ease-out allow-discrete;
   }
 
   .confirm-close {
@@ -246,7 +247,7 @@
     border-radius: var(--radius-lg);
     color: var(--color-base04);
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
     z-index: 1;
   }
 

@@ -120,7 +120,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     overflow: hidden;
     text-decoration: none;
     border: none;
@@ -174,7 +174,7 @@
 
   .nav-icon {
     flex-shrink: 0;
-    transition: color 200ms ease;
+    transition: color var(--duration-base) ease;
   }
 
   .nav-label {

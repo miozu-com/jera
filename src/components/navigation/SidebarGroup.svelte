@@ -134,7 +134,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     margin: 0 0.5rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     overflow: hidden;
     border: none;
     background: transparent;
@@ -161,7 +161,7 @@
 
   .nav-icon {
     flex-shrink: 0;
-    transition: color 150ms ease;
+    transition: color var(--duration-fast) ease;
   }
 
   .nav-label {
@@ -178,7 +178,7 @@
 
   .expand-icon {
     color: var(--color-text-muted, var(--color-base05));
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
   }
 
   .expand-icon.rotate-180 {
@@ -201,7 +201,7 @@
     color: var(--color-text-muted, var(--color-base05));
     text-decoration: none;
     border-radius: 0.375rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     cursor: pointer;
     text-align: left;
   }

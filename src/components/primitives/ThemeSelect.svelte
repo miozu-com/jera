@@ -157,8 +157,8 @@
   }
 
   .theme-select-option:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: -2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .theme-select-option-active {
@@ -207,7 +207,7 @@
   .theme-select-native {
     appearance: none;
     background-color: var(--color-base01);
-    border: 1px solid var(--color-base03);
+    border: var(--border-width-default) solid var(--color-base03);
     border-radius: var(--radius-md);
     color: var(--color-base06);
     font-size: var(--text-sm);

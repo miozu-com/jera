@@ -71,7 +71,7 @@
     gap: 0.25rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
-    border: 1px solid;
+    border: var(--border-width-default) solid;
     white-space: nowrap;
     line-height: 1;
     transition: background 0.15s ease, border-color 0.15s ease;
@@ -180,7 +180,7 @@
   }
 
   button.jera-badge:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 </style>

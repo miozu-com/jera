@@ -198,7 +198,7 @@
     width: 100%;
     padding: 0.5rem 0.5rem 0.5rem 2.25rem;
     background-color: var(--color-surface-alt, var(--color-base02));
-    border: 1px solid color-mix(in srgb, var(--color-base03) 40%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 40%, transparent);
     border-radius: 0.375rem;
     font-size: 0.875rem;
     color: var(--color-text, var(--color-base06));

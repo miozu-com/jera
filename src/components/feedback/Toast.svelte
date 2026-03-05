@@ -198,10 +198,10 @@
     max-width: 24rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    border: 1px solid;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    border: var(--border-width-default) solid;
+    box-shadow: var(--shadow-lg);
     pointer-events: auto;
-    animation: toast-in 200ms ease-out;
+    animation: toast-in var(--duration-base) ease-out;
   }
 
   .toast-info {
@@ -268,7 +268,7 @@
     border: none;
     cursor: pointer;
     opacity: 0.6;
-    transition: opacity 150ms;
+    transition: opacity var(--duration-fast);
   }
 
   .toast-close:hover {

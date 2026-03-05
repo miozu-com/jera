@@ -80,13 +80,15 @@ All form components (Input, Select, SearchInput, Checkbox) share identical borde
 
 | Property | Value | Token |
 |----------|-------|-------|
-| Border width | `1px` | — |
+| Border width | `var(--border-width-default)` (2px) | border-width-default |
 | Border color | `var(--color-base02)` | base02 |
 | Border radius | `var(--radius-md)` (6px) | radius-md |
 | Background | `var(--color-base00)` | base00 |
 | Hover border | `var(--color-base03)` | base03 |
-| Focus ring | `box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent)` | base0D |
+| Focus ring | `box-shadow: var(--focus-ring-shadow)` | focus-ring-shadow |
+| Error focus ring | `box-shadow: var(--focus-ring-shadow-error)` | focus-ring-shadow-error |
 | Error border | `var(--color-base08)` | base08 |
+| Divider/separator | `var(--border-width-thin)` (1px) | border-width-thin |
 | Checkbox box | `1.125rem` (18px), `var(--radius-default)` (4px) | — |
 
 **Size scale** (Select, SearchInput):

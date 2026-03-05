@@ -17,6 +17,7 @@
     disabled = false,
     size = 'md',
     class: className = '',
+    name = undefined,
     oncomplete,
     ...rest
   } = $props();
@@ -105,6 +106,7 @@
       autocomplete="one-time-code"
     />
   {/each}
+  {#if name}<input type="hidden" {name} value={inputs.join('')} />{/if}
 </div>
 
 <style>

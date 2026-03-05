@@ -65,7 +65,7 @@
   .dash-card {
     border-radius: var(--radius-sm);
     padding: 1.25rem;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     transition: border-color 200ms ease;
     background: color-mix(in srgb, var(--color-base01) 60%, transparent);
     backdrop-filter: blur(12px);

@@ -137,8 +137,8 @@
   }
 
   .theme-toggle:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   /* --------------------------------------------
@@ -157,7 +157,7 @@
   .theme-toggle-outline {
     background-color: transparent;
     color: var(--color-base05);
-    border: 1px solid var(--color-base03);
+    border: var(--border-width-thin) solid var(--color-base03);
   }
 
   .theme-toggle-outline:hover {

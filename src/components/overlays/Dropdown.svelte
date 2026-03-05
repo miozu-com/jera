@@ -183,11 +183,9 @@
     min-width: 8rem;
     padding: var(--space-2);
     background: var(--color-base01);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 50%, transparent);
     border-radius: var(--radius-md);
-    box-shadow:
-      0 4px 12px -4px rgb(0 0 0 / 0.15),
-      0 1px 3px -1px rgb(0 0 0 / 0.08);
+    box-shadow: var(--shadow-lg);
     animation: dropdown-enter 0.12s var(--ease-out);
   }
 

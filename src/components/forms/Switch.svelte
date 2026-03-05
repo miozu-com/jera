@@ -113,8 +113,8 @@
   }
 
   .switch-input:focus-visible + .switch-track {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .switch-thumb {

@@ -322,7 +322,7 @@
     min-width: 280px;
     max-width: 320px;
     background-color: var(--color-surface, var(--color-base01));
-    border: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 40%, transparent));
+    border: var(--border-width-default) solid var(--color-border, color-mix(in srgb, var(--color-base03) 40%, transparent));
     border-radius: 0.75rem;
     box-shadow:
       0 20px 25px -5px rgba(0, 0, 0, 0.3),

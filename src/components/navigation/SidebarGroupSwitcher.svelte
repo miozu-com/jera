@@ -249,7 +249,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
-    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     background: transparent;
     font-family: inherit;
   }

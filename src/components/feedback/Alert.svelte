@@ -111,7 +111,7 @@
     align-items: flex-start;
     gap: var(--space-6);
     border-radius: var(--radius-lg);
-    border: 1px solid;
+    border: var(--border-width-default) solid;
   }
 
   /* Size variants */
@@ -219,7 +219,7 @@
     color: currentColor;
     opacity: 0.6;
     cursor: pointer;
-    transition: opacity 0.2s ease, background 0.2s ease;
+    transition: opacity var(--duration-base) ease, background var(--duration-base) ease;
   }
 
   .alert-close:hover {

@@ -241,13 +241,13 @@
 
     /* Search */
     --nav-search-highlight-bg: color-mix(in srgb, var(--color-warning, var(--color-base0A)) 10%, transparent);
-    --nav-search-highlight-border: 1px solid color-mix(in srgb, var(--color-warning, var(--color-base0A)) 30%, transparent);
+    --nav-search-highlight-border: var(--border-width-thin) solid color-mix(in srgb, var(--color-warning, var(--color-base0A)) 30%, transparent);
     --nav-search-indicator-size: 0.375rem;
     --nav-search-indicator-color: var(--color-warning, var(--color-base0A));
     --nav-search-indicator-offset: 0.25rem;
 
     /* Children/nesting */
-    --nav-children-border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    --nav-children-border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     --nav-children-margin-left: calc(var(--nav-icon-container-size) / 2);
     --nav-children-padding-left: 0.5rem;
 

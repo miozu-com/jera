@@ -104,7 +104,7 @@
     justify-content: center;
     width: 1.125rem;
     height: 1.125rem;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-default);
     background-color: var(--color-base00);
     transition: var(--transition-all);

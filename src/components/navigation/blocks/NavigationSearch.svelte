@@ -251,7 +251,7 @@
     width: 100%;
     padding: 0.5rem 2.25rem 0.5rem 2.25rem;
     background: var(--color-surface-alt, var(--color-base02));
-    border: 1px solid color-mix(in srgb, var(--color-base03) 40%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 40%, transparent);
     border-radius: var(--nav-item-border-radius);
     font-size: 0.875rem;
     color: var(--nav-item-color);

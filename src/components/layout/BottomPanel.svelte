@@ -100,7 +100,7 @@
     display: flex;
     flex-direction: column;
     background: var(--color-base00);
-    border-top: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border-top: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     position: fixed;
     bottom: 0;
     left: 0;

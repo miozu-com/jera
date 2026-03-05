@@ -45,10 +45,10 @@
 <style>
   .setting-card {
     background: transparent;
-    border: 1px solid color-mix(in srgb, var(--color-base02) 60%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base02) 60%, transparent);
     border-radius: var(--radius-xl);
     padding: var(--space-12);
-    transition: border-color 0.15s ease;
+    transition: border-color var(--duration-fast) ease;
   }
 
   .setting-card:hover {

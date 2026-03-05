@@ -53,7 +53,7 @@
   .custom-block-fallback {
     padding: 1rem 0.75rem;
     text-align: center;
-    border: 1px dashed var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
+    border: var(--border-width-thin) dashed var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
     border-radius: var(--nav-item-border-radius, 0.375rem);
     background: var(--color-surface-alt, var(--color-base02));
   }

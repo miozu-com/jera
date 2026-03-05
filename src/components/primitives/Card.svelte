@@ -39,7 +39,7 @@
 <style>
   .card {
     background: transparent;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-xl);
     padding: var(--space-12);
     transition: border-color 0.2s ease;

@@ -11,8 +11,8 @@
    * ======================================== */
 
   --border-width-thin: 1px;
-  --border-width-default: 1px;
-  --border-width-thick: 2px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
 
   /* ========================================
    * FOCUS RING
@@ -22,6 +22,8 @@
   --focus-ring-offset: 2px;
   --focus-ring-color: var(--color-primary);
   --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+  --focus-ring-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+  --focus-ring-shadow-error: 0 0 0 3px color-mix(in srgb, var(--color-base08) 20%, transparent);
 
   /* ========================================
    * BORDER RADIUS

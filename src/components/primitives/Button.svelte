@@ -132,8 +132,8 @@
   }
 
   .jera-btn:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .jera-btn:disabled,
@@ -166,7 +166,7 @@
   .primary {
     background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
-    border: 1px solid color-mix(in srgb, var(--color-base0D) 40%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0D) 40%, transparent);
   }
 
   .primary:hover:not(:disabled) {
@@ -184,7 +184,7 @@
   .secondary {
     background-color: color-mix(in srgb, var(--color-base03) 10%, transparent);
     color: var(--color-base05);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
   }
 
   .secondary:hover:not(:disabled) {
@@ -202,7 +202,7 @@
   .outline {
     background-color: transparent;
     color: var(--color-base05);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 50%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 50%, transparent);
   }
 
   .outline:hover:not(:disabled) {
@@ -220,7 +220,7 @@
   .ghost {
     background-color: transparent;
     color: var(--color-base05);
-    border: 1px solid transparent;
+    border: var(--border-width-thin) solid transparent;
   }
 
   .ghost:hover:not(:disabled) {
@@ -238,7 +238,7 @@
   .success {
     background-color: color-mix(in srgb, var(--color-base0B) 10%, transparent);
     color: var(--color-base0B);
-    border: 1px solid color-mix(in srgb, var(--color-base0B) 40%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0B) 40%, transparent);
   }
 
   .success:hover:not(:disabled) {
@@ -256,7 +256,7 @@
   .danger {
     background-color: color-mix(in srgb, var(--color-base08) 10%, transparent);
     color: var(--color-base08);
-    border: 1px solid color-mix(in srgb, var(--color-base08) 20%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base08) 20%, transparent);
   }
 
   .danger:hover:not(:disabled) {
@@ -274,7 +274,7 @@
   .warning {
     background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
     color: var(--color-base0A);
-    border: 1px solid color-mix(in srgb, var(--color-base0A) 40%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0A) 40%, transparent);
   }
 
   .warning:hover:not(:disabled) {
@@ -292,7 +292,7 @@
   .info {
     background-color: color-mix(in srgb, var(--color-base0C) 10%, transparent);
     color: var(--color-base0C);
-    border: 1px solid color-mix(in srgb, var(--color-base0C) 40%, transparent);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0C) 40%, transparent);
   }
 
   .info:hover:not(:disabled) {

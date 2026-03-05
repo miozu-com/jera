@@ -412,7 +412,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    border: 1px solid var(--color-base00);
+    border: var(--border-width-default) solid var(--color-base00);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }
@@ -491,7 +491,7 @@
     cursor: pointer;
     border-radius: 0.375rem;
     transition: all 200ms ease;
-    border: 1px solid color-mix(in srgb, var(--color-base0D) 30%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base0D) 30%, transparent);
     background: transparent;
     font-family: inherit;
     white-space: nowrap;

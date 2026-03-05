@@ -201,7 +201,7 @@
     width: 100%;
     padding: var(--space-6);
     background: var(--color-base00);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
   }
 

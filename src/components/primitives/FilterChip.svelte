@@ -76,7 +76,7 @@
     font-size: var(--text-sm);
     font-weight: 500;
     background: transparent;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-lg);
     color: var(--color-base04);
     cursor: pointer;
@@ -90,8 +90,8 @@
   }
 
   .filter-chip:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .filter-chip.disabled {

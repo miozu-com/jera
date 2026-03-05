@@ -382,7 +382,7 @@
     color: var(--color-text-muted);
     cursor: pointer;
     border-radius: var(--nav-item-border-radius);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     background: transparent;
     font-family: inherit;
     transition: all var(--nav-transition-duration) var(--nav-transition-easing);

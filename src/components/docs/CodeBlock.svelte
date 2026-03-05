@@ -99,7 +99,7 @@
     border-radius: var(--radius-md, 0.5rem);
     overflow: hidden;
     background: var(--color-base00);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-left: 2px solid color-mix(in srgb, var(--color-base0E) 60%, var(--color-base02));
   }
 

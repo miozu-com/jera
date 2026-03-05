@@ -215,7 +215,7 @@
     line-height: 1.5;
     border-radius: var(--radius-default);
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-base03);
+    border: var(--border-width-default) solid var(--color-base03);
     pointer-events: auto;
     word-wrap: break-word;
     hyphens: auto;

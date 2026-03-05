@@ -64,7 +64,7 @@
     position: fixed;
     z-index: 50;
     background-color: var(--color-base00);
-    border: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     border-radius: var(--radius-default);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     min-width: 200px;

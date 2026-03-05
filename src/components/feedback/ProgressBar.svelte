@@ -102,7 +102,7 @@
   .progress-bar {
     height: 100%;
     border-radius: var(--radius-default);
-    transition: width 0.3s ease-out;
+    transition: width var(--duration-slow) ease-out;
   }
 
   .progress-indeterminate {

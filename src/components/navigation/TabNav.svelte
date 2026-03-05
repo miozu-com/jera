@@ -157,7 +157,7 @@
     padding: var(--space-4) var(--space-8);
     border-radius: var(--radius-sm);
     background: transparent;
-    border: 1px solid transparent;
+    border: var(--border-width-default) solid transparent;
     color: var(--color-base04);
     font-size: var(--text-sm);
     font-weight: 500;
@@ -231,8 +231,8 @@
   }
 
   .tab-item:focus-visible {
-    outline: 2px solid var(--tabs-accent);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .tab-icon {

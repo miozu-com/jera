@@ -97,6 +97,7 @@
   bind:this={dialogEl}
   class="modal modal-{size} {fill ? 'modal-fill' : ''} {className}"
   aria-labelledby={title ? 'modal-title' : undefined}
+  aria-modal="true"
   onclose={handleClose}
   oncancel={handleCancel}
   onclick={handleBackdropClick}
@@ -161,7 +162,7 @@
     border-radius: var(--radius-default);
     background: var(--color-base01);
     box-shadow: var(--shadow-2xl);
-    border: 1px solid var(--color-base03);
+    border: var(--border-width-default) solid var(--color-base03);
     padding: 0;
     margin: auto;
     max-height: calc(100vh - 2rem);
@@ -263,17 +264,17 @@
   /* Transitions for smooth open/close */
   dialog.modal {
     transition:
-      opacity 0.2s ease-out,
-      transform 0.2s ease-out,
-      overlay 0.2s ease-out allow-discrete,
-      display 0.2s ease-out allow-discrete;
+      opacity var(--duration-base) ease-out,
+      transform var(--duration-base) ease-out,
+      overlay var(--duration-base) ease-out allow-discrete,
+      display var(--duration-base) ease-out allow-discrete;
   }
 
   dialog.modal::backdrop {
     transition:
-      opacity 0.2s ease-out,
-      overlay 0.2s ease-out allow-discrete,
-      display 0.2s ease-out allow-discrete;
+      opacity var(--duration-base) ease-out,
+      overlay var(--duration-base) ease-out allow-discrete,
+      display var(--duration-base) ease-out allow-discrete;
   }
 
   .modal-close {
@@ -286,7 +287,7 @@
     border-radius: 0.5rem;
     color: var(--color-base05);
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: background var(--duration-fast), color var(--duration-fast);
     z-index: 1;
   }
 
@@ -322,7 +323,7 @@
 
   .modal-title {
     margin: 0 0 0.5rem 0;
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-base07);
     line-height: 1.4;

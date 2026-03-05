@@ -57,7 +57,7 @@
     padding: var(--space-6) var(--space-8);
     border-radius: var(--radius-lg);
     background: var(--color-base01);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     text-decoration: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
   }

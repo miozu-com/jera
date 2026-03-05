@@ -17,6 +17,7 @@
     placeholder = 'Search...',
     disabled = false,
     loading = false,
+    error = false,
     size = 'md',
     class: className = '',
     oninput,
@@ -37,7 +38,7 @@
   }
 </script>
 
-<div class={cn('search-input', `search-input-${size}`, className)}>
+<div class={cn('search-input', `search-input-${size}`, error && 'search-input-error', className)}>
   <span class="search-icon">
     {#if loading}
       <svg class="search-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -114,7 +115,7 @@
     font-size: var(--text-sm);
     color: var(--color-base07);
     background: var(--color-base00);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
     transition: var(--transition-colors);
   }
@@ -154,7 +155,16 @@
   .search-field:focus {
     outline: none;
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .search-input-error .search-field {
+    border-color: var(--color-base08);
+  }
+
+  .search-input-error .search-field:focus {
+    border-color: var(--color-base08);
+    box-shadow: var(--focus-ring-shadow-error);
   }
 
   .search-field:disabled {

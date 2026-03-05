@@ -213,7 +213,7 @@
     top: 1px;
     bottom: 1px;
     background: var(--color-base00);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
   }
 
   /* Underline variant indicator */
@@ -273,7 +273,7 @@
 
   .tab:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--tabs-accent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .tab-disabled {
@@ -302,7 +302,7 @@
     border-radius: var(--radius-sm);
     padding: 1px;
     gap: 0;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
   }
 
   .tabs-segment .tab {
@@ -320,7 +320,7 @@
     background: transparent;
     padding: 0;
     gap: 0;
-    border-bottom: 1px solid var(--color-base03);
+    border-bottom: var(--border-width-thin) solid var(--color-base03);
   }
 
   .tabs-underline .tab {
@@ -346,7 +346,7 @@
   }
 
   .tabs-pills .tab {
-    border: 1px solid var(--color-base03);
+    border: var(--border-width-default) solid var(--color-base03);
   }
 
   .tabs-pills .tab-active {

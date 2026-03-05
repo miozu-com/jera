@@ -82,8 +82,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-02-27",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -131,8 +131,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-02",
+      "revision": 4,
+      "lastReviewed": "2026-03-05",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
         "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
@@ -299,7 +299,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -325,7 +325,7 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -428,8 +428,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-02",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -469,7 +469,7 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -510,6 +510,21 @@
           "type": "boolean",
           "default": "false",
           "description": "Show error state"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id attribute"
+        },
+        "name": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Form field name for hidden input submission"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark field as required"
         }
       },
       "events": [
@@ -520,7 +535,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -559,7 +574,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -623,8 +638,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-03-02",
+      "revision": 5,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -654,6 +669,26 @@
           "type": "'sm'|'md'|'lg'",
           "default": "'md'",
           "description": "Input size"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id attribute"
+        },
+        "name": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Form field name"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark field as required"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error border state"
         }
       },
       "events": [
@@ -665,7 +700,7 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -681,7 +716,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -726,7 +761,7 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
@@ -849,7 +884,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"

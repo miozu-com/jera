@@ -323,7 +323,7 @@
 
   .account-item.collapsed-add {
     background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+    border: var(--border-width-default) solid color-mix(in srgb, var(--color-primary) 30%, transparent);
     width: 2rem;
     height: 2rem;
     margin: 0 auto;
@@ -410,7 +410,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    border: 1px solid var(--color-bg, var(--color-base00));
+    border: var(--border-width-default) solid var(--color-bg, var(--color-base00));
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     z-index: 10;
   }

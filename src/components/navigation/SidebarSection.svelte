@@ -107,7 +107,7 @@
 
   .section-header.expandable {
     cursor: pointer;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     border: none;
     background: transparent;
     font-family: inherit;
@@ -135,7 +135,7 @@
 
   .section-chevron {
     color: var(--color-text-muted, var(--color-base05));
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     flex-shrink: 0;
   }
 
@@ -145,7 +145,7 @@
 
   .section-divider {
     margin: 0.5rem 0.75rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
+    border-bottom: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
   }
 
   .nav-list {

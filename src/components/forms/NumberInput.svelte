@@ -153,8 +153,8 @@
     font-size: var(--text-sm);
     color: var(--color-base07);
     background: var(--color-base00);
-    border-top: 1px solid var(--color-base02);
-    border-bottom: 1px solid var(--color-base02);
+    border-top: var(--border-width-thin) solid var(--color-base02);
+    border-bottom: var(--border-width-thin) solid var(--color-base02);
     border-left: none;
     border-right: none;
     transition: var(--transition-colors);
@@ -192,7 +192,7 @@
     padding: 0 var(--space-6);
     color: var(--color-base04);
     background: var(--color-base01);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     cursor: pointer;
     transition: var(--transition-colors);
   }

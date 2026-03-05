@@ -141,7 +141,7 @@
     gap: var(--space-6);
     padding: var(--space-10);
     background: var(--color-base01);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-sm);
     text-decoration: none;
     transition: all 0.15s ease;
@@ -265,7 +265,7 @@
 
   /* Focus state for clickable */
   .metric-card-clickable:focus-visible {
-    outline: 2px solid var(--color-base0D);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 </style>

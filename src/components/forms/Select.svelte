@@ -27,6 +27,9 @@
     size = 'md',
     disabled = false,
     error = false,
+    id = undefined,
+    name = undefined,
+    required = false,
     class: className = '',
     onchange
   } = $props();
@@ -120,9 +123,12 @@
 </script>
 
 <div class={cn('select-wrapper', className)} use:clickOutside={close}>
+  {#if name}
+    <input type="hidden" {name} value={value ?? ''} {required} />
+  {/if}
   <button
     bind:this={triggerRef}
-    id={triggerId}
+    id={id || triggerId}
     type="button"
     class={cn('select-trigger', `select-${size}`, isOpen && 'select-open', error && 'select-error', hasValue && 'has-value')}
     {disabled}
@@ -195,14 +201,14 @@
     height: 2.5rem;
     padding: 0 0.75rem;
     border-radius: var(--radius-md);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     background-color: var(--color-base00);
     color: var(--color-base04);
     font-size: 0.875rem;
     font-family: inherit;
     text-align: left;
     cursor: pointer;
-    transition: border-color 150ms, box-shadow 150ms;
+    transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
   }
 
   .select-trigger:hover:not(:disabled) {
@@ -212,7 +218,7 @@
   .select-trigger:focus-visible {
     outline: none;
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .select-trigger:disabled {
@@ -226,7 +232,7 @@
 
   .select-trigger.select-open {
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .select-trigger.select-error {
@@ -294,7 +300,7 @@
     max-height: 15rem;
     overflow: auto;
     background-color: var(--color-base01);
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
     padding: 0.25rem 0;

@@ -69,7 +69,7 @@
 <style>
   .jera-props-table {
     overflow-x: auto;
-    border: 1px solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
   }
 
