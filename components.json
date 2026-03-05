@@ -273,10 +273,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-02-27",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "ThemeToggle",
@@ -299,10 +299,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "ThemeSelect",
@@ -325,10 +325,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Input",
@@ -469,10 +469,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Select",
@@ -520,10 +520,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Checkbox",
@@ -559,10 +559,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Switch",
@@ -665,10 +665,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Toast",
@@ -681,10 +681,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Alert",
@@ -726,10 +726,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Spinner",
@@ -752,10 +752,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "EmptyState",
@@ -787,10 +787,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Skeleton",
@@ -813,10 +813,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "ProgressBar",
@@ -849,10 +849,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Modal",
@@ -911,10 +911,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Popover",
@@ -946,10 +946,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "ConfirmDialog",
@@ -987,10 +987,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Tabs",
@@ -1077,10 +1077,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-27",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "AccordionItem",
@@ -1126,10 +1126,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-27",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "NavBar",
@@ -1169,10 +1169,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LeftBar",
@@ -1209,10 +1209,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LeftBarSection",
@@ -1235,10 +1235,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LeftBarItem",
@@ -1304,10 +1304,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LeftBarGroup",
@@ -1350,10 +1350,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LeftBarToggle",
@@ -1365,10 +1365,17 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard",
+      "props": {
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS class names"
+        }
+      }
     },
     {
       "name": "DropdownContainer",
@@ -1400,10 +1407,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "PageHeader",
@@ -1442,10 +1449,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "SettingCard",
@@ -1471,10 +1478,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "SettingItem",
@@ -1501,10 +1508,10 @@
         "dash"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "BottomPanel",
@@ -1559,10 +1566,10 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "CodeBlock",
@@ -1596,10 +1603,10 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "IconInput",
@@ -1654,10 +1661,10 @@
         "onclear"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "NumberInput",
@@ -1712,10 +1719,10 @@
         "onchange"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Radio",
@@ -1745,10 +1752,10 @@
         }
       },
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "RadioGroup",
@@ -1785,10 +1792,10 @@
         "onchange"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "FileUpload",
@@ -1832,10 +1839,10 @@
         "onerror"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "RangeSlider",
@@ -1895,10 +1902,10 @@
         "onchange"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "PinInput",
@@ -1937,10 +1944,10 @@
         "oncomplete"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Dropzone",
@@ -1968,10 +1975,10 @@
         "ondrop"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Tooltip",
@@ -2005,10 +2012,10 @@
         "content"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Card",
@@ -2031,10 +2038,10 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Link",
@@ -2066,10 +2073,10 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LinkCard",
@@ -2097,10 +2104,10 @@
         "trailing"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "LazyImage",
@@ -2143,10 +2150,10 @@
         "onload"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "MetricCard",
@@ -2208,10 +2215,10 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-02-27",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "FilterChip",
@@ -2219,10 +2226,10 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-02-27",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal",
+      "docLevel": "standard",
       "props": {
         "label": {
           "type": "string",
@@ -2283,10 +2290,10 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "MemberCard",
@@ -2338,10 +2345,10 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "DashCard",
@@ -2382,10 +2389,10 @@
         "actions"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-02-27",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "DistributionBar",
@@ -2410,10 +2417,10 @@
         }
       },
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Dropdown",
@@ -2438,12 +2445,12 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-02-26",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [
         "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
       ],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "DropdownItem",
@@ -2470,10 +2477,10 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-02-26",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "DropdownDivider",
@@ -2481,10 +2488,10 @@
       "path": "src/components/overlays/DropdownDivider.svelte",
       "description": "Horizontal separator line for dropdown menu groups",
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "PropsTable",
@@ -2499,10 +2506,10 @@
         }
       },
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "SplitPane",
@@ -2531,10 +2538,10 @@
         "right"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "DocSection",
@@ -2572,10 +2579,10 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
       "breaking": [],
-      "docLevel": "minimal"
+      "docLevel": "standard"
     },
     {
       "name": "Sidebar",

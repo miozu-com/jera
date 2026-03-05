@@ -42,11 +42,13 @@
     disabled = false,
     class: className = '',
     content,
-    children
+    children,
+    ...rest
   } = $props();
 
   let visible = $state(false);
   let timeout = null;
+  const tooltipId = `tooltip-${Math.random().toString(36).slice(2, 9)}`;
 
   function show() {
     if (disabled) return;
@@ -62,6 +64,15 @@
     }
     visible = false;
   }
+
+  $effect(() => {
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+    };
+  });
 </script>
 
 <div
@@ -70,6 +81,8 @@
   onmouseleave={hide}
   onfocus={show}
   onblur={hide}
+  aria-describedby={visible && (text || content) ? tooltipId : undefined}
+  {...rest}
 >
   {#if children}
     {@render children()}
@@ -77,6 +90,7 @@
 
   {#if visible && (text || content)}
     <div
+      id={tooltipId}
       class="tooltip tooltip-{position} {content ? 'tooltip-interactive' : ''}"
       role="tooltip"
       onmouseenter={content ? show : undefined}
@@ -114,11 +128,9 @@
   @keyframes tooltip-enter {
     from {
       opacity: 0;
-      transform: scale(0.95);
     }
     to {
       opacity: 1;
-      transform: scale(1);
     }
   }
 
@@ -131,8 +143,9 @@
     border: 1px solid var(--color-base02);
     border-radius: var(--radius-md);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    white-space: nowrap;
+    white-space: normal;
     max-width: 20rem;
+    width: max-content;
   }
 
   .tooltip-arrow {
