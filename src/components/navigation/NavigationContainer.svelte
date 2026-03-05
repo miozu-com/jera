@@ -223,7 +223,7 @@
     --nav-badge-opacity: 10%;
     --nav-badge-color: var(--color-primary);
     --nav-badge-background: color-mix(in srgb, var(--color-primary) var(--nav-badge-opacity), transparent);
-    --nav-badge-radius: 9999px;
+    --nav-badge-radius: var(--radius-full);
     --nav-badge-min-width: 1rem;
     --nav-badge-height: 1rem;
 

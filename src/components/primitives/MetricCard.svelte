@@ -144,7 +144,7 @@
     border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-sm);
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all var(--duration-fast) ease;
   }
 
   .metric-card-clickable {
@@ -248,7 +248,7 @@
   .metric-progress-bar {
     height: 100%;
     border-radius: 2px;
-    transition: width 0.3s ease;
+    transition: width var(--duration-slow) ease;
   }
 
   .progress-primary {

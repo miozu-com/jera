@@ -126,7 +126,7 @@
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
-    transition: all 200ms ease-out;
+    transition: all var(--duration-base) ease-out;
     background: transparent;
     border-radius: var(--radius-sm);
   }

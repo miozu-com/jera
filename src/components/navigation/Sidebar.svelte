@@ -243,7 +243,7 @@
     border-right: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
     height: 100vh;
     width: var(--sidebar-width);
-    transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width var(--duration-base) cubic-bezier(0.4, 0, 0.2, 1);
     position: sticky;
     top: 0;
     will-change: width;
@@ -303,7 +303,7 @@
     position: fixed;
     z-index: var(--z-modal);
     height: 100vh;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-2xl);
   }
 
   .sidebar.mobile-overlay.left {
@@ -323,7 +323,7 @@
     cursor: pointer;
     border: none;
     background: transparent;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     margin-left: auto;
   }
 

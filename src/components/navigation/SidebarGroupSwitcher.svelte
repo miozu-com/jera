@@ -156,7 +156,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     border: none;
     background: transparent;
     font-family: inherit;
@@ -177,13 +177,13 @@
     font-size: 0.625rem;
     background-color: var(--color-surface-alt, var(--color-base02));
     color: var(--color-text-muted, var(--color-base05));
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     flex-shrink: 0;
   }
 
   .section-chevron {
     color: var(--color-text-muted, var(--color-base04));
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     flex-shrink: 0;
   }
 
@@ -208,7 +208,7 @@
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     overflow: hidden;
     border: none;
     background: transparent;
@@ -248,7 +248,7 @@
     color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border-radius: 0.375rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     background: transparent;
     font-family: inherit;

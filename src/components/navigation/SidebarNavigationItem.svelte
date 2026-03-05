@@ -429,7 +429,7 @@
     font-weight: var(--nav-badge-weight, 600);
     color: var(--nav-badge-color, var(--color-primary));
     background: var(--nav-badge-background, color-mix(in srgb, var(--color-primary) var(--nav-badge-opacity, 10%), transparent));
-    border-radius: var(--nav-badge-radius, 9999px);
+    border-radius: var(--nav-badge-radius, var(--radius-full));
     min-width: var(--nav-badge-min-width, 1rem);
     height: var(--nav-badge-height, 1rem);
   }

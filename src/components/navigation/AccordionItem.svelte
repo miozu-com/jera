@@ -162,7 +162,7 @@
     color: var(--color-base06);
     cursor: pointer;
     text-align: left;
-    transition: background 0.15s ease;
+    transition: background var(--duration-fast) ease;
   }
 
   .accordion-trigger:hover:not(:disabled) {
@@ -204,7 +204,7 @@
     justify-content: center;
     flex-shrink: 0;
     color: var(--color-base05);
-    transition: transform 0.2s ease;
+    transition: transform var(--duration-base) ease;
   }
 
   .accordion-trigger:hover:not(:disabled) .accordion-indicator {

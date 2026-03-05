@@ -90,7 +90,7 @@
 
 <style>
   .lazy-image {
-    transition: opacity 0.3s ease;
+    transition: opacity var(--duration-slow) ease;
   }
 
   .lazy-loading {

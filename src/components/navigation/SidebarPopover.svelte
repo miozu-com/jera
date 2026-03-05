@@ -72,9 +72,7 @@
     background-color: var(--color-bg, var(--color-base00));
     border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     border-radius: 0.5rem;
-    box-shadow:
-      0 25px 50px -12px rgba(0, 0, 0, 0.25),
-      0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-2xl);
     min-width: 200px;
     max-width: 280px;
     overflow: hidden;
@@ -124,7 +122,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: all 150ms ease;
+    transition: all var(--duration-fast) ease;
     font-family: inherit;
   }
 

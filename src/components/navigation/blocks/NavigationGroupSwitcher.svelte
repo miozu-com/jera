@@ -187,7 +187,7 @@
     font-size: 0.625rem;
     background: var(--color-surface-alt, var(--color-base02));
     color: var(--color-text-muted, var(--color-base05));
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     flex-shrink: 0;
   }
 

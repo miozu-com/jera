@@ -80,7 +80,7 @@
     border-radius: var(--radius-lg);
     color: var(--color-base04);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all var(--duration-fast) ease;
   }
 
   .filter-chip:hover:not(.disabled) {

@@ -136,7 +136,7 @@
     padding: var(--space-6);
     background: transparent;
     border-radius: var(--radius-lg);
-    transition: background 0.15s ease;
+    transition: background var(--duration-fast) ease;
   }
 
   .member-card-default {
@@ -282,7 +282,7 @@
     align-items: center;
     gap: var(--space-4);
     opacity: 0;
-    transition: opacity 0.15s ease;
+    transition: opacity var(--duration-fast) ease;
   }
 
   .member-card:hover .member-actions {

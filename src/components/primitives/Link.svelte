@@ -104,7 +104,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: color 0.15s ease;
+    transition: color var(--duration-fast) ease;
   }
 
   .link:hover {
@@ -113,7 +113,7 @@
 
   .link-icon {
     flex-shrink: 0;
-    transition: transform 0.15s ease;
+    transition: transform var(--duration-fast) ease;
   }
 
   .link:hover .link-icon {

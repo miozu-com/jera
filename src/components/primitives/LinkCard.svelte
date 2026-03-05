@@ -59,7 +59,7 @@
     background: var(--color-base01);
     border: var(--border-width-default) solid var(--color-base02);
     text-decoration: none;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    transition: border-color var(--duration-base) ease, background-color var(--duration-base) ease;
   }
 
   .link-card:hover {
@@ -89,6 +89,6 @@
 
   .link-card-trailing {
     color: var(--color-base04);
-    transition: color 0.2s ease;
+    transition: color var(--duration-base) ease;
   }
 </style>

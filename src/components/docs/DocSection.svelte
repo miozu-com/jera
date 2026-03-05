@@ -96,7 +96,7 @@
   .anchor-link {
     opacity: 0;
     color: var(--color-base04);
-    transition: opacity 0.15s, color 0.15s;
+    transition: opacity var(--duration-fast), color var(--duration-fast);
   }
 
   .section-title:hover .anchor-link {

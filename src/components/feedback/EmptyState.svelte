@@ -94,7 +94,7 @@
     border-radius: var(--radius-default);
     background: var(--color-base01);
     color: var(--color-base04);
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    transition: background var(--duration-slow) ease, color var(--duration-slow) ease, transform var(--duration-slow) ease;
   }
 
   .empty-state-compact .empty-state-icon {

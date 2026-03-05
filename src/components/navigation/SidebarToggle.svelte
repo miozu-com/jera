@@ -68,7 +68,7 @@
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    transition: all 150ms ease;
+    transition: all var(--duration-fast) ease;
   }
 
   .sidebar-toggle:hover {
@@ -77,7 +77,7 @@
   }
 
   .toggle-icon {
-    transition: transform 200ms ease;
+    transition: transform var(--duration-base) ease;
   }
 
   .toggle-icon.collapsed {

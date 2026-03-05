@@ -155,7 +155,7 @@
     border-radius: var(--radius-lg);
     background: var(--color-base01);
     cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: border-color var(--duration-base) ease, background var(--duration-base) ease;
   }
 
   .dropzone:hover:not(.dropzone-disabled) {
@@ -237,7 +237,7 @@
     border-radius: var(--radius-sm);
     color: var(--color-base04);
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
     z-index: 1;
   }
 

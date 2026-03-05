@@ -146,7 +146,7 @@
     color: var(--color-base04);
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.15s, background 0.15s, color 0.15s;
+    transition: opacity var(--duration-fast), background var(--duration-fast), color var(--duration-fast);
   }
 
   .jera-code-block:hover .copy-btn {

@@ -131,7 +131,7 @@
     color: var(--color-base06);
     letter-spacing: -0.02em;
     line-height: 1.2;
-    transition: color 0.2s ease;
+    transition: color var(--duration-base) ease;
   }
 
   .stat-unit {
@@ -191,7 +191,7 @@
     height: 100%;
     background: var(--color-base0D);
     border-radius: var(--radius-full);
-    transition: width 0.3s ease;
+    transition: width var(--duration-slow) ease;
   }
 
   .stat-bar-success { background: var(--color-base0B); }

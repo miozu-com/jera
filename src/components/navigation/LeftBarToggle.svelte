@@ -69,7 +69,7 @@
     justify-content: center;
     color: var(--color-base04);
     border-radius: 0.25rem;
-    transition: all 150ms;
+    transition: all var(--duration-fast);
     background: transparent;
     border: none;
     cursor: pointer;

@@ -161,7 +161,7 @@
 
   .slider::-webkit-slider-thumb:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow); /* token uses 3px; thumb previously used 4px */
   }
 
   .slider:active::-webkit-slider-thumb {
@@ -169,7 +169,7 @@
   }
 
   .slider:focus-visible::-webkit-slider-thumb {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-base0D) 30%, transparent);
+    box-shadow: var(--focus-ring-shadow); /* token uses 20% opacity; thumb previously used 30% */
   }
 
   /* Firefox */
@@ -186,7 +186,7 @@
 
   .slider::-moz-range-thumb:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow); /* token uses 3px; thumb previously used 4px */
   }
 
   .slider::-webkit-slider-runnable-track {

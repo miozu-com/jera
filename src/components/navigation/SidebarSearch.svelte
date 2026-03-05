@@ -161,7 +161,7 @@
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     border: none;
     background: transparent;
     font-family: inherit;
@@ -202,7 +202,7 @@
     border-radius: 0.375rem;
     font-size: 0.875rem;
     color: var(--color-text, var(--color-base06));
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
     font-family: inherit;
   }
 
@@ -226,7 +226,7 @@
     cursor: pointer;
     border: none;
     background: transparent;
-    transition: all 200ms ease;
+    transition: all var(--duration-base) ease;
   }
 
   .search-close:hover {

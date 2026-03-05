@@ -66,7 +66,7 @@
     border-radius: var(--radius-sm);
     padding: 1.25rem;
     border: var(--border-width-default) solid var(--color-base02);
-    transition: border-color 200ms ease;
+    transition: border-color var(--duration-base) ease;
     background: color-mix(in srgb, var(--color-base01) 60%, transparent);
     backdrop-filter: blur(12px);
     opacity: 0;
@@ -140,7 +140,7 @@
     font-size: 0.6875rem;
     color: var(--color-base04);
     text-decoration: none;
-    transition: color 150ms ease;
+    transition: color var(--duration-fast) ease;
   }
 
   .dash-card-link:hover {

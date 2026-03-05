@@ -186,7 +186,7 @@
     padding: var(--space-6) var(--space-8);
     background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: var(--border-width-default) solid transparent;
     margin-bottom: -1px;
     color: var(--color-base04);
     font-size: var(--text-sm);
@@ -266,7 +266,7 @@
     font-weight: 600;
     background: var(--color-base09);
     color: var(--color-base00);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
   }
 
   /* Scrollable container */

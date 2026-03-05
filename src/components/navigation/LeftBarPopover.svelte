@@ -66,7 +66,7 @@
     background-color: var(--color-base00);
     border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     border-radius: var(--radius-default);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-2xl);
     min-width: 200px;
     max-width: 280px;
     overflow: hidden;
@@ -108,7 +108,7 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--color-base06);
-    transition: all 150ms;
+    transition: all var(--duration-fast);
     cursor: pointer;
     text-decoration: none;
   }

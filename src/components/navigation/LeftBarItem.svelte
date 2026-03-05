@@ -193,7 +193,7 @@
     border-radius: 0.375rem;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    transition: all 150ms;
+    transition: all var(--duration-fast);
     text-decoration: none;
     overflow: hidden;
     background: transparent;
@@ -233,7 +233,7 @@
 
   .nav-item :global(svg.nav-icon) {
     flex-shrink: 0;
-    transition: color 150ms;
+    transition: color var(--duration-fast);
   }
 
   .nav-item.expandable:hover :global(svg.nav-icon) {
@@ -253,7 +253,7 @@
     font-weight: 600;
     background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     flex-shrink: 0;
   }
 
@@ -261,7 +261,7 @@
     color: var(--color-base05);
     flex-shrink: 0;
     margin-left: auto;
-    transition: all 200ms;
+    transition: all var(--duration-base);
   }
 
   .nav-item.expandable:hover .expand-icon {
@@ -287,7 +287,7 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: var(--color-base05);
-    transition: all 150ms;
+    transition: all var(--duration-fast);
     width: 100%;
     text-align: left;
     cursor: pointer;

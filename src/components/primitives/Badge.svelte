@@ -74,7 +74,7 @@
     border: var(--border-width-thin) solid;
     white-space: nowrap;
     line-height: 1;
-    transition: background 0.15s ease, border-color 0.15s ease;
+    transition: background var(--duration-fast) ease, border-color var(--duration-fast) ease;
   }
 
   /* Sizes */
@@ -145,7 +145,7 @@
   .badge-indicator {
     display: inline-block;
     flex-shrink: 0;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: currentColor;
   }
 

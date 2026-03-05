@@ -335,7 +335,7 @@
   .avatar-trigger {
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
-    transition: all 200ms;
+    transition: all var(--duration-base);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -426,7 +426,7 @@
     align-items: center;
     justify-content: center;
     color: var(--color-base05);
-    transition: all 200ms;
+    transition: all var(--duration-base);
   }
 
   .trigger-chevron :global(svg) {
@@ -440,7 +440,7 @@
     background-color: var(--color-base00);
     border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
     border-radius: 0.5rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-xl);
     overflow-y: auto;
     max-height: calc(100vh - 120px);
     z-index: var(--z-dropdown);
@@ -522,7 +522,7 @@
     gap: 0.75rem;
     font-size: 0.875rem;
     color: var(--color-base06);
-    transition: all 150ms;
+    transition: all var(--duration-fast);
     cursor: pointer;
     border-radius: 0.375rem;
     background: transparent;
@@ -554,7 +554,7 @@
   .menu-item :global(svg) {
     flex-shrink: 0;
     color: var(--color-base05);
-    transition: color 150ms;
+    transition: color var(--duration-fast);
   }
 
   .menu-item:hover :global(svg) {

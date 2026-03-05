@@ -91,7 +91,7 @@
     white-space: nowrap;
     flex-shrink: 0;
     cursor: pointer;
-    transition: color 150ms ease, background-color 150ms ease;
+    transition: color var(--duration-fast) ease, background-color var(--duration-fast) ease;
   }
 
   .chip:hover {
@@ -127,7 +127,7 @@
     font-weight: 600;
     background: var(--color-base09);
     color: var(--color-base00);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
   }
 
   .chip.active .chip-badge {

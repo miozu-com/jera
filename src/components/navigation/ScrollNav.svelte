@@ -154,7 +154,7 @@
     color: var(--color-base05);
     cursor: pointer;
     pointer-events: all;
-    transition: all 0.15s ease;
+    transition: all var(--duration-fast) ease;
     box-shadow: var(--shadow-sm);
   }
 

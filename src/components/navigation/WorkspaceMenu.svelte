@@ -210,7 +210,7 @@
     border-radius: 0.5rem;
     cursor: pointer;
     text-align: left;
-    transition: background-color 150ms ease;
+    transition: background-color var(--duration-fast) ease;
     font-family: inherit;
   }
 
@@ -308,7 +308,7 @@
   .chevron {
     flex-shrink: 0;
     color: var(--color-text-muted, var(--color-base05));
-    transition: transform 200ms ease;
+    transition: transform var(--duration-base) ease;
   }
 
   .chevron.open {

@@ -303,7 +303,7 @@
     background-color: var(--color-base01);
     border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+    box-shadow: var(--shadow-lg);
     padding: 0.25rem 0;
     animation: dropdown-in var(--duration-fast) ease-out;
   }

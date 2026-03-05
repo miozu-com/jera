@@ -309,7 +309,7 @@
 
   .brand-chevron {
     opacity: 0.5;
-    transition: transform 180ms ease;
+    transition: transform var(--duration-base) ease;
   }
 
   .brand-chevron.rotated {
@@ -480,7 +480,7 @@
 
   .trigger-chevron {
     opacity: 0.5;
-    transition: transform 180ms ease;
+    transition: transform var(--duration-base) ease;
   }
 
   .trigger-chevron.rotated {

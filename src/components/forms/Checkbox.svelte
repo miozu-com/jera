@@ -140,7 +140,7 @@
     color: white;
     opacity: 0;
     transform: scale(0.5);
-    transition: opacity 150ms, transform 150ms;
+    transition: opacity var(--duration-fast), transform var(--duration-fast);
   }
 
   .checkbox-icon-visible {

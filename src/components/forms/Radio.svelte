@@ -104,7 +104,7 @@
     border-radius: 50%;
     background: var(--color-base0D);
     transform: scale(0);
-    transition: transform 0.15s ease-out;
+    transition: transform var(--duration-fast) ease-out;
   }
 
   .radio-input:checked + .radio-control {
