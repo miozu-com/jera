@@ -231,6 +231,7 @@
   }
 
   .select-trigger.select-open {
+    outline: none;
     border-color: var(--color-base0D);
     box-shadow: var(--focus-ring-shadow);
   }
@@ -285,7 +286,7 @@
     height: 1rem;
     flex-shrink: 0;
     color: var(--color-base04);
-    transition: transform 200ms;
+    transition: transform var(--duration-base);
   }
 
   .select-chevron.rotated {
@@ -304,7 +305,7 @@
     border-radius: var(--radius-md);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
     padding: 0.25rem 0;
-    animation: dropdown-in 150ms ease-out;
+    animation: dropdown-in var(--duration-fast) ease-out;
   }
 
   .select-empty {
@@ -329,7 +330,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: background-color 75ms;
+    transition: background-color var(--duration-75);
   }
 
   .select-option.highlighted {

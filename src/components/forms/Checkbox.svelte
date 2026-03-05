@@ -126,12 +126,12 @@
 
   .checkbox-input:focus-visible + .checkbox-box {
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .checkbox-input:focus-visible + .checkbox-error {
     border-color: var(--color-base08);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base08) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow-error);
   }
 
   .checkbox-icon {

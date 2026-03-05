@@ -151,7 +151,7 @@
     justify-content: center;
     min-height: 8rem;
     padding: var(--space-8);
-    border: 2px dashed var(--color-base02);
+    border: var(--border-width-default) dashed var(--color-base02);
     border-radius: var(--radius-lg);
     background: var(--color-base01);
     cursor: pointer;

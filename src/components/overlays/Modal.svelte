@@ -158,7 +158,6 @@
   /* Native dialog element - automatically in top-layer */
   dialog.modal {
     position: fixed;
-    border: none;
     border-radius: var(--radius-default);
     background: var(--color-base01);
     box-shadow: var(--shadow-2xl);

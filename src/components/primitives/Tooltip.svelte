@@ -140,7 +140,7 @@
     font-weight: 500;
     color: var(--color-base06);
     background: var(--color-base01);
-    border: var(--border-width-default) solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     border-radius: var(--radius-md);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     white-space: normal;
@@ -153,7 +153,7 @@
     width: 8px;
     height: 8px;
     background: var(--color-base01);
-    border: var(--border-width-default) solid var(--color-base02);
+    border: var(--border-width-thin) solid var(--color-base02);
     transform: rotate(45deg);
   }
 

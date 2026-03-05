@@ -315,6 +315,10 @@
     color: var(--color-base05);
   }
 
+  .tabs-segment .tab-active:focus-visible {
+    box-shadow: var(--focus-ring-shadow);
+  }
+
   /* ---- Underline variant ---- */
   .tabs-underline {
     background: transparent;

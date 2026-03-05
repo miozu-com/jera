@@ -141,9 +141,9 @@
     height: 1.25rem;
     border-radius: 0.375rem;
     background: var(--color-base00);
-    border: 2px solid var(--color-base0D);
+    border: var(--border-width-default) solid var(--color-base0D);
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
     margin-top: -0.375rem;
   }
 
@@ -179,9 +179,9 @@
     height: 1.25rem;
     border-radius: 0.375rem;
     background: var(--color-base00);
-    border: 2px solid var(--color-base0D);
+    border: var(--border-width-default) solid var(--color-base0D);
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
   }
 
   .slider::-moz-range-thumb:hover {

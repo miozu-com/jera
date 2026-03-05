@@ -222,10 +222,10 @@
     border-color: var(--color-base04);
   }
 
-  .theme-select-native:focus {
+  .theme-select-native:focus-visible {
     outline: none;
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .theme-select-dropdown-icon {

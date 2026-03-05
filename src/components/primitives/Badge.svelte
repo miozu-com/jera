@@ -71,7 +71,7 @@
     gap: 0.25rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
-    border: var(--border-width-default) solid;
+    border: var(--border-width-thin) solid;
     white-space: nowrap;
     line-height: 1;
     transition: background 0.15s ease, border-color 0.15s ease;

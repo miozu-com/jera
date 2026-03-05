@@ -88,7 +88,7 @@
     width: 1.125rem;
     height: 1.125rem;
     margin-top: 0.125rem;
-    border: 2px solid var(--color-base03);
+    border: var(--border-width-default) solid var(--color-base03);
     border-radius: 50%;
     background: var(--color-base00);
     transition: var(--transition-colors);
@@ -116,7 +116,7 @@
   }
 
   .radio-input:focus-visible + .radio-control {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .radio-label:hover:not(.radio-disabled) .radio-control {

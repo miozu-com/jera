@@ -205,7 +205,7 @@
     width: var(--space-6);
     height: var(--space-6);
     border-radius: var(--radius-full);
-    border: 2px solid var(--color-base00);
+    border: var(--border-width-default) solid var(--color-base00);
   }
 
   .status-online {

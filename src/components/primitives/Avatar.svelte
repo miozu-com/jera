@@ -178,7 +178,7 @@
     min-width: 8px;
     min-height: 8px;
     border-radius: 50%;
-    border: 2px solid var(--color-base00);
+    border: var(--border-width-default) solid var(--color-base00);
   }
 
   .avatar-status-online { background: var(--color-base0B); }

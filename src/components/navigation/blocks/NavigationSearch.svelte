@@ -263,11 +263,11 @@
     color: var(--color-text-muted, var(--color-base04));
   }
 
-  .search-input:focus {
+  .search-input:focus-visible {
     outline: none;
     border-color: var(--nav-item-active-color);
     background: var(--nav-container-bg);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--nav-item-active-color) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .search-clear {

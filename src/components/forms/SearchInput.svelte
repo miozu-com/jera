@@ -152,7 +152,7 @@
     color: var(--color-base04);
   }
 
-  .search-field:focus {
+  .search-field:focus-visible {
     outline: none;
     border-color: var(--color-base0D);
     box-shadow: var(--focus-ring-shadow);
@@ -162,7 +162,7 @@
     border-color: var(--color-base08);
   }
 
-  .search-input-error .search-field:focus {
+  .search-input-error .search-field:focus-visible {
     border-color: var(--color-base08);
     box-shadow: var(--focus-ring-shadow-error);
   }

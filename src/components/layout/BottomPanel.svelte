@@ -187,7 +187,7 @@
   .bottom-panel-sidebar {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid color-mix(in srgb, var(--color-base03) 20%, transparent);
+    border-right: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 20%, transparent);
     background: var(--color-base00);
     flex-shrink: 0;
     overflow: hidden;

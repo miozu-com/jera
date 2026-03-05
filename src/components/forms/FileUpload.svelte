@@ -172,7 +172,7 @@
     width: 100%;
     padding: var(--space-12) var(--space-8);
     background: var(--color-base00);
-    border: 2px dashed var(--color-base03);
+    border: var(--border-width-default) dashed var(--color-base03);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition-colors);

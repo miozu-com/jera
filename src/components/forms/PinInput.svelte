@@ -124,7 +124,7 @@
     text-align: center;
     color: var(--color-base07);
     background: var(--color-base00);
-    border: 2px solid var(--color-base02);
+    border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-lg);
     transition: var(--transition-colors);
     font-family: inherit;
@@ -142,10 +142,10 @@
     font-size: 1.5rem;
   }
 
-  .pin-field:focus {
+  .pin-field:focus-visible {
     outline: none;
     border-color: var(--color-base0D);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-base0D) 20%, transparent);
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .pin-field-filled {
