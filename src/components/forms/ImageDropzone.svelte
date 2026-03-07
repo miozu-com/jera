@@ -24,6 +24,15 @@
     onchange={handleChange}
     onremove={handleRemove}
   />
+
+  @example With numbered previews and minimum count
+  <ImageDropzone
+    bind:files={productImages}
+    maxFiles={8}
+    minFiles={3}
+    showNumbers
+    onchange={handleChange}
+  />
 -->
 <script>
   let {
@@ -31,10 +40,12 @@
     accept = 'image/*',
     multiple = true,
     maxFiles = 10,
+    minFiles = 0,
     maxSize = 10 * 1024 * 1024,
     disabled = false,
     error = '',
     previews = true,
+    showNumbers = false,
     onchange = null,
     onremove = null,
     class: className = ''
@@ -194,6 +205,9 @@
                 alt={img.name}
                 class="preview-thumb"
               />
+              {#if showNumbers}
+                <span class="preview-number">{index + 1}</span>
+              {/if}
               <button
                 type="button"
                 class="preview-remove"
@@ -208,26 +222,26 @@
               </button>
             </div>
           {/each}
+          {#if files.length < maxFiles}
+            <button
+              type="button"
+              class="add-tile"
+              onclick={openPicker}
+              {disabled}
+              aria-label="Add more images"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Add more</span>
+            </button>
+          {/if}
         </div>
       {/if}
 
       <div class="preview-footer">
         <span class="file-count">{files.length} / {maxFiles}</span>
-        {#if files.length < maxFiles}
-          <button
-            type="button"
-            class="add-more"
-            onclick={openPicker}
-            {disabled}
-          >
-            <!-- Plus icon -->
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Add more
-          </button>
-        {/if}
       </div>
     </div>
   {/if}
@@ -245,6 +259,24 @@
     aria-hidden="true"
   />
 </div>
+
+{#if minFiles > 0}
+  <div class="count-row">
+    <span class="count-status" class:count-met={files.length >= minFiles}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      {files.length} / {minFiles} minimum
+    </span>
+    {#if files.length > 0 && files.length < minFiles}
+      <span class="count-hint">Add {minFiles - files.length} more</span>
+    {:else if files.length >= minFiles}
+      <span class="count-hint count-hint-success">Ready</span>
+    {/if}
+  </div>
+{/if}
 
 {#if displayError}
   <p class="dropzone-error-text" role="alert">{displayError}</p>
@@ -417,30 +449,75 @@
     color: var(--color-base04);
   }
 
-  .add-more {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
+  .preview-number {
+    position: absolute;
+    bottom: var(--space-2);
+    left: var(--space-2);
+    padding: 0.125rem 0.375rem;
     font-size: var(--text-xs);
     font-weight: 500;
-    color: var(--color-base0D);
-    background: transparent;
-    border: var(--border-width-thin) solid var(--color-base0D);
+    color: var(--color-base07);
+    background: color-mix(in srgb, black 60%, transparent);
     border-radius: var(--radius-md);
+  }
+
+  .add-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    aspect-ratio: 1;
+    border-radius: var(--radius-md);
+    border: var(--border-width-default) dashed var(--color-base02);
+    color: var(--color-base04);
+    font-size: var(--text-xs);
+    font-weight: 500;
     cursor: pointer;
-    transition:
-      background var(--duration-fast) var(--ease-out),
-      color var(--duration-fast) var(--ease-out);
+    background: transparent;
+    transition: border-color var(--duration-fast), background var(--duration-fast), color var(--duration-fast);
   }
 
-  .add-more:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+  .add-tile:hover:not(:disabled) {
+    border-color: var(--color-base0D);
+    background: color-mix(in srgb, var(--color-base0D) 5%, transparent);
+    color: var(--color-base0D);
   }
 
-  .add-more:focus-visible {
+  .add-tile:focus-visible {
     outline: none;
     box-shadow: var(--focus-ring-shadow);
+  }
+
+  /* ---- Count status row ---- */
+
+  .count-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-3);
+  }
+
+  .count-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-base09);
+  }
+
+  .count-status.count-met {
+    color: var(--color-base0B);
+  }
+
+  .count-hint {
+    font-size: var(--text-sm);
+    color: var(--color-base04);
+  }
+
+  .count-hint-success {
+    color: var(--color-base0B);
   }
 
   /* ---- Hidden input ---- */

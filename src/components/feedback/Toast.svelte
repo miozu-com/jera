@@ -2,7 +2,8 @@
   @component Toast
 
   A toast notification system using native popover for top-layer rendering.
-  Provides stacking, auto-dismiss, and animations without z-index conflicts.
+  Provides stacking, auto-dismiss with circular progress ring, action buttons,
+  pause-on-hover, and smooth rAF-driven animations without z-index conflicts.
 
   @example
   // In your root layout
@@ -16,6 +17,11 @@
   import { getToastContext } from '@miozu/jera';
   const toast = getToastContext();
   toast.success('Saved successfully!');
+  toast.error('Something went wrong', {
+    title: 'Error',
+    action: { text: 'Retry', onClick: () => retryOp() },
+    secondaryAction: { text: 'Dismiss', onClick: () => {} }
+  });
 -->
 <script module>
   import { getContext, setContext } from 'svelte';
@@ -24,6 +30,9 @@
 
   /**
    * Toast Controller Class
+   *
+   * Manages toast lifecycle: show, dismiss, pause, resume.
+   * Progress tracking is handled in the component via rAF, not here.
    */
   export class ToastController {
     toasts = $state.raw([]);
@@ -40,7 +49,11 @@
         title: options.title,
         message: options.message,
         duration: options.duration ?? this.defaultDuration,
-        createdAt: Date.now()
+        action: options.action ?? null,
+        secondaryAction: options.secondaryAction ?? null,
+        paused: false,
+        pausedAt: undefined,
+        startTime: Date.now()
       };
       this.toasts = [toast, ...this.toasts].slice(0, this.maxToasts);
       return id;
@@ -56,15 +69,15 @@
 
     pause(id) {
       this.toasts = this.toasts.map(t =>
-        t.id === id ? { ...t, pausedAt: Date.now() } : t
+        t.id === id ? { ...t, paused: true, pausedAt: Date.now() } : t
       );
     }
 
     resume(id) {
       this.toasts = this.toasts.map(t => {
-        if (t.id !== id || !t.pausedAt) return t;
-        const pausedDuration = Date.now() - t.pausedAt;
-        return { ...t, createdAt: t.createdAt + pausedDuration, pausedAt: undefined };
+        if (t.id !== id || !t.paused) return t;
+        const pausedDuration = Date.now() - (t.pausedAt || Date.now());
+        return { ...t, paused: false, pausedAt: undefined, startTime: t.startTime + pausedDuration };
       });
     }
 
@@ -92,6 +105,8 @@
 
   let containerEl = $state(null);
 
+  const circumference = 2 * Math.PI * 8;
+
   const icons = {
     info: `<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>`,
     success: `<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>`,
@@ -107,6 +122,87 @@
     'bottom-center': 'toast-bottom-center',
     'bottom-right': 'toast-bottom-right'
   }[toast.position]);
+
+  // Local progress map — keeps rAF progress separate from $state.raw toast data
+  let progressMap = $state(new Map());
+
+  // Check reduced motion preference
+  const prefersReducedMotion = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+
+  // rAF-driven progress tracking
+  $effect(() => {
+    const items = toast.toasts;
+    if (items.length === 0) {
+      progressMap = new Map();
+      return;
+    }
+
+    // For reduced motion, use setTimeout fallback for dismiss only
+    if (prefersReducedMotion) {
+      const timeouts = [];
+      for (const item of items) {
+        if (item.duration <= 0 || item.paused) continue;
+        const elapsed = Date.now() - item.startTime;
+        const remaining = item.duration - elapsed;
+        if (remaining > 0) {
+          const tid = setTimeout(() => toast.dismiss(item.id), remaining);
+          timeouts.push(tid);
+        } else {
+          toast.dismiss(item.id);
+        }
+      }
+      // Set progress to 0 for reduced motion (no ring animation)
+      const newMap = new Map();
+      for (const item of items) {
+        newMap.set(item.id, 0);
+      }
+      progressMap = newMap;
+
+      return () => {
+        for (const tid of timeouts) clearTimeout(tid);
+      };
+    }
+
+    let frameId;
+
+    const update = () => {
+      const now = Date.now();
+      const newMap = new Map(progressMap);
+      let hasActive = false;
+
+      for (const item of items) {
+        if (item.duration <= 0) continue;
+        if (item.paused) {
+          hasActive = true;
+          continue;
+        }
+
+        const elapsed = now - item.startTime;
+        const progress = Math.min((elapsed / item.duration) * 100, 100);
+        newMap.set(item.id, progress);
+
+        if (progress >= 100) {
+          toast.dismiss(item.id);
+        } else {
+          hasActive = true;
+        }
+      }
+
+      progressMap = newMap;
+
+      if (hasActive) {
+        frameId = requestAnimationFrame(update);
+      }
+    };
+
+    frameId = requestAnimationFrame(update);
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  });
 
   // Show/hide popover based on toast count
   $effect(() => {
@@ -134,7 +230,7 @@
   aria-label="Notifications"
 >
   {#each toast.toasts as item (item.id)}
-    {@const remaining = item.duration - (Date.now() - item.createdAt)}
+    {@const progress = progressMap.get(item.id) ?? 0}
     <div
       class={cn('toast-item', `toast-${item.type}`)}
       role="alert"
@@ -152,15 +248,31 @@
           <p class="toast-title">{item.title}</p>
         {/if}
         <p class={cn('toast-message', item.title && 'has-title')}>{item.message}</p>
+
+        {#if item.action || item.secondaryAction}
+          <div class="toast-actions">
+            {#if item.secondaryAction}
+              <button class="toast-action secondary" onclick={() => { item.secondaryAction.onClick(); toast.dismiss(item.id); }}>
+                {item.secondaryAction.text}
+              </button>
+            {/if}
+            {#if item.action}
+              <button class="toast-action primary" onclick={() => { item.action.onClick(); toast.dismiss(item.id); }}>
+                {item.action.text}
+              </button>
+            {/if}
+          </div>
+        {/if}
       </div>
-      <button type="button" class="toast-close" onclick={() => toast.dismiss(item.id)} aria-label="Dismiss">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+
+      <button type="button" class="progress-btn" onclick={() => toast.dismiss(item.id)} aria-label="Dismiss">
+        <svg class="progress-ring" width="24" height="24" viewBox="0 0 24 24">
+          <circle class="progress-ring-bg" cx="12" cy="12" r="8" stroke-width="1" fill="none" />
+          <circle class="progress-ring-fill" cx="12" cy="12" r="8" stroke-width="2" fill="none"
+            style="stroke-dasharray: {circumference}; stroke-dashoffset: {circumference - (circumference * progress) / 100}" />
+          <path class="close-x" d="M15 9L9 15M9 9l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" />
         </svg>
       </button>
-      {#if item.duration > 0 && !item.pausedAt}
-        {@const _ = setTimeout(() => toast.dismiss(item.id), remaining)}
-      {/if}
     </div>
   {/each}
 </div>
@@ -195,15 +307,23 @@
     align-items: flex-start;
     gap: 0.75rem;
     width: 100%;
+    min-width: 280px;
     max-width: 24rem;
     padding: 1rem;
-    border-radius: 0.5rem;
-    border: var(--border-width-default) solid;
+    border-radius: var(--radius-xl, 0.75rem);
+    border: var(--border-width-default, 1px) solid;
     box-shadow: var(--shadow-lg);
     pointer-events: auto;
-    animation: toast-in var(--duration-base) ease-out;
+    backdrop-filter: blur(20px);
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .toast-item {
+      animation: toast-in var(--duration-base, 200ms) ease-out;
+    }
+  }
+
+  /* Variant backgrounds and borders */
   .toast-info {
     background-color: var(--color-base01);
     border-color: var(--color-base03);
@@ -226,6 +346,51 @@
     background-color: color-mix(in srgb, var(--color-base08) 10%, var(--color-base00));
     border-color: color-mix(in srgb, var(--color-base08) 30%, transparent);
     color: var(--color-base08);
+  }
+
+  /* Variant-colored titles */
+  .toast-info .toast-title { color: var(--color-base0C); }
+  .toast-success .toast-title { color: var(--color-base0B); }
+  .toast-warning .toast-title { color: var(--color-base0A); }
+  .toast-error .toast-title { color: var(--color-base08); }
+
+  /* Variant-colored progress rings */
+  .toast-info .progress-ring-fill { stroke: var(--color-base0C); }
+  .toast-success .progress-ring-fill { stroke: var(--color-base0B); }
+  .toast-warning .progress-ring-fill { stroke: var(--color-base0A); }
+  .toast-error .progress-ring-fill { stroke: var(--color-base08); }
+
+  /* Variant-colored primary action buttons */
+  .toast-info .toast-action.primary {
+    color: var(--color-base0C);
+    background: color-mix(in srgb, var(--color-base0C) 10%, transparent);
+  }
+  .toast-info .toast-action.primary:hover {
+    background: color-mix(in srgb, var(--color-base0C) 20%, transparent);
+  }
+
+  .toast-success .toast-action.primary {
+    color: var(--color-base0B);
+    background: color-mix(in srgb, var(--color-base0B) 10%, transparent);
+  }
+  .toast-success .toast-action.primary:hover {
+    background: color-mix(in srgb, var(--color-base0B) 20%, transparent);
+  }
+
+  .toast-warning .toast-action.primary {
+    color: var(--color-base0A);
+    background: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+  }
+  .toast-warning .toast-action.primary:hover {
+    background: color-mix(in srgb, var(--color-base0A) 20%, transparent);
+  }
+
+  .toast-error .toast-action.primary {
+    color: var(--color-base08);
+    background: color-mix(in srgb, var(--color-base08) 10%, transparent);
+  }
+  .toast-error .toast-action.primary:hover {
+    background: color-mix(in srgb, var(--color-base08) 20%, transparent);
   }
 
   .toast-icon {
@@ -253,6 +418,7 @@
   .toast-message {
     font-size: 0.875rem;
     margin: 0;
+    color: var(--color-base05);
   }
 
   .toast-message.has-title {
@@ -260,24 +426,68 @@
     opacity: 0.9;
   }
 
-  .toast-close {
+  /* Action buttons */
+  .toast-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .toast-action {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--radius-md, 0.375rem);
+    cursor: pointer;
+    transition: background var(--duration-fast, 150ms);
+  }
+
+  .toast-action.secondary {
+    color: var(--color-base04);
+    background: transparent;
+  }
+
+  .toast-action.secondary:hover {
+    background: color-mix(in srgb, var(--color-base04) 10%, transparent);
+  }
+
+  /* Progress ring button (replaces close X) */
+  .progress-btn {
     flex-shrink: 0;
-    padding: 0.25rem;
-    border-radius: 0.375rem;
+    cursor: pointer;
+    padding: 0;
     background: transparent;
     border: none;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity var(--duration-fast);
+    transition: opacity var(--duration-fast, 150ms);
   }
 
-  .toast-close:hover {
-    opacity: 1;
+  .progress-btn:hover {
+    opacity: 0.8;
   }
 
-  .toast-close svg {
-    width: 1rem;
-    height: 1rem;
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+
+  .progress-ring-bg {
+    stroke: var(--color-base03);
+    fill: none;
+  }
+
+  .progress-ring-fill {
+    fill: none;
+    stroke: currentColor;
+    transition: stroke-dashoffset 50ms linear;
+  }
+
+  .close-x {
+    stroke: var(--color-base04);
+    transition: stroke var(--duration-fast, 150ms);
+  }
+
+  .progress-btn:hover .close-x {
+    stroke: var(--color-base05);
   }
 
   @keyframes toast-in {

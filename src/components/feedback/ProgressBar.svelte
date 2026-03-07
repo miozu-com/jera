@@ -107,11 +107,16 @@
 
   .progress-indeterminate {
     width: 30% !important;
-    animation: indeterminate 1.5s ease-in-out infinite;
   }
 
-  @keyframes indeterminate {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(400%); }
+  @media (prefers-reduced-motion: no-preference) {
+    .progress-indeterminate {
+      animation: indeterminate 1.5s ease-in-out infinite;
+    }
+
+    @keyframes indeterminate {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(400%); }
+    }
   }
 </style>

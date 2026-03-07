@@ -63,15 +63,22 @@
 
 <style>
   .spinner {
-    animation: spin 1s linear infinite;
+    transform: rotate(45deg);
   }
 
   .spinner-track {
     opacity: 0.2;
   }
 
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  @media (prefers-reduced-motion: no-preference) {
+    .spinner {
+      transform: none;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   }
 </style>

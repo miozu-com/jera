@@ -66,6 +66,9 @@ export { default as ImageDropzone } from './components/forms/ImageDropzone.svelt
 export { default as ValidatedInput } from './components/forms/ValidatedInput.svelte';
 export { default as ButtonInput } from './components/forms/ButtonInput.svelte';
 export { default as DatePicker } from './components/forms/DatePicker.svelte';
+export { default as TagInput } from './components/forms/TagInput.svelte';
+export { default as OptionCard } from './components/forms/OptionCard.svelte';
+export { default as MultiUrlInput } from './components/forms/MultiUrlInput.svelte';
 
 // --------------------------------------------
 // COMPONENTS - Feedback

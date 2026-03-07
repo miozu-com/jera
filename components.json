@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 90,
+  "totalComponents": 93,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -478,7 +478,7 @@
       "name": "Select",
       "category": "forms",
       "path": "src/components/forms/Select.svelte",
-      "description": "Custom dropdown with keyboard navigation",
+      "description": "Native select element styled with base16 tokens",
       "props": {
         "options": {
           "type": "array",
@@ -496,10 +496,20 @@
           "default": "'Select...'",
           "description": "Placeholder when no selection"
         },
+        "labelKey": {
+          "type": "string",
+          "default": "'label'",
+          "description": "Key to use for option display text"
+        },
+        "valueKey": {
+          "type": "string",
+          "default": "'value'",
+          "description": "Key to use for option value"
+        },
         "size": {
           "type": "'xs'|'sm'|'md'|'lg'",
           "default": "'md'",
-          "description": "Dropdown size"
+          "description": "Select size"
         },
         "disabled": {
           "type": "boolean",
@@ -519,7 +529,7 @@
         "name": {
           "type": "string",
           "default": "undefined",
-          "description": "Form field name for hidden input submission"
+          "description": "Form field name (native select handles submission)"
         },
         "required": {
           "type": "boolean",
@@ -535,8 +545,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -716,8 +726,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -787,8 +797,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-07",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -831,25 +841,50 @@
       "name": "Skeleton",
       "category": "feedback",
       "path": "src/components/feedback/Skeleton.svelte",
-      "description": "Loading placeholder shapes",
+      "description": "Loading placeholder with shimmer animation. Variant mode for primitives, preset mode for layout patterns.",
       "props": {
         "variant": {
           "type": "'text'|'heading'|'circle'|'rect'",
           "default": "'text'",
-          "description": "Shape variant"
+          "description": "Shape variant (ignored when preset is set)"
+        },
+        "preset": {
+          "type": "'card'|'content'|'toc'|null",
+          "default": "null",
+          "description": "Layout preset pattern"
+        },
+        "width": {
+          "type": "string",
+          "default": "'100%'",
+          "description": "CSS width"
+        },
+        "height": {
+          "type": "string",
+          "default": "null",
+          "description": "CSS height override"
+        },
+        "size": {
+          "type": "string",
+          "default": "null",
+          "description": "Width and height for circle variant"
         },
         "lines": {
           "type": "number",
           "default": "1",
-          "description": "Number of lines (text variant)"
+          "description": "Number of lines (text variant or content/toc preset)"
+        },
+        "animate": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Enable shimmer animation"
         }
       },
       "consumers": [
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -884,8 +919,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2918,16 +2953,18 @@
         "accept": { "type": "string", "default": "'image/*'", "description": "Accepted MIME types" },
         "multiple": { "type": "boolean", "default": "true", "description": "Allow multiple files" },
         "maxFiles": { "type": "number", "default": "10", "description": "Maximum file count" },
+        "minFiles": { "type": "number", "default": "0", "description": "Minimum required file count for status indicator" },
         "maxSize": { "type": "number", "default": "10485760", "description": "Max file size in bytes (10MB)" },
         "disabled": { "type": "boolean", "default": "false", "description": "Disable upload" },
         "error": { "type": "string", "default": "''", "description": "Error message" },
         "previews": { "type": "boolean", "default": "true", "description": "Show image thumbnails" },
+        "showNumbers": { "type": "boolean", "default": "false", "description": "Show index numbers on preview thumbnails" },
         "onchange": { "type": "function", "default": "null", "description": "Files changed callback" },
         "onremove": { "type": "function", "default": "null", "description": "File removed callback (index)" }
       },
       "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-06",
+      "revision": 2,
+      "lastReviewed": "2026-03-07",
       "docLevel": "none",
       "breaking": []
     },
@@ -2995,6 +3032,68 @@
       "stage": "draft",
       "revision": 1,
       "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "TagInput",
+      "category": "forms",
+      "path": "src/components/forms/TagInput.svelte",
+      "description": "Tag/chip input with add/remove, deduplication, and variant colors",
+      "props": {
+        "tags": { "type": "string[]", "default": "[]", "bindable": true, "description": "Array of tag strings" },
+        "placeholder": { "type": "string", "default": "'Add tag...'", "description": "Input placeholder" },
+        "variant": { "type": "'default'|'accent'|'success'|'warning'|'error'", "default": "'default'", "description": "Chip color variant" },
+        "maxTags": { "type": "number", "default": "Infinity", "description": "Maximum number of tags" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable input" },
+        "duplicates": { "type": "boolean", "default": "false", "description": "Allow duplicate tags" },
+        "transform": { "type": "function|null", "default": "null", "description": "Transform function applied to tag value before adding" },
+        "onchange": { "type": "function|null", "default": "null", "description": "Called with updated tags array" }
+      },
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-07",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "OptionCard",
+      "category": "forms",
+      "path": "src/components/forms/OptionCard.svelte",
+      "description": "Selectable option card for multi-choice layouts",
+      "props": {
+        "selected": { "type": "boolean", "default": "false", "description": "Whether the option is selected" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable the option" },
+        "variant": { "type": "'default'|'compact'", "default": "'default'", "description": "Size variant" },
+        "onclick": { "type": "function|null", "default": "null", "description": "Click handler" }
+      },
+      "snippets": ["children"],
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-07",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "MultiUrlInput",
+      "category": "forms",
+      "path": "src/components/forms/MultiUrlInput.svelte",
+      "description": "URL list input with validation, deduplication, and domain display",
+      "props": {
+        "urls": { "type": "string[]", "default": "[]", "bindable": true, "description": "Array of URL strings" },
+        "label": { "type": "string", "default": "''", "description": "Header label" },
+        "description": { "type": "string", "default": "''", "description": "Description text below label" },
+        "placeholder": { "type": "string", "default": "'https://example.com'", "description": "Input placeholder" },
+        "maxUrls": { "type": "number", "default": "10", "description": "Maximum number of URLs" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable input" },
+        "onchange": { "type": "function|null", "default": "null", "description": "Called with updated URLs array" }
+      },
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-07",
       "docLevel": "none",
       "breaking": []
     }
