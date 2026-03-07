@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 85,
+  "totalComponents": 90,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -2865,6 +2865,136 @@
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "Stepper",
+      "category": "navigation",
+      "path": "src/components/navigation/Stepper.svelte",
+      "description": "Multi-step progress indicator for wizards and multi-stage workflows",
+      "props": {
+        "steps": { "type": "Array<{id, label, icon?, description?}>", "default": "[]", "description": "Step definitions" },
+        "active": { "type": "number", "default": "0", "bindable": true, "description": "Current step index" },
+        "variant": { "type": "'default'|'compact'|'vertical'", "default": "'default'", "description": "Layout variant" },
+        "completed": { "type": "number[]", "default": "[]", "description": "Array of completed step indices" },
+        "clickable": { "type": "boolean", "default": "false", "description": "Allow clicking completed steps" },
+        "onclick": { "type": "function", "default": "null", "description": "Click handler (stepIndex) => void" }
+      },
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "Drawer",
+      "category": "overlays",
+      "path": "src/components/overlays/Drawer.svelte",
+      "description": "Slide-out panel overlay with backdrop, focus trap, and multi-position support",
+      "props": {
+        "open": { "type": "boolean", "default": "false", "bindable": true, "description": "Drawer visibility" },
+        "position": { "type": "'left'|'right'|'top'|'bottom'", "default": "'right'", "description": "Slide direction" },
+        "size": { "type": "'sm'|'md'|'lg'|'xl'|'full'", "default": "'md'", "description": "Panel size" },
+        "title": { "type": "string", "default": "''", "description": "Header title" },
+        "closable": { "type": "boolean", "default": "true", "description": "Show close button" },
+        "closeOnOverlay": { "type": "boolean", "default": "true", "description": "Close on backdrop click" },
+        "closeOnEscape": { "type": "boolean", "default": "true", "description": "Close on Escape key" }
+      },
+      "snippets": ["header", "footer", "children"],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ImageDropzone",
+      "category": "forms",
+      "path": "src/components/forms/ImageDropzone.svelte",
+      "description": "Drag-and-drop image upload with preview grid and file validation",
+      "props": {
+        "files": { "type": "Array<{file, preview, name, size}>", "default": "[]", "bindable": true, "description": "Uploaded files" },
+        "accept": { "type": "string", "default": "'image/*'", "description": "Accepted MIME types" },
+        "multiple": { "type": "boolean", "default": "true", "description": "Allow multiple files" },
+        "maxFiles": { "type": "number", "default": "10", "description": "Maximum file count" },
+        "maxSize": { "type": "number", "default": "10485760", "description": "Max file size in bytes (10MB)" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable upload" },
+        "error": { "type": "string", "default": "''", "description": "Error message" },
+        "previews": { "type": "boolean", "default": "true", "description": "Show image thumbnails" },
+        "onchange": { "type": "function", "default": "null", "description": "Files changed callback" },
+        "onremove": { "type": "function", "default": "null", "description": "File removed callback (index)" }
+      },
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ValidatedInput",
+      "category": "forms",
+      "path": "src/components/forms/ValidatedInput.svelte",
+      "description": "Input wrapper with built-in validation rules, error/success display",
+      "props": {
+        "value": { "type": "string", "default": "''", "bindable": true, "description": "Input value" },
+        "label": { "type": "string", "default": "''", "description": "Label text" },
+        "rules": { "type": "Array<{test, message}|function>", "default": "[]", "description": "Validation rules" },
+        "validateOn": { "type": "'blur'|'input'", "default": "'blur'", "description": "When to validate" },
+        "showSuccess": { "type": "boolean", "default": "false", "description": "Show green check on valid" },
+        "error": { "type": "string", "default": "''", "bindable": true, "description": "External error message" },
+        "required": { "type": "boolean", "default": "false", "description": "Required field" },
+        "id": { "type": "string", "default": "null", "description": "Input id" },
+        "name": { "type": "string", "default": "null", "description": "Input name" }
+      },
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ButtonInput",
+      "category": "forms",
+      "path": "src/components/forms/ButtonInput.svelte",
+      "description": "Input with attached button for search, submit, or inline actions",
+      "props": {
+        "value": { "type": "string", "default": "''", "bindable": true, "description": "Input value" },
+        "buttonLabel": { "type": "string", "default": "'Submit'", "description": "Button text" },
+        "buttonVariant": { "type": "string", "default": "'primary'", "description": "Button variant" },
+        "buttonSize": { "type": "string", "default": "'md'", "description": "Button size" },
+        "buttonPosition": { "type": "'left'|'right'", "default": "'right'", "description": "Button placement" },
+        "onsubmit": { "type": "function", "default": "null", "description": "Submit handler (value) => void" },
+        "loading": { "type": "boolean", "default": "false", "description": "Loading state" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable both" }
+      },
+      "snippets": ["children"],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "DatePicker",
+      "category": "forms",
+      "path": "src/components/forms/DatePicker.svelte",
+      "description": "Calendar date picker with month navigation, min/max constraints. Zero dependencies — uses native Date + Intl.DateTimeFormat",
+      "props": {
+        "value": { "type": "string|null", "default": "null", "bindable": true, "description": "Selected date (ISO YYYY-MM-DD)" },
+        "min": { "type": "string|null", "default": "null", "description": "Earliest selectable date (ISO)" },
+        "max": { "type": "string|null", "default": "null", "description": "Latest selectable date (ISO)" },
+        "placeholder": { "type": "string", "default": "'Select date'", "description": "Trigger placeholder" },
+        "disabled": { "type": "boolean", "default": "false", "description": "Disable picker" },
+        "required": { "type": "boolean", "default": "false", "description": "Required field" },
+        "id": { "type": "string", "default": "null", "description": "Hidden input id" },
+        "name": { "type": "string", "default": "null", "description": "Hidden input name" },
+        "onchange": { "type": "function", "default": "null", "description": "Date change callback" }
+      },
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-06",
       "docLevel": "none",
       "breaking": []
     }

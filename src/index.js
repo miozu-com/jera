@@ -62,6 +62,10 @@ export { default as RangeSlider } from './components/forms/RangeSlider.svelte';
 export { default as SearchInput } from './components/forms/SearchInput.svelte';
 export { default as PinInput } from './components/forms/PinInput.svelte';
 export { default as Dropzone } from './components/forms/Dropzone.svelte';
+export { default as ImageDropzone } from './components/forms/ImageDropzone.svelte';
+export { default as ValidatedInput } from './components/forms/ValidatedInput.svelte';
+export { default as ButtonInput } from './components/forms/ButtonInput.svelte';
+export { default as DatePicker } from './components/forms/DatePicker.svelte';
 
 // --------------------------------------------
 // COMPONENTS - Feedback
@@ -90,11 +94,13 @@ export { default as Dropdown } from './components/overlays/Dropdown.svelte';
 export { default as DropdownItem } from './components/overlays/DropdownItem.svelte';
 export { default as DropdownDivider } from './components/overlays/DropdownDivider.svelte';
 export { default as ConfirmDialog } from './components/overlays/ConfirmDialog.svelte';
+export { default as Drawer } from './components/overlays/Drawer.svelte';
 
 // --------------------------------------------
 // COMPONENTS - Navigation
 // --------------------------------------------
 
+export { default as Stepper } from './components/navigation/Stepper.svelte';
 export { default as Tabs } from './components/navigation/Tabs.svelte';
 export { default as TabNav } from './components/navigation/TabNav.svelte';
 export { default as ChipNav } from './components/navigation/ChipNav.svelte';
