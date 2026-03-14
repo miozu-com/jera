@@ -118,19 +118,20 @@
     position: absolute;
     z-index: var(--z-tooltip);
     pointer-events: none;
-    animation: tooltip-enter 0.15s ease-out;
   }
 
   .tooltip-interactive {
     pointer-events: auto;
   }
 
-  @keyframes tooltip-enter {
-    from {
-      opacity: 0;
+  @media (prefers-reduced-motion: no-preference) {
+    .tooltip {
+      animation: tooltip-enter 0.15s ease-out;
     }
-    to {
-      opacity: 1;
+
+    @keyframes tooltip-enter {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   }
 

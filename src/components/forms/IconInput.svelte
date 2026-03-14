@@ -155,13 +155,15 @@
     right: 1rem;
   }
 
-  .spinner {
-    animation: spin 1s linear infinite;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
 
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   }
 
   .icon-clear {

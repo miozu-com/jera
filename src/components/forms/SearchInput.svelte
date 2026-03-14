@@ -98,13 +98,15 @@
     pointer-events: none;
   }
 
-  .search-spinner {
-    animation: spin 1s linear infinite;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .search-spinner {
+      animation: spin 1s linear infinite;
+    }
 
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   }
 
   .search-field {

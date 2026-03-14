@@ -28,7 +28,7 @@
 
   let fileInput = $state(null);
   let isDragging = $state(false);
-  let files = $state([]);
+  let files = $state.raw([]);
 
   function validateFile(file) {
     if (maxSize && file.size > maxSize) {

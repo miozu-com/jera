@@ -70,8 +70,6 @@
     background: color-mix(in srgb, var(--color-base01) 60%, transparent);
     backdrop-filter: blur(12px);
     opacity: 0;
-    animation: fadeSlideUp 400ms ease forwards;
-    animation-delay: calc(var(--index, 0) * 80ms);
   }
 
   .dash-card:hover {
@@ -147,14 +145,21 @@
     color: var(--color-base05);
   }
 
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
+  @media (prefers-reduced-motion: no-preference) {
+    .dash-card {
+      animation: fadeSlideUp 400ms ease forwards;
+      animation-delay: calc(var(--index, 0) * 80ms);
     }
-    to {
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dash-card {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 </style>

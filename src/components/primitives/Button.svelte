@@ -338,13 +338,16 @@
 
   /* Spinner */
   .btn-spinner {
-    animation: spin 1s linear infinite;
     flex-shrink: 0;
   }
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   }
 </style>

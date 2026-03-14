@@ -53,7 +53,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 **Modal:** `bind:open`, `title`, `size` (sm-xl), `variant`, `fill`, `footer` (snippet)
 - **fill** — Anchors dialog to stable height (80dvh). Prevents collapse when content changes (empty states, search results). Uses flex column: header/footer pinned, body stretches + scrolls.
 
-**Toast:** Use `createToastContext()` in root, `getToastContext()` anywhere
+**Toast:** Singleton — `getToastState()` from any file. Dual progress: `'ring'` (default) or `'bar'`. Title-first convenience: `toast.success('Saved', 'Changes applied')`. Error default 6s. Pause-on-hover. Svelte `fly` transitions. Popover top-layer.
 
 **Tabs:** `tabs=[{id, label, badge?, icon?, panelId?}]`, `bind:active`, `variant` (default|segment|underline|pills), `size` (sm|md|lg), `fullWidth`, `onchange`
 - **default** — Pill bg indicator slides between tabs
@@ -171,6 +171,59 @@ export const buttonStyles = cv({
 <div use:escapeKey={() => close()}>
 ```
 
+## Stateful Component Philosophy (CRITICAL)
+
+All jera components with persistent state follow the **singleton reactive class** pattern. This matches the Selify platform architecture where every feature area uses a reactive state class.
+
+### Pattern
+
+```javascript
+// In the component's <script module>
+export class FooController {
+  items = $state.raw([]);   // $state.raw for arrays/objects (no deep proxy)
+  config = $state('default'); // $state for primitives
+  // ...methods
+}
+
+let _instance = null;
+export function getFooState(config) {
+  if (!_instance) { _instance = new FooController(); /* apply config */ }
+  return _instance;
+}
+export function resetFooState() { _instance = null; }
+```
+
+### Current Singletons
+
+| Component | Getter | Controller |
+|-----------|--------|------------|
+| **Toast** | `getToastState()` | `ToastController` |
+| **Theme** | `getTheme()` | `ThemeState` |
+
+### Rules
+
+1. **Singleton, not context** — callable from any `.js` file, reactive state class, or component
+2. **`$state.raw()`** for arrays/objects — avoids deep proxy overhead on frequent updates
+3. **`$state()`** for primitives only (strings, numbers, booleans)
+4. **Convenience methods** — `toast.success(title, msg?)` not just `toast.show({...})`
+5. **Reset function** — `resetXState()` for testing / cleanup
+6. **Backward compat** — deprecated context wrappers can delegate to singleton
+
+### Animation Rules
+
+1. **Svelte transitions** (`fly`, `fade`, `slide`) — not CSS `@keyframes`. Svelte manages DOM lifecycle (keeps element for out-transition)
+2. **Direction-aware** — `fly` params derived from component position (left/right/top/bottom)
+3. **Entry + exit consistent** — same direction, exit is shorter duration
+4. **`prefers-reduced-motion`** — `{duration: 0}` for all transitions, `setTimeout` fallback for timed dismiss
+5. **rAF for continuous animation** (progress rings/bars) — not `setInterval`. Pauses in hidden tabs.
+6. **Compositor-only properties** — animate `opacity`, `transform` only. Use `scaleX()` for bar progress.
+
+### Rendering
+
+1. **`popover="manual"`** for overlay components (Toast, Dropdown) — native top-layer, no z-index wars
+2. **Inline SVG** for icons — no imported icon components in library code
+3. **`color-mix()`** for variant tinting — `color-mix(in srgb, var(--color-base0B) 10%, var(--color-base00))`
+
 ## Rules for AI
 
 1. Svelte 5 runes only - no legacy syntax
@@ -179,6 +232,7 @@ export const buttonStyles = cv({
 4. Semantic colors from Base16
 5. Accessibility first (ARIA, keyboard)
 6. Pure JavaScript (no TypeScript)
+7. Singleton reactive class for stateful components (see above)
 
 ## Component Lifecycle
 

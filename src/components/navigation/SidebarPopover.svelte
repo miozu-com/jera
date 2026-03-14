@@ -76,17 +76,16 @@
     min-width: 200px;
     max-width: 280px;
     overflow: hidden;
-    animation: popover-appear 0.15s ease-out;
   }
 
-  @keyframes popover-appear {
-    from {
-      opacity: 0;
-      transform: translateX(-8px) scale(0.96);
+  @media (prefers-reduced-motion: no-preference) {
+    .popover-content {
+      animation: popover-appear 0.15s ease-out;
     }
-    to {
-      opacity: 1;
-      transform: translateX(0) scale(1);
+
+    @keyframes popover-appear {
+      from { opacity: 0; transform: translateX(-8px) scale(0.96); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
     }
   }
 

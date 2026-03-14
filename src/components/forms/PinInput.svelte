@@ -22,7 +22,7 @@
     ...rest
   } = $props();
 
-  let inputs = $state([]);
+  let inputs = $state.raw([]);
 
   // Keep value in sync with inputs
   $effect(() => {
@@ -45,7 +45,7 @@
       return;
     }
 
-    inputs[index] = char;
+    inputs = inputs.map((v, i) => i === index ? char : v);
     updateValue();
 
     // Move to next input
@@ -72,9 +72,7 @@
     e.preventDefault();
     const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, length);
 
-    for (let i = 0; i < length; i++) {
-      inputs[i] = pasted[i] || '';
-    }
+    inputs = Array(length).fill('').map((_, i) => pasted[i] || '');
     updateValue();
 
     // Focus appropriate input

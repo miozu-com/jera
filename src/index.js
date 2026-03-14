@@ -77,6 +77,8 @@ export { default as MultiUrlInput } from './components/forms/MultiUrlInput.svelt
 export {
   default as Toast,
   ToastController,
+  getToastState,
+  resetToastState,
   createToastContext,
   getToastContext
 } from './components/feedback/Toast.svelte';

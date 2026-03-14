@@ -196,21 +196,20 @@
     margin: 0;
     font-size: var(--text-xs, 0.75rem);
     line-height: var(--leading-normal, 1.5);
-    animation: vi-slide-in var(--duration-fast, 150ms) var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
   }
 
   .vi-message--error {
     color: var(--color-base08);
   }
 
-  @keyframes vi-slide-in {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
+  @media (prefers-reduced-motion: no-preference) {
+    .vi-message {
+      animation: vi-slide-in var(--duration-fast, 150ms) var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    @keyframes vi-slide-in {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   }
 </style>

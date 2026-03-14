@@ -186,32 +186,25 @@
     border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 50%, transparent);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
-    animation: dropdown-enter 0.12s var(--ease-out);
   }
 
-  .dropdown-enter-up {
-    animation-name: dropdown-enter-up;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .dropdown-content {
+      animation: dropdown-enter 0.12s var(--ease-out);
+    }
 
-  @keyframes dropdown-enter {
-    from {
-      opacity: 0;
-      transform: translateY(-4px) scale(0.97);
+    .dropdown-enter-up {
+      animation-name: dropdown-enter-up;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
 
-  @keyframes dropdown-enter-up {
-    from {
-      opacity: 0;
-      transform: translateY(4px) scale(0.97);
+    @keyframes dropdown-enter {
+      from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+
+    @keyframes dropdown-enter-up {
+      from { opacity: 0; transform: translateY(4px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   }
 </style>

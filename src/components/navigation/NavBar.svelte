@@ -331,7 +331,6 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: var(--space-8);
-    animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .brand-breadcrumbs {
@@ -435,18 +434,6 @@
     display: flex;
     align-items: center;
     gap: 2px;
-    animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes navSectionsIn {
-    from {
-      opacity: 0;
-      transform: translateX(-6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
   }
 
   .navbar-dropdown {
@@ -502,17 +489,29 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
-    animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  @keyframes navDropIn {
-    from {
-      opacity: 0;
-      transform: translateY(-6px);
+  @media (prefers-reduced-motion: no-preference) {
+    .mega-menu-panel {
+      animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    .mega-mega-panel {
+      animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar-sections {
+      animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes navDropIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes navSectionsIn {
+      from { opacity: 0; transform: translateX(-6px); }
+      to { opacity: 1; transform: translateX(0); }
     }
   }
 

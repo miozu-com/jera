@@ -81,7 +81,7 @@
   }
 
   // Hover popover state
-  let hoverPopover = $state({
+  let hoverPopover = $state.raw({
     item: null,
     position: { top: 0, left: 0 }
   });

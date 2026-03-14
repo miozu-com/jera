@@ -92,7 +92,7 @@
   });
 
   // Hover popover state for collapsed sidebar
-  let hoverPopover = $state({
+  let hoverPopover = $state.raw({
     item: null,
     position: { top: 0, left: 0 }
   });
@@ -115,7 +115,7 @@
 
   function hidePopover() {
     hoverTimeout = setTimeout(() => {
-      hoverPopover.item = null;
+      hoverPopover = { ...hoverPopover, item: null };
     }, 150);
   }
 

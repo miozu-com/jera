@@ -67,7 +67,7 @@
   let dropdownReady = $state(false);
   let dropdownRef = $state(null);
   let triggerRef = $state(null);
-  let dropdownPosition = $state({ top: 0, left: 0, right: 0 });
+  let dropdownPosition = $state.raw({ top: 0, left: 0, right: 0 });
   let isMobileView = $state(false);
 
   function toggleDropdown() {
@@ -444,21 +444,20 @@
     overflow-y: auto;
     max-height: calc(100vh - 120px);
     z-index: var(--z-dropdown);
-    animation: dropdown-appear 0.15s ease-out;
   }
 
   .dropdown-menu.mobile-dropdown {
     width: auto;
   }
 
-  @keyframes dropdown-appear {
-    from {
-      opacity: 0;
-      transform: translateY(-8px) scale(0.96);
+  @media (prefers-reduced-motion: no-preference) {
+    .dropdown-menu {
+      animation: dropdown-appear 0.15s ease-out;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+
+    @keyframes dropdown-appear {
+      from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   }
 

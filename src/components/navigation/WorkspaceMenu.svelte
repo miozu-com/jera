@@ -328,17 +328,16 @@
       0 20px 25px -5px rgba(0, 0, 0, 0.3),
       0 8px 10px -6px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    animation: dropdown-appear 150ms ease-out;
   }
 
-  @keyframes dropdown-appear {
-    from {
-      opacity: 0;
-      transform: translateY(-4px) scale(0.98);
+  @media (prefers-reduced-motion: no-preference) {
+    .workspace-dropdown {
+      animation: dropdown-appear 150ms ease-out;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+
+    @keyframes dropdown-appear {
+      from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   }
 

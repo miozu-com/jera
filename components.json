@@ -719,16 +719,22 @@
       "name": "Toast",
       "category": "feedback",
       "path": "src/components/feedback/Toast.svelte",
-      "description": "Notification system via context API",
-      "contextSetup": "createToastContext() in root, getToastContext() in children",
+      "description": "Enterprise toast system — singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
+      "statePattern": "singleton: getToastState()",
       "consumers": [
+        "dash",
         "admin",
         "miozu"
       ],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-03-07",
-      "breaking": [],
+      "breaking": [
+        {
+          "revision": 5,
+          "change": "Convenience methods changed from (message, options?) to (title, messageOrOptions?, options?). Context API deprecated in favor of getToastState() singleton."
+        }
+      ],
       "docLevel": "standard"
     },
     {

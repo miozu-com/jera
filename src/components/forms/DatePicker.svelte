@@ -366,12 +366,17 @@
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     padding: 0.75rem;
-    animation: datepicker-in var(--duration-fast) var(--ease-out);
   }
 
-  @keyframes datepicker-in {
-    from { opacity: 0; transform: translateY(-0.375rem); }
-    to { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: no-preference) {
+    .calendar-dropdown {
+      animation: datepicker-in var(--duration-fast) var(--ease-out);
+    }
+
+    @keyframes datepicker-in {
+      from { opacity: 0; transform: translateY(-0.375rem); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   }
 
   /* ---- Calendar header ---- */
