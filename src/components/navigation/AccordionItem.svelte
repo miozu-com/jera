@@ -41,6 +41,7 @@
     expanded: expandedProp = $bindable(false),
     disabled = false,
     badge = null,
+    ontoggle = null,
     leading,
     trailing,
     indicator,
@@ -59,11 +60,13 @@
 
   function handleClick() {
     if (disabled) return;
+    const wasOpen = isOpen;
     if (inGroup) {
       accordion.toggle(itemId);
     } else {
       expandedProp = !expandedProp;
     }
+    ontoggle?.(!wasOpen);
   }
 </script>
 
