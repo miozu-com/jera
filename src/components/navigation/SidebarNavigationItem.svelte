@@ -42,6 +42,7 @@
   import { cubicOut } from 'svelte/easing';
   import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
   import { NAVIGATION_CONTEXT_KEY } from '../../utils/navigation.svelte.js';
+  import SidebarNavigationItem from './SidebarNavigationItem.svelte';
 
   let {
     item,
@@ -267,7 +268,7 @@
         transition:slide={{ duration: 200, easing: cubicOut }}
       >
         {#each item.children as child}
-          <svelte:self
+          <SidebarNavigationItem
             item={child}
             {navigationState}
             depth={depth + 1}
