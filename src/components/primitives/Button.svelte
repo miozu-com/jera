@@ -79,13 +79,25 @@
       {@render defaultSpinner()}
     {/if}
     {#if icon && icon.position !== 'right'}
-      <span class="btn-icon">{@render icon.icon()}</span>
+      <span class="btn-icon">
+        {#if typeof icon.icon === 'function' && icon.icon.length === 0}
+          {@render icon.icon()}
+        {:else if typeof icon.icon === 'function'}
+          <svelte:component this={icon.icon} size={icon.size || 16} />
+        {/if}
+      </span>
     {/if}
     {#if children}
       {@render children()}
     {/if}
     {#if icon?.position === 'right'}
-      <span class="btn-icon">{@render icon.icon()}</span>
+      <span class="btn-icon">
+        {#if typeof icon.icon === 'function' && icon.icon.length === 0}
+          {@render icon.icon()}
+        {:else if typeof icon.icon === 'function'}
+          <svelte:component this={icon.icon} size={icon.size || 16} />
+        {/if}
+      </span>
     {/if}
   {/if}
 {/snippet}
