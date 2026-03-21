@@ -79,16 +79,18 @@
       {@render defaultSpinner()}
     {/if}
     {#if icon && icon.position !== 'right'}
+      {@const IconComponent = icon.icon}
       <span class="btn-icon">
-        <svelte:component this={icon.icon} size={icon.size || 16} />
+        <IconComponent size={icon.size || 16} />
       </span>
     {/if}
     {#if children}
       {@render children()}
     {/if}
     {#if icon?.position === 'right'}
+      {@const IconComponent = icon.icon}
       <span class="btn-icon">
-        <svelte:component this={icon.icon} size={icon.size || 16} />
+        <IconComponent size={icon.size || 16} />
       </span>
     {/if}
   {/if}
