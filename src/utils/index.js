@@ -22,6 +22,19 @@ export {
 } from './sidebar.svelte.js';
 
 export {
+  NavigationState,
+  createNavigationState,
+  createActiveChecker,
+  NAVIGATION_CONTEXT_KEY
+} from './navigation.svelte.js';
+
+export {
+  getHighlighter,
+  highlightCode,
+  DEFAULT_LANGUAGES
+} from './highlighter.js';
+
+export {
   generateAvatar,
   generateAvatarDataURL,
   generateAvatarBlob
