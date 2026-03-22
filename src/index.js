@@ -8,11 +8,14 @@
  * @license MIT
  *
  * @example
- * // Import components
- * import { Button, Input, IconInput, SearchInput, PinInput, RangeSlider, Toast, Modal } from '@miozu/jera';
+ * // Import components (deep-path — preferred)
+ * import Button from '@miozu/jera/components/primitives/Button';
+ * import Input from '@miozu/jera/components/forms/Input';
+ * import Modal from '@miozu/jera/components/overlays/Modal';
+ * import Toast, { getToastState } from '@miozu/jera/components/feedback/Toast';
  *
  * // Import utilities
- * import { cn, cv } from '@miozu/jera';
+ * import { cn, cv } from '@miozu/jera/utils';
  *
  * // Import actions
  * import { clickOutside, focusTrap } from '@miozu/jera/actions';

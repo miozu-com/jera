@@ -109,27 +109,66 @@ Singleton pattern with `miozu-theme` storage key.
 
 **ThemeToggle:** Accessible toggle with animated sun/moon icons
 ```svelte
-import { ThemeToggle } from '@miozu/jera';
+import ThemeToggle from '@miozu/jera/components/primitives/ThemeToggle';
 <ThemeToggle />
 <ThemeToggle size="sm" variant="outline" />
 ```
 
 **ThemeSelect:** Three-option selector (light/dark/system)
 ```svelte
-import { ThemeSelect } from '@miozu/jera';
+import ThemeSelect from '@miozu/jera/components/primitives/ThemeSelect';
 <ThemeSelect />
 <ThemeSelect variant="dropdown" />
 ```
 
 **ThemeState API:**
 ```javascript
-import { getTheme } from '@miozu/jera';
+import { getTheme } from '@miozu/jera/utils';
 const theme = getTheme();
 theme.init();        // Call once in root onMount
 theme.toggle();      // Switch dark/light
 theme.set('system'); // Follow OS preference
 theme.isDark;        // boolean reactive property
 ```
+
+## Import Style (CRITICAL)
+
+**Always use deep-path imports.** Never barrel imports (`from '@miozu/jera'`).
+
+```javascript
+// CORRECT — deep-path imports (used by dash + admin)
+import Button from '@miozu/jera/components/primitives/Button';
+import Input from '@miozu/jera/components/forms/Input';
+import Modal from '@miozu/jera/components/overlays/Modal';
+import Toast, { getToastState } from '@miozu/jera/components/feedback/Toast';
+
+// Utilities and actions have their own entry points
+import { cn, cv } from '@miozu/jera/utils';
+import { getTheme } from '@miozu/jera/utils';
+import { clickOutside, focusTrap } from '@miozu/jera/actions';
+import '@miozu/jera/tokens';
+
+// WRONG — barrel imports (slow dev server, poor tree-shaking)
+import { Button, Input, Modal } from '@miozu/jera';
+```
+
+**Why deep-path:** Barrel files force Vite to parse 90+ re-exports on every HMR update. Deep imports load only the component you need, giving faster dev server cold starts and reliable tree-shaking.
+
+### Path patterns
+
+| Category | Deep path |
+|----------|-----------|
+| Primitives | `@miozu/jera/components/primitives/{Name}` |
+| Forms | `@miozu/jera/components/forms/{Name}` |
+| Feedback | `@miozu/jera/components/feedback/{Name}` |
+| Overlays | `@miozu/jera/components/overlays/{Name}` |
+| Navigation | `@miozu/jera/components/navigation/{Name}` |
+| Nav blocks | `@miozu/jera/components/navigation/blocks/{Name}` |
+| Layout | `@miozu/jera/components/layout/{Name}` |
+| Docs | `@miozu/jera/components/docs/{Name}` |
+| Utilities | `@miozu/jera/utils` |
+| Actions | `@miozu/jera/actions` |
+| Tokens (CSS) | `@miozu/jera/tokens` |
 
 ## Svelte 5 Patterns
 

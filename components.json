@@ -2968,9 +2968,9 @@
         "onchange": { "type": "function", "default": "null", "description": "Files changed callback" },
         "onremove": { "type": "function", "default": "null", "description": "File removed callback (index)" }
       },
-      "stage": "draft",
-      "revision": 2,
-      "lastReviewed": "2026-03-07",
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-22",
       "docLevel": "none",
       "breaking": []
     },
@@ -3076,9 +3076,9 @@
       },
       "snippets": ["children"],
       "dependencies": [],
-      "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-07",
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-22",
       "docLevel": "none",
       "breaking": []
     },
