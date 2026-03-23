@@ -110,37 +110,8 @@ export { default as Drawer } from './components/overlays/Drawer.svelte';
 
 export { default as Stepper } from './components/navigation/Stepper.svelte';
 export { default as Tabs } from './components/navigation/Tabs.svelte';
-export { default as TabNav } from './components/navigation/TabNav.svelte';
-export { default as ChipNav } from './components/navigation/ChipNav.svelte';
-export { default as ScrollNav } from './components/navigation/ScrollNav.svelte';
 export { default as Accordion } from './components/navigation/Accordion.svelte';
 export { default as AccordionItem } from './components/navigation/AccordionItem.svelte';
-
-// Sidebar Components (Legacy - Enhanced)
-export { default as Sidebar } from './components/navigation/Sidebar.svelte';
-export { default as SidebarSection } from './components/navigation/SidebarSection.svelte';
-export { default as SidebarItem } from './components/navigation/SidebarItem.svelte';
-export { default as SidebarGroup } from './components/navigation/SidebarGroup.svelte';
-export { default as SidebarPopover } from './components/navigation/SidebarPopover.svelte';
-export { default as SidebarAccountItem } from './components/navigation/SidebarAccountItem.svelte';
-export { default as SidebarToggle } from './components/navigation/SidebarToggle.svelte';
-export { default as SidebarSearch } from './components/navigation/SidebarSearch.svelte';
-export { default as SidebarGroupSwitcher } from './components/navigation/SidebarGroupSwitcher.svelte';
-export { default as SidebarAccountGroup } from './components/navigation/SidebarAccountGroup.svelte';
-
-// Enterprise Navigation System
-export { default as NavigationContainer } from './components/navigation/NavigationContainer.svelte';
-export { default as SidebarNavigationItem } from './components/navigation/SidebarNavigationItem.svelte';
-
-// Navigation Blocks
-export { default as NavigationSearch } from './components/navigation/blocks/NavigationSearch.svelte';
-export { default as NavigationSection } from './components/navigation/blocks/NavigationSection.svelte';
-export { default as NavigationAccountGroup } from './components/navigation/blocks/NavigationAccountGroup.svelte';
-export { default as NavigationGroupSwitcher } from './components/navigation/blocks/NavigationGroupSwitcher.svelte';
-export { default as NavigationCustomBlock } from './components/navigation/blocks/NavigationCustomBlock.svelte';
-
-// Enterprise Components
-export { default as WorkspaceMenu } from './components/navigation/WorkspaceMenu.svelte';
 
 // NavBar (Horizontal mega-menu)
 export { default as NavBar } from './components/navigation/NavBar.svelte';
@@ -151,7 +122,6 @@ export { default as LeftBarSection } from './components/navigation/LeftBarSectio
 export { default as LeftBarItem } from './components/navigation/LeftBarItem.svelte';
 export { default as LeftBarGroup } from './components/navigation/LeftBarGroup.svelte';
 export { default as LeftBarToggle } from './components/navigation/LeftBarToggle.svelte';
-export { default as LeftBarPopover } from './components/navigation/LeftBarPopover.svelte';
 export { default as DropdownContainer } from './components/navigation/DropdownContainer.svelte';
 
 // --------------------------------------------
@@ -193,19 +163,8 @@ export {
   generateId
 } from './utils/reactive.svelte.js';
 
-// Sidebar State Management
-export {
-  createSidebarState,
-  SIDEBAR_CONTEXT_KEY
-} from './utils/sidebar.svelte.js';
-
-// Enterprise Navigation State Management
-export {
-  NavigationState,
-  createNavigationState,
-  createActiveChecker,
-  NAVIGATION_CONTEXT_KEY
-} from './utils/navigation.svelte.js';
+// Active Route Checker (used by LeftBar consumers)
+export { createActiveChecker } from './utils/navigation.svelte.js';
 
 // Code Highlighting
 export {
