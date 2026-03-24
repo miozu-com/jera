@@ -120,6 +120,7 @@
   <!-- Section Header -->
   <button
     class="group-header"
+    class:collapsed={isCollapsed}
     onclick={toggleExpanded}
     aria-expanded={expanded}
   >
@@ -283,11 +284,16 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all var(--duration-base) ease;
+    transition: color var(--duration-base) ease;
     border: none;
     background: transparent;
     font-family: inherit;
     justify-content: flex-start;
+  }
+
+  .group-header.collapsed {
+    justify-content: center;
+    padding: 0.5rem;
   }
 
   .group-header:hover {
