@@ -63,6 +63,7 @@
     getSubroutes = () => [],
     isItemActive = () => false,
     isSubrouteActive = () => false,
+    getItemColor = null,
     class: className = '',
     item: itemSnippet,
     children
@@ -111,6 +112,7 @@
   };
 
   function getAvatarStyle(item) {
+    if (getItemColor) return getItemColor(item);
     const platform = getItemPlatform(item);
     return platformColors[platform] || platformColors.default;
   }
