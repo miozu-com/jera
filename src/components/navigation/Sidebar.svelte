@@ -242,6 +242,7 @@
     background-color: var(--color-surface, var(--color-base01));
     border-right: 1px solid var(--color-border, color-mix(in srgb, var(--color-base03) 30%, transparent));
     height: 100vh;
+    height: 100dvh;
     width: var(--sidebar-width);
     transition: width var(--duration-base) cubic-bezier(0.4, 0, 0.2, 1);
     position: sticky;
@@ -287,6 +288,7 @@
     position: fixed;
     z-index: var(--z-modal);
     height: 100vh;
+    height: 100dvh;
     box-shadow: var(--shadow-2xl);
   }
 

@@ -489,16 +489,23 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .mega-menu-panel {
+    .dropdown-panel,
+    .brand-panel {
       animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
 
-    .mega-mega-panel {
-      animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
     }
 
     .navbar-sections {
       animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      @starting-style {
+        opacity: 0;
+        transform: translateX(-6px);
+      }
     }
 
     @keyframes navDropIn {

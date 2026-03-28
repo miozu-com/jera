@@ -82,7 +82,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
@@ -428,8 +428,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -469,8 +469,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -545,8 +545,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-03-07",
+      "revision": 6,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -710,8 +710,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -727,7 +727,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 6,
+      "revision": 7,
       "lastReviewed": "2026-03-28",
       "breaking": [
         {
@@ -987,8 +987,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1245,8 +1245,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1285,7 +1285,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
+      "revision": 4,
       "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
@@ -1483,8 +1483,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1795,8 +1795,8 @@
         "onchange"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2088,8 +2088,8 @@
         "content"
       ],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2546,8 +2546,8 @@
         "children"
       ],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 5,
+      "lastReviewed": "2026-03-28",
       "breaking": [
         "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
       ],
@@ -2639,8 +2639,8 @@
         "right"
       ],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2692,7 +2692,7 @@
       "description": "Legacy sidebar — replaced by LeftBar",
       "replacedBy": "LeftBar",
       "stage": "deprecated",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
@@ -2715,7 +2715,7 @@
       "description": "Legacy tab nav — use Tabs instead",
       "replacedBy": "Tabs",
       "stage": "deprecated",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
@@ -3166,8 +3166,8 @@
       },
       "dependencies": [],
       "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-06",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "docLevel": "none",
       "breaking": []
     },

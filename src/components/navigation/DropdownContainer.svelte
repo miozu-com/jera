@@ -53,6 +53,12 @@
     children
   } = $props();
 
+  // Feature detection for CSS Anchor Positioning
+  const supportsAnchor = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--test');
+
+  // Generate unique anchor name for this instance
+  const anchorName = `--dc-anchor-${Math.random().toString(36).slice(2, 9)}`;
+
   // Get initials from name
   function getInitials(name) {
     if (!name) return '?';
@@ -75,6 +81,13 @@
 
     if (isOpen && triggerRef) {
       isMobileView = typeof window !== 'undefined' && window.innerWidth < 1024;
+
+      // CSS Anchor handles desktop positioning natively — no JS needed
+      if (supportsAnchor && !isMobileView) {
+        dropdownReady = true;
+        return;
+      }
+
       dropdownReady = false;
 
       const calculatePosition = () => {
@@ -111,13 +124,12 @@
       };
 
       if (isMobileView) {
-        setTimeout(() => {
+        // Mobile needs layout settle time for accurate measurements
+        requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              calculatePosition();
-            });
+            calculatePosition();
           });
-        }, 500);
+        });
       } else {
         calculatePosition();
       }
@@ -178,6 +190,7 @@
     bind:this={triggerRef}
     class="avatar-trigger"
     class:collapsed={isCollapsed}
+    style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
     onclick={toggleDropdown}
     aria-expanded={isOpen}
     aria-haspopup="true"
@@ -224,8 +237,11 @@
     <div
       bind:this={dropdownRef}
       class="dropdown-menu"
+      class:dropdown-anchor={supportsAnchor && !isMobileView}
       class:mobile-dropdown={isMobileView}
-      style="top: {dropdownPosition.top}px; left: {dropdownPosition.left}px; {dropdownPosition.right !== 'auto' ? `right: ${dropdownPosition.right}px;` : ''}"
+      style={supportsAnchor && !isMobileView
+        ? `position-anchor: ${anchorName};`
+        : `top: ${dropdownPosition.top}px; left: ${dropdownPosition.left}px; ${dropdownPosition.right !== 'auto' ? `right: ${dropdownPosition.right}px;` : ''}`}
     >
       <!-- User Header -->
       {#if userHeader}
@@ -443,7 +459,16 @@
     box-shadow: var(--shadow-xl);
     overflow-y: auto;
     max-height: calc(100vh - 120px);
+    max-height: calc(100dvh - 120px);
     z-index: var(--z-dropdown);
+  }
+
+  /* CSS Anchor Positioning (Chrome 125+) */
+  .dropdown-anchor {
+    inset: unset;
+    top: calc(anchor(bottom) + 8px);
+    left: anchor(left);
+    position-try-fallbacks: flip-block;
   }
 
   .dropdown-menu.mobile-dropdown {
@@ -453,6 +478,11 @@
   @media (prefers-reduced-motion: no-preference) {
     .dropdown-menu {
       animation: dropdown-appear 0.15s ease-out;
+
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+      }
     }
 
     @keyframes dropdown-appear {

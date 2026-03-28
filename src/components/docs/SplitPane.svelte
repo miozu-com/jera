@@ -92,6 +92,7 @@
       top: 1rem;
       align-self: flex-start;
       max-height: calc(100vh - 2rem);
+      max-height: calc(100dvh - 2rem);
       overflow-y: auto;
     }
   }

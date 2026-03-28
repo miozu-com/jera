@@ -182,7 +182,7 @@
     margin: 0;
   }
   .number-field[type="number"] {
-    -moz-appearance: textfield;
+    appearance: textfield;
   }
 
   .number-btn {

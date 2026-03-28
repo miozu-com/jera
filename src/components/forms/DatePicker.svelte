@@ -287,7 +287,6 @@
   /* ---- Trigger ---- */
   .datepicker-trigger {
     appearance: none;
-    -webkit-appearance: none;
     position: relative;
     width: 100%;
     display: flex;
@@ -373,8 +372,13 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .calendar-dropdown {
+    .datepicker-dropdown {
       animation: datepicker-in var(--duration-fast) var(--ease-out);
+
+      @starting-style {
+        opacity: 0;
+        transform: translateY(-0.375rem);
+      }
     }
 
     @keyframes datepicker-in {

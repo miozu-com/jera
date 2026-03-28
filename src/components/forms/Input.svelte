@@ -118,4 +118,13 @@
     border-color: var(--color-base08);
     box-shadow: var(--focus-ring-shadow-error);
   }
+
+  /* Validation styling after user interaction (not on page load) */
+  .input-base:user-invalid {
+    border-color: var(--color-base08);
+  }
+
+  .input-base:user-invalid:focus {
+    box-shadow: var(--focus-ring-shadow-error);
+  }
 </style>

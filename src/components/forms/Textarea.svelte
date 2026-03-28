@@ -36,6 +36,9 @@
     ...rest
   } = $props();
 
+  // Feature detection: CSS field-sizing eliminates JS auto-resize
+  const supportsFieldSizing = typeof CSS !== 'undefined' && CSS.supports('field-sizing', 'content');
+
   const textareaClass = $derived(
     unstyled ? className : cn(
       'textarea-base',
@@ -46,7 +49,7 @@
   );
 
   function handleInput(e) {
-    if (autoResize && ref) {
+    if (autoResize && !supportsFieldSizing && ref) {
       ref.style.height = 'auto';
       ref.style.height = ref.scrollHeight + 'px';
     }
@@ -111,12 +114,28 @@
     overflow: hidden;
   }
 
+  /* Native auto-resize: Chrome 123+, Safari 26.2+ */
+  @supports (field-sizing: content) {
+    .textarea-auto-resize {
+      field-sizing: content;
+    }
+  }
+
   .textarea-error {
     border-color: var(--color-base08);
   }
 
   .textarea-error:focus {
     border-color: var(--color-base08);
+    box-shadow: var(--focus-ring-shadow-error);
+  }
+
+  /* Validation styling after user interaction (not on page load) */
+  .textarea-base:user-invalid {
+    border-color: var(--color-base08);
+  }
+
+  .textarea-base:user-invalid:focus {
     box-shadow: var(--focus-ring-shadow-error);
   }
 </style>

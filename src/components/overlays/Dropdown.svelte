@@ -25,6 +25,12 @@
     class: className = ''
   } = $props();
 
+  // Feature detection for CSS Anchor Positioning
+  const supportsAnchor = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--test');
+
+  // Generate unique anchor name for this instance
+  const anchorName = `--dropdown-anchor-${Math.random().toString(36).slice(2, 9)}`;
+
   let triggerEl = $state(null);
   let contentEl = $state(null);
   let floatingStyle = $state('');
@@ -39,8 +45,9 @@
     open = false;
   }
 
+  // JS fallback positioning (only used when CSS Anchor not supported)
   function updatePosition() {
-    if (!triggerEl || !contentEl) return;
+    if (!triggerEl || !contentEl || supportsAnchor) return;
 
     const rect = triggerEl.getBoundingClientRect();
     const contentRect = contentEl.getBoundingClientRect();
@@ -115,10 +122,9 @@
 
   $effect(() => {
     if (open && triggerEl) {
-      // Wait for content to mount, then position
       requestAnimationFrame(() => {
-        updatePosition();
-        // Focus first item
+        if (!supportsAnchor) updatePosition();
+        // Focus first item (always, regardless of positioning method)
         const firstItem = contentEl?.querySelector('[role="menuitem"]:not([disabled])');
         firstItem?.focus();
       });
@@ -128,6 +134,7 @@
 
 <div
   class={cn('dropdown', className)}
+  style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
   bind:this={triggerEl}
 >
   <div
@@ -150,9 +157,11 @@
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <div
       class="dropdown-content"
-      class:dropdown-enter-up={resolvedPosition.startsWith('top')}
+      class:dropdown-anchor={supportsAnchor}
+      class:dropdown-enter-up={!supportsAnchor && resolvedPosition.startsWith('top')}
+      data-position={position}
       bind:this={contentEl}
-      style={floatingStyle}
+      style={supportsAnchor ? `position-anchor: ${anchorName};` : floatingStyle}
       role="menu"
       onclick={e => e.stopPropagation()}
     >
@@ -186,11 +195,70 @@
     border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base03) 50%, transparent);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+
+    /* @starting-style prevents flash of final state before animation starts */
+    @starting-style {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.97);
+    }
+  }
+
+  /* CSS Anchor Positioning (Chrome 125+) */
+  .dropdown-anchor {
+    inset: unset;
+
+    /* Default: bottom-start */
+    top: calc(anchor(bottom) + 4px);
+    left: anchor(left);
+
+    /* Auto-flip when near viewport edges */
+    position-try-fallbacks: flip-block;
+
+    &[data-position="bottom-end"] {
+      left: unset;
+      right: anchor(right);
+    }
+
+    &[data-position="bottom-center"] {
+      left: anchor(center);
+      translate: -50% 0;
+    }
+
+    &[data-position="top-start"] {
+      top: unset;
+      bottom: calc(anchor(top) + 4px);
+      left: anchor(left);
+    }
+
+    &[data-position="top-end"] {
+      top: unset;
+      bottom: calc(anchor(top) + 4px);
+      left: unset;
+      right: anchor(right);
+    }
+
+    &[data-position="top-center"] {
+      top: unset;
+      bottom: calc(anchor(top) + 4px);
+      left: anchor(center);
+      translate: -50% 0;
+    }
+  }
+
+  /* JS fallback: animation for top-positioned */
+  .dropdown-enter-up {
+    @starting-style {
+      opacity: 0;
+      transform: translateY(4px) scale(0.97);
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .dropdown-content {
       animation: dropdown-enter 0.12s var(--ease-out);
+      transition: opacity 0.12s var(--ease-out), transform 0.12s var(--ease-out);
     }
 
     .dropdown-enter-up {

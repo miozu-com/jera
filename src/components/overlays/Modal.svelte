@@ -165,6 +165,7 @@
     padding: 0;
     margin: auto;
     max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
     overflow: auto;
   }
 
@@ -173,7 +174,12 @@
   dialog.modal-md { width: 100%; max-width: 28rem; }
   dialog.modal-lg { width: 100%; max-width: 36rem; }
   dialog.modal-xl { width: 100%; max-width: 48rem; }
-  dialog.modal-full { width: calc(100vw - 2rem); max-width: calc(100vw - 2rem); }
+  dialog.modal-full {
+    width: calc(100vw - 2rem);
+    width: calc(100dvw - 2rem);
+    max-width: calc(100vw - 2rem);
+    max-width: calc(100dvw - 2rem);
+  }
 
   /*
    * Fill mode — stable height frame.

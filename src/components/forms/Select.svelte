@@ -78,7 +78,6 @@
 
   .jera-select {
     appearance: none;
-    -webkit-appearance: none;
     width: 100%;
     height: 2.5rem;
     padding: 0 2rem 0 0.75rem;
@@ -116,6 +115,15 @@
   }
 
   .jera-select-error .jera-select:focus-visible {
+    box-shadow: var(--focus-ring-shadow-error);
+  }
+
+  /* Validation styling after user interaction (not on page load) */
+  .jera-select:user-invalid {
+    border-color: var(--color-base08);
+  }
+
+  .jera-select:user-invalid:focus-visible {
     box-shadow: var(--focus-ring-shadow-error);
   }
 

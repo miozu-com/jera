@@ -116,6 +116,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-1);
+    container-type: inline-size;
   }
 
   /* Default variant - subtle background */
@@ -269,8 +270,8 @@
     border-radius: var(--radius-full);
   }
 
-  /* Scrollable container */
-  @media (max-width: 768px) {
+  /* Scrollable container — uses container query for parent-responsive behavior */
+  @container (max-width: 768px) {
     .tab-nav {
       overflow-x: auto;
       scrollbar-width: none;

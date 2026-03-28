@@ -127,6 +127,10 @@
   @media (prefers-reduced-motion: no-preference) {
     .tooltip {
       animation: tooltip-enter 0.15s ease-out;
+
+      @starting-style {
+        opacity: 0;
+      }
     }
 
     @keyframes tooltip-enter {

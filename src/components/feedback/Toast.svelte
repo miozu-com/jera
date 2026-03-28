@@ -395,6 +395,7 @@
     display: flex;
     pointer-events: none;
     max-width: min(400px, calc(100vw - 32px));
+    max-width: min(400px, calc(100dvw - 32px));
     /* Reset popover defaults */
     border: none;
     background: transparent;
