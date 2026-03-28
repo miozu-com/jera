@@ -40,8 +40,8 @@
     toasts = $state.raw([]);
     position = $state('bottom-right');
     progressStyle = 'ring'; // 'ring' | 'bar'
-    defaultDuration = 4000;
-    defaultErrorDuration = 6000;
+    defaultDuration = 2500;
+    defaultErrorDuration = 5000;
     maxToasts = 5;
     #counter = 0;
 
@@ -154,7 +154,7 @@
 </script>
 
 <script>
-  import {fly} from 'svelte/transition';
+  import {slide} from 'svelte/transition';
 
   const toast = getToastState();
 
@@ -180,14 +180,8 @@
     }[toast.position]
   );
 
-  // Fly direction based on position
-  const flyParams = $derived.by(() => {
-    const p = toast.position;
-    if (p.includes('left')) return {x: -20, duration: 250};
-    if (p.includes('right')) return {x: 20, duration: 250};
-    if (p.includes('top')) return {y: -20, duration: 250};
-    return {y: 20, duration: 250};
-  });
+  const slideIn = {duration: 300};
+  const slideOut = {duration: 200};
 
   // Local progress map — rAF drives this, template reads it
   let progressMap = $state.raw(new Map());
@@ -293,12 +287,12 @@
       class="toast-item toast-{item.type}"
       role="alert"
       aria-live="polite"
-      in:fly={prefersReducedMotion ? {duration: 0} : flyParams}
-      out:fly={prefersReducedMotion ? {duration: 0} : {...flyParams, duration: 150}}
+      in:slide={prefersReducedMotion ? {duration: 0} : slideIn}
+      out:slide={prefersReducedMotion ? {duration: 0} : slideOut}
       onmouseenter={() => toast.pause(item.id)}
       onmouseleave={() => toast.resume(item.id)}
     >
-      {#if item.progressStyle === 'bar' && item.duration > 0}
+      {#if item.duration > 0}
         <div
           class="toast-bar"
           style="transform: scaleX({1 - progress / 100})"
@@ -309,23 +303,24 @@
         ></div>
       {/if}
 
-      <span class="toast-icon">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          {@html icons[item.type]}
-        </svg>
-      </span>
-
-      <div class="toast-body">
-        {#if item.title}
-          <p class="toast-title">{item.title}</p>
-        {/if}
+      <div class="toast-content">
+        <div class="toast-header">
+          <span class="toast-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              {@html icons[item.type]}
+            </svg>
+          </span>
+          {#if item.title}
+            <p class="toast-title">{item.title}</p>
+          {/if}
+        </div>
         {#if item.message}
           <p class="toast-message" class:has-title={item.title}>{item.message}</p>
         {/if}
@@ -358,57 +353,35 @@
         {/if}
       </div>
 
-      {#if item.progressStyle === 'ring'}
-        <button
-          type="button"
-          class="progress-btn"
-          onclick={() => toast.dismiss(item.id)}
-          aria-label="Dismiss"
-        >
-          <svg class="progress-ring" width="24" height="24" viewBox="0 0 24 24">
-            <circle class="progress-ring-bg" cx="12" cy="12" r="8" stroke-width="1" fill="none" />
-            {#if item.duration > 0}
-              <circle
-                class="progress-ring-fill"
-                cx="12"
-                cy="12"
-                r="8"
-                stroke-width="2"
-                fill="none"
-                style="stroke-dasharray: {circumference}; stroke-dashoffset: {circumference -
-                  (circumference * progress) / 100}"
-              />
-            {/if}
-            <path
-              class="close-x"
-              d="M15 9L9 15M9 9l6 6"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              fill="none"
+      <button
+        type="button"
+        class="progress-btn"
+        onclick={() => toast.dismiss(item.id)}
+        aria-label="Dismiss"
+      >
+        <svg class="progress-ring" width="24" height="24" viewBox="0 0 24 24">
+          <circle class="progress-ring-bg" cx="12" cy="12" r="8" stroke-width="1" />
+          {#if item.duration > 0}
+            <circle
+              class="progress-ring-fill"
+              cx="12"
+              cy="12"
+              r="8"
+              stroke-width="2"
+              style="stroke-dasharray: {circumference}; stroke-dashoffset: {circumference -
+                (circumference * progress) / 100}"
             />
-          </svg>
-        </button>
-      {:else}
-        <button
-          type="button"
-          class="dismiss-btn"
-          onclick={() => toast.dismiss(item.id)}
-          aria-label="Dismiss"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
+          {/if}
+          <path
+            class="close-x"
+            d="M18 6L6 18M6 6l12 12"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1"
             stroke-linecap="round"
-          >
-            <path d="M18 6L6 18M6 6l12 12" />
-          </svg>
-        </button>
-      {/if}
+            transform="translate(0 24) scale(1 -1)"
+          />
+        </svg>
+      </button>
     </div>
   {/each}
 </div>
@@ -420,8 +393,8 @@
   .toast-container {
     position: fixed;
     display: flex;
-    gap: 0.5rem;
     pointer-events: none;
+    max-width: min(400px, calc(100vw - 32px));
     /* Reset popover defaults */
     border: none;
     background: transparent;
@@ -466,28 +439,25 @@
   }
 
   /* ============================================================
-     Toast item — shared base
+     Toast item — shared base (neutral bg/border for all variants)
      ============================================================ */
   .toast-item {
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    width: 100%;
-    min-width: 280px;
-    max-width: 24rem;
     padding: 1rem;
-    border-radius: var(--radius-xl, 0.75rem);
-    border: var(--border-width-default, 1px) solid;
-    box-shadow: var(--shadow-lg);
+    min-width: 280px;
+    max-width: 420px;
+    border-radius: 2px;
+    border: 1px solid;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-base00) 40%, transparent);
     pointer-events: auto;
     overflow: hidden;
     backdrop-filter: blur(20px);
+    margin-bottom: 0.75rem;
   }
 
-  /* ============================================================
-     Variant backgrounds + borders
-     ============================================================ */
+  /* Variant backgrounds + borders */
   .toast-info {
     background-color: var(--color-base01);
     border-color: var(--color-base03);
@@ -497,19 +467,16 @@
   .toast-success {
     background-color: color-mix(in srgb, var(--color-base0B) 10%, var(--color-base00));
     border-color: color-mix(in srgb, var(--color-base0B) 30%, transparent);
-    color: var(--color-base0B);
   }
 
   .toast-warning {
-    background-color: color-mix(in srgb, var(--color-base0A) 10%, var(--color-base00));
-    border-color: color-mix(in srgb, var(--color-base0A) 30%, transparent);
-    color: var(--color-base0A);
+    background-color: color-mix(in srgb, var(--color-base09) 10%, var(--color-base00));
+    border-color: color-mix(in srgb, var(--color-base09) 30%, transparent);
   }
 
   .toast-error {
     background-color: color-mix(in srgb, var(--color-base08) 10%, var(--color-base00));
     border-color: color-mix(in srgb, var(--color-base08) 30%, transparent);
-    color: var(--color-base08);
   }
 
   /* ============================================================
@@ -532,10 +499,26 @@
     background-color: var(--color-base0B);
   }
   .toast-warning .toast-bar {
-    background-color: var(--color-base0A);
+    background-color: var(--color-base09);
   }
   .toast-error .toast-bar {
     background-color: var(--color-base08);
+  }
+
+  /* ============================================================
+     Content layout
+     ============================================================ */
+  .toast-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toast-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   /* ============================================================
@@ -543,8 +526,9 @@
      ============================================================ */
   .toast-icon {
     flex-shrink: 0;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 0.9375rem;
+    height: 0.9375rem;
+    margin-top: 1px;
   }
 
   .toast-icon svg {
@@ -552,43 +536,40 @@
     height: 100%;
   }
 
-  /* ============================================================
-     Content
-     ============================================================ */
-  .toast-body {
-    flex: 1;
-    min-width: 0;
-  }
+  /* Variant-colored icons */
+  .toast-info .toast-icon { color: var(--color-base0C); }
+  .toast-success .toast-icon { color: var(--color-base0B); }
+  .toast-warning .toast-icon { color: var(--color-base09); }
+  .toast-error .toast-icon { color: var(--color-base08); }
 
+  /* ============================================================
+     Title + message
+     ============================================================ */
   .toast-title {
     font-weight: 500;
     font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
     margin: 0;
+    flex: 1;
   }
 
   /* Variant-colored titles */
-  .toast-info .toast-title {
-    color: var(--color-base0C);
-  }
-  .toast-success .toast-title {
-    color: var(--color-base0B);
-  }
-  .toast-warning .toast-title {
-    color: var(--color-base0A);
-  }
-  .toast-error .toast-title {
-    color: var(--color-base08);
-  }
+  .toast-info .toast-title { color: var(--color-base0C); }
+  .toast-success .toast-title { color: var(--color-base0B); }
+  .toast-warning .toast-title { color: var(--color-base09); }
+  .toast-error .toast-title { color: var(--color-base08); }
 
   .toast-message {
     font-size: 0.875rem;
+    font-weight: 500;
     margin: 0;
     color: var(--color-base05);
+    padding-left: 1.4375rem; /* icon width + gap */
   }
 
   .toast-message.has-title {
     margin-top: 0.25rem;
-    opacity: 0.9;
   }
 
   /* ============================================================
@@ -637,11 +618,11 @@
   }
 
   .toast-warning .toast-action.primary {
-    color: var(--color-base0A);
-    background: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+    color: var(--color-base09);
+    background: color-mix(in srgb, var(--color-base09) 10%, transparent);
   }
   .toast-warning .toast-action.primary:hover {
-    background: color-mix(in srgb, var(--color-base0A) 20%, transparent);
+    background: color-mix(in srgb, var(--color-base09) 20%, transparent);
   }
 
   .toast-error .toast-action.primary {
@@ -656,12 +637,14 @@
      Circular progress ring (progressStyle: 'ring')
      ============================================================ */
   .progress-btn {
-    flex-shrink: 0;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
     cursor: pointer;
     padding: 0;
     background: transparent;
     border: none;
-    transition: opacity var(--duration-fast, 150ms);
+    transition: all var(--duration-fast, 150ms);
   }
 
   .progress-btn:hover {
@@ -673,12 +656,12 @@
   }
 
   .progress-ring-bg {
-    stroke: var(--color-base03);
-    fill: none;
+    stroke: var(--color-base04);
+    fill: var(--color-base01);
   }
 
   .progress-ring-fill {
-    fill: none;
+    fill: var(--color-base01);
     stroke: currentColor;
     transition: stroke-dashoffset 50ms linear;
   }
@@ -691,7 +674,7 @@
     stroke: var(--color-base0B);
   }
   .toast-warning .progress-ring-fill {
-    stroke: var(--color-base0A);
+    stroke: var(--color-base09);
   }
   .toast-error .progress-ring-fill {
     stroke: var(--color-base08);
@@ -699,32 +682,12 @@
 
   .close-x {
     stroke: var(--color-base04);
+    fill: var(--color-base01);
     transition: stroke var(--duration-fast, 150ms);
   }
 
   .progress-btn:hover .close-x {
     stroke: var(--color-base05);
-  }
-
-  /* ============================================================
-     Dismiss button (progressStyle: 'bar')
-     ============================================================ */
-  .dismiss-btn {
-    flex-shrink: 0;
-    padding: 0.25rem;
-    border-radius: var(--radius-default, 0.25rem);
-    color: var(--color-base04);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition:
-      color var(--duration-fast, 150ms),
-      background-color var(--duration-fast, 150ms);
-  }
-
-  .dismiss-btn:hover {
-    color: var(--color-base05);
-    background-color: var(--color-base02);
   }
 
   /* ============================================================
@@ -740,6 +703,7 @@
 
     .toast-item {
       max-width: none;
+      min-width: 0;
     }
   }
 </style>
