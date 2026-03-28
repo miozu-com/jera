@@ -266,29 +266,13 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-base03) transparent;
   }
 
   .sidebar-footer {
     flex-shrink: 0;
     margin-top: auto;
-  }
-
-  /* Scrollbar styling */
-  .sidebar-content::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .sidebar-content::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .sidebar-content::-webkit-scrollbar-thumb {
-    background: var(--color-base03);
-    border-radius: 2px;
-  }
-
-  .sidebar-content::-webkit-scrollbar-thumb:hover {
-    background: var(--color-base04);
   }
 
   /* Mobile overlay styles */

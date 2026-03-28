@@ -130,8 +130,8 @@
       {...inputProps}
     />
     {#if rightIcon?.icon}
+      {@const Icon = rightIcon.icon}
       <span class="input-icon-overlay">
-        {@const Icon = rightIcon.icon}
         <Icon size={14} />
       </span>
     {/if}

@@ -274,11 +274,6 @@
     .tab-nav {
       overflow-x: auto;
       scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .tab-nav::-webkit-scrollbar {
-      display: none;
     }
   }
 </style>

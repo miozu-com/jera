@@ -319,24 +319,6 @@
   }
 
   /* Scrollbar styling */
-  .navigation-container::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .navigation-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .navigation-container::-webkit-scrollbar-thumb {
-    background: var(--color-base03);
-    border-radius: 2px;
-  }
-
-  .navigation-container::-webkit-scrollbar-thumb:hover {
-    background: var(--color-base04);
-  }
-
-  /* Firefox scrollbar */
   .navigation-container {
     scrollbar-width: thin;
     scrollbar-color: var(--color-base03) transparent;

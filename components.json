@@ -1285,8 +1285,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2692,8 +2692,8 @@
       "description": "Legacy sidebar — replaced by LeftBar",
       "replacedBy": "LeftBar",
       "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
     },
@@ -2703,8 +2703,8 @@
       "path": "src/components/navigation/NavigationContainer.svelte",
       "description": "Legacy enterprise nav — unused",
       "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
     },
@@ -2715,8 +2715,8 @@
       "description": "Legacy tab nav — use Tabs instead",
       "replacedBy": "Tabs",
       "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
     },
@@ -2726,8 +2726,8 @@
       "path": "src/components/navigation/ScrollNav.svelte",
       "description": "Legacy scroll wrapper — unused",
       "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "none"
     },
@@ -2874,8 +2874,8 @@
       "path": "src/components/navigation/ChipNav.svelte",
       "description": "Internal chip navigation — used inside NavBar",
       "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
       "docLevel": "none",
       "breaking": []
     },

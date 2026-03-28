@@ -425,9 +425,6 @@
     scrollbar-width: none;
   }
 
-  .navbar-subnav-slot::-webkit-scrollbar {
-    display: none;
-  }
 
   /* ── Section triggers row ────────────── */
   .navbar-sections {
@@ -665,9 +662,6 @@
     scrollbar-width: none;
   }
 
-  .navbar-center::-webkit-scrollbar {
-    display: none;
-  }
 
   /* ── Right side actions ──────────────── */
   .navbar-actions {

@@ -71,9 +71,6 @@
     scrollbar-width: none;
   }
 
-  .chip-nav::-webkit-scrollbar {
-    display: none;
-  }
 
   .chip {
     display: inline-flex;
