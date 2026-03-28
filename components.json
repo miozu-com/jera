@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 93,
+  "totalComponents": 90,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -82,8 +82,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -727,8 +727,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-03-07",
+      "revision": 6,
+      "lastReviewed": "2026-03-28",
       "breaking": [
         {
           "revision": 5,
@@ -2499,6 +2499,31 @@
       "docLevel": "standard"
     },
     {
+      "name": "ChecklistCard",
+      "category": "primitives",
+      "path": "src/components/primitives/ChecklistCard.svelte",
+      "description": "Sequential onboarding checklist. Shows steps with done/current/future states. Auto-hides when all steps complete.",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "'Quick setup'",
+          "description": "Card heading"
+        },
+        "steps": {
+          "type": "Array<{id: string, label: string, done: boolean, href?: string, onclick?: function, actionLabel?: string}>",
+          "default": "[]",
+          "description": "Ordered step definitions"
+        }
+      },
+      "snippets": [],
+      "events": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
       "name": "Dropdown",
       "category": "overlays",
       "path": "src/components/overlays/Dropdown.svelte",
@@ -2910,89 +2935,76 @@
       "breaking": []
     },
     {
-      "name": "Stepper",
-      "category": "navigation",
-      "path": "src/components/navigation/Stepper.svelte",
-      "description": "Multi-step progress indicator for wizards and multi-stage workflows",
-      "props": {
-        "steps": { "type": "Array<{id, label, icon?, description?}>", "default": "[]", "description": "Step definitions" },
-        "active": { "type": "number", "default": "0", "bindable": true, "description": "Current step index" },
-        "variant": { "type": "'default'|'compact'|'vertical'", "default": "'default'", "description": "Layout variant" },
-        "completed": { "type": "number[]", "default": "[]", "description": "Array of completed step indices" },
-        "clickable": { "type": "boolean", "default": "false", "description": "Allow clicking completed steps" },
-        "onclick": { "type": "function", "default": "null", "description": "Click handler (stepIndex) => void" }
-      },
-      "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-06",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "Drawer",
-      "category": "overlays",
-      "path": "src/components/overlays/Drawer.svelte",
-      "description": "Slide-out panel overlay with backdrop, focus trap, and multi-position support",
-      "props": {
-        "open": { "type": "boolean", "default": "false", "bindable": true, "description": "Drawer visibility" },
-        "position": { "type": "'left'|'right'|'top'|'bottom'", "default": "'right'", "description": "Slide direction" },
-        "size": { "type": "'sm'|'md'|'lg'|'xl'|'full'", "default": "'md'", "description": "Panel size" },
-        "title": { "type": "string", "default": "''", "description": "Header title" },
-        "closable": { "type": "boolean", "default": "true", "description": "Show close button" },
-        "closeOnOverlay": { "type": "boolean", "default": "true", "description": "Close on backdrop click" },
-        "closeOnEscape": { "type": "boolean", "default": "true", "description": "Close on Escape key" }
-      },
-      "snippets": ["header", "footer", "children"],
-      "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-06",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
       "name": "ImageDropzone",
       "category": "forms",
       "path": "src/components/forms/ImageDropzone.svelte",
       "description": "Drag-and-drop image upload with preview grid and file validation",
       "props": {
-        "files": { "type": "Array<{file, preview, name, size}>", "default": "[]", "bindable": true, "description": "Uploaded files" },
-        "accept": { "type": "string", "default": "'image/*'", "description": "Accepted MIME types" },
-        "multiple": { "type": "boolean", "default": "true", "description": "Allow multiple files" },
-        "maxFiles": { "type": "number", "default": "10", "description": "Maximum file count" },
-        "minFiles": { "type": "number", "default": "0", "description": "Minimum required file count for status indicator" },
-        "maxSize": { "type": "number", "default": "10485760", "description": "Max file size in bytes (10MB)" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable upload" },
-        "error": { "type": "string", "default": "''", "description": "Error message" },
-        "previews": { "type": "boolean", "default": "true", "description": "Show image thumbnails" },
-        "showNumbers": { "type": "boolean", "default": "false", "description": "Show index numbers on preview thumbnails" },
-        "onchange": { "type": "function", "default": "null", "description": "Files changed callback" },
-        "onremove": { "type": "function", "default": "null", "description": "File removed callback (index)" }
+        "files": {
+          "type": "Array<{file, preview, name, size}>",
+          "default": "[]",
+          "bindable": true,
+          "description": "Uploaded files"
+        },
+        "accept": {
+          "type": "string",
+          "default": "'image/*'",
+          "description": "Accepted MIME types"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Allow multiple files"
+        },
+        "maxFiles": {
+          "type": "number",
+          "default": "10",
+          "description": "Maximum file count"
+        },
+        "minFiles": {
+          "type": "number",
+          "default": "0",
+          "description": "Minimum required file count for status indicator"
+        },
+        "maxSize": {
+          "type": "number",
+          "default": "10485760",
+          "description": "Max file size in bytes (10MB)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable upload"
+        },
+        "error": {
+          "type": "string",
+          "default": "''",
+          "description": "Error message"
+        },
+        "previews": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show image thumbnails"
+        },
+        "showNumbers": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show index numbers on preview thumbnails"
+        },
+        "onchange": {
+          "type": "function",
+          "default": "null",
+          "description": "Files changed callback"
+        },
+        "onremove": {
+          "type": "function",
+          "default": "null",
+          "description": "File removed callback (index)"
+        }
       },
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-03-22",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "ValidatedInput",
-      "category": "forms",
-      "path": "src/components/forms/ValidatedInput.svelte",
-      "description": "Input wrapper with built-in validation rules, error/success display",
-      "props": {
-        "value": { "type": "string", "default": "''", "bindable": true, "description": "Input value" },
-        "label": { "type": "string", "default": "''", "description": "Label text" },
-        "rules": { "type": "Array<{test, message}|function>", "default": "[]", "description": "Validation rules" },
-        "validateOn": { "type": "'blur'|'input'", "default": "'blur'", "description": "When to validate" },
-        "showSuccess": { "type": "boolean", "default": "false", "description": "Show green check on valid" },
-        "error": { "type": "string", "default": "''", "bindable": true, "description": "External error message" },
-        "required": { "type": "boolean", "default": "false", "description": "Required field" },
-        "id": { "type": "string", "default": "null", "description": "Input id" },
-        "name": { "type": "string", "default": "null", "description": "Input name" }
-      },
-      "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-06",
       "docLevel": "none",
       "breaking": []
     },
@@ -3002,28 +3014,101 @@
       "path": "src/components/forms/ButtonInput.svelte",
       "description": "Input with attached button for search, submit, or inline actions",
       "props": {
-        "value": { "type": "string", "default": "''", "bindable": true, "description": "Input value" },
-        "ref": { "type": "HTMLInputElement", "default": "undefined", "bindable": true, "description": "Input element reference" },
-        "buttonLabel": { "type": "string", "default": "'Submit'", "description": "Button text (overridden by children snippet)" },
-        "buttonVariant": { "type": "string", "default": "'primary'", "description": "Button variant" },
-        "buttonSize": { "type": "string", "default": "'md'", "description": "Button size" },
-        "buttonType": { "type": "string", "default": "'button'", "description": "Button type attribute (button|submit|reset)" },
-        "buttonPosition": { "type": "'left'|'right'", "default": "'right'", "description": "Button placement" },
-        "buttonIcon": { "type": "{icon, position}|null", "default": "null", "description": "Icon in button: {icon: Component, position: 'left'|'right'}" },
-        "buttonDisabled": { "type": "boolean", "default": "false", "description": "Disable button only" },
-        "buttonLoading": { "type": "boolean", "default": "false", "description": "Loading state for button only" },
-        "inputDisabled": { "type": "boolean", "default": "false", "description": "Disable input only" },
-        "inputIcon": { "type": "{icon, position}|null", "default": "null", "description": "Icon overlay in input: {icon: Component, position: 'right'}" },
-        "loading": { "type": "boolean", "default": "false", "description": "Loading state (disables both)" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable both input and button" },
-        "onsubmit": { "type": "function", "default": "null", "description": "Submit handler (value) => void, fires on click and Enter" },
-        "wrapperClass": { "type": "string", "default": "''", "description": "CSS class for the outer wrapper div" }
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Input value"
+        },
+        "ref": {
+          "type": "HTMLInputElement",
+          "default": "undefined",
+          "bindable": true,
+          "description": "Input element reference"
+        },
+        "buttonLabel": {
+          "type": "string",
+          "default": "'Submit'",
+          "description": "Button text (overridden by children snippet)"
+        },
+        "buttonVariant": {
+          "type": "string",
+          "default": "'primary'",
+          "description": "Button variant"
+        },
+        "buttonSize": {
+          "type": "string",
+          "default": "'md'",
+          "description": "Button size"
+        },
+        "buttonType": {
+          "type": "string",
+          "default": "'button'",
+          "description": "Button type attribute (button|submit|reset)"
+        },
+        "buttonPosition": {
+          "type": "'left'|'right'",
+          "default": "'right'",
+          "description": "Button placement"
+        },
+        "buttonIcon": {
+          "type": "{icon, position}|null",
+          "default": "null",
+          "description": "Icon in button: {icon: Component, position: 'left'|'right'}"
+        },
+        "buttonDisabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable button only"
+        },
+        "buttonLoading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Loading state for button only"
+        },
+        "inputDisabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input only"
+        },
+        "inputIcon": {
+          "type": "{icon, position}|null",
+          "default": "null",
+          "description": "Icon overlay in input: {icon: Component, position: 'right'}"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Loading state (disables both)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable both input and button"
+        },
+        "onsubmit": {
+          "type": "function",
+          "default": "null",
+          "description": "Submit handler (value) => void, fires on click and Enter"
+        },
+        "wrapperClass": {
+          "type": "string",
+          "default": "''",
+          "description": "CSS class for the outer wrapper div"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS class for the root element"
+        }
       },
-      "snippets": ["children"],
-      "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-23",
-      "docLevel": "none",
+      "snippets": [
+        "children"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "docLevel": "minimal",
       "breaking": []
     },
     {
@@ -3032,15 +3117,52 @@
       "path": "src/components/forms/DatePicker.svelte",
       "description": "Calendar date picker with month navigation, min/max constraints. Zero dependencies — uses native Date + Intl.DateTimeFormat",
       "props": {
-        "value": { "type": "string|null", "default": "null", "bindable": true, "description": "Selected date (ISO YYYY-MM-DD)" },
-        "min": { "type": "string|null", "default": "null", "description": "Earliest selectable date (ISO)" },
-        "max": { "type": "string|null", "default": "null", "description": "Latest selectable date (ISO)" },
-        "placeholder": { "type": "string", "default": "'Select date'", "description": "Trigger placeholder" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable picker" },
-        "required": { "type": "boolean", "default": "false", "description": "Required field" },
-        "id": { "type": "string", "default": "null", "description": "Hidden input id" },
-        "name": { "type": "string", "default": "null", "description": "Hidden input name" },
-        "onchange": { "type": "function", "default": "null", "description": "Date change callback" }
+        "value": {
+          "type": "string|null",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected date (ISO YYYY-MM-DD)"
+        },
+        "min": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Earliest selectable date (ISO)"
+        },
+        "max": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Latest selectable date (ISO)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Select date'",
+          "description": "Trigger placeholder"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable picker"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Required field"
+        },
+        "id": {
+          "type": "string",
+          "default": "null",
+          "description": "Hidden input id"
+        },
+        "name": {
+          "type": "string",
+          "default": "null",
+          "description": "Hidden input name"
+        },
+        "onchange": {
+          "type": "function",
+          "default": "null",
+          "description": "Date change callback"
+        }
       },
       "dependencies": [],
       "stage": "draft",
@@ -3055,14 +3177,47 @@
       "path": "src/components/forms/TagInput.svelte",
       "description": "Tag/chip input with add/remove, deduplication, and variant colors",
       "props": {
-        "tags": { "type": "string[]", "default": "[]", "bindable": true, "description": "Array of tag strings" },
-        "placeholder": { "type": "string", "default": "'Add tag...'", "description": "Input placeholder" },
-        "variant": { "type": "'default'|'accent'|'success'|'warning'|'error'", "default": "'default'", "description": "Chip color variant" },
-        "maxTags": { "type": "number", "default": "Infinity", "description": "Maximum number of tags" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable input" },
-        "duplicates": { "type": "boolean", "default": "false", "description": "Allow duplicate tags" },
-        "transform": { "type": "function|null", "default": "null", "description": "Transform function applied to tag value before adding" },
-        "onchange": { "type": "function|null", "default": "null", "description": "Called with updated tags array" }
+        "tags": {
+          "type": "string[]",
+          "default": "[]",
+          "bindable": true,
+          "description": "Array of tag strings"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Add tag...'",
+          "description": "Input placeholder"
+        },
+        "variant": {
+          "type": "'default'|'accent'|'success'|'warning'|'error'",
+          "default": "'default'",
+          "description": "Chip color variant"
+        },
+        "maxTags": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Maximum number of tags"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "duplicates": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Allow duplicate tags"
+        },
+        "transform": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Transform function applied to tag value before adding"
+        },
+        "onchange": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Called with updated tags array"
+        }
       },
       "dependencies": [],
       "stage": "draft",
@@ -3077,37 +3232,34 @@
       "path": "src/components/forms/OptionCard.svelte",
       "description": "Selectable option card for multi-choice layouts",
       "props": {
-        "selected": { "type": "boolean", "default": "false", "description": "Whether the option is selected" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable the option" },
-        "variant": { "type": "'default'|'compact'", "default": "'default'", "description": "Size variant" },
-        "onclick": { "type": "function|null", "default": "null", "description": "Click handler" }
+        "selected": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the option is selected"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the option"
+        },
+        "variant": {
+          "type": "'default'|'compact'",
+          "default": "'default'",
+          "description": "Size variant"
+        },
+        "onclick": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Click handler"
+        }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "dependencies": [],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-22",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "MultiUrlInput",
-      "category": "forms",
-      "path": "src/components/forms/MultiUrlInput.svelte",
-      "description": "URL list input with validation, deduplication, and domain display",
-      "props": {
-        "urls": { "type": "string[]", "default": "[]", "bindable": true, "description": "Array of URL strings" },
-        "label": { "type": "string", "default": "''", "description": "Header label" },
-        "description": { "type": "string", "default": "''", "description": "Description text below label" },
-        "placeholder": { "type": "string", "default": "'https://example.com'", "description": "Input placeholder" },
-        "maxUrls": { "type": "number", "default": "10", "description": "Maximum number of URLs" },
-        "disabled": { "type": "boolean", "default": "false", "description": "Disable input" },
-        "onchange": { "type": "function|null", "default": "null", "description": "Called with updated URLs array" }
-      },
-      "dependencies": [],
-      "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-07",
       "docLevel": "none",
       "breaking": []
     }

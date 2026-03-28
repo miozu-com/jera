@@ -38,6 +38,7 @@ export { default as Link } from './components/primitives/Link.svelte';
 export { default as LinkCard } from './components/primitives/LinkCard.svelte';
 export { default as LazyImage } from './components/primitives/LazyImage.svelte';
 export { default as MetricCard } from './components/primitives/MetricCard.svelte';
+export { default as ChecklistCard } from './components/primitives/ChecklistCard.svelte';
 export { default as FilterChip } from './components/primitives/FilterChip.svelte';
 export { default as StatusLine } from './components/primitives/StatusLine.svelte';
 export { default as Tooltip } from './components/primitives/Tooltip.svelte';
@@ -66,12 +67,11 @@ export { default as SearchInput } from './components/forms/SearchInput.svelte';
 export { default as PinInput } from './components/forms/PinInput.svelte';
 export { default as Dropzone } from './components/forms/Dropzone.svelte';
 export { default as ImageDropzone } from './components/forms/ImageDropzone.svelte';
-export { default as ValidatedInput } from './components/forms/ValidatedInput.svelte';
 export { default as ButtonInput } from './components/forms/ButtonInput.svelte';
 export { default as DatePicker } from './components/forms/DatePicker.svelte';
 export { default as TagInput } from './components/forms/TagInput.svelte';
 export { default as OptionCard } from './components/forms/OptionCard.svelte';
-export { default as MultiUrlInput } from './components/forms/MultiUrlInput.svelte';
+
 
 // --------------------------------------------
 // COMPONENTS - Feedback
@@ -102,13 +102,12 @@ export { default as Dropdown } from './components/overlays/Dropdown.svelte';
 export { default as DropdownItem } from './components/overlays/DropdownItem.svelte';
 export { default as DropdownDivider } from './components/overlays/DropdownDivider.svelte';
 export { default as ConfirmDialog } from './components/overlays/ConfirmDialog.svelte';
-export { default as Drawer } from './components/overlays/Drawer.svelte';
+
 
 // --------------------------------------------
 // COMPONENTS - Navigation
 // --------------------------------------------
 
-export { default as Stepper } from './components/navigation/Stepper.svelte';
 export { default as Tabs } from './components/navigation/Tabs.svelte';
 export { default as Accordion } from './components/navigation/Accordion.svelte';
 export { default as AccordionItem } from './components/navigation/AccordionItem.svelte';
