@@ -4,7 +4,7 @@
   A calendar date picker with single date selection.
   Renders a trigger button that opens a calendar dropdown.
   Supports min/max constraints and form submission via hidden input.
-  Zero dependencies — uses native Date and Intl.DateTimeFormat.
+  Uses Temporal API (ES2026) via polyfill for calendar math.
 
   @example
   <DatePicker bind:value={date} placeholder="Pick a date" />
@@ -19,6 +19,7 @@
   />
 -->
 <script>
+  import { Temporal } from '@js-temporal/polyfill';
   import { clickOutside } from '../../actions/index.js';
 
   let {
@@ -36,28 +37,31 @@
 
   let isOpen = $state(false);
 
-  // The month/year being viewed in the calendar
-  let viewYear = $state(new Date().getFullYear());
-  let viewMonth = $state(new Date().getMonth()); // 0-indexed
+  // The month/year being viewed in the calendar (0-indexed month for internal state)
+  const nowDate = Temporal.Now.plainDateISO();
+  let viewYear = $state(nowDate.year);
+  let viewMonth = $state(nowDate.month - 1); // 0-indexed internally to match legacy API
 
-  // --- Date helpers (all native) ---
+  // --- Date helpers (Temporal-based) ---
+  // All internal state uses 0-indexed months; this helper centralizes the +1 conversion.
+
+  /** Convert 0-indexed month parts to a Temporal.PlainDate. */
+  function pd(year, month0, day = 1) {
+    return Temporal.PlainDate.from({ year, month: month0 + 1, day });
+  }
 
   function toISO(year, month, day) {
-    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    return pd(year, month, day).toString();
   }
 
   function parseISO(str) {
     if (!str) return null;
-    const [y, m, d] = str.split('-').map(Number);
-    return { year: y, month: m - 1, day: d };
-  }
-
-  function daysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-  }
-
-  function firstDayOfWeek(year, month) {
-    return new Date(year, month, 1).getDay(); // 0=Sun
+    try {
+      const d = Temporal.PlainDate.from(str);
+      return { year: d.year, month: d.month - 1, day: d.day };
+    } catch {
+      return null;
+    }
   }
 
   function isSameDay(a, b) {
@@ -102,15 +106,15 @@
 
   const calendarDays = $derived.by(() => {
     const days = [];
-    const totalDays = daysInMonth(viewYear, viewMonth);
-    const startDay = firstDayOfWeek(viewYear, viewMonth);
+    const current = pd(viewYear, viewMonth);
+    const totalDays = current.daysInMonth;
+    const startDay = current.dayOfWeek === 7 ? 0 : current.dayOfWeek; // 1=Mon..7=Sun → 0=Sun..6=Sat
 
     // Previous month padding
-    const prevMonth = viewMonth === 0 ? 11 : viewMonth - 1;
-    const prevYear = viewMonth === 0 ? viewYear - 1 : viewYear;
-    const prevDays = daysInMonth(prevYear, prevMonth);
+    const prev = current.subtract({ months: 1 });
+    const prevDays = prev.daysInMonth;
     for (let i = startDay - 1; i >= 0; i--) {
-      days.push({ year: prevYear, month: prevMonth, day: prevDays - i, isCurrentMonth: false });
+      days.push({ year: prev.year, month: prev.month - 1, day: prevDays - i, isCurrentMonth: false });
     }
 
     // Current month
@@ -119,27 +123,26 @@
     }
 
     // Next month padding (fill to 42 = 6 rows)
-    const nextMonth = viewMonth === 11 ? 0 : viewMonth + 1;
-    const nextYear = viewMonth === 11 ? viewYear + 1 : viewYear;
+    const next = current.add({ months: 1 });
     const remaining = 42 - days.length;
     for (let i = 1; i <= remaining; i++) {
-      days.push({ year: nextYear, month: nextMonth, day: i, isCurrentMonth: false });
+      days.push({ year: next.year, month: next.month - 1, day: i, isCurrentMonth: false });
     }
 
     return days;
   });
 
   const todayParts = $derived.by(() => {
-    const now = new Date();
-    return { year: now.getFullYear(), month: now.getMonth(), day: now.getDate() };
+    const today = Temporal.Now.plainDateISO();
+    return { year: today.year, month: today.month - 1, day: today.day }; // 0-indexed month
   });
 
   // --- Logic ---
 
   function isDisabledDay(d) {
-    const iso = toISO(d.year, d.month, d.day);
-    if (min && iso < min) return true;
-    if (max && iso > max) return true;
+    const date = pd(d.year, d.month, d.day);
+    if (min && Temporal.PlainDate.compare(date, Temporal.PlainDate.from(min)) < 0) return true;
+    if (max && Temporal.PlainDate.compare(date, Temporal.PlainDate.from(max)) > 0) return true;
     return false;
   }
 
@@ -150,20 +153,21 @@
     isOpen = false;
   }
 
+  function setView(plainDate) {
+    viewYear = plainDate.year;
+    viewMonth = plainDate.month - 1;
+  }
+
   function prevMonthNav() {
-    if (viewMonth === 0) { viewYear--; viewMonth = 11; }
-    else { viewMonth--; }
+    setView(pd(viewYear, viewMonth).subtract({ months: 1 }));
   }
 
   function nextMonthNav() {
-    if (viewMonth === 11) { viewYear++; viewMonth = 0; }
-    else { viewMonth++; }
+    setView(pd(viewYear, viewMonth).add({ months: 1 }));
   }
 
   function goToToday() {
-    const now = new Date();
-    viewYear = now.getFullYear();
-    viewMonth = now.getMonth();
+    setView(Temporal.Now.plainDateISO());
   }
 
   function toggle() {

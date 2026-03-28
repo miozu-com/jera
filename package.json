@@ -100,5 +100,7 @@
   "bugs": {
     "url": "https://github.com/miozu-com/jera/issues"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1"
+  }
 }
