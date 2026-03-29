@@ -151,7 +151,7 @@
 
   <!-- Items List -->
   {#if expanded}
-    <div class="group-content" transition:slide={{ duration: 200, easing: cubicOut }}>
+    <div class="group-content" class:collapsed={isCollapsed} transition:slide={{ duration: 200, easing: cubicOut }}>
       <!-- Custom children content -->
       {#if children}
         {@render children()}
@@ -174,6 +174,7 @@
                 class="group-item"
                 class:active={isItemActive(item)}
                 class:expanded={isExpanded}
+                class:collapsed={isCollapsed}
                 onclick={() => handleItemClick(item)}
                 title={isCollapsed ? itemName : null}
               >
@@ -359,6 +360,15 @@
     background: transparent;
     font-family: inherit;
     text-align: left;
+  }
+
+  .group-item.collapsed {
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .group-content.collapsed {
+    padding: 0 0.25rem;
   }
 
   .group-item:hover {

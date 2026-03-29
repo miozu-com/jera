@@ -2281,6 +2281,11 @@
           "type": "string",
           "default": "''",
           "description": "Trend indicator (e.g. '+12%', '-3%'). Auto-colors: + green, - red, else muted"
+        },
+        "size": {
+          "type": "'sm'|'md'",
+          "default": "'md'",
+          "description": "Card density. 'sm' removes background, reduces padding, and uses lighter borders"
         }
       },
       "snippets": [
@@ -2291,8 +2296,8 @@
         "onclick"
       ],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-03-29",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2487,14 +2492,14 @@
           "description": "Bar height (4px or 6px)"
         },
         "showLegend": {
-          "type": "boolean",
+          "type": "boolean|'hover'",
           "default": "true",
-          "description": "Show color legend below bar"
+          "description": "Show color legend below bar. 'hover' shows legend on parent hover via absolute positioning"
         }
       },
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-29",
       "breaking": [],
       "docLevel": "standard"
     },
