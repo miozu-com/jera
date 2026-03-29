@@ -51,6 +51,7 @@
     subtitle = '',
     trend = '',
     status = '',
+    size = 'md',
     progress = null,
     href = null,
     class: className = '',
@@ -117,14 +118,14 @@
 {#if href}
   <a
     {href}
-    class="metric-card {status ? `metric-card-${status}` : ''} metric-card-clickable {className}"
+    class="metric-card {size === 'sm' ? 'metric-card-sm' : ''} {status ? `metric-card-${status}` : ''} metric-card-clickable {className}"
     {...rest}
   >
     {@render cardContent()}
   </a>
 {:else}
   <div
-    class="metric-card {status ? `metric-card-${status}` : ''} {isClickable ? 'metric-card-clickable' : ''} {className}"
+    class="metric-card {size === 'sm' ? 'metric-card-sm' : ''} {status ? `metric-card-${status}` : ''} {isClickable ? 'metric-card-clickable' : ''} {className}"
     {onclick}
     role={onclick ? 'button' : undefined}
     tabindex={onclick ? 0 : undefined}
@@ -193,15 +194,16 @@
 
   .metric-body {
     display: flex;
-    align-items: baseline;
-    gap: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
   .metric-value {
-    font-size: var(--text-3xl);
+    font-size: var(--text-2xl);
     font-weight: 600;
     color: var(--color-base06);
-    line-height: 1;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
   .metric-value-success {
@@ -223,8 +225,9 @@
   }
 
   .metric-sublabel {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--color-base04);
+    line-height: 1.4;
   }
 
   .metric-trend {
@@ -261,6 +264,44 @@
 
   .progress-error {
     background: var(--color-base08);
+  }
+
+  /* ── Size: sm (compact) ───────────────────────────────────────────── */
+  .metric-card-sm {
+    padding: 0.625rem 0.875rem;
+    gap: 0.125rem;
+    background: transparent;
+    border-color: color-mix(in srgb, var(--color-base02) 60%, transparent);
+  }
+
+  .metric-card-sm .metric-label {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .metric-card-sm .metric-value {
+    font-size: var(--text-lg);
+  }
+
+  .metric-card-sm .metric-unit {
+    font-size: var(--text-sm);
+  }
+
+  .metric-card-sm.metric-card-clickable:hover {
+    border-color: var(--color-base03);
+    background: color-mix(in srgb, var(--color-base02) 30%, transparent);
+  }
+
+  .metric-card-sm.metric-card-error {
+    border-color: color-mix(in srgb, var(--color-base08) 25%, transparent);
+  }
+
+  .metric-card-sm.metric-card-success {
+    border-color: color-mix(in srgb, var(--color-base0B) 25%, transparent);
+  }
+
+  .metric-card-sm.metric-card-warning {
+    border-color: color-mix(in srgb, var(--color-base0A) 25%, transparent);
   }
 
   /* Focus state for clickable */
