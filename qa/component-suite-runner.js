@@ -222,8 +222,9 @@ function commitReportsToQaBranch() {
       execSync(`git checkout -b ${QA_BRANCH}`, { stdio: 'pipe' });
     }
 
-    // Stage all JSON reports in the reports dir
-    execSync(`git add "${reportsDir}"/*.json`, { stdio: 'pipe' });
+    // Force-add reports — they are in .gitignore for normal branches but explicitly
+    // committed here on the dedicated qa-reports branch.
+    execSync(`git add -f "${reportsDir}"/*.json`, { stdio: 'pipe' });
 
     const date    = new Date().toISOString().slice(0, 10);
     const message = `qa-reports: suite run ${date}`;
