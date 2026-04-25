@@ -1,12 +1,3 @@
----
-title: QA Runner — Usage & Environments
-type: readme
-date_created: 2026-04-24
-last_updated: 2026-04-24
-project: Selify.ai
-tags: [qa, storybook, runner, environments, readme]
----
-
 # QA Component Runner
 
 Automated 4-layer accessibility and interaction test suite for Jera UI components.
@@ -53,7 +44,7 @@ STORYBOOK_URL=https://admin.selify.ai node component-suite-runner.js
 
 ### Standard Storybook
 
-Set `STORYBOOK_MODE=storybook` for a standard Storybook v7/v8 instance (e.g. Nicholas's `localhost:6006`).
+Set `STORYBOOK_MODE=storybook` for a standard Storybook v7/v8 instance (e.g. `localhost:6006`).
 
 **Selectors used:**
 - Preview area: `.docs-story` (first story block in docs view)
@@ -96,11 +87,11 @@ STORYBOOK_MODE=storybook STORYBOOK_URL=http://localhost:6006 \
 
 | Variable | Default | Description |
 |---|---|---|
-| `STORYBOOK_URL` | `https://admin.selify.ai` | Base URL of the docs/Storybook server |
+| `STORYBOOK_URL` | `http://localhost:6006` | Base URL of the docs/Storybook server |
 | `STORYBOOK_MODE` | `selify` | `selify` or `storybook` — controls URL format and DOM selectors |
 | `CI` | — | Set to `true` to skip authentication |
-| `SELIFY_EMAIL` | — | Login email (Selify mode only) |
-| `SELIFY_PASSWORD` | — | Login password (Selify mode only) |
+| `STORYBOOK_EMAIL` | — | Login email (Selify mode only) |
+| `STORYBOOK_PASSWORD` | — | Login password (Selify mode only) |
 
 ---
 
@@ -108,12 +99,7 @@ STORYBOOK_MODE=storybook STORYBOOK_URL=http://localhost:6006 \
 
 | File | Location |
 |---|---|
-| Per-component JSON | `System/Projects/Selify.ai/Reports/{Component}-test-results.json` |
-| Suite report | `System/Projects/Selify.ai/Reports/suite-test-results.json` |
+| Per-component JSON | `qa/reports/{component}-test-results.json` |
+| Suite report | `qa/reports/suite-test-results.json` |
 | Playwright specs | `qa/specs/{component}.spec.ts` (auto-generated for failing components) |
-| Screenshots | `System/Projects/Selify.ai/Assets/Screenshots/` |
-
----
-
-## Related
-[[component-test-runner]] | [[component-suite-runner]] | [[spec-generator]] | [[Architecture-v2]]
+| Screenshots | `qa/screenshots/` |
