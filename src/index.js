@@ -61,6 +61,7 @@ export { default as Switch } from './components/forms/Switch.svelte';
 export { default as NumberInput } from './components/forms/NumberInput.svelte';
 export { default as Radio } from './components/forms/Radio.svelte';
 export { default as RadioGroup } from './components/forms/RadioGroup.svelte';
+export { default as CardRadioGroup } from './components/forms/CardRadioGroup.svelte';
 export { default as FileUpload } from './components/forms/FileUpload.svelte';
 export { default as RangeSlider } from './components/forms/RangeSlider.svelte';
 export { default as SearchInput } from './components/forms/SearchInput.svelte';

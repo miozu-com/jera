@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 90,
+  "totalComponents": 91,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -1872,6 +1872,59 @@
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "CardRadioGroup",
+      "category": "forms",
+      "path": "src/components/forms/CardRadioGroup.svelte",
+      "description": "Single-choice radio group rendered as stacked cards with title + description. Clearer than native Select for 2-6 high-stakes options (roles, plans, modes).",
+      "props": {
+        "value": {
+          "type": "any",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected option value (bindable)"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form field name; emitted on the hidden radio inputs"
+        },
+        "options": {
+          "type": "Array<{value, title, description?, disabled?}>",
+          "default": "[]",
+          "description": "Option list. value = form value, title = card heading, description = body text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the entire group"
+        },
+        "orientation": {
+          "type": "'vertical'|'horizontal'",
+          "default": "'vertical'",
+          "description": "Card stack direction"
+        },
+        "size": {
+          "type": "'sm'|'md'",
+          "default": "'md'",
+          "description": "Card padding + title size"
+        },
+        "aria-label": {
+          "type": "string",
+          "default": "''",
+          "description": "Screen-reader label for the radiogroup (use when no <legend>)"
+        }
+      },
+      "snippets": [],
+      "events": [
+        "onchange"
+      ],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-05-25",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "FileUpload",
