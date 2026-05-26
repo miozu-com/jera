@@ -72,12 +72,22 @@
     imgError = false;
   });
 
+  // Perf hardening: skip any "generated-avatar.svg" URL — those are
+  // ~3-16 KB SVGs served from Supabase Storage with a 1+ s round-trip
+  // and contain only algorithmically generated colorful blobs. We can
+  // render the same visual locally from `seed` (data: URL, no network).
+  // Consumers using <Avatar src={user.avatar_url}> get an instant
+  // free win without having to sanitize URLs themselves.
+  const effectiveSrc = $derived(
+    src && !src.includes('generated-avatar.svg') ? src : ''
+  );
+
   // Rendering chain:
-  // 1. src truthy + no error → <img> with src
-  // 2. src failed or empty, seed truthy → algorithmic avatar
+  // 1. effectiveSrc truthy + no error → <img>
+  // 2. effectiveSrc empty/skipped, seed truthy → algorithmic avatar
   // 3. neither → initials from name
   // 4. nothing → placeholder icon
-  const showImage = $derived(src && !imgError);
+  const showImage = $derived(effectiveSrc && !imgError);
   const showAlgorithmic = $derived(!showImage && !!algorithmicSrc);
   const showInitials = $derived(!showImage && !showAlgorithmic && !!initials);
 
@@ -90,7 +100,7 @@
 <div class="avatar avatar-{size} {className}" style="border-radius: {borderRadius};">
   {#if showImage}
     <img
-      {src}
+      src={effectiveSrc}
       alt={alt || name || 'Avatar'}
       class="avatar-image"
       onerror={() => imgError = true}
