@@ -149,7 +149,7 @@
       class:tab-disabled={tab.disabled}
       aria-selected={active === tab.id}
       aria-disabled={tab.disabled}
-      aria-controls={tab.panelId || `${componentId}-panel-${tab.id}`}
+      aria-controls={tab.panelId || undefined}
       tabindex={active === tab.id ? 0 : -1}
       data-tab-id={tab.id}
       onclick={() => selectTab(tab)}

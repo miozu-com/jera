@@ -219,11 +219,24 @@ export class ThemeState {
 
   /**
    * Apply theme to document
+   *
+   * NOTE: We compute the theme strings inline here rather than reading the
+   * `dataTheme` / `resolved` $derived class fields. `#apply()` runs from
+   * inside `init()` (an onMount callback, not a Svelte effect). Reading a
+   * $derived class field from a non-reactive context can return Svelte's
+   * internal UNINITIALIZED Symbol on the very first call, which would then
+   * crash `setAttribute` with:
+   *   Failed to execute 'setAttribute' on 'Element':
+   *   Cannot convert a Symbol value to a string
+   * Resolving inline keeps `#apply` independent of derived initialization
+   * order and works identically once the derives are warm.
    */
   #apply() {
     if (typeof document === 'undefined') return;
-    document.documentElement.setAttribute('data-theme', this.dataTheme);
-    document.documentElement.style.colorScheme = this.resolved;
+    const resolved = this.#resolveTheme();
+    const dataTheme = resolved === 'dark' ? 'miozu-dark' : 'miozu-light';
+    document.documentElement.setAttribute('data-theme', dataTheme);
+    document.documentElement.style.colorScheme = resolved;
   }
 }
 

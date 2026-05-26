@@ -43,6 +43,7 @@
   } = $props();
 
   let dialogEl = $state(null);
+  const titleId = `modal-title-${crypto.randomUUID()}`;
 
   // Variant styles for the icon container
   const iconVariants = {
@@ -96,7 +97,7 @@
 <dialog
   bind:this={dialogEl}
   class="modal modal-{size} {fill ? 'modal-fill' : ''} {className}"
-  aria-labelledby={title ? 'modal-title' : undefined}
+  aria-labelledby={title ? titleId : undefined}
   aria-modal="true"
   onclose={handleClose}
   oncancel={handleCancel}
@@ -130,7 +131,7 @@
         {#if title || children}
           <div class="modal-text">
             {#if title}
-              <h3 id="modal-title" class="modal-title">{title}</h3>
+              <h3 id={titleId} class="modal-title">{title}</h3>
             {/if}
             {#if children}
               <div class="modal-body">

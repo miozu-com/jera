@@ -222,6 +222,11 @@
     font-weight: 500;
   }
 
+  /* Light mode: darken active text to meet WCAG AA 4.5:1 contrast */
+  :global([data-theme="miozu-light"]) .nav-item.active {
+    color: color-mix(in srgb, var(--color-base0D) 60%, black);
+  }
+
   .nav-item.expandable {
     position: relative;
   }
@@ -306,6 +311,10 @@
     color: var(--color-base0D);
     font-weight: 500;
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  }
+
+  :global([data-theme="miozu-light"]) .subnav-item.active {
+    color: color-mix(in srgb, var(--color-base0D) 60%, black);
   }
 
   /* Variants */

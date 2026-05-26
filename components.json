@@ -82,8 +82,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-03-28",
+      "revision": 6,
+      "lastReviewed": "2026-04-17",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -987,8 +987,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-28",
+      "revision": 4,
+      "lastReviewed": "2026-04-17",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1120,8 +1120,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-02",
+      "revision": 4,
+      "lastReviewed": "2026-03-29",
       "breaking": [
         "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb."
       ],
@@ -1380,8 +1380,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2522,9 +2522,9 @@
         "children",
         "actions"
       ],
-      "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-04-17",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2750,8 +2750,8 @@
       "description": "Legacy sidebar — replaced by LeftBar",
       "replacedBy": "LeftBar",
       "stage": "deprecated",
-      "revision": 3,
-      "lastReviewed": "2026-03-28",
+      "revision": 4,
+      "lastReviewed": "2026-04-17",
       "breaking": [],
       "docLevel": "none"
     },

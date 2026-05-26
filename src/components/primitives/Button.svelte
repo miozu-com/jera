@@ -101,7 +101,6 @@
     {href}
     class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {className}"
     aria-disabled={isDisabled || undefined}
-    role="button"
     {...restProps}
   >
     {@render buttonContent()}

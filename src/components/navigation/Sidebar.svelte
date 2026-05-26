@@ -170,7 +170,12 @@
 {#if mobileOverlay}
   <!-- Mobile overlay mode -->
   {#if overlayOpen}
-    <div class="sidebar-overlay" onclick={closeMobileOverlay}></div>
+    <button
+      type="button"
+      class="sidebar-overlay"
+      onclick={closeMobileOverlay}
+      aria-label="Close sidebar"
+    ></button>
     <aside
       class="sidebar mobile-overlay {className} {position}"
       class:collapsed={isCollapsed}
@@ -282,6 +287,9 @@
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: var(--z-modal-backdrop);
+    border: none;
+    padding: 0;
+    cursor: pointer;
   }
 
   .sidebar.mobile-overlay {
