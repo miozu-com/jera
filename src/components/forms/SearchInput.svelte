@@ -23,6 +23,10 @@
     oninput,
     onchange,
     onclear,
+    // Bindable reference to the underlying <input>. Consumers can call
+    // `inputEl.focus()` to programmatically take focus (e.g. for the
+    // chat-route `f` keyboard shortcut). Optional — defaults to null.
+    inputEl = $bindable(null),
     ...rest
   } = $props();
 
@@ -56,6 +60,7 @@
   <input
     type="search"
     bind:value
+    bind:this={inputEl}
     {placeholder}
     {disabled}
     class="search-field"
