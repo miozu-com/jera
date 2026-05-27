@@ -1642,8 +1642,8 @@
         "admin"
       ],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-05-27",
       "breaking": [],
       "docLevel": "standard"
     },
