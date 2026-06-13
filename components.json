@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 91,
+  "totalComponents": 92,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -991,6 +991,59 @@
       "lastReviewed": "2026-04-17",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "Sheet",
+      "category": "overlays",
+      "path": "src/components/overlays/Sheet.svelte",
+      "description": "Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss)",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Sheet visibility (bindable)"
+        },
+        "closeOnBackdrop": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close when clicking the backdrop"
+        },
+        "closeOnEscape": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close on Escape key"
+        },
+        "showHandle": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show the drag-to-dismiss grab handle"
+        },
+        "ariaLabel": {
+          "type": "string",
+          "default": "''",
+          "description": "Accessible label for the dialog"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the dialog element"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash"
+      ],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-06-13",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "Popover",
