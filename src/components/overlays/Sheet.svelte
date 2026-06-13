@@ -101,10 +101,19 @@
     {#if showHandle}
       <div
         class="sheet-handle-zone"
+        role="button"
+        tabindex="0"
+        aria-label="Close"
         onpointerdown={onHandleDown}
         onpointermove={onHandleMove}
         onpointerup={onHandleUp}
         onpointercancel={onHandleUp}
+        onkeydown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            close();
+          }
+        }}
       >
         <span class="sheet-handle"></span>
       </div>
