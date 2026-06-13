@@ -1040,7 +1040,7 @@
         "dash"
       ],
       "stage": "beta",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-06-13",
       "breaking": [],
       "docLevel": "minimal"

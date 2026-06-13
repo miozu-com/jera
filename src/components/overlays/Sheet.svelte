@@ -32,6 +32,8 @@
   let dragY = $state(0); // px the panel is currently dragged down
   let dragging = $state(false);
   let startY = 0;
+  let capturedEl = null;
+  let capturedPointerId = null;
 
   // Sync the bindable `open` with the native dialog's modal state.
   $effect(() => {
@@ -70,7 +72,9 @@
   function onHandleDown(e) {
     dragging = true;
     startY = e.clientY;
-    e.currentTarget.setPointerCapture?.(e.pointerId);
+    capturedEl = e.currentTarget;
+    capturedPointerId = e.pointerId;
+    capturedEl.setPointerCapture?.(e.pointerId);
   }
   function onHandleMove(e) {
     if (!dragging) return;
@@ -80,6 +84,11 @@
   function onHandleUp() {
     if (!dragging) return;
     dragging = false;
+    // Release explicitly so capture never outlives the element (e.g. if the
+    // sheet unmounts on a breakpoint change mid-drag).
+    capturedEl?.releasePointerCapture?.(capturedPointerId);
+    capturedEl = null;
+    capturedPointerId = null;
     if (dragY > DISMISS_THRESHOLD) close();
     else dragY = 0; // snap back
   }
@@ -103,7 +112,7 @@
         class="sheet-handle-zone"
         role="button"
         tabindex="0"
-        aria-label="Close"
+        aria-label="Close; drag down to dismiss"
         onpointerdown={onHandleDown}
         onpointermove={onHandleMove}
         onpointerup={onHandleUp}
