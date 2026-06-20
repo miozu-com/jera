@@ -32,9 +32,30 @@
   const anchorName = `--dropdown-anchor-${Math.random().toString(36).slice(2, 9)}`;
 
   let triggerEl = $state(null);
+  let triggerWrapEl = $state(null);
   let contentEl = $state(null);
   let floatingStyle = $state('');
   let resolvedPosition = $state(position);
+
+  // The caller passes the real control (a <button>) via the `trigger` snippet,
+  // so ARIA state must live on that focusable element — not the wrapper div, or
+  // screen readers announce the menu state on a non-interactive node (WCAG 4.1.2).
+  // Resolve the focusable child and keep aria-haspopup/aria-expanded synced to it.
+  function focusableTrigger() {
+    if (!triggerWrapEl) return null;
+    return (
+      triggerWrapEl.querySelector(
+        'button, [href], [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      ) || triggerWrapEl.firstElementChild
+    );
+  }
+
+  $effect(() => {
+    const el = focusableTrigger();
+    if (!el) return;
+    el.setAttribute('aria-haspopup', 'menu');
+    el.setAttribute('aria-expanded', String(open));
+  });
 
   function toggle(e) {
     e.stopPropagation();
@@ -137,11 +158,12 @@
   style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
   bind:this={triggerEl}
 >
+  <!-- ARIA (haspopup/expanded) is set on the focusable child trigger via $effect,
+       not on this wrapper, so screen readers announce state on the real control. -->
   <div
     class="dropdown-trigger"
     onclick={toggle}
-    aria-haspopup="true"
-    aria-expanded={open}
+    bind:this={triggerWrapEl}
   >
     {@render trigger?.()}
   </div>

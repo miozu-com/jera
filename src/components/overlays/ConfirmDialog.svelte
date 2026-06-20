@@ -49,6 +49,11 @@
 
   let dialogEl = $state(null);
 
+  // Unique ids so multiple ConfirmDialogs mounted at once don't collide
+  // (duplicate ids break aria-labelledby/aria-describedby). Mirrors Modal.svelte.
+  const titleId = `confirm-title-${crypto.randomUUID()}`;
+  const messageId = `confirm-message-${crypto.randomUUID()}`;
+
   const variantConfig = $derived({
     danger: {
       iconColor: 'var(--color-base08)',
@@ -111,7 +116,8 @@
 <dialog
   bind:this={dialogEl}
   class="confirm-dialog {className}"
-  aria-labelledby="confirm-title"
+  aria-labelledby={titleId}
+  aria-describedby={messageId}
   aria-modal="true"
   onclose={handleClose}
   oncancel={handleCancel}
@@ -163,8 +169,8 @@
       </div>
 
       <div class="confirm-text">
-        <h3 id="confirm-title" class="confirm-title">{title}</h3>
-        <p class="confirm-message">{message}</p>
+        <h3 id={titleId} class="confirm-title">{title}</h3>
+        <p id={messageId} class="confirm-message">{message}</p>
       </div>
     </div>
 

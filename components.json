@@ -70,17 +70,9 @@
           "description": "HTML button type attribute"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onclick"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "events": ["onclick"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-04-17",
@@ -119,17 +111,9 @@
           "description": "Additional CSS classes on the badge element"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onclick"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "events": ["onclick"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-05",
@@ -161,14 +145,8 @@
           "description": "Margin around divider"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -222,10 +200,7 @@
           "description": "Custom CSS class"
         }
       },
-      "consumers": [
-        "admin",
-        "miozu"
-      ],
+      "consumers": ["admin", "miozu"],
       "stage": "stable",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -269,9 +244,7 @@
           "description": "Description text below the value (alias for secondary, takes priority)"
         }
       },
-      "consumers": [
-        "dash"
-      ],
+      "consumers": ["dash"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -295,9 +268,7 @@
           "description": "Button style"
         }
       },
-      "consumers": [
-        "miozu"
-      ],
+      "consumers": ["miozu"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -321,9 +292,7 @@
           "description": "Control size"
         }
       },
-      "consumers": [
-        "dash"
-      ],
+      "consumers": ["dash"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -415,18 +384,8 @@
           "description": "Additional CSS classes"
         }
       },
-      "events": [
-        "oninput",
-        "onchange",
-        "onkeydown",
-        "onfocus",
-        "onblur"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "events": ["oninput", "onchange", "onkeydown", "onfocus", "onblur"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -461,13 +420,8 @@
           "description": "Show error state"
         }
       },
-      "events": [
-        "oninput",
-        "onchange"
-      ],
-      "consumers": [
-        "admin"
-      ],
+      "events": ["oninput", "onchange"],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -537,13 +491,8 @@
           "description": "Mark field as required"
         }
       },
-      "events": [
-        "onchange"
-      ],
-      "consumers": [
-        "admin",
-        "miozu"
-      ],
+      "events": ["onchange"],
+      "consumers": ["admin", "miozu"],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-03-28",
@@ -573,16 +522,9 @@
           "description": "Show error state"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onchange"
-      ],
-      "consumers": [
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "events": ["onchange"],
+      "consumers": ["admin", "miozu"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -637,16 +579,9 @@
           "description": "Additional CSS classes on the wrapper label"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onchange"
-      ],
-      "consumers": [
-        "dash",
-        "admin"
-      ],
+      "snippets": ["children"],
+      "events": ["onchange"],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
       "revision": 5,
       "lastReviewed": "2026-03-05",
@@ -701,14 +636,8 @@
           "description": "Show error border state"
         }
       },
-      "events": [
-        "oninput",
-        "onchange",
-        "onclear"
-      ],
-      "consumers": [
-        "admin"
-      ],
+      "events": ["oninput", "onchange", "onclear"],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -721,11 +650,7 @@
       "path": "src/components/feedback/Toast.svelte",
       "description": "Enterprise toast system — singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
       "statePattern": "singleton: getToastState()",
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 7,
       "lastReviewed": "2026-03-28",
@@ -764,18 +689,9 @@
           "description": "Alert size"
         }
       },
-      "snippets": [
-        "children",
-        "icon",
-        "actions"
-      ],
-      "events": [
-        "onclose"
-      ],
-      "consumers": [
-        "dash",
-        "admin"
-      ],
+      "snippets": ["children", "icon", "actions"],
+      "events": ["onclose"],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -799,9 +715,7 @@
           "description": "Spinner color"
         }
       },
-      "consumers": [
-        "admin"
-      ],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-07",
@@ -830,13 +744,8 @@
           "description": "Display size"
         }
       },
-      "snippets": [
-        "icon",
-        "actions"
-      ],
-      "consumers": [
-        "admin"
-      ],
+      "snippets": ["icon", "actions"],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -885,9 +794,7 @@
           "description": "Enable shimmer animation"
         }
       },
-      "consumers": [
-        "miozu"
-      ],
+      "consumers": ["miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-07",
@@ -921,9 +828,7 @@
           "description": "Show indeterminate animation"
         }
       },
-      "consumers": [
-        "miozu"
-      ],
+      "consumers": ["miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-07",
@@ -973,19 +878,9 @@
           "description": "Close on Escape key"
         }
       },
-      "snippets": [
-        "children",
-        "footer",
-        "icon"
-      ],
-      "events": [
-        "onclose"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children", "footer", "icon"],
+      "events": ["onclose"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-04-17",
@@ -1030,15 +925,9 @@
           "description": "Extra class on the dialog element"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onclose"
-      ],
-      "consumers": [
-        "dash"
-      ],
+      "snippets": ["children"],
+      "events": ["onclose"],
+      "consumers": ["dash"],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-06-13",
@@ -1067,13 +956,8 @@
           "description": "Distance from trigger (px)"
         }
       },
-      "snippets": [
-        "children",
-        "content"
-      ],
-      "consumers": [
-        "miozu"
-      ],
+      "snippets": ["children", "content"],
+      "consumers": ["miozu"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1108,16 +992,11 @@
           "description": "Color variant"
         }
       },
-      "events": [
-        "onconfirm",
-        "oncancel"
-      ],
-      "consumers": [
-        "dash"
-      ],
+      "events": ["onconfirm", "oncancel"],
+      "consumers": ["dash"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-06-16",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1164,14 +1043,8 @@
           "description": "Additional CSS classes on the tabs container"
         }
       },
-      "events": [
-        "onchange"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "events": ["onchange"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-29",
@@ -1198,13 +1071,8 @@
           "description": "Allow multiple items open"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "consumers": [
-        "dash",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "consumers": ["dash", "miozu"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1244,16 +1112,8 @@
           "description": "Badge text in header"
         }
       },
-      "snippets": [
-        "children",
-        "leading",
-        "trailing",
-        "indicator"
-      ],
-      "consumers": [
-        "dash",
-        "miozu"
-      ],
+      "snippets": ["children", "leading", "trailing", "indicator"],
+      "consumers": ["dash", "miozu"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1287,16 +1147,8 @@
           "description": "Stick to top of viewport"
         }
       },
-      "snippets": [
-        "actions",
-        "center",
-        "subnav",
-        "renderIcon"
-      ],
-      "consumers": [
-        "dash",
-        "admin"
-      ],
+      "snippets": ["actions", "center", "subnav", "renderIcon"],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -1326,17 +1178,8 @@
           "description": "Cookie key for SSR persistence"
         }
       },
-      "snippets": [
-        "header",
-        "navigation",
-        "footer",
-        "children"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["header", "navigation", "footer", "children"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -1355,14 +1198,8 @@
           "description": "Section title"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["children"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1422,16 +1259,8 @@
           "description": "Color variant"
         }
       },
-      "snippets": [
-        "leading",
-        "trailing",
-        "children"
-      ],
-      "consumers": [
-        "dash",
-        "admin",
-        "miozu"
-      ],
+      "snippets": ["leading", "trailing", "children"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -1471,13 +1300,8 @@
           "description": "Show add button"
         }
       },
-      "snippets": [
-        "item",
-        "children"
-      ],
-      "consumers": [
-        "dash"
-      ],
+      "snippets": ["item", "children"],
+      "consumers": ["dash"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1489,10 +1313,7 @@
       "category": "navigation",
       "path": "src/components/navigation/LeftBarToggle.svelte",
       "description": "Sidebar collapse toggle, reads LeftBar context",
-      "consumers": [
-        "dash",
-        "admin"
-      ],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -1532,9 +1353,7 @@
         "footerContent",
         "children"
       ],
-      "consumers": [
-        "admin"
-      ],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -1568,15 +1387,8 @@
           "description": "Header size"
         }
       },
-      "snippets": [
-        "icon",
-        "actions",
-        "search",
-        "filters"
-      ],
-      "consumers": [
-        "admin"
-      ],
+      "snippets": ["icon", "actions", "search", "filters"],
+      "consumers": ["admin"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1600,12 +1412,8 @@
           "description": "Card color variant"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "consumers": [
-        "dash"
-      ],
+      "snippets": ["children"],
+      "consumers": ["dash"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1629,13 +1437,8 @@
           "description": "Setting description"
         }
       },
-      "snippets": [
-        "leading",
-        "action"
-      ],
-      "consumers": [
-        "dash"
-      ],
+      "snippets": ["leading", "action"],
+      "consumers": ["dash"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1682,18 +1485,9 @@
           "description": "Left offset for sidebar clearance"
         }
       },
-      "snippets": [
-        "header",
-        "sidebar",
-        "children"
-      ],
-      "events": [
-        "onresize"
-      ],
-      "consumers": [
-        "dash",
-        "admin"
-      ],
+      "snippets": ["header", "sidebar", "children"],
+      "events": ["onresize"],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-05-27",
@@ -1727,10 +1521,7 @@
           "description": "Show line numbers via CSS counters"
         }
       },
-      "consumers": [
-        "admin",
-        "miozu"
-      ],
+      "consumers": ["admin", "miozu"],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1780,15 +1571,8 @@
           "description": "Show clear button when value present"
         }
       },
-      "snippets": [
-        "leftIcon",
-        "rightIcon"
-      ],
-      "events": [
-        "oninput",
-        "onchange",
-        "onclear"
-      ],
+      "snippets": ["leftIcon", "rightIcon"],
+      "events": ["oninput", "onchange", "onclear"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1843,10 +1627,7 @@
           "description": "Show error state"
         }
       },
-      "events": [
-        "oninput",
-        "onchange"
-      ],
+      "events": ["oninput", "onchange"],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -1914,12 +1695,8 @@
           "description": "Layout direction"
         }
       },
-      "snippets": [
-        "children"
-      ],
-      "events": [
-        "onchange"
-      ],
+      "snippets": ["children"],
+      "events": ["onchange"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1970,9 +1747,7 @@
         }
       },
       "snippets": [],
-      "events": [
-        "onchange"
-      ],
+      "events": ["onchange"],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-05-25",
@@ -2016,10 +1791,7 @@
           "description": "Hint text below label"
         }
       },
-      "events": [
-        "onchange",
-        "onerror"
-      ],
+      "events": ["onchange", "onerror"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2079,10 +1851,7 @@
           "description": "Slider size"
         }
       },
-      "events": [
-        "oninput",
-        "onchange"
-      ],
+      "events": ["oninput", "onchange"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2122,9 +1891,7 @@
           "description": "Input size"
         }
       },
-      "events": [
-        "oncomplete"
-      ],
+      "events": ["oncomplete"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2153,9 +1920,7 @@
           "description": "Disable upload"
         }
       },
-      "events": [
-        "ondrop"
-      ],
+      "events": ["ondrop"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2189,10 +1954,7 @@
           "description": "Disable tooltip"
         }
       },
-      "snippets": [
-        "children",
-        "content"
-      ],
+      "snippets": ["children", "content"],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -2216,9 +1978,7 @@
           "description": "Color variant"
         }
       },
-      "snippets": [
-        "children"
-      ],
+      "snippets": ["children"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2247,13 +2007,8 @@
           "description": "Show arrow icon"
         }
       },
-      "snippets": [
-        "children",
-        "icon"
-      ],
-      "events": [
-        "onclick"
-      ],
+      "snippets": ["children", "icon"],
+      "events": ["onclick"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2282,9 +2037,7 @@
           "description": "Disable interaction"
         }
       },
-      "snippets": [
-        "trailing"
-      ],
+      "snippets": ["trailing"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2328,9 +2081,7 @@
           "description": "Placeholder image src"
         }
       },
-      "events": [
-        "onload"
-      ],
+      "events": ["onload"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2394,13 +2145,8 @@
           "description": "Card density. 'sm' removes background, reduces padding, and uses lighter borders"
         }
       },
-      "snippets": [
-        "icon",
-        "badge"
-      ],
-      "events": [
-        "onclick"
-      ],
+      "snippets": ["icon", "badge"],
+      "events": ["onclick"],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-03-29",
@@ -2444,12 +2190,8 @@
           "description": "Disable interaction"
         }
       },
-      "snippets": [
-        "icon"
-      ],
-      "events": [
-        "onclick"
-      ]
+      "snippets": ["icon"],
+      "events": ["onclick"]
     },
     {
       "name": "StatusLine",
@@ -2473,9 +2215,7 @@
           "description": "Array of strings or {text, icon} objects"
         }
       },
-      "snippets": [
-        "children"
-      ],
+      "snippets": ["children"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2524,13 +2264,8 @@
           "description": "Display density"
         }
       },
-      "snippets": [
-        "badge",
-        "actions"
-      ],
-      "events": [
-        "onclick"
-      ],
+      "snippets": ["badge", "actions"],
+      "events": ["onclick"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2569,12 +2304,7 @@
           "description": "Subtitle text below the card title"
         }
       },
-      "snippets": [
-        "icon",
-        "linkLabel",
-        "children",
-        "actions"
-      ],
+      "snippets": ["icon", "linkLabel", "children", "actions"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-04-17",
@@ -2652,13 +2382,10 @@
           "description": "Preferred menu position (auto-flips if near viewport edge)"
         }
       },
-      "snippets": [
-        "trigger",
-        "children"
-      ],
+      "snippets": ["trigger", "children"],
       "stage": "beta",
-      "revision": 5,
-      "lastReviewed": "2026-03-28",
+      "revision": 6,
+      "lastReviewed": "2026-06-16",
       "breaking": [
         "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
       ],
@@ -2681,13 +2408,8 @@
           "description": "Disable item"
         }
       },
-      "snippets": [
-        "icon",
-        "children"
-      ],
-      "events": [
-        "onclick"
-      ],
+      "snippets": ["icon", "children"],
+      "events": ["onclick"],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -2745,10 +2467,7 @@
           "description": "Stick right pane on scroll"
         }
       },
-      "snippets": [
-        "left",
-        "right"
-      ],
+      "snippets": ["left", "right"],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -2787,9 +2506,7 @@
           "description": "Show hover anchor link"
         }
       },
-      "snippets": [
-        "children"
-      ],
+      "snippets": ["children"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -3213,9 +2930,7 @@
           "description": "Additional CSS class for the root element"
         }
       },
-      "snippets": [
-        "children"
-      ],
+      "snippets": ["children"],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -3364,9 +3079,7 @@
           "description": "Click handler"
         }
       },
-      "snippets": [
-        "children"
-      ],
+      "snippets": ["children"],
       "dependencies": [],
       "stage": "beta",
       "revision": 2,
