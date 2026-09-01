@@ -1,6 +1,6 @@
 {
   "name": "@miozu/jera",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "type": "module",
   "sideEffects": false,
@@ -66,7 +66,7 @@
     "components.json",
     "llms.txt",
     "CLAUDE.md",
-    "ARCHITECTURE.md"
+    "CHANGELOG.md"
   ],
   "peerDependencies": {
     "shiki": "^3.0.0",
@@ -78,7 +78,7 @@
     }
   },
   "devDependencies": {
-    "svelte": "^5.56.3"
+    "svelte": "^5.57.0"
   },
   "keywords": [
     "svelte",
