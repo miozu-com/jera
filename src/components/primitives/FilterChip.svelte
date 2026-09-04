@@ -83,7 +83,7 @@
     transition: all var(--duration-fast) ease;
   }
 
-  .filter-chip:hover:not(.disabled) {
+  .filter-chip:hover:not(.disabled):not(.active) {
     border-color: var(--color-base03);
     color: var(--color-base05);
     background: var(--color-base01);
@@ -99,35 +99,18 @@
     cursor: not-allowed;
   }
 
-  /* Active states by variant */
-  .filter-chip-default.active {
-    background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0D) 40%, transparent);
-    color: var(--color-base0D);
-  }
+  /* Active states by variant — each variant only sets the accent token;
+     the shared .active rule derives bg/border/text/count from it. */
+  .filter-chip-default.active { --chip-accent: var(--color-base0D); }
+  .filter-chip-error.active   { --chip-accent: var(--color-base08); }
+  .filter-chip-warning.active { --chip-accent: var(--color-base0A); }
+  .filter-chip-success.active { --chip-accent: var(--color-base0B); }
+  .filter-chip-info.active    { --chip-accent: var(--color-base0C); }
 
-  .filter-chip-error.active {
-    background: color-mix(in srgb, var(--color-base08) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base08) 40%, transparent);
-    color: var(--color-base08);
-  }
-
-  .filter-chip-warning.active {
-    background: color-mix(in srgb, var(--color-base0A) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0A) 40%, transparent);
-    color: var(--color-base0A);
-  }
-
-  .filter-chip-success.active {
-    background: color-mix(in srgb, var(--color-base0B) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0B) 40%, transparent);
-    color: var(--color-base0B);
-  }
-
-  .filter-chip-info.active {
-    background: color-mix(in srgb, var(--color-base0C) 10%, transparent);
-    border-color: color-mix(in srgb, var(--color-base0C) 40%, transparent);
-    color: var(--color-base0C);
+  .filter-chip.active {
+    background: color-mix(in srgb, var(--chip-accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--chip-accent) 40%, transparent);
+    color: var(--chip-accent);
   }
 
   .chip-icon {
@@ -154,9 +137,11 @@
     border-radius: var(--radius-default);
   }
 
+  /* Inverted count pill: solid accent fill, page-background text.
+     NOTE: never use `background: currentColor` here — currentColor resolves
+     against this element's own `color`, so fill and text collapse to one value. */
   .filter-chip.active .chip-count {
-    background: currentColor;
+    background: var(--chip-accent);
     color: var(--color-base00);
-    opacity: 0.8;
   }
 </style>

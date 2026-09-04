@@ -2159,8 +2159,8 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-09-04",
       "breaking": [],
       "docLevel": "standard",
       "props": {
