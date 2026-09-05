@@ -2343,7 +2343,7 @@
       "name": "ChecklistCard",
       "category": "primitives",
       "path": "src/components/primitives/ChecklistCard.svelte",
-      "description": "Sequential onboarding checklist. Shows steps with done/current/future states. Auto-hides when all steps complete.",
+      "description": "Sequential onboarding checklist. Shows steps with done/current/future states; the current step's whole row is the click target with the action chip beside the label. Auto-hides when all steps complete.",
       "props": {
         "title": {
           "type": "string",
@@ -2359,8 +2359,8 @@
       "snippets": [],
       "events": [],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-03-28",
+      "revision": 2,
+      "lastReviewed": "2026-09-05",
       "breaking": [],
       "docLevel": "minimal"
     },
@@ -2415,10 +2415,16 @@
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Custom CSS class on the card root"
     },
     {
       "name": "DropdownDivider",
       "category": "overlays",
+      "consumers": ["dash"],
       "path": "src/components/overlays/DropdownDivider.svelte",
       "description": "Horizontal separator line for dropdown menu groups",
       "stage": "beta",
