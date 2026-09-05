@@ -200,11 +200,13 @@
           "description": "Custom CSS class"
         }
       },
-      "consumers": ["admin", "miozu"],
+      "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "breaking": [],
+      "revision": 2,
+      "lastReviewed": "2026-09-05",
+      "breaking": [
+        "v2: Initials fallback recolored for WCAG AA. Text is --color-base00 (was a hardcoded white that measured 1.76:1 on dark-mode accents) and the tile is mixed 20% toward --color-base05. No API change; the tile reads slightly deeper in light mode and slightly softer in dark mode."
+      ],
       "docLevel": "complete"
     },
     {
@@ -817,18 +819,38 @@
           "default": "100",
           "description": "Maximum value"
         },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Track height (sm 4px, md 8px, lg 12px)"
+        },
         "variant": {
           "type": "'primary'|'success'|'warning'|'error'|'info'",
           "default": "'primary'",
           "description": "Color variant"
         },
+        "showLabel": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show the rounded percentage above the track (suppressed when indeterminate)"
+        },
+        "label": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Text label above the track; also becomes the aria-label"
+        },
         "indeterminate": {
           "type": "boolean",
           "default": "false",
           "description": "Show indeterminate animation"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Custom CSS class on the container"
         }
       },
-      "consumers": ["miozu"],
+      "consumers": ["dash", "miozu"],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-07",

@@ -112,7 +112,7 @@
       class="avatar-image"
     />
   {:else if showInitials}
-    <span class="avatar-initials" style="background: {bgColor};">
+    <span class="avatar-initials" style="--avatar-accent: {bgColor};">
       {initials}
     </span>
   {:else}
@@ -159,7 +159,16 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    color: white;
+    /* Contrast: the accent tokens flip lightness between themes (light mode
+       L 0.52-0.62, dark mode L 0.68-0.82), so a hardcoded `white` measured
+       1.76:1 - 3.16:1 in dark mode and 3.67:1 - 6.13:1 in light mode: below
+       WCAG AA (4.5:1) for every dark-mode hue and for half the light-mode
+       ones. base00 is the background pole in BOTH themes, so it is always the
+       far end from an accent, and mixing the fill 20% toward base05 (the
+       foreground pole) widens that gap in whichever direction the theme runs.
+       Worst case across all 8 hues is now 5.05:1 light / 7.57:1 dark. */
+    background: color-mix(in oklab, var(--avatar-accent) 80%, var(--color-base05));
+    color: var(--color-base00);
     font-weight: 600;
     letter-spacing: 0.02em;
   }
