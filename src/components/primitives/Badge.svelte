@@ -141,6 +141,12 @@
     border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
   }
 
+  .jera-badge-accent {
+    background: color-mix(in srgb, var(--color-base0E) 10%, transparent);
+    color: var(--color-base0E);
+    border-color: color-mix(in srgb, var(--color-base0E) 30%, transparent);
+  }
+
   /* Indicator dot */
   .badge-indicator {
     display: inline-block;

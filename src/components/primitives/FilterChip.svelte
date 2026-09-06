@@ -80,7 +80,7 @@
     border-radius: var(--radius-lg);
     color: var(--color-base04);
     cursor: pointer;
-    transition: all var(--duration-fast) ease;
+    transition: var(--transition-colors);
   }
 
   .filter-chip:hover:not(.disabled):not(.active) {
@@ -106,6 +106,7 @@
   .filter-chip-warning.active { --chip-accent: var(--color-base0A); }
   .filter-chip-success.active { --chip-accent: var(--color-base0B); }
   .filter-chip-info.active    { --chip-accent: var(--color-base0C); }
+  .filter-chip-accent.active  { --chip-accent: var(--color-base0E); }
 
   .filter-chip.active {
     background: color-mix(in srgb, var(--chip-accent) 10%, transparent);
@@ -135,6 +136,7 @@
     background: var(--color-base02);
     color: var(--color-base05);
     border-radius: var(--radius-default);
+    transition: var(--transition-colors);
   }
 
   /* Inverted count pill: solid accent fill, page-background text.

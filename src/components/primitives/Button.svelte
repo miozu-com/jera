@@ -311,6 +311,24 @@
     transform: scale(0.98);
   }
 
+  /* Accent - Violet, AI actions */
+  .accent {
+    background-color: color-mix(in srgb, var(--color-base0E) 10%, transparent);
+    color: var(--color-base0E);
+    border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0E) 40%, transparent);
+  }
+
+  .accent:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0E) 20%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0E) 60%, transparent);
+  }
+
+  .accent:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0E) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-base0E) 80%, transparent);
+    transform: scale(0.98);
+  }
+
   /* ============================================
      SIZES - matches dash.selify.ai Button exactly
      ============================================ */

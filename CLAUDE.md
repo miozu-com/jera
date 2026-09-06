@@ -34,7 +34,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 ## Component API Quick Reference
 
-**Button:** `variant` (primary|secondary|ghost|outline|danger|success|warning|info), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
+**Button:** `variant` (primary|secondary|ghost|outline|danger|success|warning|info|accent), `size` (xs|sm|md|lg), `disabled`, `loading`, `href`, `fullWidth`
 
 - **primary** — Tinted blue (10% bg), main CTAs (Create, Save, Publish)
 - **secondary** — Tinted gray, neutral actions
@@ -48,7 +48,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Select:** `options=[{value, label}]`, `bind:value`, `placeholder`, `size` (xs|sm|md|lg), `onchange(option)`
 
-**Badge:** `variant` (default|primary|success|warning|error), `size` (sm|md|lg)
+**Badge:** `variant` (default|primary|secondary|success|warning|error|info|accent), `size` (sm|md|lg)
 
 **Modal:** `bind:open`, `title`, `size` (sm-xl), `variant`, `fill`, `footer` (snippet)
 - **fill** — Anchors dialog to stable height (80dvh). Prevents collapse when content changes (empty states, search results). Uses flex column: header/footer pinned, body stretches + scrolls.
