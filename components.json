@@ -1026,7 +1026,7 @@
       "name": "Tabs",
       "category": "navigation",
       "path": "src/components/navigation/Tabs.svelte",
-      "description": "Tab navigation with animated sliding indicator and configurable accent color",
+      "description": "Tab navigation with animated sliding indicator, WAI-ARIA keyboard support, and horizontal overflow scrolling",
       "props": {
         "tabs": {
           "type": "array",
@@ -1059,6 +1059,26 @@
           "default": "false",
           "description": "Stretch tabs to fill container width"
         },
+        "scrollable": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Scroll the tablist horizontally when the tabs overflow, keeping the active tab in view"
+        },
+        "panelId": {
+          "type": "string",
+          "default": "''",
+          "description": "id of the tabpanel every tab controls; a per-tab panelId wins over it"
+        },
+        "idPrefix": {
+          "type": "string",
+          "default": "''",
+          "description": "When set, each tab button gets id `${idPrefix}-${tab.id}` so the tabpanel can aria-labelledby the active tab"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Accessible name for the tablist (aria-label)"
+        },
         "class": {
           "type": "string",
           "default": "''",
@@ -1068,10 +1088,11 @@
       "events": ["onchange"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-03-29",
+      "revision": 5,
+      "lastReviewed": "2026-09-06",
       "breaking": [
-        "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb."
+        "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb.",
+        "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) — consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup."
       ],
       "docLevel": "standard"
     },

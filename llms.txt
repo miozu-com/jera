@@ -39,106 +39,108 @@ Full API reference: [llms-full.txt](./llms-full.txt) | Component manifest: [comp
 Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 
 ### Primitives
-- [Button](./src/components/primitives/Button.svelte): 8 variants (primary|secondary|outline|ghost|success|danger|warning|info), 4 sizes, polymorphic (a/button), loading state
-- [Badge](./src/components/primitives/Badge.svelte): 7 variants, 3 sizes, optional click and icon slots
-- [StatusBadge](./src/components/primitives/StatusBadge.svelte): 15 semantic status variants (pending, approved, connected, error, etc.)
-- [Divider](./src/components/primitives/Divider.svelte): Horizontal/vertical with optional label
-- [Avatar](./src/components/primitives/Avatar.svelte): Image/initials with status indicator (online|offline|busy|away), 6 sizes
-- [Stat](./src/components/primitives/Stat.svelte): Metric display with optional progress bar and status coloring
+- [Avatar](./src/components/primitives/Avatar.svelte): User avatar with image, algorithmic Truchet fallback, initials, and status indicator
+- [Badge](./src/components/primitives/Badge.svelte): Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 2px radius).
+- [Button](./src/components/primitives/Button.svelte): Primary action trigger, polymorphic (a/button)
+- [DashCard](./src/components/primitives/DashCard.svelte): Glassmorphism dashboard section card with stagger-fade animation on mount
+- [Divider](./src/components/primitives/Divider.svelte): Visual separator with optional label
+- [Stat](./src/components/primitives/Stat.svelte): Metric display with optional progress bar
+- [ThemeSelect](./src/components/primitives/ThemeSelect.svelte): Three-option theme selector (light/dark/system)
 - [ThemeToggle](./src/components/primitives/ThemeToggle.svelte): Animated sun/moon theme switcher
-- [ThemeSelect](./src/components/primitives/ThemeSelect.svelte): Three-option theme selector (light/dark/system), segmented or dropdown
 
 ### Forms
-- [Input](./src/components/forms/Input.svelte): Text input with bind:value, error state, unstyled mode
-- [Textarea](./src/components/forms/Textarea.svelte): Multiline with autoResize, bind:value
-- [Select](./src/components/forms/Select.svelte): Custom dropdown with keyboard navigation, 4 sizes, onchange(option)
-- [Checkbox](./src/components/forms/Checkbox.svelte): Checkbox with label snippet, bind:checked
-- [Switch](./src/components/forms/Switch.svelte): Toggle switch, 3 sizes, bind:checked
-- [SearchInput](./src/components/forms/SearchInput.svelte): Search with icon, clear button, loading state, 3 sizes
+- [ButtonInput](./src/components/forms/ButtonInput.svelte): Input with attached button for search, submit, or inline actions
+- [Checkbox](./src/components/forms/Checkbox.svelte): Checkbox with label via children snippet
+- [Input](./src/components/forms/Input.svelte): Flexible text input with full browser feature control, error states, and aria-invalid accessibility
+- [SearchInput](./src/components/forms/SearchInput.svelte): Search field with icon, clear button, loading state
+- [Select](./src/components/forms/Select.svelte): Native select element styled with base16 tokens
+- [Switch](./src/components/forms/Switch.svelte): Accessible toggle switch for boolean values with smooth CSS transitions
+- [Textarea](./src/components/forms/Textarea.svelte): Multiline text input with optional auto-resize
 
 ### Feedback
-- [Toast](./src/components/feedback/Toast.svelte): Notification system via context (createToastContext/getToastContext), 6 positions, auto-dismiss
-- [Alert](./src/components/feedback/Alert.svelte): Inline alert with icon, actions, dismissible, 4 variants
-- [Spinner](./src/components/feedback/Spinner.svelte): Loading spinner, 5 sizes
-- [EmptyState](./src/components/feedback/EmptyState.svelte): Empty data placeholder with icon and action slots
-- [Skeleton](./src/components/feedback/Skeleton.svelte): Loading placeholder (text|heading|circle|rect), multi-line
-- [ProgressBar](./src/components/feedback/ProgressBar.svelte): Determinate/indeterminate progress, 5 variants
+- [Alert](./src/components/feedback/Alert.svelte): Inline alert with icon and actions
+- [EmptyState](./src/components/feedback/EmptyState.svelte): Empty data placeholder
+- [ProgressBar](./src/components/feedback/ProgressBar.svelte): Determinate/indeterminate progress indicator
+- [Skeleton](./src/components/feedback/Skeleton.svelte): Loading placeholder with shimmer animation. Variant mode for primitives, preset mode for layout patterns.
+- [Spinner](./src/components/feedback/Spinner.svelte): Loading indicator
+- [Toast](./src/components/feedback/Toast.svelte): Enterprise toast system — singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer
 
 ### Overlays
-- [Modal](./src/components/overlays/Modal.svelte): Dialog with 5 sizes (sm-full), variants, fill mode (80dvh pinned), footer snippet
-- [Popover](./src/components/overlays/Popover.svelte): CSS Anchor Positioning with JS fallback, auto-flip
-- [ConfirmDialog](./src/components/overlays/ConfirmDialog.svelte): Confirmation modal with onconfirm/oncancel, 4 variants
+- [ConfirmDialog](./src/components/overlays/ConfirmDialog.svelte): Pre-built confirmation modal
+- [Modal](./src/components/overlays/Modal.svelte): Dialog overlay with variants and fill mode
+- [Popover](./src/components/overlays/Popover.svelte): Hover popover with CSS Anchor Positioning
 
 ### Navigation
-- [Tabs](./src/components/navigation/Tabs.svelte): 4 variants (default|segment|underline|pills), animated sliding indicator, bind:active
-- [Accordion](./src/components/navigation/Accordion.svelte): Expandable sections, single/multiple mode
-- [AccordionItem](./src/components/navigation/AccordionItem.svelte): Item with title, badge, custom indicator snippet
-- [NavBar](./src/components/navigation/NavBar.svelte): Horizontal mega-menu with brand, sections, subnav
-- [LeftBar](./src/components/navigation/LeftBar.svelte): Collapsible sidebar with context, cookie/localStorage persistence
-- [LeftBarSection](./src/components/navigation/LeftBarSection.svelte): Grouped navigation section with title
+- [Accordion](./src/components/navigation/Accordion.svelte): Collapsible content sections
+- [AccordionItem](./src/components/navigation/AccordionItem.svelte): Expandable item with title and custom indicator
+- [DropdownContainer](./src/components/navigation/DropdownContainer.svelte): User account menu with theme toggle and sign out
+- [LeftBar](./src/components/navigation/LeftBar.svelte): Collapsible sidebar with context and persistence
+- [LeftBarGroup](./src/components/navigation/LeftBarGroup.svelte): Dynamic item group with search and avatar support
 - [LeftBarItem](./src/components/navigation/LeftBarItem.svelte): Nav item with icon, badge, expandable subroutes
-- [LeftBarGroup](./src/components/navigation/LeftBarGroup.svelte): Dynamic item group with search, add button, avatar support
-- [LeftBarToggle](./src/components/navigation/LeftBarToggle.svelte): Sidebar collapse toggle button
-- [DropdownContainer](./src/components/navigation/DropdownContainer.svelte): User menu with avatar, theme toggle, sign out
+- [LeftBarSection](./src/components/navigation/LeftBarSection.svelte): Grouped navigation section with title
+- [LeftBarToggle](./src/components/navigation/LeftBarToggle.svelte): Sidebar collapse toggle, reads LeftBar context
+- [NavBar](./src/components/navigation/NavBar.svelte): Horizontal mega-menu navigation bar
+- [Tabs](./src/components/navigation/Tabs.svelte): Tab navigation with animated sliding indicator and configurable accent color
 
 ### Layout
-- [PageHeader](./src/components/layout/PageHeader.svelte): Page header with title, description, stats, icon/actions/search/filters snippets
-- [SettingCard](./src/components/layout/SettingCard.svelte): Settings group card with title
-- [SettingItem](./src/components/layout/SettingItem.svelte): Setting row with label, description, action slot
-- [BottomPanel](./src/components/layout/BottomPanel.svelte): Slide-up panel with drag-to-resize, minimize, sidebar slot
+- [BottomPanel](./src/components/layout/BottomPanel.svelte): Slide-up panel with drag-to-resize
+- [PageHeader](./src/components/layout/PageHeader.svelte): Flexible page header with stats and action slots
+- [SettingCard](./src/components/layout/SettingCard.svelte): Settings group card
+- [SettingItem](./src/components/layout/SettingItem.svelte): Individual setting row
 
 ### Docs
-- [CodeBlock](./src/components/docs/CodeBlock.svelte): Syntax-highlighted code with Shiki, copy button, line numbers
+- [CodeBlock](./src/components/docs/CodeBlock.svelte): Syntax-highlighted code with Shiki and copy button
 
 ## Ready Components
 
 Built and tested but not yet used in production. Available for immediate adoption.
 
-### Forms (Ready)
-- [IconInput](./src/components/forms/IconInput.svelte): Input with left/right icon slots, loading spinner, clearable
-- [NumberInput](./src/components/forms/NumberInput.svelte): Numeric input with +/- buttons, min/max/step
-- [Radio](./src/components/forms/Radio.svelte): Radio button (use inside RadioGroup)
-- [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group with vertical/horizontal layout, bind:value
-- [FileUpload](./src/components/forms/FileUpload.svelte): File upload with drag-drop, maxSize validation, multi-file
-- [RangeSlider](./src/components/forms/RangeSlider.svelte): Range input with labels, value display, format function
-- [PinInput](./src/components/forms/PinInput.svelte): PIN/code entry, auto-advance, paste support
-- [Dropzone](./src/components/forms/Dropzone.svelte): Drag-and-drop file zone with accept filter
-
 ### Primitives (Ready)
-- [Tooltip](./src/components/primitives/Tooltip.svelte): Hover tooltip with position (top|bottom|left|right), delay, content snippet
-- [Card](./src/components/primitives/Card.svelte): Surface container
-- [Link](./src/components/primitives/Link.svelte): Styled link
-- [LinkCard](./src/components/primitives/LinkCard.svelte): Clickable card link
-- [LazyImage](./src/components/primitives/LazyImage.svelte): Image with lazy loading
-- [MetricCard](./src/components/primitives/MetricCard.svelte): Metric display card
-- [FilterChip](./src/components/primitives/FilterChip.svelte): Filterable chip/tag
-- [StatusLine](./src/components/primitives/StatusLine.svelte): Status indicator line
-- [MemberCard](./src/components/primitives/MemberCard.svelte): Team member card
-- [DashCard](./src/components/primitives/DashCard.svelte): Dashboard card
-- [DistributionBar](./src/components/primitives/DistributionBar.svelte): Segmented distribution visualization
+- [Card](./src/components/primitives/Card.svelte): Bordered container with optional title and semantic color variants
+- [ChecklistCard](./src/components/primitives/ChecklistCard.svelte): Sequential onboarding checklist. Shows steps with done/current/future states. Auto-hides when all steps complete.
+- [DistributionBar](./src/components/primitives/DistributionBar.svelte): Horizontal segmented bar with auto-calculated percentages and optional legend
+- [FilterChip](./src/components/primitives/FilterChip.svelte): Toggleable filter chip with active state indicator
+- [LazyImage](./src/components/primitives/LazyImage.svelte): Image with IntersectionObserver lazy loading and fade-in animation
+- [Link](./src/components/primitives/Link.svelte): Polymorphic link/button with arrow icon that shifts on hover
+- [LinkCard](./src/components/primitives/LinkCard.svelte): Full-width clickable card rendered as anchor with label and trailing slot
+- [MemberCard](./src/components/primitives/MemberCard.svelte): Team member row with avatar, status dot, role, timestamp, and hover actions
+- [MetricCard](./src/components/primitives/MetricCard.svelte): Dashboard KPI card with icon, value, unit, progress bar, and auto-colored thresholds
+- [StatusLine](./src/components/primitives/StatusLine.svelte): Horizontal row of items separated by configurable delimiter
+- [Tooltip](./src/components/primitives/Tooltip.svelte): Hover/focus tooltip with arrow pointer, delay, and optional rich content snippet
+
+### Forms (Ready)
+- [CardRadioGroup](./src/components/forms/CardRadioGroup.svelte): Single-choice radio group rendered as stacked cards with title + description. Clearer than native Select for 2-6 high-stakes options (roles, plans, modes).
+- [Dropzone](./src/components/forms/Dropzone.svelte): Single-file drag-and-drop zone with file preview and type validation
+- [FileUpload](./src/components/forms/FileUpload.svelte): Drag-and-drop upload zone with file list, size validation, and multi-file support
+- [IconInput](./src/components/forms/IconInput.svelte): Input with leading/trailing icon slots, loading spinner, and clear button
+- [ImageDropzone](./src/components/forms/ImageDropzone.svelte): Drag-and-drop image upload with preview grid and file validation
+- [NumberInput](./src/components/forms/NumberInput.svelte): Stepper input with decrement/increment buttons and min/max enforcement
+- [OptionCard](./src/components/forms/OptionCard.svelte): Selectable option card for multi-choice layouts
+- [PinInput](./src/components/forms/PinInput.svelte): OTP/PIN code entry with per-digit inputs, auto-advance, and paste support
+- [Radio](./src/components/forms/Radio.svelte): Single radio button with animated dot indicator (use inside RadioGroup)
+- [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group container with context for child Radio components
+- [RangeSlider](./src/components/forms/RangeSlider.svelte): Styled range input with fill bar, labels, and custom value formatting
 
 ### Overlays (Ready)
-- [Dropdown](./src/components/overlays/Dropdown.svelte): Menu dropdown
-- [DropdownItem](./src/components/overlays/DropdownItem.svelte): Dropdown menu item
-- [DropdownDivider](./src/components/overlays/DropdownDivider.svelte): Dropdown separator
+- [Dropdown](./src/components/overlays/Dropdown.svelte): Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA
+- [DropdownDivider](./src/components/overlays/DropdownDivider.svelte): Horizontal separator line for dropdown menu groups
+- [DropdownItem](./src/components/overlays/DropdownItem.svelte): Menu item with role=menuitem, keyboard support, icon and danger variant
+- [Sheet](./src/components/overlays/Sheet.svelte): Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss)
 
 ### Docs (Ready)
-- [PropsTable](./src/components/docs/PropsTable.svelte): Props documentation table
-- [SplitPane](./src/components/docs/SplitPane.svelte): Side-by-side pane
-- [DocSection](./src/components/docs/DocSection.svelte): Documentation section wrapper
+- [DocSection](./src/components/docs/DocSection.svelte): Documentation section with heading, anchor link, and configurable heading level
+- [PropsTable](./src/components/docs/PropsTable.svelte): Styled API documentation table with type chips and default value highlights
+- [SplitPane](./src/components/docs/SplitPane.svelte): Two-column layout with configurable ratio, responsive stacking, and optional sticky right pane
 
 ## Legacy Components
 
 Previous implementations replaced by newer versions. Kept for backward compatibility.
 
-### Navigation (Legacy — replaced by LeftBar)
-- Sidebar, SidebarSection, SidebarItem, SidebarGroup, SidebarPopover, SidebarToggle, SidebarSearch, SidebarGroupSwitcher, SidebarAccountGroup, SidebarAccountItem
-
-### Navigation (Legacy — Enterprise Nav, unused)
-- NavigationContainer, SidebarNavigationItem, NavigationSearch, NavigationSection, NavigationAccountGroup, NavigationGroupSwitcher, NavigationCustomBlock, WorkspaceMenu
+### Navigation (Legacy -- replaced by LeftBar)
+- Sidebar, TabNav, SidebarSection, SidebarItem, SidebarGroup, SidebarPopover, SidebarToggle
 
 ### Navigation (Legacy)
-- TabNav, ChipNav (internal to NavBar), ScrollNav
+- NavigationContainer, ScrollNav, WorkspaceMenu, SidebarSearch, SidebarGroupSwitcher, SidebarAccountGroup, SidebarAccountItem, SidebarNavigationItem, LeftBarPopover, ChipNav, NavigationSearch, NavigationSection, NavigationAccountGroup, NavigationGroupSwitcher, NavigationCustomBlock
 
 ## Utilities
 - [cn()](./src/utils/cn.svelte.js): Class name concatenation with falsy filtering

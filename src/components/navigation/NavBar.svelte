@@ -2,12 +2,16 @@
   @component NavBar
   Reusable horizontal mega-menu navigation bar with hover dropdowns.
 
-  The brand item shows the current page context — click does nothing,
-  hover reveals a breadcrumb trail + description panel (distinct from
-  the section dropdowns which show navigation links).
+  The brand item (see NavBarBrand) shows the current page context: hover reveals
+  a breadcrumb trail + description panel on pointer devices, and tap/click toggles
+  the same panel so touch users can reach it too — distinct from the section
+  dropdowns, which show navigation links. Pass `onBrandClick` to take over the
+  tap entirely, e.g. to open a workspace switcher on mobile.
 
   Props:
     brand     - Current page context (label, icon, description, breadcrumbs)
+    onBrandClick - Optional: called on brand tap/click instead of opening the
+                   context panel. Receives no args.
     sections  - Dropdown menu sections (replaced by subnavItems when provided)
     subnavItems - Array of {id, label, href, badge?, icon?} for route-specific ChipNav
     activeSubnav - ID of the currently active subnav item
@@ -39,6 +43,7 @@
 -->
 <script>
   import ChipNav from './ChipNav.svelte';
+  import NavBarBrand from './NavBarBrand.svelte';
 
   let {
     brand = { label: 'Home', description: '', breadcrumbs: [] },
@@ -46,6 +51,7 @@
     subnavItems = [],
     activeSubnav = null,
     sticky = false,
+    onBrandClick = null,
     actions,
     center,
     subnav,
@@ -54,7 +60,9 @@
   } = $props();
 
   let activeDropdown = $state(null);
-  let brandHover = $state(false);
+  // Owned here (not inside NavBarBrand) purely so opening a section dropdown can
+  // close the brand panel and vice versa — the two are mutually exclusive.
+  let brandOpen = $state(false);
   let sectionsExpanded = $state(false);
   let closeTimer = null;
 
@@ -67,20 +75,14 @@
 
   function openDropdown(id) {
     clearTimer();
-    brandHover = false;
+    brandOpen = false;
     activeDropdown = id;
-  }
-
-  function openBrand() {
-    clearTimer();
-    activeDropdown = null;
-    brandHover = true;
   }
 
   function scheduleClose() {
     closeTimer = setTimeout(() => {
       activeDropdown = null;
-      brandHover = false;
+      brandOpen = false;
     }, 120);
   }
 
@@ -98,57 +100,13 @@
 
 <nav class="navbar" class:navbar--sticky={sticky}>
   <div class="navbar-inner">
-    <!-- Brand — current page context, hover for breadcrumbs -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div
-      class="navbar-brand-wrap"
-      onmouseenter={openBrand}
-      onmouseleave={scheduleClose}
-    >
-      <span class="navbar-brand" class:open={brandHover}>
-        {#if renderIcon && brand.icon}
-          {@render renderIcon(brand.icon, 16)}
-        {/if}
-        <span>{brand.label}</span>
-        {#if brand.breadcrumbs?.length || brand.description}
-          <svg
-            class="brand-chevron"
-            class:rotated={brandHover}
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"><path d="M6 9l6 6 6-6" /></svg
-          >
-        {/if}
-      </span>
-
-      {#if brandHover && (brand.breadcrumbs?.length || brand.description)}
-        <div class="brand-panel">
-          {#if brand.breadcrumbs?.length}
-            <div class="brand-breadcrumbs">
-              {#each brand.breadcrumbs as crumb, i}
-                {#if i > 0}
-                  <span class="crumb-sep">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6" /></svg>
-                  </span>
-                {/if}
-                {#if crumb.href}
-                  <a href={crumb.href} class="crumb-link">{crumb.label}</a>
-                {:else}
-                  <span class="crumb-current">{crumb.label}</span>
-                {/if}
-              {/each}
-            </div>
-          {/if}
-          {#if brand.description}
-            <p class="brand-desc">{brand.description}</p>
-          {/if}
-        </div>
-      {/if}
-    </div>
+    <NavBarBrand
+      {brand}
+      {renderIcon}
+      {onBrandClick}
+      bind:open={brandOpen}
+      onopen={() => (activeDropdown = null)}
+    />
 
     <!-- Section toggle — always visible when sections exist -->
     {#if sections.length}
@@ -280,102 +238,6 @@
     height: var(--space-22); /* 44px */
   }
 
-  /* ── Brand ───────────────────────────── */
-  .navbar-brand-wrap {
-    position: relative;
-  }
-
-  .navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-5);
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: var(--text-sm);
-    line-height: 1.2;
-    color: var(--color-base05);
-    white-space: nowrap;
-    cursor: default;
-    transition: color var(--duration-fast) var(--ease-default),
-                background-color var(--duration-fast) var(--ease-default);
-  }
-
-  .navbar-brand:hover,
-  .navbar-brand.open {
-    color: var(--color-base07);
-    background-color: color-mix(in srgb, var(--color-base0D) 8%, transparent);
-  }
-
-  .brand-chevron {
-    opacity: 0.5;
-    transition: transform var(--duration-base) ease;
-  }
-
-  .brand-chevron.rotated {
-    transform: rotate(180deg);
-  }
-
-  /* ── Brand hover panel — breadcrumbs + description ── */
-  .brand-panel {
-    position: absolute;
-    top: calc(100% + var(--space-4));
-    left: 0;
-    min-width: 280px;
-    max-width: 400px;
-    background: var(--color-base01);
-    border: var(--border-width-thin) solid var(--color-base03);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 20px 40px color-mix(in srgb, var(--color-base00) 50%, transparent),
-                0 2px 8px color-mix(in srgb, var(--color-base00) 25%, transparent);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: var(--space-8);
-  }
-
-  .brand-breadcrumbs {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-5);
-  }
-
-  .crumb-sep {
-    display: flex;
-    align-items: center;
-    color: var(--color-base03);
-  }
-
-  .crumb-link {
-    font-size: var(--text-xs);
-    color: var(--color-base04);
-    text-decoration: none;
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-default);
-    transition: color var(--duration-fast) var(--ease-default),
-                background-color var(--duration-fast) var(--ease-default);
-  }
-
-  .crumb-link:hover {
-    color: var(--color-base0D);
-    background-color: color-mix(in srgb, var(--color-base0D) 8%, transparent);
-  }
-
-  .crumb-current {
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-base06);
-    padding: var(--space-1) var(--space-3);
-  }
-
-  .brand-desc {
-    font-size: var(--text-xs);
-    line-height: 1.5;
-    color: var(--color-base04);
-    margin: 0;
-  }
-
   /* ── Section toggle trigger ─────────────── */
   .navbar-nav-toggle {
     display: flex;
@@ -489,8 +351,7 @@
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .dropdown-panel,
-    .brand-panel {
+    .dropdown-panel {
       animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
 
       @starting-style {

@@ -1,7 +1,13 @@
 <!--
   @component Tabs
 
-  Tabbed navigation component with keyboard navigation and sliding indicator.
+  Tabbed navigation component following the WAI-ARIA Tabs pattern with
+  automatic activation: Arrow keys move focus *and* selection, Home/End jump to
+  the first/last enabled tab, disabled tabs are skipped, and Tab leaves the
+  tablist (roving tabindex).
+
+  When the tabs are wider than their container they scroll horizontally and the
+  active tab is kept in view.
 
   @example Basic usage
   <Tabs
@@ -22,6 +28,10 @@
     fullWidth
   />
 
+  @example Wired to a single tabpanel
+  <Tabs {tabs} active={activeTab} idPrefix="worker-tab" panelId="worker-panel" label="Worker sections" />
+  <div id="worker-panel" role="tabpanel" aria-labelledby="worker-tab-{activeTab}">…</div>
+
   @example With icons (component reference)
   <Tabs
     tabs={[
@@ -31,8 +41,6 @@
   />
 -->
 <script>
-  import { generateId } from '../../utils/reactive.svelte.js';
-
   let {
     tabs = [],
     active = $bindable(null),
@@ -40,6 +48,10 @@
     size = 'md',
     color = 'primary',
     fullWidth = false,
+    scrollable = true,
+    panelId = '',
+    idPrefix = '',
+    label = '',
     onchange = () => {},
     class: className = ''
   } = $props();
@@ -53,9 +65,28 @@
   };
   const accent = $derived(accentMap[color] || accentMap.primary);
 
-  const componentId = generateId();
   let tablistEl = $state(null);
+  let scrollerEl = $state(null);
   let indicatorStyle = $state('');
+  let hasMeasured = false;
+
+  function tabButtonId(id) {
+    return idPrefix ? `${idPrefix}-${id}` : undefined;
+  }
+
+  /** The rendered button for the active tab, or null. */
+  function activeButton() {
+    if (!tablistEl || active === null || active === undefined) return null;
+    const key = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(String(active)) : active;
+    return tablistEl.querySelector(`[data-tab-id="${key}"]`);
+  }
+
+  function prefersReducedMotion() {
+    return (
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
+    );
+  }
 
   // Initialize active to first tab if not set
   $effect(() => {
@@ -68,28 +99,56 @@
   $effect(() => {
     if (!tablistEl || !active) return;
 
-    // Find the active tab button by data attribute
-    const activeBtn = tablistEl.querySelector(`[data-tab-id="${active}"]`);
-    if (!activeBtn) {
-      indicatorStyle = 'opacity: 0;';
-      return;
-    }
+    const measure = () => {
+      const btn = activeButton();
+      if (!btn) {
+        indicatorStyle = 'opacity: 0;';
+        return;
+      }
+      indicatorStyle = `--indicator-left: ${btn.offsetLeft}px; --indicator-width: ${btn.offsetWidth}px; opacity: 1;`;
+    };
 
-    const left = activeBtn.offsetLeft;
-    const width = activeBtn.offsetWidth;
-    indicatorStyle = `--indicator-left: ${left}px; --indicator-width: ${width}px; opacity: 1;`;
+    measure();
 
     // Observe layout changes (resize, font load, etc.)
-    const ro = new ResizeObserver(() => {
-      const btn = tablistEl?.querySelector(`[data-tab-id="${active}"]`);
-      if (btn) {
-        indicatorStyle = `--indicator-left: ${btn.offsetLeft}px; --indicator-width: ${btn.offsetWidth}px; opacity: 1;`;
-      }
-    });
+    const ro = new ResizeObserver(measure);
     ro.observe(tablistEl);
 
     return () => ro.disconnect();
   });
+
+  // Keep the active tab inside the horizontal scroll viewport.
+  $effect(() => {
+    // Re-run whenever the selection, the tab set, or the binding changes.
+    void active;
+    void tabs.length;
+    void scrollerEl;
+    if (!scrollable) return;
+    const smooth = hasMeasured;
+    hasMeasured = true;
+    scrollActiveIntoView(smooth);
+  });
+
+  function scrollActiveIntoView(smooth) {
+    if (!scrollerEl) return;
+    const btn = activeButton();
+    if (!btn) return;
+
+    const b = btn.getBoundingClientRect();
+    const s = scrollerEl.getBoundingClientRect();
+    if (s.width === 0) return;
+
+    const pad = 8;
+    let delta = 0;
+    if (b.left < s.left + pad) delta = b.left - s.left - pad;
+    else if (b.right > s.right - pad) delta = b.right - s.right + pad;
+    if (delta === 0) return;
+
+    scrollerEl.scrollBy({
+      left: delta,
+      behavior: smooth && !prefersReducedMotion() ? 'smooth' : 'auto'
+    });
+  }
 
   function selectTab(tab) {
     if (tab.disabled) return;
@@ -97,81 +156,139 @@
     onchange(tab);
   }
 
-  function handleKeydown(e, tab, index) {
-    let nextIndex = index;
-
-    if (e.key === 'ArrowRight') {
-      nextIndex = (index + 1) % tabs.length;
-    } else if (e.key === 'ArrowLeft') {
-      nextIndex = (index - 1 + tabs.length) % tabs.length;
-    } else if (e.key === 'Home') {
-      nextIndex = 0;
-    } else if (e.key === 'End') {
-      nextIndex = tabs.length - 1;
-    } else {
-      return;
+  /** Index of the next enabled tab `step` places away, wrapping. -1 if none. */
+  function nextEnabledIndex(from, step) {
+    const n = tabs.length;
+    for (let i = 1; i <= n; i++) {
+      const idx = (((from + step * i) % n) + n) % n;
+      if (!tabs[idx]?.disabled) return idx;
     }
+    return -1;
+  }
+
+  /** First enabled index scanning forwards (step 1) or backwards (step -1). */
+  function edgeEnabledIndex(step) {
+    const n = tabs.length;
+    for (let i = 0; i < n; i++) {
+      const idx = step === 1 ? i : n - 1 - i;
+      if (!tabs[idx]?.disabled) return idx;
+    }
+    return -1;
+  }
+
+  function focusTabAt(index) {
+    const buttons = tablistEl?.querySelectorAll('[role="tab"]');
+    buttons?.[index]?.focus();
+  }
+
+  function handleKeydown(e, index) {
+    if (tabs.length === 0) return;
+
+    let nextIndex;
+    if (e.key === 'ArrowRight') nextIndex = nextEnabledIndex(index, 1);
+    else if (e.key === 'ArrowLeft') nextIndex = nextEnabledIndex(index, -1);
+    else if (e.key === 'Home') nextIndex = edgeEnabledIndex(1);
+    else if (e.key === 'End') nextIndex = edgeEnabledIndex(-1);
+    else return;
 
     e.preventDefault();
-    const nextTab = tabs[nextIndex];
-    if (!nextTab.disabled) {
-      selectTab(nextTab);
-      const buttons = e.currentTarget.parentElement.querySelectorAll('[role="tab"]');
-      buttons[nextIndex]?.focus();
-    }
+    if (nextIndex < 0) return;
+
+    // Automatic activation: move focus AND selection together.
+    if (nextIndex !== index) selectTab(tabs[nextIndex]);
+    focusTabAt(nextIndex);
   }
 
   const showIndicator = $derived(variant !== 'pills');
+
+  // Roving tabindex. If `active` matches no tab — a consumer whose selection is
+  // derived from a URL alias can land there — the first enabled tab stays
+  // tabbable so the tablist never drops out of the Tab order entirely.
+  const tabbableIndex = $derived.by(() => {
+    const selected = tabs.findIndex(t => t.id === active);
+    if (selected >= 0) return selected;
+    const firstEnabled = tabs.findIndex(t => !t.disabled);
+    return firstEnabled >= 0 ? firstEnabled : -1;
+  });
 </script>
 
-<div
-  class="tabs tabs-{variant} tabs-{size} {className}"
-  class:tabs-full-width={fullWidth}
-  role="tablist"
-  bind:this={tablistEl}
-  style="--tabs-accent: {accent}"
->
-  {#if showIndicator}
-    <span
-      class="tabs-indicator"
-      class:tabs-indicator-underline={variant === 'underline'}
-      style={indicatorStyle}
-      aria-hidden="true"
-    ></span>
-  {/if}
+<div class="tabs-scroll" class:tabs-scroll-on={scrollable} bind:this={scrollerEl}>
+  <div
+    class="tabs tabs-{variant} tabs-{size} {className}"
+    class:tabs-full-width={fullWidth}
+    role="tablist"
+    aria-label={label || undefined}
+    bind:this={tablistEl}
+    style="--tabs-accent: {accent}"
+  >
+    {#if showIndicator}
+      <span
+        class="tabs-indicator"
+        class:tabs-indicator-underline={variant === 'underline'}
+        style={indicatorStyle}
+        aria-hidden="true"
+      ></span>
+    {/if}
 
-  {#each tabs as tab, index}
-    <button
-      type="button"
-      role="tab"
-      class="tab"
-      class:tab-active={active === tab.id}
-      class:tab-disabled={tab.disabled}
-      aria-selected={active === tab.id}
-      aria-disabled={tab.disabled}
-      aria-controls={tab.panelId || undefined}
-      tabindex={active === tab.id ? 0 : -1}
-      data-tab-id={tab.id}
-      onclick={() => selectTab(tab)}
-      onkeydown={(e) => handleKeydown(e, tab, index)}
-    >
-      {#if tab.icon}
-        {@const Icon = tab.icon}
-        <span class="tab-icon">
-          <Icon size={16} />
-        </span>
-      {/if}
-      {#if tab.label}
-        <span class="tab-label">{tab.label}</span>
-      {/if}
-      {#if tab.badge !== undefined}
-        <span class="tab-badge">{tab.badge}</span>
-      {/if}
-    </button>
-  {/each}
+    {#each tabs as tab, index (tab.id)}
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        class:tab-active={active === tab.id}
+        class:tab-disabled={tab.disabled}
+        id={tabButtonId(tab.id)}
+        aria-selected={active === tab.id}
+        aria-disabled={tab.disabled}
+        aria-controls={tab.panelId || panelId || undefined}
+        tabindex={index === tabbableIndex ? 0 : -1}
+        data-tab-id={tab.id}
+        onclick={() => selectTab(tab)}
+        onkeydown={e => handleKeydown(e, index)}
+      >
+        {#if tab.icon}
+          {@const Icon = tab.icon}
+          <span class="tab-icon">
+            <Icon size={16} />
+          </span>
+        {/if}
+        {#if tab.label}
+          <span class="tab-label">{tab.label}</span>
+        {/if}
+        {#if tab.badge !== undefined}
+          <span class="tab-badge">{tab.badge}</span>
+        {/if}
+      </button>
+    {/each}
+  </div>
 </div>
 
 <style>
+  /* ---- Horizontal scroll wrapper ----
+     `display: contents` when disabled, so the tablist stays the flex/inline
+     item it has always been and no consumer layout shifts. When enabled the
+     wrapper becomes the scroll container; the 3px padding (cancelled by the
+     matching negative margin) keeps the focus ring from being clipped by the
+     scroll container's overflow. */
+  .tabs-scroll {
+    display: contents;
+  }
+
+  .tabs-scroll-on {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    padding: 3px;
+    margin: -3px;
+    scrollbar-width: none;
+  }
+
+  .tabs-scroll-on::-webkit-scrollbar {
+    display: none;
+  }
+
   .tabs {
     display: inline-flex;
     position: relative;

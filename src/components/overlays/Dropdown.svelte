@@ -4,6 +4,10 @@
   Portaled action menu with viewport-aware positioning, keyboard navigation,
   and ARIA attributes. Content renders at body level to avoid clipping.
 
+  Dismissal follows the ARIA APG menu-button pattern: Escape closes the menu
+  and returns focus to the trigger, Tab closes it, and a click anywhere outside
+  closes it (the open menu is backed by a full-viewport click layer).
+
   @example
   <Dropdown>
     {#snippet trigger()}
@@ -14,7 +18,6 @@
   </Dropdown>
 -->
 <script>
-  import { clickOutside, escapeKey } from '../../actions/index.js';
   import { cn } from '../../utils/cn.svelte.js';
 
   let {
@@ -64,6 +67,13 @@
 
   function close() {
     open = false;
+  }
+
+  // APG menu-button pattern: Escape dismisses and returns focus to the button.
+  function closeAndFocusTrigger() {
+    const el = focusableTrigger();
+    open = false;
+    el?.focus();
   }
 
   // JS fallback positioning (only used when CSS Anchor not supported)
@@ -119,9 +129,19 @@
     floatingStyle = `top:${top}px;left:${left}px`;
   }
 
-  // Keyboard navigation within items
+  // Keyboard navigation within items.
+  // Escape is handled here — on the open menu's subtree — rather than with a
+  // document-level listener, because consumers open a Modal from a menu item
+  // while leaving the menu open; a global handler would swallow the Modal's
+  // own Escape. Focus always lands inside the menu on open, so this fires.
   function handleContentKeydown(e) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (e.key === 'Escape') {
+      // preventDefault stops an ancestor <dialog> from also treating this as a
+      // close request; stopPropagation keeps consumer-level handlers out of it.
+      e.preventDefault();
+      e.stopPropagation();
+      closeAndFocusTrigger();
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
       const items = Array.from(contentEl.querySelectorAll('[role="menuitem"]:not([disabled])'));
       if (items.length === 0) return;
@@ -145,9 +165,11 @@
     if (open && triggerEl) {
       requestAnimationFrame(() => {
         if (!supportsAnchor) updatePosition();
-        // Focus first item (always, regardless of positioning method)
+        // Focus first item (always, regardless of positioning method).
+        // Fall back to the menu container so an item-less menu still holds
+        // focus — otherwise Escape would never reach handleContentKeydown.
         const firstItem = contentEl?.querySelector('[role="menuitem"]:not([disabled])');
-        firstItem?.focus();
+        (firstItem ?? contentEl)?.focus();
       });
     }
   });
@@ -185,6 +207,7 @@
       bind:this={contentEl}
       style={supportsAnchor ? `position-anchor: ${anchorName};` : floatingStyle}
       role="menu"
+      tabindex="-1"
       onclick={e => e.stopPropagation()}
     >
       {@render children?.()}
@@ -219,12 +242,19 @@
     box-shadow: var(--shadow-lg);
     opacity: 1;
     transform: translateY(0) scale(1);
+    outline: none;
 
     /* @starting-style prevents flash of final state before animation starts */
     @starting-style {
       opacity: 0;
       transform: translateY(-4px) scale(0.97);
     }
+  }
+
+  /* Container is focusable (tabindex="-1") as a fallback focus target, so give
+     it the themed ring instead of the UA outline when focus is keyboard-driven. */
+  .dropdown-content:focus-visible {
+    box-shadow: var(--shadow-lg), var(--focus-ring-shadow);
   }
 
   /* CSS Anchor Positioning (Chrome 125+) */
