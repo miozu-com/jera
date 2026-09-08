@@ -324,6 +324,10 @@
 
   .modal-text {
     flex: 1;
+    /* A flex item defaults to min-width:auto, so wide children (two-column
+       NumberInput rows, tables) would push past the dialog instead of
+       shrinking into it. */
+    min-width: 0;
     padding-top: 0.25rem;
   }
 

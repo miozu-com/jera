@@ -904,8 +904,8 @@
       "events": ["onclose"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-04-17",
+      "revision": 5,
+      "lastReviewed": "2026-09-08",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1890,7 +1890,7 @@
           "type": "number",
           "default": "50",
           "bindable": true,
-          "description": "Slider value (bindable)"
+          "description": "Slider value (bindable). A null/undefined value is treated as `min` (or 0) instead of throwing."
         },
         "min": {
           "type": "number",
@@ -1935,8 +1935,8 @@
       },
       "events": ["oninput", "onchange"],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-08",
       "breaking": [],
       "docLevel": "standard"
     },
