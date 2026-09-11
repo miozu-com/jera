@@ -875,7 +875,7 @@
           "description": "Modal title"
         },
         "size": {
-          "type": "'sm'|'md'|'lg'|'xl'|'full'",
+          "type": "'sm'|'md'|'lg'|'xl'|'xxl'|'full'",
           "default": "'md'",
           "description": "Dialog width"
         },
@@ -904,8 +904,8 @@
       "events": ["onclose"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-09-08",
+      "revision": 6,
+      "lastReviewed": "2026-09-12",
       "breaking": [],
       "docLevel": "standard"
     },

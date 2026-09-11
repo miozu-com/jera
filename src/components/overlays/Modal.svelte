@@ -175,6 +175,7 @@
   dialog.modal-md { width: 100%; max-width: 28rem; }
   dialog.modal-lg { width: 100%; max-width: 36rem; }
   dialog.modal-xl { width: 100%; max-width: 48rem; }
+  dialog.modal-xxl { width: 100%; max-width: 56rem; }
   dialog.modal-full {
     width: calc(100vw - 2rem);
     width: calc(100dvw - 2rem);

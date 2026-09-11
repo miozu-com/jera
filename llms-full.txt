@@ -446,7 +446,7 @@ Dialog overlay with variants and fill mode.
 |------|------|---------|-------------|
 | open | boolean | $bindable(false) | Visibility (two-way) |
 | title | string | '' | Dialog heading |
-| size | 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full' | 'md' | Width |
+| size | 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'full' | 'md' | Width |
 | variant | 'default' \| 'danger' \| 'warning' \| 'success' \| 'info' | 'default' | Color accent |
 | closeOnBackdrop | boolean | true | Close on backdrop click |
 | closeOnEscape | boolean | true | Close on Esc key |
