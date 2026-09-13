@@ -54,6 +54,10 @@
     }
   }
 
+  // No clamping while typing. Clamping here rewrote "99" to "50" under the
+  // cursor, and the next keystroke landed on the rewritten text ("509") while
+  // the bound value stayed 50 — the box and the value disagreed. The raw text
+  // stands until blur, where handleBlur clamps once and fires onchange.
   function handleInput(e) {
     const inputValue = e.target.value;
     if (inputValue === '' || inputValue === '-') {
@@ -64,7 +68,7 @@
 
     const num = parseFloat(inputValue);
     if (!isNaN(num)) {
-      value = Math.max(min, Math.min(num, max));
+      value = num;
     }
     oninput?.(e);
   }
