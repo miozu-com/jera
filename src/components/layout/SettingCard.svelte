@@ -75,8 +75,11 @@
     color: var(--color-base08);
   }
 
+  /* A size container so SettingItem can ask the card's width — see
+     SettingItem's container rule. */
   .card-content {
     display: flex;
     flex-direction: column;
+    container-type: inline-size;
   }
 </style>

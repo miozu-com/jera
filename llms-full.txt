@@ -734,6 +734,7 @@ Individual setting row.
 |------|------|---------|-------------|
 | label | string | '' | Setting name |
 | description | string | '' | Help text |
+| stacked | boolean | false | Control on its own full-width row under the text |
 | class | string | '' | Additional CSS classes |
 
 Snippets: `leading`, `action`

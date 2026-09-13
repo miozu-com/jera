@@ -1,37 +1,32 @@
 <!--
   @component SettingItem
+  One setting: its label, what it does, and the control that changes it.
 
-  A structured setting row for use inside SettingCard.
-  Replaces magic class names with a composable component API.
+  `stacked` puts the control on a full-width row under the text. A Select,
+  Input or Textarea cannot share a ~430px row with a description — the panel
+  they are mostly rendered in is 369–480px wide on a desktop — so the choice is
+  the row's, not the viewport's.
 
-  @example Basic setting
-  <SettingItem label="Display Name" description="Your public display name">
-    {#snippet action()}
-      <Input value={name} />
-    {/snippet}
-  </SettingItem>
-
-  @example With icon
-  <SettingItem label="Active Sessions" description="Manage your devices">
-    {#snippet leading()}
-      <Monitor size={16} />
-    {/snippet}
-    {#snippet action()}
-      <Button size="sm">Manage</Button>
-    {/snippet}
-  </SettingItem>
+  Inside a SettingCard the row also asks the CARD's width (a container query),
+  not the viewport's: a card in a narrow pane on a wide screen used to stay
+  side-by-side because only `@media` decided.
 -->
 <script>
   let {
     label = '',
     description = '',
+    stacked = false,
     leading,
     action,
     class: className = ''
   } = $props();
 </script>
 
-<div class="setting-item {className}" class:has-leading={leading}>
+<div
+  class="setting-item {className}"
+  class:has-leading={leading}
+  class:setting-item-stacked={stacked}
+>
   {#if leading}
     <div class="setting-leading">
       {@render leading()}
@@ -105,9 +100,34 @@
     flex-shrink: 0;
   }
 
-  /* Responsive */
+  /* Stacked: the control wraps onto a row of its own and takes all of it. */
+  .setting-item-stacked {
+    flex-wrap: wrap;
+  }
+
+  .setting-item-stacked .setting-action {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .setting-item-stacked .setting-action > :global(*) {
+    width: 100%;
+  }
+
+  /* Narrow viewport (consumers outside a card). */
   @media (max-width: 640px) {
-    .setting-item:not(.has-leading) {
+    .setting-item:not(.has-leading):not(.setting-item-stacked) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+    }
+  }
+
+  /* Narrow CARD (SettingCard's content is a size container). 360px, not 640:
+     the row is asked about its own box, and a 400px card holds a label, a
+     description and a switch side by side without trouble. */
+  @container (max-width: 360px) {
+    .setting-item:not(.has-leading):not(.setting-item-stacked) {
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-6);

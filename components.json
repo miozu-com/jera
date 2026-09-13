@@ -1497,8 +1497,8 @@
       "snippets": ["children"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-13",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1517,13 +1517,18 @@
           "type": "string",
           "default": "''",
           "description": "Setting description"
+        },
+        "stacked": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Control on its own full-width row under the text"
         }
       },
       "snippets": ["leading", "action"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-13",
       "breaking": [],
       "docLevel": "standard"
     },
