@@ -43,6 +43,16 @@
   --space-96: 192px;  /* 96 × 2 */
 
   /* ----------------------------------------
+   * LAYOUT
+   *
+   * The app shell's own measurements, so a consumer that has to sit under a
+   * bar does not restate the bar's height and then drift from it. (dash's
+   * mobile drawer was pinned at 4rem against a 44px NavBar: a 20px strip of
+   * the page showed through the gap.)
+   * ---------------------------------------- */
+  --navbar-height: var(--space-22);  /* 44px, NavBar's inner height */
+
+  /* ----------------------------------------
    * BACKWARD COMPAT (consumers still on old scale)
    * Remove after full migration
    * ---------------------------------------- */

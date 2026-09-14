@@ -235,7 +235,7 @@
     align-items: center;
     gap: var(--space-3);
     padding: 0 var(--space-8);
-    height: var(--space-22); /* 44px */
+    height: var(--navbar-height); /* 44px — the token consumers pin to */
   }
 
   /* ── Section toggle trigger ─────────────── */
