@@ -120,6 +120,7 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [Radio](./src/components/forms/Radio.svelte): Single radio button with animated dot indicator (use inside RadioGroup)
 - [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group container with context for child Radio components
 - [RangeSlider](./src/components/forms/RangeSlider.svelte): Styled range input with fill bar, labels, and custom value formatting
+- [TagInput](./src/components/forms/TagInput.svelte): Tag/chip input with add/remove, deduplication, and variant colors
 
 ### Overlays (Ready)
 - [Dropdown](./src/components/overlays/Dropdown.svelte): Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA

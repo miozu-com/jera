@@ -3120,7 +3120,17 @@
         "placeholder": {
           "type": "string",
           "default": "'Add tag...'",
-          "description": "Input placeholder"
+          "description": "Input placeholder, and the field's accessible name when inputLabel is unset"
+        },
+        "label": {
+          "type": "string",
+          "default": "'Tag input'",
+          "description": "Accessible name for the chip group — name it after the setting it edits"
+        },
+        "inputLabel": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Accessible name for the text field; falls back to placeholder"
         },
         "variant": {
           "type": "'default'|'accent'|'success'|'warning'|'error'",
@@ -3130,7 +3140,7 @@
         "maxTags": {
           "type": "number",
           "default": "Infinity",
-          "description": "Maximum number of tags"
+          "description": "Maximum number of tags; the field turns read-only at the limit"
         },
         "disabled": {
           "type": "boolean",
@@ -3154,10 +3164,10 @@
         }
       },
       "dependencies": [],
-      "stage": "draft",
-      "revision": 2,
+      "stage": "beta",
+      "revision": 3,
       "lastReviewed": "2026-09-14",
-      "docLevel": "none",
+      "docLevel": "standard",
       "breaking": []
     },
     {

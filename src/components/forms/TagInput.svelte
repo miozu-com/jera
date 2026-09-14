@@ -3,8 +3,16 @@
 
   Tag/chip input with add/remove, deduplication, and variant colors.
 
+  The field inside the chip row is a real text input with its own accessible
+  name (`inputLabel`, falling back to `placeholder`), so a screen reader
+  announces the group and the field separately. Adds, removals and rejected
+  duplicates are announced through a polite live region.
+
   @example Basic usage
   <TagInput bind:tags={keywords} placeholder="Add keyword..." />
+
+  @example Named for the surrounding setting
+  <TagInput bind:tags={questions} label="Suggested questions" placeholder="Add a suggested question" />
 
   @example With variant and max
   <TagInput bind:tags={labels} variant="accent" maxTags={5} />
@@ -16,6 +24,8 @@
   let {
     tags = $bindable([]),
     placeholder = 'Add tag...',
+    label = 'Tag input',
+    inputLabel = null,
     variant = 'default',
     maxTags = Infinity,
     disabled = false,
@@ -28,8 +38,11 @@
 
   let inputValue = $state('');
   let inputRef = $state();
+  /** Polite announcement for add / remove / rejected duplicate. */
+  let announcement = $state('');
 
   const atLimit = $derived(tags.length >= maxTags);
+  const fieldLabel = $derived(inputLabel || placeholder || 'Add tag');
 
   const variantColor = $derived({
     default: 'var(--color-base04)',
@@ -44,18 +57,26 @@
     if (!value) return;
     if (transform) value = transform(value);
     if (!value) return;
-    if (!duplicates && tags.includes(value)) {
-      inputValue = '';
+    if (atLimit) {
+      announcement = `Limit of ${maxTags} reached. Remove a tag first.`;
       return;
     }
-    if (atLimit) return;
+    if (!duplicates && tags.includes(value)) {
+      inputValue = '';
+      announcement = `${value} is already added`;
+      return;
+    }
     tags = [...tags, value];
     inputValue = '';
+    announcement =
+      tags.length >= maxTags ? `${value} added. Limit of ${maxTags} reached.` : `${value} added`;
     onchange?.(tags);
   }
 
   function removeTag(index) {
+    const removed = tags[index];
     tags = tags.filter((_, i) => i !== index);
+    announcement = `${removed} removed`;
     onchange?.(tags);
     inputRef?.focus();
   }
@@ -75,7 +96,7 @@
   class:tag-input-disabled={disabled}
   style="--_variant-color: {variantColor}"
   role="group"
-  aria-label="Tag input"
+  aria-label={label}
   onclick={() => inputRef?.focus()}
   {...rest}
 >
@@ -97,24 +118,33 @@
     </span>
   {/each}
 
-  {#if !atLimit && !disabled}
+  {#if !disabled}
+    <!-- The field stays mounted at the limit (readonly, not unmounted) so the
+         caret does not fall back to <body> the moment the last tag is added —
+         Backspace from here frees a slot. -->
     <input
       type="text"
       class="tag-field"
       bind:this={inputRef}
       bind:value={inputValue}
       onkeydown={handleKeydown}
-      {placeholder}
-      {disabled}
+      placeholder={atLimit ? '' : placeholder}
+      readonly={atLimit}
+      aria-label={fieldLabel}
     />
-  {:else if atLimit}
+  {/if}
+
+  {#if atLimit}
     <span class="tag-limit">{tags.length}/{maxTags}</span>
   {/if}
+
+  <span class="tag-status" role="status" aria-live="polite">{announcement}</span>
 </div>
 
 <style>
   .tag-input-container {
     display: flex;
+    position: relative;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.375rem;
@@ -196,6 +226,10 @@
     outline: none;
   }
 
+  .tag-field:read-only {
+    cursor: default;
+  }
+
   .tag-field::placeholder {
     color: var(--color-base04);
   }
@@ -204,5 +238,19 @@
     font-size: var(--text-xs, 0.75rem);
     color: var(--color-base04);
     padding: 0.125rem 0.25rem;
+  }
+
+  /* Announcements are for assistive tech only — the chips themselves are the
+     visible feedback. */
+  .tag-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 </style>
