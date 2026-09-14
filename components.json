@@ -744,13 +744,18 @@
           "type": "'default'|'compact'|'large'",
           "default": "'default'",
           "description": "Display size"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Custom CSS class on the root element"
         }
       },
-      "snippets": ["icon", "actions"],
-      "consumers": ["admin"],
+      "snippets": ["art", "icon", "actions"],
+      "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-14",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1467,13 +1472,23 @@
           "type": "'default'|'compact'|'large'",
           "default": "'default'",
           "description": "Header size"
+        },
+        "back": {
+          "type": "{href: string, label?: string}|null",
+          "default": "null",
+          "description": "Back link rendered above the title; label defaults to 'Back'"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Custom CSS class on the root element"
         }
       },
       "snippets": ["icon", "actions", "search", "filters"],
-      "consumers": ["admin"],
+      "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-14",
       "breaking": [],
       "docLevel": "standard"
     },

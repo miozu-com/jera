@@ -24,6 +24,17 @@
 
   @example Compact size
   <EmptyState size="compact" title="No results" />
+
+  @example With an illustration instead of an icon
+  The `art` snippet is a wide, unstyled well for a drawing (no tinted square, no
+  hover transform), so a wide scene is not letterboxed into the 4rem `icon` box.
+  `art` wins when both are passed, and `size="compact"` never renders it.
+
+  <EmptyState title="Your customers" description="Everyone who messages you lands here.">
+    {#snippet art()}
+      <Illustration scene="channels" />
+    {/snippet}
+  </EmptyState>
 -->
 <script>
   let {
@@ -31,6 +42,7 @@
     description = '',
     size = 'default',
     class: className = '',
+    art,
     icon,
     actions
   } = $props();
@@ -38,7 +50,11 @@
 
 <div class="empty-state empty-state-{size} {className}">
   <div class="empty-state-content">
-    {#if icon}
+    {#if art}
+      <div class="empty-state-art">
+        {@render art()}
+      </div>
+    {:else if icon}
       <div class="empty-state-icon">
         {@render icon()}
       </div>
@@ -113,6 +129,24 @@
     background: var(--color-base02);
     color: var(--color-base05);
     transform: scale(1.05);
+  }
+
+  /* The art well is deliberately bare: no background, no radius, no hover
+     transform. A scene paints its own surfaces, so a tinted well behind it
+     double-tints, and a wide drawing cannot live in the 4rem icon square. */
+  .empty-state-art {
+    width: 100%;
+    max-width: 15rem;
+    margin-bottom: var(--space-16);
+  }
+
+  .empty-state-large .empty-state-art {
+    max-width: 18rem;
+  }
+
+  /* Compact is for a narrowed list or a table cell — it never carries art. */
+  .empty-state-compact .empty-state-art {
+    display: none;
   }
 
   .empty-state-text {

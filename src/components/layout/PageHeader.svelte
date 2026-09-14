@@ -21,6 +21,13 @@
     {/snippet}
   </PageHeader>
 
+  @example Detail page with a back link
+  <PageHeader
+    size="compact"
+    title={line.name}
+    back={{href: '/workspace/acme/sourcing/', label: 'Lines'}}
+  />
+
   @example With actions and search
   <PageHeader title="Products">
     {#snippet actions()}
@@ -36,6 +43,7 @@
     title = '',
     description = '',
     stats = [],
+    back = null,
     size = 'default',
     class: className = '',
     icon,
@@ -46,6 +54,26 @@
 </script>
 
 <header class="page-header page-header-{size} {className}">
+  {#if back?.href}
+    <a class="header-back" href={back.href}>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M19 12H5" />
+        <path d="m12 19-7-7 7-7" />
+      </svg>
+      <span>{back.label ?? 'Back'}</span>
+    </a>
+  {/if}
+
   <div class="header-main">
     <div class="header-title-section">
       {#if icon}
@@ -120,6 +148,31 @@
   .page-header-large {
     padding: var(--space-16);
     gap: var(--space-12);
+  }
+
+  /* Sits above the title on a detail page, so the title stays the first thing
+     read. An <a>, not a button: back is navigation, and the browser's own
+     affordances (middle-click, copy link) come free. */
+  .header-back {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-base04);
+    text-decoration: none;
+    border-radius: var(--radius-default);
+    transition: color var(--duration-fast) ease;
+  }
+
+  .header-back:hover {
+    color: var(--color-base06);
+  }
+
+  .header-back:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
   }
 
   .header-main {

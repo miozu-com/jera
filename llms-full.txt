@@ -391,7 +391,11 @@ Placeholder for empty data states.
 | size | 'default' \| 'compact' \| 'large' | 'default' | Dimensions |
 | class | string | '' | Additional CSS classes |
 
-Snippets: `icon`, `actions`
+Snippets: `art`, `icon`, `actions`
+
+`art` is a wide, unstyled well for an illustration: no tinted square, no hover
+transform, `max-width: 15rem`. It wins when both `art` and `icon` are passed, and
+`size="compact"` never renders it. Use `icon` for a glyph, `art` for a drawing.
 
 ```svelte
 <EmptyState title="No products" description="Connect your Shopify store to sync products.">
@@ -705,6 +709,7 @@ Flexible page header with stats and action slots.
 | title | string | '' | Page title |
 | description | string | '' | Subtitle |
 | stats | array | [] | Array of {label, value, variant?, icon?} |
+| back | {href, label?} \| null | null | Back link above the title, for detail pages |
 | size | 'default' \| 'compact' \| 'large' | 'default' | Dimensions |
 | class | string | '' | Additional CSS classes |
 
