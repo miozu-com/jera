@@ -81,7 +81,7 @@
 >
   {#each tags as tag, i (tag + '-' + i)}
     <span class="tag-chip">
-      {tag}
+      <span class="tag-chip-text">{tag}</span>
       {#if !disabled}
         <button
           type="button"
@@ -147,6 +147,17 @@
     font-weight: 500;
     background: color-mix(in srgb, var(--_variant-color) 15%, transparent);
     color: var(--_variant-color);
+    /* A pasted URL or a long unbroken string must not push the chip past the
+       row it shares with other chips — the row wraps, not this one chip. */
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .tag-chip-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .tag-remove {
@@ -161,6 +172,7 @@
     cursor: pointer;
     opacity: 0.6;
     transition: opacity var(--duration-fast);
+    flex-shrink: 0;
   }
 
   .tag-remove:hover {

@@ -1198,8 +1198,8 @@
       "snippets": ["actions", "center", "subnav", "renderIcon"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-08-23",
+      "revision": 5,
+      "lastReviewed": "2026-09-14",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -3140,8 +3140,8 @@
       },
       "dependencies": [],
       "stage": "draft",
-      "revision": 1,
-      "lastReviewed": "2026-03-07",
+      "revision": 2,
+      "lastReviewed": "2026-09-14",
       "docLevel": "none",
       "breaking": []
     },
