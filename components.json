@@ -3142,6 +3142,11 @@
           "default": "Infinity",
           "description": "Maximum number of tags; the field turns read-only at the limit"
         },
+        "maxTagLength": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Maximum characters per tag; an over-long tag is refused, never shortened"
+        },
         "disabled": {
           "type": "boolean",
           "default": "false",
@@ -3165,8 +3170,8 @@
       },
       "dependencies": [],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-09-14",
+      "revision": 4,
+      "lastReviewed": "2026-09-16",
       "docLevel": "standard",
       "breaking": []
     },

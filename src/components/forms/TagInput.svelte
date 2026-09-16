@@ -17,10 +17,15 @@
   @example With variant and max
   <TagInput bind:tags={labels} variant="accent" maxTags={5} />
 
+  @example Bounded per tag — an over-long tag is refused, never shortened
+  <TagInput bind:tags={claims} maxTagLength={200} />
+
   @example With transform
   <TagInput bind:tags={tags} transform={t => t.toLowerCase().trim()} />
 -->
 <script>
+  import { tagRejection } from './tagInput.rules.js';
+
   let {
     tags = $bindable([]),
     placeholder = 'Add tag...',
@@ -28,6 +33,7 @@
     inputLabel = null,
     variant = 'default',
     maxTags = Infinity,
+    maxTagLength = Infinity,
     disabled = false,
     duplicates = false,
     transform = null,
@@ -38,11 +44,34 @@
 
   let inputValue = $state('');
   let inputRef = $state();
-  /** Polite announcement for add / remove / rejected duplicate. */
+  /** Unique so two bounded TagInputs on one page don't share a description. */
+  const lengthId = `tag-length-${crypto.randomUUID()}`;
+  /** Polite announcement for add / remove / a refused tag. */
   let announcement = $state('');
 
   const atLimit = $derived(tags.length >= maxTags);
   const fieldLabel = $derived(inputLabel || placeholder || 'Add tag');
+
+  /**
+   * The length of what the field is holding, measured as `addTag` measures it.
+   *
+   * Advisory. `addTag` asks `tagRejection` about the value *after* `transform`,
+   * which is the one that would be stored and the one a server bound applies
+   * to; a transform that changes length makes this counter and that refusal
+   * disagree by exactly that much, and the refusal is the authority.
+   */
+  const typedLength = $derived(inputValue.trim().length);
+  /**
+   * A value the control would refuse for its length.
+   *
+   * Drawn, not enforced: there is no `maxlength` on the field below, because a
+   * native one truncates pasted text to fit and says nothing, which would put
+   * a silently shortened claim in the list — the exact outcome this prop was
+   * added to prevent. The person can type or paste anything; the control says
+   * plainly that it is past the bound, and refuses it at Enter with the two
+   * numbers in the announcement.
+   */
+  const overLength = $derived(typedLength > maxTagLength);
 
   const variantColor = $derived({
     default: 'var(--color-base04)',
@@ -57,13 +86,10 @@
     if (!value) return;
     if (transform) value = transform(value);
     if (!value) return;
-    if (atLimit) {
-      announcement = `Limit of ${maxTags} reached. Remove a tag first.`;
-      return;
-    }
-    if (!duplicates && tags.includes(value)) {
-      inputValue = '';
-      announcement = `${value} is already added`;
+    const refusal = tagRejection(value, { tags, maxTags, maxTagLength, duplicates });
+    if (refusal) {
+      if (refusal.clearsField) inputValue = '';
+      announcement = refusal.message;
       return;
     }
     tags = [...tags, value];
@@ -94,6 +120,7 @@
 <div
   class="tag-input-container {className}"
   class:tag-input-disabled={disabled}
+  class:tag-input-invalid={overLength}
   style="--_variant-color: {variantColor}"
   role="group"
   aria-label={label}
@@ -131,11 +158,18 @@
       placeholder={atLimit ? '' : placeholder}
       readonly={atLimit}
       aria-label={fieldLabel}
+      aria-invalid={overLength || undefined}
+      aria-describedby={overLength ? lengthId : undefined}
     />
   {/if}
 
   {#if atLimit}
     <span class="tag-limit">{tags.length}/{maxTags}</span>
+  {:else if overLength}
+    <!-- Shown only past the bound, and showing the person's own number: they
+         learn the limit at the moment it starts to matter, before they press
+         Enter, and nothing was cut to produce the count. -->
+    <span id={lengthId} class="tag-limit tag-limit--over">{typedLength}/{maxTagLength}</span>
   {/if}
 
   <span class="tag-status" role="status" aria-live="polite">{announcement}</span>
@@ -160,6 +194,18 @@
   .tag-input-container:focus-within {
     border-color: var(--color-base0D);
     box-shadow: var(--focus-ring-shadow);
+  }
+
+  /* A value the control will refuse, marked the way every other jera form
+     control marks one — base08 border, error focus ring. The value itself is
+     untouched; only the chrome says so. */
+  .tag-input-container.tag-input-invalid,
+  .tag-input-container.tag-input-invalid:focus-within {
+    border-color: var(--color-base08);
+  }
+
+  .tag-input-container.tag-input-invalid:focus-within {
+    box-shadow: var(--focus-ring-shadow-error);
   }
 
   .tag-input-disabled {
@@ -238,6 +284,11 @@
     font-size: var(--text-xs, 0.75rem);
     color: var(--color-base04);
     padding: 0.125rem 0.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tag-limit--over {
+    color: var(--color-base08);
   }
 
   /* Announcements are for assistive tech only — the chips themselves are the

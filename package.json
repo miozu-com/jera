@@ -6,6 +6,7 @@
   "sideEffects": false,
   "scripts": {
     "prepublishOnly": "echo 'Publishing @miozu/jera...' && test -f src/index.js",
+    "test": "node --test",
     "audit": "node scripts/audit.js",
     "audit:fix": "node scripts/audit.js --fix",
     "audit:json": "node scripts/audit.js --json"
