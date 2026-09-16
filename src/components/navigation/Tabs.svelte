@@ -333,11 +333,12 @@
     border: var(--border-width-default) solid var(--color-base02);
   }
 
-  /* Underline variant indicator */
+  /* Underline variant indicator — sits ON the rule (hence the -1px), at 2px so
+     it reads as a mark rather than as a thicker piece of the same line. */
   .tabs-indicator-underline {
     top: auto;
-    bottom: 0;
-    height: var(--border-width-thick);
+    bottom: calc(-1 * var(--border-width-thin));
+    height: 2px;
     background: var(--tabs-accent);
     border-radius: var(--radius-full);
     box-shadow: none;
@@ -436,17 +437,31 @@
     box-shadow: var(--focus-ring-shadow);
   }
 
-  /* ---- Underline variant ---- */
+  /* ---- Underline variant ----
+     The rule is the point of this variant: it spans the full width of whatever
+     holds the tabs, so the strip reads as the page's own edge rather than as a
+     row of links that happens to have a line under it. `inline-flex` (the base
+     `.tabs` display) shrank the rule to the width of the labels, which left it
+     stopping in mid-air on a wide screen. */
   .tabs-underline {
+    display: flex;
+    width: 100%;
     background: transparent;
     padding: 0;
     gap: 0;
-    border-bottom: var(--border-width-thin) solid var(--color-base03);
+    border-bottom: var(--border-width-thin) solid
+      color-mix(in srgb, var(--color-base03) 60%, transparent);
   }
 
   .tabs-underline .tab {
     border-radius: 0;
     margin-bottom: -1px;
+    padding-block: var(--space-3);
+    padding-inline: var(--space-4);
+    font-weight: 500;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
   }
 
   .tabs-underline .tab-active {
@@ -457,6 +472,7 @@
 
   .tabs-underline .tab:hover:not(.tab-disabled) {
     background: transparent;
+    color: var(--color-base06);
   }
 
   /* ---- Pills variant ---- */

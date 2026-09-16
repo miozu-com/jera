@@ -1094,11 +1094,12 @@
       "events": ["onchange"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-09-06",
+      "revision": 6,
+      "lastReviewed": "2026-09-16",
       "breaking": [
         "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb.",
-        "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) — consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup."
+        "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) — consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup.",
+        "v6: underline variant — the tablist is now full width (display: flex; width: 100%) so its rule spans its container instead of hugging the labels; tabs are taller and wider (padding-block space-3, padding-inline space-4) and the indicator is 2px, sitting on the rule. Visual only, no API change."
       ],
       "docLevel": "standard"
     },
