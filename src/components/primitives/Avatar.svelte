@@ -135,7 +135,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    /* Deliberately not `overflow: hidden`. The container's own border-radius
+       clipped the status dot — which sits in the bottom-right corner, i.e.
+       outside a round avatar — down to a sliver: at `sm` and below the dot was
+       effectively invisible, which is why consumers hand-rolled their own.
+       The fills round themselves instead, so the dot reads as a dot. */
     flex-shrink: 0;
   }
 
@@ -151,6 +155,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: inherit;
   }
 
   .avatar-initials {
@@ -159,6 +164,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    border-radius: inherit;
     /* Contrast: the accent tokens flip lightness between themes (light mode
        L 0.52-0.62, dark mode L 0.68-0.82), so a hardcoded `white` measured
        1.76:1 - 3.16:1 in dark mode and 3.67:1 - 6.13:1 in light mode: below
@@ -179,6 +185,7 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    border-radius: inherit;
     background: var(--color-base03);
     color: var(--color-base05);
   }

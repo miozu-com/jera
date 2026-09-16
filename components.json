@@ -202,10 +202,11 @@
       },
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-09-05",
+      "revision": 3,
+      "lastReviewed": "2026-09-16",
       "breaking": [
-        "v2: Initials fallback recolored for WCAG AA. Text is --color-base00 (was a hardcoded white that measured 1.76:1 on dark-mode accents) and the tile is mixed 20% toward --color-base05. No API change; the tile reads slightly deeper in light mode and slightly softer in dark mode."
+        "v2: Initials fallback recolored for WCAG AA. Text is --color-base00 (was a hardcoded white that measured 1.76:1 on dark-mode accents) and the tile is mixed 20% toward --color-base05. No API change; the tile reads slightly deeper in light mode and slightly softer in dark mode.",
+        "v3: The status dot is no longer clipped by the avatar's own border-radius — it rendered as a sliver, invisible at sm and below, which is why consumers hand-rolled their own. No API change; an avatar without `status` looks identical, and a consumer that worked around this can now pass `status`."
       ],
       "docLevel": "complete"
     },
