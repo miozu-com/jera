@@ -34,6 +34,19 @@
     onchange={handleChange}
   />
 -->
+<!-- file-size: justified -- single dropzone with drag/drop, paste arbitration, and file validation sharing one state tree, plus two full visual states (empty/filled) and their CSS; splitting would prop-drill the shared state across files -->
+<script module>
+  /**
+   * Every mounted zone on the page, so that several of them agree on which one
+   * a paste belongs to. A paste is a window-level event: without arbitration two
+   * zones would both swallow the same screenshot and the form would receive it
+   * twice. `pasteTouch` is a global recency stamp — the zone the owner last
+   * touched wins, which is where they were working.
+   */
+  const pasteZones = new Set();
+  let pasteTouch = 0;
+</script>
+
 <script>
   let {
     files = $bindable([]),
@@ -48,6 +61,7 @@
     showNumbers = false,
     onchange = null,
     onremove = null,
+    pasteTarget = 'document',
     class: className = ''
   } = $props();
 
@@ -150,6 +164,102 @@
     if (!disabled) fileInput?.click();
   }
 
+  /* ---- Clipboard paste --------------------------------------------------
+     A screenshot on the clipboard is a File and nothing else on the page can do
+     anything with it, so the zone takes it — including while the caret sits in a
+     text field beside it, which is exactly where the owner is when they press
+     ⌘V after a screenshot. Text pastes are never intercepted. */
+
+  let rootEl = $state(null);
+  const zone = {touched: 0};
+
+  const MAC = typeof navigator !== 'undefined' && /mac|iphone|ipad/i.test(navigator.platform || '');
+  const PASTE_KEY = MAC ? '⌘V' : 'Ctrl+V';
+
+  const EXT_BY_TYPE = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/webp': 'webp',
+    'image/gif': 'gif',
+    'image/avif': 'avif',
+    'image/svg+xml': 'svg'
+  };
+
+  /** A clipboard image may arrive with an empty name; uploads need one. */
+  function namedClipboardFile(file, index) {
+    if (file.name) return file;
+    const ext = EXT_BY_TYPE[file.type] || file.type.split('/')[1] || 'png';
+    return new File([file], `pasted-${Date.now()}-${index + 1}.${ext}`, {type: file.type});
+  }
+
+  function imageFilesFrom(data) {
+    if (!data) return [];
+    const out = [];
+    for (const item of data.items || []) {
+      if (item.kind !== 'file') continue;
+      const file = item.getAsFile();
+      if (file && isFileTypeAccepted(file)) out.push(file);
+    }
+    // Copied desktop files populate `.files` without usable `items`.
+    if (out.length === 0) {
+      for (const file of data.files || []) {
+        if (isFileTypeAccepted(file)) out.push(file);
+      }
+    }
+    return out;
+  }
+
+  function isTextField(node) {
+    if (!(node instanceof HTMLElement)) return false;
+    if (node.isContentEditable) return true;
+    if (node.tagName === 'TEXTAREA') return true;
+    return node.tagName === 'INPUT' && /^(text|search|url|email|tel|password|number)?$/.test(node.type);
+  }
+
+  function canTakeMore() {
+    return !disabled && files.length < maxFiles;
+  }
+
+  /**
+   * One paste, one zone: the caret's zone, else the last one touched, else —
+   * before anyone has touched any of them — the first one on the page. Without
+   * that last rule two fresh zones would each decide the other had the better
+   * claim and neither would take the photo.
+   */
+  function ownsPaste() {
+    const active = document.activeElement;
+    if (rootEl && active instanceof Node && rootEl.contains(active)) return true;
+    if (pasteZones.size <= 1) return true;
+    let winner = null;
+    for (const candidate of pasteZones) {
+      if (!winner || candidate.touched > winner.touched) winner = candidate;
+    }
+    return winner === zone;
+  }
+
+  function handlePaste(event) {
+    if (!canTakeMore()) return;
+    const inside = rootEl && event.target instanceof Node && rootEl.contains(event.target);
+    if (!inside) {
+      if (pasteTarget === 'none') return;
+      if (pasteTarget === 'self') return;
+      // A text field with words on the clipboard keeps its paste: that is a URL
+      // or a caption, not a photo. A screenshot carries no text, so it lands here.
+      const text = event.clipboardData?.getData('text/plain') || '';
+      if (isTextField(event.target) && text.length > 0) return;
+      if (!ownsPaste()) return;
+    }
+    const picked = imageFilesFrom(event.clipboardData);
+    if (picked.length === 0) return;
+    // Claimed: stop the browser from also pasting the image into the page.
+    event.preventDefault();
+    addFiles(picked.map(namedClipboardFile));
+  }
+
+  function markTouched() {
+    zone.touched = ++pasteTouch;
+  }
+
   // Revoke all object URLs on unmount
   $effect(() => {
     return () => {
@@ -158,17 +268,32 @@
       });
     };
   });
+
+  // Registered for arbitration even when this zone only accepts pastes on
+  // itself; the window listener is what makes ⌘V work from the form's fields.
+  $effect(() => {
+    pasteZones.add(zone);
+    const onPaste = event => handlePaste(event);
+    window.addEventListener('paste', onPaste);
+    return () => {
+      window.removeEventListener('paste', onPaste);
+      pasteZones.delete(zone);
+    };
+  });
 </script>
 
 <div
+  bind:this={rootEl}
   class="image-dropzone {className}"
   class:image-dropzone-error={displayError}
   class:image-dropzone-disabled={disabled}
   ondragover={handleDragOver}
   ondragleave={handleDragLeave}
   ondrop={handleDrop}
+  onpointerdown={markTouched}
+  onfocusin={markTouched}
   role="region"
-  aria-label="Image upload zone"
+  aria-label="Image upload zone — drop, browse or paste"
 >
   {#if files.length === 0}
     <!-- Empty state: full clickable zone -->
@@ -192,6 +317,11 @@
       <span class="upload-hint">
         Up to {maxFiles} {maxFiles === 1 ? 'image' : 'images'} · Max {formatSize(maxSize)} each
       </span>
+      {#if pasteTarget !== 'none'}
+        <span class="upload-hint upload-hint-paste">
+          or paste a screenshot — {PASTE_KEY}
+        </span>
+      {/if}
     </button>
   {:else}
     <!-- Filled state: preview grid + add more -->
@@ -242,6 +372,9 @@
 
       <div class="preview-footer">
         <span class="file-count">{files.length} / {maxFiles}</span>
+        {#if pasteTarget !== 'none' && files.length < maxFiles}
+          <span class="upload-hint">Paste to add more — {PASTE_KEY}</span>
+        {/if}
       </div>
     </div>
   {/if}

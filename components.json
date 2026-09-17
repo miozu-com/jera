@@ -2938,11 +2938,16 @@
           "type": "function",
           "default": "null",
           "description": "File removed callback (index)"
+        },
+        "pasteTarget": {
+          "type": "'document' | 'self' | 'none'",
+          "default": "'document'",
+          "description": "Where ⌘V/Ctrl+V is claimed: 'document' also accepts a paste made while a field beside the zone has the caret, 'self' only when the zone itself is focused, 'none' disables paste"
         }
       },
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-22",
+      "revision": 4,
+      "lastReviewed": "2026-09-17",
       "docLevel": "none",
       "breaking": []
     },
