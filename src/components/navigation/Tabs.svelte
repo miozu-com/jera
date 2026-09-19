@@ -1,3 +1,6 @@
+<!-- file-size: justified -- one tab strip with four visual variants (default, pills,
+     segment, underline) that share the same roving-tabindex, indicator and scroll
+     logic; the length past 400 is the per-variant CSS, not a second concern. -->
 <!--
   @component Tabs
 
@@ -68,6 +71,9 @@
   let tablistEl = $state(null);
   let scrollerEl = $state(null);
   let indicatorStyle = $state('');
+  // False until the first measurement has painted, so the indicator appears
+  // on the active tab instead of sliding there from the left edge on load.
+  let indicatorSettled = $state(false);
   let hasMeasured = false;
 
   function tabButtonId(id) {
@@ -109,12 +115,30 @@
     };
 
     measure();
+    if (!indicatorSettled) {
+      requestAnimationFrame(() => {
+        indicatorSettled = true;
+      });
+    }
 
-    // Observe layout changes (resize, font load, etc.)
+    // Observe layout changes. The tablist alone is not enough: it is as wide
+    // as its container, so a web font arriving after hydration widens the
+    // buttons without resizing the list, and the indicator stayed where the
+    // fallback font had put it — a tab to the left of the active one whenever
+    // the page opened on a later tab (2026-09-19). Each button is observed
+    // too, and fonts.ready re-measures once the real metrics are in.
     const ro = new ResizeObserver(measure);
     ro.observe(tablistEl);
+    for (const btn of tablistEl.querySelectorAll('[data-tab-id]')) ro.observe(btn);
+    let cancelled = false;
+    document.fonts?.ready?.then(() => {
+      if (!cancelled) measure();
+    });
 
-    return () => ro.disconnect();
+    return () => {
+      cancelled = true;
+      ro.disconnect();
+    };
   });
 
   // Keep the active tab inside the horizontal scroll viewport.
@@ -225,6 +249,7 @@
       <span
         class="tabs-indicator"
         class:tabs-indicator-underline={variant === 'underline'}
+        class:tabs-indicator-settled={indicatorSettled}
         style={indicatorStyle}
         aria-hidden="true"
       ></span>
@@ -319,10 +344,13 @@
     border-radius: var(--radius-sm);
     pointer-events: none;
     z-index: 0;
+    opacity: 0;
+  }
+
+  .tabs-indicator-settled {
     transition: left var(--duration-base) var(--ease-out),
                 width var(--duration-base) var(--ease-out),
                 opacity var(--duration-fast) var(--ease-out);
-    opacity: 0;
   }
 
   /* Segment variant indicator */
