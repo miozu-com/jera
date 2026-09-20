@@ -190,16 +190,29 @@
    * Uses dvh with vh fallback for mobile address bar stability.
    * Internally: flex column → header/footer pinned, body stretches + scrolls.
    */
-  dialog.modal-fill:not([open]) {
-    display: none;
-  }
-
-  dialog.modal-fill[open] {
+  /* The frame is keyed to "is displayed", not to [open].
+   *
+   * `close()` drops the open attribute in the tick it is called, while
+   * `display` stays flex for the whole exit — the allow-discrete transition
+   * below defers the change to `none` until the end. Gating the height on
+   * [open] therefore collapsed the dialog to its content on the first frame of
+   * the exit, and the still-painting modal grew and re-centred on its way out:
+   * measured 1177px → 1439px in a single frame on a 1471px viewport
+   * (2026-09-21). Nothing else was ever gated — the .modal-body and
+   * .modal-header flex rules below already apply whenever .modal-fill is
+   * present, so the frame must be present for exactly as long as they are. */
+  dialog.modal-fill {
     height: min(80vh, calc(100vh - 2rem));
     height: min(80dvh, calc(100dvh - 2rem));
     overflow: hidden;
     display: flex;
     flex-direction: column;
+  }
+
+  /* Still what hides a closed fill modal: takes over from the `display: flex`
+     above until `open` is set, and from `display` it transitions. */
+  dialog.modal-fill:not([open]) {
+    display: none;
   }
 
   dialog.modal-fill > .modal-content {

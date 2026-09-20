@@ -910,8 +910,8 @@
       "events": ["onclose"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-09-12",
+      "revision": 7,
+      "lastReviewed": "2026-09-21",
       "breaking": [],
       "docLevel": "standard"
     },
