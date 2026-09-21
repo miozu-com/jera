@@ -226,4 +226,18 @@
   .number-input-error .number-btn {
     border-color: var(--color-base08);
   }
+
+  /* iOS Safari zooms the whole page when a control under 16px takes focus, and
+     does not zoom back out — the page is left scrolled and oversized. On a chat
+     composer that happens on every message sent from a phone. 16px is the
+     documented threshold, so the rule meets it on touch pointers and leaves the
+     mouse alone: `--text-sm` stays the design's size everywhere it is safe.
+     Keyed on `pointer: coarse` rather than a width breakpoint, because the trap
+     belongs to the input method and not to the viewport — a narrow desktop
+     window has no zoom behaviour to avoid. */
+  @media (pointer: coarse) {
+    .number-field {
+      font-size: max(16px, var(--text-sm));
+    }
+  }
 </style>
