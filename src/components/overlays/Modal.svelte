@@ -8,6 +8,13 @@
     (empty states, search results) don't cause layout jumps. Uses flex
     column internally: header/footer stay pinned, body stretches and scrolls.
 
+  @prop fullscreen — `false` (default) always framed; `true` always fills the
+    viewport; `'mobile'` fills it below `md` and stays framed above, so a dialog
+    that is wide by design reads as a page on a phone. Fullscreen keeps the
+    dialog chrome the size classes do not provide: the whole viewport, no
+    border, no radius. It is still a modal — top layer, focus trap, close
+    button — and its content scrolls internally so the close button stays put.
+
   @example
   <Modal bind:open={showModal} title="Confirm Action">
     <p>Are you sure you want to proceed?</p>
@@ -25,6 +32,13 @@
     {/snippet}
   </Modal>
 -->
+
+<!-- file-size: justified -- one component (the modal dialog). The style block is
+     the frame, five width steps, fill mode, fullscreen, the top-layer
+     transitions and the close button: all of it styles this one element and its
+     three internal parts, and none of it is usable apart from the rest. The two
+     fullscreen blocks are deliberately identical — the mobile variant has to be
+     applied under a media query, not un-applied outside one (see the note there). -->
 <script>
   let {
     open = $bindable(false),
@@ -35,6 +49,13 @@
     closeOnEscape = true,
     showClose = true,
     fill = false,
+    /**
+     * `false` — always framed. `true` — always fills the viewport.
+     * `'mobile'` — fills the viewport below `md`, framed above it, so a dialog
+     * that is wide by design reads as a page on a phone instead of a card
+     * floating in a margin.
+     */
+    fullscreen = false,
     children,
     footer,
     icon,
@@ -43,6 +64,18 @@
   } = $props();
 
   let dialogEl = $state(null);
+
+  // Two class names, not one flag: the mobile variant has to be scoped by a
+  // media query, and a query cannot be OR'd with a plain selector on the same
+  // rule — so they stay separate rather than being merged into one class the
+  // stylesheet then has to un-apply.
+  const fullscreenClass = $derived(
+    fullscreen === true
+      ? 'modal-fullscreen'
+      : fullscreen === 'mobile'
+        ? 'modal-fullscreen-mobile'
+        : ''
+  );
   const titleId = `modal-title-${crypto.randomUUID()}`;
 
   // Variant styles for the icon container
@@ -96,7 +129,7 @@
 
 <dialog
   bind:this={dialogEl}
-  class="modal modal-{size} {fill ? 'modal-fill' : ''} {className}"
+  class="modal modal-{size} {fill ? 'modal-fill' : ''} {fullscreenClass} {className}"
   aria-labelledby={title ? titleId : undefined}
   aria-modal="true"
   onclose={handleClose}
@@ -181,6 +214,63 @@
     width: calc(100dvw - 2rem);
     max-width: calc(100vw - 2rem);
     max-width: calc(100dvw - 2rem);
+  }
+
+  /*
+   * Fullscreen — the dialog fills the viewport and drops its frame. It stays a
+   * modal, on the same top layer with the same focus trap and close button; it
+   * just stops reading as a card floating in a margin.
+   *
+   * `inset: 0` with `width/height: auto` rather than `100dvw/100dvh`: this is
+   * fixed-positioned, and its containing block already excludes the scrollbar,
+   * whereas `100dvw` includes it and would hang the dialog over the document
+   * scrollbar wherever one is showing.
+   *
+   * `overflow: hidden` on the dialog with the scrolling moved to `.modal-content`
+   * is the point of the whole thing. The close button is an absolutely
+   * positioned *sibling* of the content, so if the dialog itself scrolled, the X
+   * would ride off the top and a full-height modal would have no visible way out.
+   *
+   * The declarations are written twice deliberately. The mobile variant has to
+   * be applied *under* a media query rather than un-applied outside one: it
+   * shares its specificity with `.modal-{size}`, so a reset could not restore
+   * the max-width the size class asked for. Keep the two blocks identical.
+   */
+  dialog.modal-fullscreen {
+    inset: 0;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  dialog.modal-fullscreen .modal-content {
+    height: 100%;
+    overflow: auto;
+    /* Clear the home indicator on a phone; zero where there isn't one. */
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (max-width: 767px) {
+    dialog.modal-fullscreen-mobile {
+      inset: 0;
+      width: auto;
+      max-width: none;
+      height: auto;
+      max-height: none;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      overflow: hidden;
+    }
+    dialog.modal-fullscreen-mobile .modal-content {
+      height: 100%;
+      overflow: auto;
+      padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    }
   }
 
   /*
