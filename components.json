@@ -746,6 +746,11 @@
           "default": "'default'",
           "description": "Display size"
         },
+        "align": {
+          "type": "'center'|'start'",
+          "default": "'center'",
+          "description": "Anchor. `start` moves the whole block to the container's start edge and left-aligns its contents, for pages whose content already has a left edge (a list, a toolbar, a form). `center` is for a lone empty state on an otherwise empty canvas."
+        },
         "class": {
           "type": "string",
           "default": "''",
@@ -755,8 +760,8 @@
       "snippets": ["art", "icon", "actions"],
       "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-09-14",
+      "revision": 4,
+      "lastReviewed": "2026-09-25",
       "breaking": [],
       "docLevel": "standard"
     },

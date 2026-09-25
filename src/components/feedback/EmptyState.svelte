@@ -35,12 +35,21 @@
       <Illustration scene="channels" />
     {/snippet}
   </EmptyState>
+
+  @example Anchored to the start, for a page that has its own column
+  Use `align="start"` when the page already has a left edge the empty state
+  should share — a list, a toolbar, or a form above it. The whole block moves to
+  the start edge and its contents left-align, so anything running to two or more
+  lines reads on a stable axis instead of a ragged one.
+
+  <EmptyState align="start" title="No collections yet" description="…" />
 -->
 <script>
   let {
     title = 'No data found',
     description = '',
     size = 'default',
+    align = 'center',
     class: className = '',
     art,
     icon,
@@ -48,7 +57,7 @@
   } = $props();
 </script>
 
-<div class="empty-state empty-state-{size} {className}">
+<div class="empty-state empty-state-{size} align-{align} {className}">
   <div class="empty-state-content">
     {#if art}
       <div class="empty-state-art">
@@ -97,7 +106,24 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 24rem;
+    max-width: 28rem;
+  }
+
+  /* `align="start"` — the whole block anchors to the start edge, like
+     `text-align: start`. For a page whose content already has a left edge it must
+     share: a list, a toolbar, or a form above it. On catalog/collections the
+     create form starts at the column's left edge and a centred empty state
+     floated in the middle of it, which is what this fixes.
+     `center` stays the default because a lone empty state on an otherwise empty
+     canvas wants to be centred — pinned to the far left of a 1700px full-bleed
+     canvas it reads as abandoned, not deliberate. */
+  .align-start {
+    justify-content: flex-start;
+  }
+
+  .align-start .empty-state-content {
+    align-items: flex-start;
+    text-align: left;
   }
 
   .empty-state-icon {
@@ -178,12 +204,18 @@
     font-size: var(--text-xl);
   }
 
+  /* 20rem rendered a 14px description at ~32 characters a line — under half the
+     45–75 the typographers' range calls for, so a two-line sentence broke into
+     three cramped ones. Measured 2026-09-25 on the catalog first run: 97 chars
+     over 3 lines. 28rem puts the same sentence at ~45, the bottom of the range,
+     and 36 of this component's 40 descriptions in dash are long enough to feel
+     the difference. Widening further would push a long description past 75. */
   .empty-state-description {
     margin: 0;
     font-size: var(--text-sm);
     color: var(--color-base04);
     line-height: 1.5;
-    max-width: 20rem;
+    max-width: 28rem;
   }
 
   .empty-state-compact .empty-state-description {
@@ -192,7 +224,9 @@
 
   .empty-state-large .empty-state-description {
     font-size: var(--text-base);
-    max-width: 24rem;
+    /* Scaled with the base rule above — the same 45–75 character target at the
+       larger `large` size. */
+    max-width: 32rem;
   }
 
   .empty-state-actions {
@@ -201,6 +235,10 @@
     gap: var(--space-6);
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .align-start .empty-state-actions {
+    justify-content: flex-start;
   }
 
   .empty-state-compact .empty-state-actions {
