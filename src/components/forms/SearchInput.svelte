@@ -127,6 +127,33 @@
     transition: var(--transition-colors);
   }
 
+  /* `xs` — 1.625rem/26px, the size the component's own scale documents and the
+     one `Select` and `Input` already implement. Catalog was passing `sm` and
+     then patching the height down to 26px from the page with
+     `:global(.search-field)`, which meant the field first painted at jera's
+     32px and dropped to 26px once the page's stylesheet landed — a visible
+     height jump on every reload (reported 2026-09-26). */
+  .search-input-xs .search-field {
+    height: 1.625rem;
+    padding: 0 var(--space-3);
+    padding-left: 1.625rem;
+    padding-right: 1.625rem;
+    font-size: var(--text-xs);
+  }
+
+  .search-input-xs .search-icon {
+    left: 0.4375rem;
+  }
+
+  .search-input-xs .search-icon svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .search-input-xs .search-clear {
+    right: 0.1875rem;
+  }
+
   .search-input-sm .search-field {
     height: 2rem;
     padding: 0 var(--space-4);
