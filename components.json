@@ -760,8 +760,8 @@
       "snippets": ["art", "icon", "actions"],
       "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-09-25",
+      "revision": 5,
+      "lastReviewed": "2026-09-26",
       "breaking": [],
       "docLevel": "standard"
     },

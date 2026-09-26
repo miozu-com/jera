@@ -187,9 +187,13 @@
     margin-bottom: var(--space-16);
   }
 
+  /* 1.25rem, up from 1.125rem (2026-09-26). At 18px the title read weaker than
+     the 14px body under it once the art grew to the full text column — the
+     drawing was the loudest element and the heading the quietest. The title is
+     the one line the reader actually reads, so it leads. */
   .empty-state-title {
     margin: 0 0 var(--space-4) 0;
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: 600;
     color: var(--color-base07);
     line-height: 1.3;
@@ -201,7 +205,7 @@
   }
 
   .empty-state-large .empty-state-title {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
   }
 
   /* 20rem rendered a 14px description at ~32 characters a line — under half the
