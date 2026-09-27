@@ -48,11 +48,15 @@
 </div>
 
 <style>
+  /* Wraps: a wide action (chips + badge + switch) drops onto its own line
+     instead of crushing the label to one word per line. The content column
+     asks for 14rem before it gives way; below that the action wraps. */
   .setting-item {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-8);
+    gap: var(--space-3) var(--space-8);
     padding: var(--space-8) 0;
     border-bottom: 1px solid var(--color-base02);
   }
@@ -78,7 +82,7 @@
   }
 
   .setting-content {
-    flex: 1;
+    flex: 1 1 14rem;
     min-width: 0;
   }
 
@@ -96,8 +100,11 @@
     line-height: 1.5;
   }
 
+  /* `margin-left: auto` keeps a wrapped action on the right, where it sits
+     when the row fits on one line. */
   .setting-action {
     flex-shrink: 0;
+    margin-left: auto;
   }
 
   /* Stacked: the control wraps onto a row of its own and takes all of it. */
