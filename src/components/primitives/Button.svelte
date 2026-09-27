@@ -1,3 +1,7 @@
+<!-- file-size: justified -- one button, nine colour variants (primary through
+     accent) each needing base/hover/active rules plus four size classes and the
+     loading/icon-only states; the length is per-variant CSS repetition, not a
+     second concern to split out. -->
 <!--
   @component Button
 
