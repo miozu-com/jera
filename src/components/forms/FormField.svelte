@@ -90,13 +90,16 @@
   {@render children?.(describedById)}
 
   {#if hasFooter}
-    <div class="form-field-footer">
+    <!-- The id lives on the footer itself, not on whichever of hint/error/
+         counter happens to be present — a field with only a counter (no
+         hint, no error) used to point `aria-describedby` at an empty `<span>`,
+         so a screen reader announced nothing at all for "52/60" (jera review,
+         2026-09-27). One described element covers every combination. -->
+    <div class="form-field-footer" id={describedById}>
       {#if error}
-        <p class="form-field-error" id={describedById}>{error}</p>
+        <p class="form-field-error">{error}</p>
       {:else if hint}
-        <p class="form-field-hint" id={describedById}>{hint}</p>
-      {:else}
-        <span id={describedById}></span>
+        <p class="form-field-hint">{hint}</p>
       {/if}
       {#if counter}
         <span class={cn('form-field-counter', counterTone)}>{counter.value}/{counter.max}</span>
