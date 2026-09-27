@@ -29,6 +29,14 @@
  * ---------------------------------------- */
 
 :root {
+  /* Native UI (a <select>'s open option list, date pickers, scrollbars,
+     autofill) is painted by the browser from `color-scheme`, not from these
+     tokens. Declared here, beside the palette it has to match, so every page
+     that loads the tokens gets it from the cascade — a JS theme toggle that
+     sets `html.style.colorScheme` is a fast path, not the only guarantee
+     (dark theme showed white option lists, 2026-09-27). */
+  color-scheme: dark;
+
   /* 12-step gray scale — subtle blue-purple tint (H 265) */
   --gray-1:  oklch(0.155 0.008 265);  /* App background */
   --gray-2:  oklch(0.190 0.008 265);  /* Card / surface */
@@ -106,6 +114,8 @@
  * ---------------------------------------- */
 
 [data-theme="miozu-light"] {
+  color-scheme: light;
+
   /* 12-step gray scale — inverted lightness */
   --gray-1:  oklch(0.990 0.005 265);  /* App background */
   --gray-2:  oklch(0.970 0.005 265);  /* Card / surface */

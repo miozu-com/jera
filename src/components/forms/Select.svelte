@@ -95,6 +95,22 @@
     color: var(--color-base04);
   }
 
+  /* The open option list is drawn by the browser, which takes each option's
+     own colours — and falls back to its light-scheme white when the select's
+     background is transparent (a consumer grouping the select into a compound
+     field), while the text still inherits base07. That was white on white in
+     the dark theme (2026-09-27). Options carry their own opaque pair so the
+     list is readable whatever the select itself is painted with; the
+     placeholder's muted colour stays on the closed control only. */
+  .jera-select option {
+    background-color: var(--color-base00);
+    color: var(--color-base05);
+  }
+
+  .jera-select option:disabled {
+    color: var(--color-base04);
+  }
+
   .jera-select:hover:not(:disabled) {
     border-color: var(--color-base03);
   }

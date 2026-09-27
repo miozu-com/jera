@@ -515,10 +515,10 @@
         }
       },
       "events": ["onchange"],
-      "consumers": ["admin", "miozu"],
+      "consumers": ["admin", "miozu", "dash"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-09-21",
+      "revision": 8,
+      "lastReviewed": "2026-09-27",
       "breaking": [],
       "docLevel": "standard"
     },
