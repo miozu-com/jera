@@ -68,6 +68,11 @@
           "type": "string",
           "default": "'button'",
           "description": "HTML button type attribute"
+        },
+        "iconOnly": {
+          "type": "boolean",
+          "default": "false",
+          "description": "No text label \u2014 a square button the same height as size, horizontal padding dropped (pair with an aria-label)"
         }
       },
       "snippets": [
@@ -82,8 +87,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-09-06",
+      "revision": 8,
+      "lastReviewed": "2026-09-27",
       "breaking": [],
       "docLevel": "standard"
     },
