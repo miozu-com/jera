@@ -342,36 +342,33 @@
   /* ============================================
      SIZES - matches dash.selify.ai Button exactly
      ============================================ */
-  /* min-height per size (review 2026-09-27): a text label's line box is
-     taller than a bare icon's own height, so an icon-only button (no text
-     node at all — the product page's "···" trigger) rendered visibly
-     shorter than a text-plus-icon button of the *same* `size`, both
-     `display: inline-flex; align-items: center`. The floor is what a text
-     button already reaches (padding + a ~1.5 line-height), so this changes
-     nothing for text buttons and only fills in the icon-only case — and it
-     lines up with jera's own Input/Select height scale (xs 1.625rem, sm 2rem,
-     md 2.5rem, lg 3rem), which was pure coincidence until now and is a
-     property worth keeping. */
+  /* One height per size, the Input/Select scale (xs 1.625rem, sm 2rem, md
+     2.5rem, lg 3rem). Buttons never wrap (`white-space: nowrap`), so the
+     height is the size's min-height and flex centres the label: no vertical
+     padding. With vertical padding a text `sm` button came out ~35px (padding
+     + a 1.5 line-height + border) while an icon-only `sm` sat at the 32px
+     floor, so "AI ▾" and "···" beside each other were different heights
+     (owner, 2026-09-27). */
   .xs {
-    padding: 0.25rem 0.5rem;   /* py-1 px-2 */
+    padding: 0 0.5rem;
     font-size: 0.75rem;        /* text-xs */
     min-height: 1.625rem;
   }
 
   .sm {
-    padding: 0.375rem 0.75rem; /* py-1.5 px-3 */
+    padding: 0 0.75rem;
     font-size: 0.875rem;       /* text-sm */
     min-height: 2rem;
   }
 
   .md {
-    padding: 0.5rem 1rem;      /* py-2 px-4 */
+    padding: 0 1rem;
     font-size: 1rem;           /* text-base */
     min-height: 2.5rem;
   }
 
   .lg {
-    padding: 0.75rem 1.25rem;  /* py-3 px-5 */
+    padding: 0 1.25rem;
     font-size: 1.125rem;       /* text-lg */
     min-height: 3rem;
   }

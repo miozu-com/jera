@@ -79,9 +79,9 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 9,
+      "revision": 10,
       "lastReviewed": "2026-09-27",
-      "breaking": [],
+      "breaking": [{"revision": 10, "date": "2026-09-27", "change": "Text buttons render at exactly the size scale height (xs 26px, sm 32px, md 40px, lg 48px), matching Input/Select and icon-only buttons; sm text buttons were ~35px, md ~42px."}],
       "docLevel": "standard"
     },
     {
