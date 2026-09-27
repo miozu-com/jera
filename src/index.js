@@ -72,6 +72,7 @@ export { default as ButtonInput } from "./components/forms/ButtonInput.svelte";
 export { default as DatePicker } from "./components/forms/DatePicker.svelte";
 export { default as TagInput } from "./components/forms/TagInput.svelte";
 export { default as OptionCard } from "./components/forms/OptionCard.svelte";
+export { default as FormField } from "./components/forms/FormField.svelte";
 
 // --------------------------------------------
 // COMPONENTS - Feedback

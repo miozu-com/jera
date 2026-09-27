@@ -25,6 +25,7 @@
     maxlength,
     minlength,
     autoResize = false,
+    size = 'md',
     class: className = '',
     unstyled = false,
     error = false,
@@ -42,6 +43,7 @@
   const textareaClass = $derived(
     unstyled ? className : cn(
       'textarea-base',
+      `textarea-${size}`,
       autoResize && 'textarea-auto-resize',
       error && 'textarea-error',
       className
@@ -87,10 +89,32 @@
     color: var(--color-base07);
     background-color: var(--color-base00);
     border: var(--border-width-default) solid var(--color-base02);
-    border-radius: var(--radius-lg);
+    /* radius-md, not radius-lg (breaking, components.json Textarea rev 6):
+       a Textarea beside an Input/Select in a form no longer draws a visibly
+       larger corner than everything next to it (jera-lifecycle.md's border
+       standard). */
+    border-radius: var(--radius-md);
     transition: var(--transition-colors);
     resize: vertical;
     font-family: inherit;
+  }
+
+  /* Size scale, same padding/font steps as Input's (jera-lifecycle.md). `md`
+     matches the unscaled rule above. */
+  .textarea-sm {
+    padding: 0.375rem 0.5rem;
+    font-size: var(--text-xs, 0.75rem);
+  }
+
+  .textarea-md {
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .textarea-lg {
+    padding: 0.75rem 1rem;
+    font-size: var(--text-base, 1rem);
+    border-radius: var(--radius-lg);
   }
 
   .textarea-base::placeholder {

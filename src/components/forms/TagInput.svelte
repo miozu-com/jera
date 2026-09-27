@@ -22,6 +22,9 @@
 
   @example With transform
   <TagInput bind:tags={tags} transform={t => t.toLowerCase().trim()} />
+
+  @example With type-ahead suggestions (native datalist, no popover code)
+  <TagInput bind:tags={materials} suggestions={['cotton', 'mesh fabric', 'polyester']} />
 -->
 <script>
   import { tagRejection } from './tagInput.rules.js';
@@ -32,11 +35,17 @@
     label = 'Tag input',
     inputLabel = null,
     variant = 'default',
+    size = 'md',
     maxTags = Infinity,
     maxTagLength = Infinity,
     disabled = false,
     duplicates = false,
     transform = null,
+    /** Type-ahead values offered through the field's native `<datalist>` —
+        e.g. an AI reading's detected materials. Picking one still goes
+        through `addTag`'s own dedupe/length/limit checks; nothing about a
+        suggestion bypasses them. */
+    suggestions = [],
     onchange,
     class: className = '',
     ...rest
@@ -46,6 +55,9 @@
   let inputRef = $state();
   /** Unique so two bounded TagInputs on one page don't share a description. */
   const lengthId = `tag-length-${crypto.randomUUID()}`;
+  /** Unique per instance for the same reason — and so two TagInputs with
+      different suggestion lists never share one datalist. */
+  const suggestionsId = `tag-suggestions-${crypto.randomUUID()}`;
   /** Polite announcement for add / remove / a refused tag. */
   let announcement = $state('');
 
@@ -118,7 +130,7 @@
 </script>
 
 <div
-  class="tag-input-container {className}"
+  class="tag-input-container tag-input-{size} {className}"
   class:tag-input-disabled={disabled}
   class:tag-input-invalid={overLength}
   style="--_variant-color: {variantColor}"
@@ -160,7 +172,15 @@
       aria-label={fieldLabel}
       aria-invalid={overLength || undefined}
       aria-describedby={overLength ? lengthId : undefined}
+      list={suggestions.length > 0 ? suggestionsId : undefined}
     />
+    {#if suggestions.length > 0}
+      <datalist id={suggestionsId}>
+        {#each suggestions as suggestion (suggestion)}
+          <option value={suggestion}></option>
+        {/each}
+      </datalist>
+    {/if}
   {/if}
 
   {#if atLimit}
@@ -211,6 +231,24 @@
   .tag-input-disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  /* Size scale: chip padding/font and the row's own min-height, `md` matching
+     the unscaled rule above. `sm` is for a table cell or a compact facts row
+     beside `Input size="sm"`. */
+  .tag-input-sm {
+    gap: 0.25rem;
+    padding: 0.25rem 0.375rem;
+    min-height: 2rem;
+  }
+
+  .tag-input-sm .tag-chip {
+    padding: 0.0625rem 0.375rem;
+    font-size: 0.6875rem;
+  }
+
+  .tag-input-sm .tag-field {
+    font-size: var(--text-xs, 0.75rem);
   }
 
   .tag-chip {

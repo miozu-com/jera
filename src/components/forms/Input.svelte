@@ -29,6 +29,7 @@
     maxlength,
     minlength,
     inputmode,
+    size = 'md',
     class: className = '',
     unstyled = false,
     disableBrowserFeatures = false,
@@ -48,6 +49,7 @@
   const inputClass = $derived(
     unstyled ? className : cn(
       'input-base',
+      `input-${size}`,
       error && 'input-error',
       className
     )
@@ -85,6 +87,7 @@
 <style>
   .input-base {
     width: 100%;
+    height: 2.5rem;
     padding: var(--space-4, 0.5rem) var(--space-6, 0.75rem);
     font-size: var(--text-sm, 0.875rem);
     line-height: var(--leading-normal, 1.5);
@@ -93,6 +96,39 @@
     border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-md, 0.375rem);
     transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  }
+
+  /* Size scale (`jera-lifecycle.md`'s size table: xs/sm/md/lg), same heights
+     and radii as `Select`/`SearchInput` so a row that mixes an Input with
+     either reads as one control height, not three. `md` is the default —
+     identical to the unscaled rule above, kept for anyone who passes it
+     explicitly. */
+  .input-xs {
+    height: 1.625rem;
+    padding: 0 0.375rem;
+    font-size: var(--text-xs, 0.75rem);
+    border-radius: var(--radius-default);
+  }
+
+  .input-sm {
+    height: 2rem;
+    padding: 0 0.5rem;
+    font-size: var(--text-xs, 0.75rem);
+    border-radius: var(--radius-md);
+  }
+
+  .input-md {
+    height: 2.5rem;
+    padding: var(--space-4, 0.5rem) var(--space-6, 0.75rem);
+    font-size: var(--text-sm, 0.875rem);
+    border-radius: var(--radius-md);
+  }
+
+  .input-lg {
+    height: 3rem;
+    padding: 0 1rem;
+    font-size: var(--text-base, 1rem);
+    border-radius: var(--radius-lg);
   }
 
   .input-base::placeholder {
