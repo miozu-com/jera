@@ -2973,11 +2973,26 @@
           "type": "'document' | 'self' | 'none'",
           "default": "'document'",
           "description": "Where \u2318V/Ctrl+V is claimed: 'document' also accepts a paste made while a field beside the zone has the caret, 'self' only when the zone itself is focused, 'none' disables paste"
+        },
+        "reorderable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Let the owner order the photos: drag a tile, arrow keys on a focused tile, or its star to move it first"
+        },
+        "leadLabel": {
+          "type": "string",
+          "default": "''",
+          "description": "Word drawn on the first tile (e.g. 'Main'); empty draws nothing"
+        },
+        "onreorder": {
+          "type": "function",
+          "default": "null",
+          "description": "Called with (from, to) after a move; onchange fires too"
         }
       },
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-09-17",
+      "revision": 5,
+      "lastReviewed": "2026-09-28",
       "docLevel": "none",
       "breaking": []
     },

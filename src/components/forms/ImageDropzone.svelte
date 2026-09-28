@@ -25,6 +25,9 @@
     onremove={handleRemove}
   />
 
+  @example Reorderable, first photo marked as the main one
+  <ImageDropzone bind:files={photos} reorderable leadLabel="Main" />
+
   @example With numbered previews and minimum count
   <ImageDropzone
     bind:files={productImages}
@@ -48,6 +51,8 @@
 </script>
 
 <script>
+  import {tick} from 'svelte';
+
   let {
     files = $bindable([]),
     accept = 'image/*',
@@ -62,6 +67,18 @@
     onchange = null,
     onremove = null,
     pasteTarget = 'document',
+    /**
+     * Let the owner put the photos in order: drag a tile onto another, move a
+     * focused tile with the arrow keys, or send one to the front with its star
+     * (always visible on touch, where native drag does not exist). Order is
+     * meaningful whenever the first file is treated differently — a product's
+     * main photo, a cover image.
+     */
+    reorderable = false,
+    /** A short word on the first tile ("Main", "Cover"); empty draws nothing. */
+    leadLabel = '',
+    /** Called with `(from, to)` after a move; `onchange` fires too. */
+    onreorder = null,
     class: className = ''
   } = $props();
 
@@ -131,9 +148,69 @@
     onchange?.(files);
   }
 
+  // ---- Reorder --------------------------------------------------------
+  /** Index of the tile being dragged, or `null`: an internal move, not a drop of new files. */
+  let dragFrom = $state(null);
+  let dragOver = $state(null);
+  /** Tile elements by index, for putting focus back after a keyboard move. */
+  let tileEls = $state([]);
+
+  function moveFile(from, to) {
+    if (from === to || from < 0 || to < 0 || from >= files.length || to >= files.length) return;
+    const next = [...files];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    files = next;
+    onreorder?.(from, to);
+    onchange?.(files);
+  }
+
+  function onTileDragStart(event, index) {
+    if (!reorderable || disabled) return;
+    dragFrom = index;
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', String(index));
+  }
+
+  function onTileDragOver(event, index) {
+    if (dragFrom === null) return;
+    event.preventDefault();
+    dragOver = index;
+  }
+
+  function onTileDrop(event, index) {
+    if (dragFrom === null) return;
+    event.preventDefault();
+    event.stopPropagation();
+    moveFile(dragFrom, index);
+    dragFrom = null;
+    dragOver = null;
+  }
+
+  function onTileDragEnd() {
+    dragFrom = null;
+    dragOver = null;
+  }
+
+  async function onTileKeydown(event, index) {
+    if (!reorderable || disabled) return;
+    const step =
+      event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1
+      : event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1
+      : 0;
+    if (!step) return;
+    const to = index + step;
+    if (to < 0 || to >= files.length) return;
+    event.preventDefault();
+    moveFile(index, to);
+    await tick();
+    tileEls[to]?.focus();
+  }
+
   function handleDrop(event) {
     event.preventDefault();
     isDragging = false;
+    if (dragFrom !== null) return;
     if (disabled) return;
     const dropped = event.dataTransfer?.files;
     if (!dropped?.length) return;
@@ -142,7 +219,8 @@
 
   function handleDragOver(event) {
     event.preventDefault();
-    if (!disabled) isDragging = true;
+    // A tile being moved is not a file arriving — no "drop here" highlight.
+    if (!disabled && dragFrom === null) isDragging = true;
   }
 
   function handleDragLeave(event) {
@@ -328,13 +406,47 @@
     <div class="preview-area" class:preview-area-dragging={isDragging}>
       {#if previews}
         <div class="preview-grid">
-          {#each files as img, index}
-            <div class="preview-item">
+          {#each files as img, index (img.preview)}
+            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+            <div
+              bind:this={tileEls[index]}
+              class="preview-item"
+              class:preview-item-reorderable={reorderable && !disabled}
+              class:preview-item-dragging={dragFrom === index}
+              class:preview-item-over={dragOver === index && dragFrom !== index}
+              draggable={reorderable && !disabled}
+              tabindex={reorderable && !disabled ? 0 : undefined}
+              role={reorderable ? 'group' : undefined}
+              aria-label={reorderable ?
+                `Photo ${index + 1} of ${files.length}${index === 0 && leadLabel ? ` (${leadLabel})` : ''}. Arrow keys move it.`
+              : undefined}
+              ondragstart={e => onTileDragStart(e, index)}
+              ondragover={e => onTileDragOver(e, index)}
+              ondrop={e => onTileDrop(e, index)}
+              ondragend={onTileDragEnd}
+              onkeydown={e => onTileKeydown(e, index)}
+            >
               <img
                 src={img.preview}
                 alt={img.name}
                 class="preview-thumb"
+                draggable="false"
               />
+              {#if index === 0 && leadLabel}
+                <span class="preview-lead">{leadLabel}</span>
+              {:else if reorderable && !disabled}
+                <button
+                  type="button"
+                  class="preview-front"
+                  onclick={() => moveFile(index, 0)}
+                  aria-label={leadLabel ? `Make ${img.name} the ${leadLabel.toLowerCase()} photo` : `Move ${img.name} first`}
+                  title={leadLabel ? `Make ${leadLabel.toLowerCase()}` : 'Move first'}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </button>
+              {/if}
               {#if showNumbers}
                 <span class="preview-number">{index + 1}</span>
               {/if}
@@ -524,6 +636,81 @@
     background: var(--color-base00);
   }
 
+  .preview-item-reorderable {
+    cursor: grab;
+  }
+
+  .preview-item-reorderable:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .preview-item-dragging {
+    opacity: 0.4;
+  }
+
+  .preview-item-over {
+    border-color: var(--color-base0D);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-base0D) 40%, transparent);
+  }
+
+  /* The first tile's word: an overlay on the photo, so it keeps one colour
+     pair in both themes — base00 text on the accent fill, never base07. */
+  .preview-lead {
+    position: absolute;
+    bottom: var(--space-2);
+    left: var(--space-2);
+    padding: 0.0625rem 0.375rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-base00);
+    background: var(--color-base0D);
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+  }
+
+  .preview-front {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    background: color-mix(in srgb, var(--color-base00) 85%, transparent);
+    border: none;
+    border-radius: var(--radius-full);
+    color: var(--color-base05);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out);
+    z-index: 1;
+  }
+
+  .preview-item:hover .preview-front,
+  .preview-item:focus-within .preview-front {
+    opacity: 1;
+  }
+
+  .preview-front:hover {
+    color: var(--color-base0D);
+  }
+
+  .preview-front:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  /* No hover on touch: the per-tile controls are the only way to act there. */
+  @media (hover: none) {
+    .preview-remove,
+    .preview-front {
+      opacity: 1;
+    }
+  }
+
   .preview-thumb {
     width: 100%;
     height: 100%;
@@ -554,6 +741,7 @@
   }
 
   .preview-item:hover .preview-remove,
+  .preview-item:focus-within .preview-remove,
   .preview-remove:focus-visible {
     opacity: 1;
   }
