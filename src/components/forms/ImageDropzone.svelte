@@ -85,8 +85,9 @@
   let isDragging = $state(false);
   let fileInput = $state(null);
   let sizeError = $state('');
+  let typeError = $state('');
 
-  const displayError = $derived(error || sizeError);
+  const displayError = $derived(error || typeError || sizeError);
 
   function formatSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
@@ -110,6 +111,40 @@
     'image/svg+xml': ['.svg']
   };
 
+  /** A plain word for a MIME type, for the rejection message — never the raw
+      `image/jpeg`. */
+  const MIME_LABEL = {
+    'image/jpeg': 'JPG',
+    'image/png': 'PNG',
+    'image/webp': 'WebP',
+    'image/avif': 'AVIF',
+    'image/gif': 'GIF',
+    'image/heic': 'HEIC',
+    'image/heif': 'HEIF',
+    'image/svg+xml': 'SVG'
+  };
+
+  /** The `accept` list, as the words a caption can use — `null` for `image/*`
+      or a list this map has no words for, which the caller reads as "name no
+      formats". */
+  function acceptedLabels() {
+    if (!accept || accept === '*' || accept === '*/*') return null;
+    const labels = accept
+      .split(',')
+      .map(t => t.trim())
+      .map(t => MIME_LABEL[t] || (t.startsWith('.') ? t.slice(1).toUpperCase() : null))
+      .filter(Boolean);
+    return labels.length > 0 ? [...new Set(labels)] : null;
+  }
+
+  /** The word for a rejected file's own format — its MIME type's label, else
+      its extension, else a generic stand-in. */
+  function fileFormatLabel(file) {
+    return (
+      MIME_LABEL[file.type] || (file.name.split('.').pop() || '').toUpperCase() || 'That file'
+    );
+  }
+
   function isFileTypeAccepted(file) {
     if (!accept || accept === '*' || accept === '*/*') return true;
     const acceptTypes = accept.split(',').map(t => t.trim());
@@ -132,19 +167,31 @@
 
   function addFiles(newFiles) {
     sizeError = '';
+    typeError = '';
     const remaining = maxFiles - files.length;
     if (remaining <= 0) return;
 
     const filtered = [];
     const oversized = [];
+    const rejectedTypes = [];
 
     for (const file of newFiles) {
-      if (!isFileTypeAccepted(file)) continue;
+      if (!isFileTypeAccepted(file)) {
+        rejectedTypes.push(fileFormatLabel(file));
+        continue;
+      }
       if (file.size > maxSize) {
         oversized.push(file.name);
         continue;
       }
       filtered.push(file);
+    }
+
+    if (rejectedTypes.length > 0) {
+      const bad = [...new Set(rejectedTypes)].join(', ');
+      const accepted = acceptedLabels();
+      const isnt = rejectedTypes.length === 1 ? "isn't" : "aren't";
+      typeError = `${bad} ${isnt} supported` + (accepted ? ` — use ${accepted.join(', ')}.` : '.');
     }
 
     if (oversized.length > 0) {
