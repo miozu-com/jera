@@ -59,6 +59,8 @@
     "./tokens/typography": "./src/tokens/typography.css",
     "./tokens/effects": "./src/tokens/effects.css",
     "./utils": "./src/utils/index.js",
+    "./utils/diff": "./src/utils/diff.js",
+    "./utils/color": "./src/utils/color.js",
     "./actions": "./src/actions/index.js",
     "./meta": "./src/meta/index.js"
   },

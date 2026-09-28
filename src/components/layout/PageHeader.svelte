@@ -13,13 +13,26 @@
     description="Manage your workspace team"
     stats={[
       {label: "Members", value: 12},
-      {label: "Active", value: 11, variant: "success"}
+      {label: "Active", value: 11, tone: "success"}
     ]}
   >
     {#snippet icon()}
       <Users size={20} />
     {/snippet}
   </PageHeader>
+
+  @example A status word instead of a count
+  <PageHeader
+    title="Knowledge"
+    stats={[
+      {label: 'Brand', value: 'Active v3', tone: 'success'},
+      {label: 'Sources', value: 12}
+    ]}
+  />
+
+  `stats[].tone` colours the value (and icon): success base0B, warning base09,
+  info base0D, error base08; omitted is neutral. `variant` is the older name
+  for the same field and still works.
 
   @example Detail page with a back link
   <PageHeader
@@ -51,6 +64,8 @@
     search,
     filters
   } = $props();
+
+  const TONES = ['success', 'warning', 'info', 'error'];
 </script>
 
 <header class="page-header page-header-{size} {className}">
@@ -92,14 +107,15 @@
     {#if stats.length > 0}
       <div class="header-stats">
         {#each stats as stat}
-          <div class="header-stat">
+          {@const tone = TONES.includes(stat.tone ?? stat.variant) ? (stat.tone ?? stat.variant) : null}
+          <div class="header-stat" data-tone={tone}>
             {#if stat.icon}
-              <span class="stat-icon" class:stat-icon-success={stat.variant === 'success'} class:stat-icon-warning={stat.variant === 'warning'} class:stat-icon-error={stat.variant === 'error'}>
+              <span class="stat-icon">
                 {@render stat.icon()}
               </span>
             {/if}
             <span class="stat-label">{stat.label}</span>
-            <span class="stat-value" class:stat-value-success={stat.variant === 'success'} class:stat-value-warning={stat.variant === 'warning'} class:stat-value-error={stat.variant === 'error'}>
+            <span class="stat-value">
               {stat.value}
             </span>
           </div>
@@ -250,18 +266,6 @@
     color: var(--color-base04);
   }
 
-  .stat-icon-success {
-    color: var(--color-base0B);
-  }
-
-  .stat-icon-warning {
-    color: var(--color-base0A);
-  }
-
-  .stat-icon-error {
-    color: var(--color-base08);
-  }
-
   .stat-label {
     font-size: var(--text-xs);
     font-weight: 500;
@@ -276,15 +280,21 @@
     color: var(--color-base06);
   }
 
-  .stat-value-success {
+  /* One tone colours both the value and its icon. warning is base09 (orange),
+     matching the counter/status warnings elsewhere in jera. */
+  .header-stat[data-tone='success'] :is(.stat-value, .stat-icon) {
     color: var(--color-base0B);
   }
 
-  .stat-value-warning {
-    color: var(--color-base0A);
+  .header-stat[data-tone='warning'] :is(.stat-value, .stat-icon) {
+    color: var(--color-base09);
   }
 
-  .stat-value-error {
+  .header-stat[data-tone='info'] :is(.stat-value, .stat-icon) {
+    color: var(--color-base0D);
+  }
+
+  .header-stat[data-tone='error'] :is(.stat-value, .stat-icon) {
     color: var(--color-base08);
   }
 

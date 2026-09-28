@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 94,
+  "totalComponents": 97,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -726,6 +726,50 @@
       "lastReviewed": "2026-03-05",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "DiffBlock",
+      "category": "feedback",
+      "path": "src/components/feedback/DiffBlock.svelte",
+      "description": "Sentence-level before/after of one block of prose: removed rows (base08 tint), added rows (base0B tint), unchanged rows base04; '(unchanged)' when identical. Algorithm is diffSentences in @miozu/jera/utils/diff",
+      "props": {
+        "before": {
+          "type": "string|string[]",
+          "default": "''",
+          "description": "Old text (split into sentences) or already-split rows"
+        },
+        "after": {
+          "type": "string|string[]",
+          "default": "''",
+          "description": "New text (split into sentences) or already-split rows"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Block heading, e.g. 'Hook'; also the section's aria-label"
+        },
+        "context": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Unchanged sentences kept around each change; longer runs fold into 'N unchanged sentences'"
+        },
+        "unchangedText": {
+          "type": "string",
+          "default": "'unchanged'",
+          "description": "Shown in parentheses beside the label when nothing changed"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the root section"
+        }
+      },
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-09-28",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "Spinner",
@@ -1502,9 +1546,9 @@
           "description": "Page description"
         },
         "stats": {
-          "type": "array",
+          "type": "Array<{label: string, value: string|number, tone?: 'success'|'warning'|'info'|'error', icon?: Snippet}>",
           "default": "[]",
-          "description": "Stat items: {label, value, variant?}"
+          "description": "Stat items. tone colours the value and icon (success base0B, warning base09, info base0D, error base08); variant is the older alias"
         },
         "size": {
           "type": "'default'|'compact'|'large'",
@@ -1525,8 +1569,8 @@
       "snippets": ["icon", "actions", "search", "filters"],
       "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-09-14",
+      "revision": 4,
+      "lastReviewed": "2026-09-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2480,6 +2524,40 @@
       "docLevel": "standard"
     },
     {
+      "name": "ColorSwatch",
+      "category": "primitives",
+      "path": "src/components/primitives/ColorSwatch.svelte",
+      "description": "Paints one raw hex colour as a bordered square. The only jera component that takes a raw colour (brand/theme data, not theme); invalid or empty hex renders a hatched 'No colour' swatch",
+      "props": {
+        "hex": {
+          "type": "string",
+          "default": "''",
+          "description": "'#RGB' or '#RRGGBB' (with or without #), painted as given"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'|'xl'",
+          "default": "'md'",
+          "description": "1 / 1.5 / 2 / 2.5 / 3rem square"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "aria-label; defaults to the normalised hex, or 'No colour'"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the root span"
+        }
+      },
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-09-28",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
       "name": "ChecklistCard",
       "category": "primitives",
       "path": "src/components/primitives/ChecklistCard.svelte",
@@ -2552,13 +2630,23 @@
           "type": "boolean",
           "default": "false",
           "description": "Disable item"
+        },
+        "meta": {
+          "type": "string|Snippet",
+          "default": "undefined",
+          "description": "Right-aligned small base04 text after the label (a price, a shortcut)"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes"
         }
       },
-      "snippets": ["icon", "children"],
+      "snippets": ["icon", "meta", "children"],
       "events": ["onclick"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-09-28",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -3291,6 +3379,71 @@
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-09-27",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "ColorInput",
+      "category": "forms",
+      "path": "src/components/forms/ColorInput.svelte",
+      "description": "Hex colour field: a swatch that is a native <input type=color> plus a hex text field in one form-standard box. No picker library",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "description": "Bindable. Always '' or uppercase '#RRGGBB'"
+        },
+        "id": {
+          "type": "string",
+          "default": "''",
+          "description": "id of the hex text field"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "name of the hex text field"
+        },
+        "label": {
+          "type": "string",
+          "default": "'Colour'",
+          "description": "Accessible name of the hex field (the picker gets '<label>: pick a colour')"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Same heights as Input (2 / 2.5 / 3rem)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable both controls"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Emptying the field reverts instead of clearing"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Error border (also shown while the typed text is not a colour)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'#000000'",
+          "description": "Hex field placeholder"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the root"
+        }
+      },
+      "events": ["onchange"],
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-09-28",
       "breaking": [],
       "docLevel": "minimal"
     },

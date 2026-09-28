@@ -59,6 +59,7 @@ Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 
 ### Feedback
 - [Alert](./src/components/feedback/Alert.svelte): Inline alert with icon and actions
+- [DiffBlock](./src/components/feedback/DiffBlock.svelte): Sentence-level before/after of a block of prose; algorithm diffSentences in @miozu/jera/utils/diff
 - [EmptyState](./src/components/feedback/EmptyState.svelte): Empty data placeholder
 - [ProgressBar](./src/components/feedback/ProgressBar.svelte): Determinate/indeterminate progress indicator
 - [Skeleton](./src/components/feedback/Skeleton.svelte): Loading placeholder with shimmer animation. Variant mode for primitives, preset mode for layout patterns.
@@ -99,6 +100,7 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [Card](./src/components/primitives/Card.svelte): Bordered container with optional title and semantic color variants
 - [ChecklistCard](./src/components/primitives/ChecklistCard.svelte): Sequential onboarding checklist. Shows steps with done/current/future states; the current step's whole row is the click target with the action chip beside the label. Auto-hides when all steps complete.
 - [DistributionBar](./src/components/primitives/DistributionBar.svelte): Horizontal segmented bar with auto-calculated percentages and optional legend
+- [ColorSwatch](./src/components/primitives/ColorSwatch.svelte): Paints one raw hex colour (brand/theme data) as a bordered square; hatched when empty
 - [FilterChip](./src/components/primitives/FilterChip.svelte): Toggleable filter chip with active state indicator
 - [LazyImage](./src/components/primitives/LazyImage.svelte): Image with IntersectionObserver lazy loading and fade-in animation
 - [Link](./src/components/primitives/Link.svelte): Polymorphic link/button with arrow icon that shifts on hover
@@ -113,6 +115,7 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [Dropzone](./src/components/forms/Dropzone.svelte): Single-file drag-and-drop zone with file preview and type validation
 - [FileUpload](./src/components/forms/FileUpload.svelte): Drag-and-drop upload zone with file list, size validation, and multi-file support
 - [FormField](./src/components/forms/FormField.svelte): Label-pairing wrapper for one editable row: label, control, hint/error, live counter, provenance/AI meta slot
+- [ColorInput](./src/components/forms/ColorInput.svelte): Hex colour field: native <input type=color> swatch plus hex text field, form border standard
 - [IconInput](./src/components/forms/IconInput.svelte): Input with leading/trailing icon slots, loading spinner, and clear button
 - [ImageDropzone](./src/components/forms/ImageDropzone.svelte): Drag-and-drop image upload with preview grid and file validation
 - [NumberInput](./src/components/forms/NumberInput.svelte): Stepper input with decrement/increment buttons and min/max enforcement

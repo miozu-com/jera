@@ -8,6 +8,12 @@
 
   @example
   <DropdownItem onclick={handleDelete} variant="danger">Delete</DropdownItem>
+
+  @example Right-aligned meta (a price, a shortcut)
+  <DropdownItem onclick={shorten} meta="5¢">Make it shorter</DropdownItem>
+
+  `meta` is a string or a snippet, rendered after the label in small base04
+  text. It is part of the item's accessible name, so keep it short.
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -16,6 +22,7 @@
     variant = 'default',
     disabled = false,
     icon,
+    meta,
     children,
     onclick,
     class: className = '',
@@ -57,6 +64,11 @@
   <span class="dropdown-item-label">
     {@render children?.()}
   </span>
+  {#if meta}
+    <span class="dropdown-item-meta">
+      {#if typeof meta === 'function'}{@render meta()}{:else}{meta}{/if}
+    </span>
+  {/if}
 </button>
 
 <style>
@@ -107,5 +119,13 @@
 
   .dropdown-item-label {
     flex: 1;
+  }
+
+  .dropdown-item-meta {
+    flex-shrink: 0;
+    margin-left: var(--space-4);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-base04);
   }
 </style>

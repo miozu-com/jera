@@ -45,6 +45,7 @@ export { default as Tooltip } from "./components/primitives/Tooltip.svelte";
 export { default as MemberCard } from "./components/primitives/MemberCard.svelte";
 export { default as DashCard } from "./components/primitives/DashCard.svelte";
 export { default as DistributionBar } from "./components/primitives/DistributionBar.svelte";
+export { default as ColorSwatch } from "./components/primitives/ColorSwatch.svelte";
 export { default as ThemeToggle } from "./components/primitives/ThemeToggle.svelte";
 export { default as ThemeSelect } from "./components/primitives/ThemeSelect.svelte";
 
@@ -73,6 +74,7 @@ export { default as DatePicker } from "./components/forms/DatePicker.svelte";
 export { default as TagInput } from "./components/forms/TagInput.svelte";
 export { default as OptionCard } from "./components/forms/OptionCard.svelte";
 export { default as FormField } from "./components/forms/FormField.svelte";
+export { default as ColorInput } from "./components/forms/ColorInput.svelte";
 
 // --------------------------------------------
 // COMPONENTS - Feedback
@@ -92,6 +94,7 @@ export { default as ProgressBar } from "./components/feedback/ProgressBar.svelte
 export { default as Spinner } from "./components/feedback/Spinner.svelte";
 export { default as EmptyState } from "./components/feedback/EmptyState.svelte";
 export { default as Alert } from "./components/feedback/Alert.svelte";
+export { default as DiffBlock } from "./components/feedback/DiffBlock.svelte";
 
 // --------------------------------------------
 // COMPONENTS - Overlays

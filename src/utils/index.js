@@ -39,3 +39,6 @@ export {
   generateAvatarDataURL,
   generateAvatarBlob
 } from './avatar.js';
+
+export { splitSentences, diffSentences, diffSummary } from './diff.js';
+export { normalizeHex } from './color.js';
