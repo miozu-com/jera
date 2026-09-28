@@ -81,7 +81,13 @@
       "stage": "stable",
       "revision": 10,
       "lastReviewed": "2026-09-27",
-      "breaking": [{"revision": 10, "date": "2026-09-27", "change": "Text buttons render at exactly the size scale height (xs 26px, sm 32px, md 40px, lg 48px), matching Input/Select and icon-only buttons; sm text buttons were ~35px, md ~42px."}],
+      "breaking": [
+        {
+          "revision": 10,
+          "date": "2026-09-27",
+          "change": "Text buttons render at exactly the size scale height (xs 26px, sm 32px, md 40px, lg 48px), matching Input/Select and icon-only buttons; sm text buttons were ~35px, md ~42px."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -2991,7 +2997,7 @@
         }
       },
       "stage": "beta",
-      "revision": 5,
+      "revision": 6,
       "lastReviewed": "2026-09-28",
       "docLevel": "none",
       "breaking": []

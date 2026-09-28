@@ -94,6 +94,22 @@
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   }
 
+  /**
+   * The extensions a MIME type is known to arrive with — the fallback below
+   * is keyed off this, not the other way round, so a consumer's `accept` list
+   * only ever has to name MIME types.
+   */
+  const MIME_EXTENSIONS = {
+    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/png': ['.png'],
+    'image/webp': ['.webp'],
+    'image/avif': ['.avif'],
+    'image/gif': ['.gif'],
+    'image/heic': ['.heic'],
+    'image/heif': ['.heif'],
+    'image/svg+xml': ['.svg']
+  };
+
   function isFileTypeAccepted(file) {
     if (!accept || accept === '*' || accept === '*/*') return true;
     const acceptTypes = accept.split(',').map(t => t.trim());
@@ -102,7 +118,15 @@
     return acceptTypes.some(type => {
       if (type.startsWith('.')) return fileExt === type.toLowerCase();
       if (type.endsWith('/*')) return fileType.startsWith(type.slice(0, -2) + '/');
-      return fileType === type;
+      if (fileType === type) return true;
+      // HEIC/HEIF photos (iPhone) often arrive with an empty `type` — some
+      // browsers and OSes never learned the MIME type, others hand back the
+      // generic `application/octet-stream`. Falling back to the extension a
+      // MIME type is known to use is what still lets one of these through.
+      if (!fileType || fileType === 'application/octet-stream') {
+        return (MIME_EXTENSIONS[type] || []).includes(fileExt);
+      }
+      return false;
     });
   }
 
