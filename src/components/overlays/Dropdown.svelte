@@ -19,6 +19,7 @@
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
+  import { portal } from '../../actions/index.js';
 
   let {
     open = $bindable(false),
@@ -192,11 +193,16 @@
 </div>
 
 {#if open}
+  <!-- The backdrop + panel render at body level (use:portal) so the panel's
+       z-index competes with the page root, not with whatever stacking context
+       the consumer placed the Dropdown inside (a fixed sidebar/header creates
+       one; the panel used to paint under it). -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="dropdown-portal-backdrop"
     onclick={close}
     onkeydown={handleContentKeydown}
+    use:portal
   >
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <div

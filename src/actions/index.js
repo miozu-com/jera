@@ -33,15 +33,15 @@ export function clickOutside(node, callback) {
   }
 
   // Use mousedown in bubble phase so trigger buttons can stopPropagation
-  document.addEventListener('mousedown', handleClick, false);
+  document.addEventListener("mousedown", handleClick, false);
 
   return {
     update(newCallback) {
       handler = newCallback;
     },
     destroy() {
-      document.removeEventListener('mousedown', handleClick, false);
-    }
+      document.removeEventListener("mousedown", handleClick, false);
+    },
   };
 }
 
@@ -61,20 +61,20 @@ export function focusTrap(node, options = {}) {
   let { enabled = true, initialFocus } = options;
 
   const focusableSelectors = [
-    'a[href]',
-    'button:not([disabled])',
-    'input:not([disabled])',
-    'select:not([disabled])',
-    'textarea:not([disabled])',
-    '[tabindex]:not([tabindex="-1"])'
-  ].join(',');
+    "a[href]",
+    "button:not([disabled])",
+    "input:not([disabled])",
+    "select:not([disabled])",
+    "textarea:not([disabled])",
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(",");
 
   function getFocusable() {
     return Array.from(node.querySelectorAll(focusableSelectors));
   }
 
   function handleKeydown(event) {
-    if (!enabled || event.key !== 'Tab') return;
+    if (!enabled || event.key !== "Tab") return;
 
     const focusable = getFocusable();
     if (focusable.length === 0) return;
@@ -101,7 +101,7 @@ export function focusTrap(node, options = {}) {
     target?.focus();
   }
 
-  node.addEventListener('keydown', handleKeydown);
+  node.addEventListener("keydown", handleKeydown);
   // Delay initial focus to allow transitions
   requestAnimationFrame(setInitialFocus);
 
@@ -112,8 +112,8 @@ export function focusTrap(node, options = {}) {
       if (enabled) setInitialFocus();
     },
     destroy() {
-      node.removeEventListener('keydown', handleKeydown);
-    }
+      node.removeEventListener("keydown", handleKeydown);
+    },
   };
 }
 
@@ -134,7 +134,7 @@ export function autoFocus(node, options = {}) {
 
   const timeout = setTimeout(() => {
     node.focus();
-    if (select && 'select' in node) {
+    if (select && "select" in node) {
       node.select();
     }
   }, delay);
@@ -142,7 +142,7 @@ export function autoFocus(node, options = {}) {
   return {
     destroy() {
       clearTimeout(timeout);
-    }
+    },
   };
 }
 
@@ -176,12 +176,12 @@ export function longPress(node, options) {
     }
   }
 
-  node.addEventListener('mousedown', handleStart);
-  node.addEventListener('touchstart', handleStart, { passive: true });
-  node.addEventListener('mouseup', handleEnd);
-  node.addEventListener('mouseleave', handleEnd);
-  node.addEventListener('touchend', handleEnd);
-  node.addEventListener('touchcancel', handleEnd);
+  node.addEventListener("mousedown", handleStart);
+  node.addEventListener("touchstart", handleStart, { passive: true });
+  node.addEventListener("mouseup", handleEnd);
+  node.addEventListener("mouseleave", handleEnd);
+  node.addEventListener("touchend", handleEnd);
+  node.addEventListener("touchcancel", handleEnd);
 
   return {
     update(newOptions) {
@@ -190,13 +190,13 @@ export function longPress(node, options) {
     },
     destroy() {
       handleEnd();
-      node.removeEventListener('mousedown', handleStart);
-      node.removeEventListener('touchstart', handleStart);
-      node.removeEventListener('mouseup', handleEnd);
-      node.removeEventListener('mouseleave', handleEnd);
-      node.removeEventListener('touchend', handleEnd);
-      node.removeEventListener('touchcancel', handleEnd);
-    }
+      node.removeEventListener("mousedown", handleStart);
+      node.removeEventListener("touchstart", handleStart);
+      node.removeEventListener("mouseup", handleEnd);
+      node.removeEventListener("mouseleave", handleEnd);
+      node.removeEventListener("touchend", handleEnd);
+      node.removeEventListener("touchcancel", handleEnd);
+    },
   };
 }
 
@@ -215,22 +215,22 @@ export function escapeKey(node, callback) {
   let handler = callback;
 
   function handleKeydown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       event.preventDefault();
       handler?.();
     }
   }
 
   // Listen on document for global escape handling
-  document.addEventListener('keydown', handleKeydown);
+  document.addEventListener("keydown", handleKeydown);
 
   return {
     update(newCallback) {
       handler = newCallback;
     },
     destroy() {
-      document.removeEventListener('keydown', handleKeydown);
-    }
+      document.removeEventListener("keydown", handleKeydown);
+    },
   };
 }
 
@@ -247,13 +247,20 @@ export function escapeKey(node, callback) {
  * <div use:portal>Portaled to body</div>
  * <div use:portal="#modal-root">Portaled to #modal-root</div>
  */
-export function portal(node, target = 'body') {
+export function portal(node, target = "body") {
+  // Actions only run client-side in Svelte, but keep this safe if one is ever
+  // driven from a non-DOM context (SSR, unit tests, hydration edges).
+  if (typeof document === "undefined") {
+    return { update() {}, destroy() {} };
+  }
+
   let targetEl;
 
   function update(newTarget) {
-    targetEl = typeof newTarget === 'string'
-      ? document.querySelector(newTarget)
-      : newTarget;
+    targetEl =
+      typeof newTarget === "string"
+        ? document.querySelector(newTarget)
+        : newTarget;
 
     if (targetEl) {
       targetEl.appendChild(node);
@@ -266,7 +273,7 @@ export function portal(node, target = 'body') {
     update,
     destroy() {
       node.remove();
-    }
+    },
   };
 }
 
@@ -287,7 +294,7 @@ export function intersect(node, config) {
   let { onIntersect, options = {} } = config;
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => onIntersect?.(entry));
+    entries.forEach((entry) => onIntersect?.(entry));
   }, options);
 
   observer.observe(node);
@@ -298,7 +305,7 @@ export function intersect(node, config) {
     },
     destroy() {
       observer.disconnect();
-    }
+    },
   };
 }
 
@@ -319,7 +326,7 @@ export function resize(node, callback) {
   let handler = callback;
 
   const observer = new ResizeObserver((entries) => {
-    entries.forEach(entry => handler?.(entry));
+    entries.forEach((entry) => handler?.(entry));
   });
 
   observer.observe(node);
@@ -330,7 +337,7 @@ export function resize(node, callback) {
     },
     destroy() {
       observer.disconnect();
-    }
+    },
   };
 }
 
@@ -352,7 +359,7 @@ export function copy(node, options = {}) {
 
   async function handleClick() {
     try {
-      const text = value ?? node.textContent ?? '';
+      const text = value ?? node.textContent ?? "";
       await navigator.clipboard.writeText(text);
       onCopy?.();
     } catch (err) {
@@ -360,7 +367,7 @@ export function copy(node, options = {}) {
     }
   }
 
-  node.addEventListener('click', handleClick);
+  node.addEventListener("click", handleClick);
 
   return {
     update(newOptions) {
@@ -369,7 +376,7 @@ export function copy(node, options = {}) {
       onError = newOptions.onError;
     },
     destroy() {
-      node.removeEventListener('click', handleClick);
-    }
+      node.removeEventListener("click", handleClick);
+    },
   };
 }

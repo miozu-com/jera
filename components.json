@@ -2608,8 +2608,8 @@
       },
       "snippets": ["trigger", "children"],
       "stage": "beta",
-      "revision": 7,
-      "lastReviewed": "2026-08-23",
+      "revision": 8,
+      "lastReviewed": "2026-09-30",
       "breaking": [
         "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
       ],
