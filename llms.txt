@@ -40,7 +40,7 @@ Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 
 ### Primitives
 - [Avatar](./src/components/primitives/Avatar.svelte): User avatar with image, algorithmic Truchet fallback, initials, and status indicator
-- [Badge](./src/components/primitives/Badge.svelte): Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 2px radius).
+- [Badge](./src/components/primitives/Badge.svelte): Status tag with semantic color variants, an optional indicator dot, and icon support. Tinted bordered style by default (10% bg, 30% border, 2px radius); tone="solid" fills with the full accent for badges that sit on photos.
 - [Button](./src/components/primitives/Button.svelte): Primary action trigger, polymorphic (a/button)
 - [DashCard](./src/components/primitives/DashCard.svelte): Glassmorphism dashboard section card with stagger-fade animation on mount
 - [Divider](./src/components/primitives/Divider.svelte): Visual separator with optional label

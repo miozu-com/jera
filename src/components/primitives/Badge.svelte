@@ -18,6 +18,10 @@
   <Badge variant="primary">
     <CheckIcon size={12} /> Verified
   </Badge>
+
+  @example Solid, over media
+  <Badge variant="success" tone="solid">Shopify</Badge>
+  <Badge tone="solid">+2</Badge>
 -->
 <script>
   let {
@@ -25,6 +29,7 @@
     label = '',
     variant = 'default',
     size = 'md',
+    tone = 'tinted',
     indicator = false,
     class: className = '',
     onclick,
@@ -37,7 +42,7 @@
 {#if isInteractive}
   <button
     type="button"
-    class="jera-badge jera-badge-{variant} jera-badge-{size} {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone} {className}"
     {onclick}
     {...rest}
   >
@@ -51,7 +56,10 @@
     {/if}
   </button>
 {:else}
-  <span class="jera-badge jera-badge-{variant} jera-badge-{size} {className}" {...rest}>
+  <span
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone} {className}"
+    {...rest}
+  >
     {#if indicator}
       <span class="badge-indicator"></span>
     {/if}
@@ -145,6 +153,70 @@
     background: color-mix(in srgb, var(--color-base0E) 10%, transparent);
     color: var(--color-base0E);
     border-color: color-mix(in srgb, var(--color-base0E) 30%, transparent);
+  }
+
+  /* Tone. Appended after the variants so `tinted` — still the default — keeps
+     rendering byte-identical for existing consumers. `solid` is the
+     over-media tone: on a photo the 10% tint is the photo, so the fill is the
+     full accent instead and the text is the app background (the house rule,
+     same pairing as FilterChip's count pill). Base07 would be wrong here — it
+     is the *darkest* gray in the light theme and lands at 1.7–3.9:1 on the
+     cool accents there. The 1px shadow separates the pill from a busy image;
+     it rides the tone so no consumer has to re-add it. */
+  .jera-badge-tone-solid {
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+  }
+
+  /* Neutral solid = scrim pill: the app background at 80%, primary text, a
+     half-strength border and a blur behind, for source + neutral states. */
+  .jera-badge-tone-solid.jera-badge-default,
+  .jera-badge-tone-solid.jera-badge-secondary {
+    background: color-mix(in srgb, var(--color-base00) 80%, transparent);
+    color: var(--color-base05);
+    border-color: color-mix(in srgb, var(--color-base03) 50%, transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  .jera-badge-tone-solid.jera-badge-primary,
+  .jera-badge-tone-solid.jera-badge-info {
+    background: var(--color-base0D);
+    color: var(--color-base00);
+    border-color: var(--color-base0D);
+  }
+
+  .jera-badge-tone-solid.jera-badge-success {
+    background: var(--color-base0B);
+    color: var(--color-base00);
+    border-color: var(--color-base0B);
+  }
+
+  .jera-badge-tone-solid.jera-badge-warning {
+    background: var(--color-base0A);
+    color: var(--color-base00);
+    border-color: var(--color-base0A);
+  }
+
+  .jera-badge-tone-solid.jera-badge-error {
+    background: var(--color-base08);
+    color: var(--color-base00);
+    border-color: var(--color-base08);
+  }
+
+  .jera-badge-tone-solid.jera-badge-accent {
+    background: var(--color-base0E);
+    color: var(--color-base00);
+    border-color: var(--color-base0E);
+  }
+
+  /* Light theme, yellow and green only: those two accents sit mid-lightness
+     (L 0.62 / 0.55), where app-background text measures 3.6:1 / 4.4:1 — the
+     darkest gray measures 5.7:1 / 4.7:1. Verified in Chrome 2026-09-30 against
+     the rendered pixels of every variant; red/orange/cyan/indigo/violet all
+     clear 4.5:1 with the app background. Same pattern as LeftBarItem's
+     light-mode override. */
+  :global([data-theme='miozu-light']) .jera-badge-tone-solid.jera-badge-warning,
+  :global([data-theme='miozu-light']) .jera-badge-tone-solid.jera-badge-success {
+    color: var(--color-base07);
   }
 
   /* Indicator dot */

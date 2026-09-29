@@ -94,12 +94,17 @@
       "name": "Badge",
       "category": "primitives",
       "path": "src/components/primitives/Badge.svelte",
-      "description": "Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 2px radius).",
+      "description": "Status tag with semantic color variants, an optional indicator dot, and icon support. Tinted bordered style by default (10% bg, 30% border, 2px radius); tone=\"solid\" fills with the full accent for badges that sit on photos.",
       "props": {
         "variant": {
           "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'|'accent'",
           "default": "'default'",
           "description": "Color variant"
+        },
+        "tone": {
+          "type": "'tinted'|'solid'",
+          "default": "'tinted'",
+          "description": "Fill treatment. tinted (default) is the 10% tint for a surface; solid fills with the full accent and puts the app background in the text, plus a 1px shadow — for badges over media. Neutral variants render a blurred scrim pill in solid."
         },
         "size": {
           "type": "'xs'|'sm'|'md'|'lg'",
@@ -126,8 +131,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-09-06",
+      "revision": 6,
+      "lastReviewed": "2026-09-30",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
         "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
