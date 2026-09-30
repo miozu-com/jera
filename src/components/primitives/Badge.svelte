@@ -250,7 +250,14 @@
   /* Interactive (button) */
   button.jera-badge {
     cursor: pointer;
-    font: inherit;
+    /* `font-family` alone, never the `font` shorthand: the shorthand reset
+       font-size/line-height to the inherited 16px and — at a higher
+       specificity than the size classes — silently cancelled
+       `jera-badge-xs`/`-sm` on every clickable badge (found live 2026-09-30:
+       the header's status badges rendered 16px/28px tall while the
+       non-interactive Draft chip, a <span>, honoured its `sm` class at
+       12px). The UA button font is still replaced; the size classes win. */
+    font-family: inherit;
   }
 
   button.jera-badge:hover {

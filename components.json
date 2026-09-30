@@ -131,7 +131,7 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 6,
+      "revision": 7,
       "lastReviewed": "2026-09-30",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
