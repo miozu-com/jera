@@ -272,7 +272,7 @@
     left: anchor(left);
 
     /* Auto-flip when near viewport edges */
-    position-try-fallbacks: flip-block;
+    position-try-fallbacks: flip-block, flip-inline;
 
     &[data-position="bottom-end"] {
       left: unset;
