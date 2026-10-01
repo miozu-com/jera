@@ -51,11 +51,13 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 **Badge:** `variant` (default|primary|secondary|success|warning|error|info|accent), `size` (sm|md|lg)
 
 **Modal:** `bind:open`, `title`, `size` (sm-xl), `variant`, `fill`, `footer` (snippet)
+
 - **fill** — Anchors dialog to stable height (80dvh). Prevents collapse when content changes (empty states, search results). Uses flex column: header/footer pinned, body stretches + scrolls.
 
 **Toast:** Singleton — `getToastState()` from any file. Dual progress: `'ring'` (default) or `'bar'`. Title-first convenience: `toast.success('Saved', 'Changes applied')`. Error default 6s. Pause-on-hover. Svelte `fly` transitions. Popover top-layer.
 
 **Tabs:** `tabs=[{id, label, badge?, icon?, panelId?}]`, `bind:active`, `variant` (default|segment|underline|pills), `size` (sm|md|lg), `fullWidth`, `onchange`
+
 - **default** — Pill bg indicator slides between tabs
 - **segment** — iOS-style segmented control with capsule shadow (use for compact sidebar tabs)
 - **underline** — Bottom border slides between tabs
@@ -69,6 +71,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 **LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
 
 **BottomPanel:** `bind:open`, `bind:minimized`, `bind:height`, `minHeight`, `maxHeight`, `minimizedHeight`, `offsetLeft`, `resizable`, `onresize`
+
 - Fixed bottom slide-up panel with drag-to-resize
 - Snippets: `header` (always visible), `sidebar` (optional left column), `children` (main content)
 - Consumer provides close/minimize buttons in header snippet
@@ -78,26 +81,27 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 All form components (Input, Select, SearchInput, Checkbox) share identical border rendering:
 
-| Property | Value | Token |
-|----------|-------|-------|
-| Border width | `var(--border-width-default)` (2px) | border-width-default |
-| Border color | `var(--color-base02)` | base02 |
-| Border radius | `var(--radius-md)` (6px) | radius-md |
-| Background | `var(--color-base00)` | base00 |
-| Hover border | `var(--color-base03)` | base03 |
-| Focus ring | `box-shadow: var(--focus-ring-shadow)` | focus-ring-shadow |
-| Error focus ring | `box-shadow: var(--focus-ring-shadow-error)` | focus-ring-shadow-error |
-| Error border | `var(--color-base08)` | base08 |
-| Divider/separator | `var(--border-width-thin)` (1px) | border-width-thin |
-| Checkbox box | `1.125rem` (18px), `var(--radius-default)` (4px) | — |
+| Property          | Value                                                                                  | Token                   |
+| ----------------- | -------------------------------------------------------------------------------------- | ----------------------- |
+| Border width      | `var(--border-width-default)` (1px)                                                    | border-width-default    |
+| Border color      | `var(--color-base02)`                                                                  | base02                  |
+| Border radius     | `var(--radius-default)` / `var(--radius-md)` (4px in dash — its `theme.css` pins both) | radius-default          |
+| Background        | `var(--color-base00)`                                                                  | base00                  |
+| Hover border      | `var(--color-base03)`                                                                  | base03                  |
+| Focus ring        | `box-shadow: var(--focus-ring-shadow)`                                                 | focus-ring-shadow       |
+| Error focus ring  | `box-shadow: var(--focus-ring-shadow-error)`                                           | focus-ring-shadow-error |
+| Error border      | `var(--color-base08)`                                                                  | base08                  |
+| Divider/separator | `var(--border-width-thin)` (1px)                                                       | border-width-thin       |
+| Checkbox box      | `1.125rem` (18px), `var(--radius-default)` (4px)                                       | —                       |
 
 **Size scale** (Select, SearchInput):
-| Size | Height | Font | Radius |
-|------|--------|------|--------|
-| xs | 1.625rem (26px) | 0.75rem | radius-default (4px) |
-| sm | 2rem (32px) | 0.75rem | radius-md (6px) |
-| md | 2.5rem (40px) | 0.875rem | radius-md (6px) |
-| lg | 3rem (48px) | 1rem | radius-lg (8px) |
+
+| Size | Height          | Font     | Radius               |
+| ---- | --------------- | -------- | -------------------- |
+| xs   | 1.625rem (26px) | 0.75rem  | radius-default (4px) |
+| sm   | 2rem (32px)     | 0.75rem  | radius-md (6px)      |
+| md   | 2.5rem (40px)   | 0.875rem | radius-md (6px)      |
+| lg   | 3rem (48px)     | 1rem     | radius-lg (8px)      |
 
 **Anti-pattern:** Never wrap jera form components in a div that has its own `border`, `background`, or `padding`. This creates double borders. Jera components handle their own chrome.
 
@@ -108,6 +112,7 @@ Singleton pattern with `miozu-theme` storage key.
 **Full reference:** `knowledge/curated/ai-context/theme-management.md`
 
 **ThemeToggle:** Accessible toggle with animated sun/moon icons
+
 ```svelte
 import ThemeToggle from '@miozu/jera/components/primitives/ThemeToggle';
 <ThemeToggle />
@@ -115,6 +120,7 @@ import ThemeToggle from '@miozu/jera/components/primitives/ThemeToggle';
 ```
 
 **ThemeSelect:** Three-option selector (light/dark/system)
+
 ```svelte
 import ThemeSelect from '@miozu/jera/components/primitives/ThemeSelect';
 <ThemeSelect />
@@ -122,13 +128,14 @@ import ThemeSelect from '@miozu/jera/components/primitives/ThemeSelect';
 ```
 
 **ThemeState API:**
+
 ```javascript
-import { getTheme } from '@miozu/jera/utils';
+import { getTheme } from "@miozu/jera/utils";
 const theme = getTheme();
-theme.init();        // Call once in root onMount
-theme.toggle();      // Switch dark/light
-theme.set('system'); // Follow OS preference
-theme.isDark;        // boolean reactive property
+theme.init(); // Call once in root onMount
+theme.toggle(); // Switch dark/light
+theme.set("system"); // Follow OS preference
+theme.isDark; // boolean reactive property
 ```
 
 ## Import Style (CRITICAL)
@@ -137,38 +144,38 @@ theme.isDark;        // boolean reactive property
 
 ```javascript
 // CORRECT — deep-path imports (used by dash + admin)
-import Button from '@miozu/jera/components/primitives/Button';
-import Input from '@miozu/jera/components/forms/Input';
-import Modal from '@miozu/jera/components/overlays/Modal';
-import Toast, { getToastState } from '@miozu/jera/components/feedback/Toast';
+import Button from "@miozu/jera/components/primitives/Button";
+import Input from "@miozu/jera/components/forms/Input";
+import Modal from "@miozu/jera/components/overlays/Modal";
+import Toast, { getToastState } from "@miozu/jera/components/feedback/Toast";
 
 // Utilities and actions have their own entry points
-import { cn, cv } from '@miozu/jera/utils';
-import { getTheme } from '@miozu/jera/utils';
-import { clickOutside, focusTrap } from '@miozu/jera/actions';
-import '@miozu/jera/tokens';
+import { cn, cv } from "@miozu/jera/utils";
+import { getTheme } from "@miozu/jera/utils";
+import { clickOutside, focusTrap } from "@miozu/jera/actions";
+import "@miozu/jera/tokens";
 
 // WRONG — barrel imports (slow dev server, poor tree-shaking)
-import { Button, Input, Modal } from '@miozu/jera';
+import { Button, Input, Modal } from "@miozu/jera";
 ```
 
 **Why deep-path:** Barrel files force Vite to parse 90+ re-exports on every HMR update. Deep imports load only the component you need, giving faster dev server cold starts and reliable tree-shaking.
 
 ### Path patterns
 
-| Category | Deep path |
-|----------|-----------|
-| Primitives | `@miozu/jera/components/primitives/{Name}` |
-| Forms | `@miozu/jera/components/forms/{Name}` |
-| Feedback | `@miozu/jera/components/feedback/{Name}` |
-| Overlays | `@miozu/jera/components/overlays/{Name}` |
-| Navigation | `@miozu/jera/components/navigation/{Name}` |
-| Nav blocks | `@miozu/jera/components/navigation/blocks/{Name}` |
-| Layout | `@miozu/jera/components/layout/{Name}` |
-| Docs | `@miozu/jera/components/docs/{Name}` |
-| Utilities | `@miozu/jera/utils` |
-| Actions | `@miozu/jera/actions` |
-| Tokens (CSS) | `@miozu/jera/tokens` |
+| Category     | Deep path                                         |
+| ------------ | ------------------------------------------------- |
+| Primitives   | `@miozu/jera/components/primitives/{Name}`        |
+| Forms        | `@miozu/jera/components/forms/{Name}`             |
+| Feedback     | `@miozu/jera/components/feedback/{Name}`          |
+| Overlays     | `@miozu/jera/components/overlays/{Name}`          |
+| Navigation   | `@miozu/jera/components/navigation/{Name}`        |
+| Nav blocks   | `@miozu/jera/components/navigation/blocks/{Name}` |
+| Layout       | `@miozu/jera/components/layout/{Name}`            |
+| Docs         | `@miozu/jera/components/docs/{Name}`              |
+| Utilities    | `@miozu/jera/utils`                               |
+| Actions      | `@miozu/jera/actions`                             |
+| Tokens (CSS) | `@miozu/jera/tokens`                              |
 
 ## Svelte 5 Patterns
 
@@ -189,15 +196,15 @@ import { Button, Input, Modal } from '@miozu/jera';
 
 ```javascript
 export const buttonStyles = cv({
-  base: 'inline-flex items-center justify-center rounded-lg font-medium',
+  base: "inline-flex items-center justify-center rounded-lg font-medium",
   variants: {
     variant: {
-      primary: 'bg-base0D text-base07',
-      ghost: 'bg-transparent text-base05 hover:bg-base02'
+      primary: "bg-base0D text-base07",
+      ghost: "bg-transparent text-base05 hover:bg-base02",
     },
-    size: { sm: 'h-8 px-3 text-sm', md: 'h-10 px-4' }
+    size: { sm: "h-8 px-3 text-sm", md: "h-10 px-4" },
   },
-  defaults: { variant: 'primary', size: 'md' }
+  defaults: { variant: "primary", size: "md" },
 });
 ```
 
@@ -219,25 +226,29 @@ All jera components with persistent state follow the **singleton reactive class*
 ```javascript
 // In the component's <script module>
 export class FooController {
-  items = $state.raw([]);   // $state.raw for arrays/objects (no deep proxy)
-  config = $state('default'); // $state for primitives
+  items = $state.raw([]); // $state.raw for arrays/objects (no deep proxy)
+  config = $state("default"); // $state for primitives
   // ...methods
 }
 
 let _instance = null;
 export function getFooState(config) {
-  if (!_instance) { _instance = new FooController(); /* apply config */ }
+  if (!_instance) {
+    _instance = new FooController(); /* apply config */
+  }
   return _instance;
 }
-export function resetFooState() { _instance = null; }
+export function resetFooState() {
+  _instance = null;
+}
 ```
 
 ### Current Singletons
 
-| Component | Getter | Controller |
-|-----------|--------|------------|
+| Component | Getter            | Controller        |
+| --------- | ----------------- | ----------------- |
 | **Toast** | `getToastState()` | `ToastController` |
-| **Theme** | `getTheme()` | `ThemeState` |
+| **Theme** | `getTheme()`      | `ThemeState`      |
 
 ### Rules
 
@@ -279,12 +290,12 @@ Components progress through maturity stages tracked in `components.json` (v2 sch
 
 ### Stage Definitions
 
-| Stage | Meaning | Agent Behavior |
-|-------|---------|----------------|
-| `draft` | Under development, API may change | ASK USER before using in any consumer |
-| `beta` | Functional, not yet in production consumers | Use freely, add `<!-- beta: ComponentName -->` comment |
-| `stable` | Production-ready, used by consumers | Use directly, no caveats |
-| `deprecated` | Replaced, will be removed | NEVER use. Check `replacedBy` for the replacement |
+| Stage        | Meaning                                     | Agent Behavior                                         |
+| ------------ | ------------------------------------------- | ------------------------------------------------------ |
+| `draft`      | Under development, API may change           | ASK USER before using in any consumer                  |
+| `beta`       | Functional, not yet in production consumers | Use freely, add `<!-- beta: ComponentName -->` comment |
+| `stable`     | Production-ready, used by consumers         | Use directly, no caveats                               |
+| `deprecated` | Replaced, will be removed                   | NEVER use. Check `replacedBy` for the replacement      |
 
 ### When Editing a Component
 
@@ -303,9 +314,9 @@ Components progress through maturity stages tracked in `components.json` (v2 sch
 
 ### Doc Level Requirements
 
-| Stage | Min docLevel | Required Sections |
-|-------|-------------|-------------------|
-| `stable` | `standard` | Playground, header, variants, props, usage examples |
-| `beta` | `minimal` | Playground, header, props |
-| `draft` | `none` | No docs page required |
-| `deprecated` | `none` | Remove docs if exists |
+| Stage        | Min docLevel | Required Sections                                   |
+| ------------ | ------------ | --------------------------------------------------- |
+| `stable`     | `standard`   | Playground, header, variants, props, usage examples |
+| `beta`       | `minimal`    | Playground, header, props                           |
+| `draft`      | `none`       | No docs page required                               |
+| `deprecated` | `none`       | Remove docs if exists                               |

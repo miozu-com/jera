@@ -11,7 +11,13 @@
    * ======================================== */
 
   --border-width-thin: 1px;
-  --border-width-default: 2px;
+  /* 2px → 1px, 2026-10-02: the owner asked for thinner borders on every input
+     ("make border thinner for all inputs"). The default is the token every
+     control draws with — Input, Select, TagInput, Textarea, Radio, FilterChip,
+     and the overlays' own chrome — so the change lands in one place rather than
+     as a per-consumer override. `--border-width-thin` stays the divider width;
+     the two are equal now, which is intended. */
+  --border-width-default: 1px;
   --border-width-thick: 3px;
 
   /* ========================================
