@@ -1324,7 +1324,7 @@
       },
       "snippets": ["renderIcon"],
       "stage": "beta",
-      "revision": 2,
+      "revision": 3,
       "lastReviewed": "2026-10-02",
       "breaking": [],
       "docLevel": "none"
@@ -1430,7 +1430,7 @@
         "badgeColor": {
           "type": "'blue'|'green'|'yellow'|'purple'|'red'",
           "default": "null",
-          "description": "Badge color (null = blue). A colored badge is a status marker: it also renders a corner dot on the icon when the bar is collapsed, while plain count badges stay hidden until expand"
+          "description": "Badge color (null = neutral info). Badges render as jera Badge (xs). A colored badge is a status marker: it also earns a corner dot on the icon when the bar is collapsed, while plain count badges stay hidden until expand"
         },
         "variant": {
           "type": "'default'|'warning'|'danger'|'success'",
@@ -1441,7 +1441,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-10-02",
       "breaking": [],
       "docLevel": "standard"

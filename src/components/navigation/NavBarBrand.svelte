@@ -14,13 +14,16 @@
   Props:
     brand        - {icon, label, badge?, badgeColor?, description, breadcrumbs}
                    badge/badgeColor render a tiny status chip after the label
-                   (e.g. "Early alpha") — same palette as section footer badges.
+                   (e.g. "Early alpha") — a jera Badge (xs), so it matches the
+                   sidebar's item badges exactly.
     onBrandClick - Optional: called on tap/click instead of opening the panel
     renderIcon   - Snippet: (name, size) => renders an icon component
     open         - Bindable: whether the context panel is showing
     onopen       - Called when the panel opens, so the parent can close its own menus
 -->
 <script>
+  import Badge from '../primitives/Badge.svelte';
+
   let {
     brand = { label: 'Home', description: '', breadcrumbs: [] },
     onBrandClick = null,
@@ -28,6 +31,19 @@
     open = $bindable(false),
     onopen = () => {}
   } = $props();
+
+  // badgeColor slots map onto Badge variants — same palette as LeftBarItem's
+  // badges, so the header chip and the sidebar chip read as one element.
+  // Yellow default: an unspecified badge color is a status marker, and that
+  // is warning-shaped by convention (Ads "Early access" does the same).
+  const BADGE_VARIANTS = {
+    blue: 'primary',
+    green: 'success',
+    yellow: 'warning',
+    purple: 'accent',
+    red: 'error'
+  };
+  const badgeVariant = $derived(BADGE_VARIANTS[brand.badgeColor] ?? 'warning');
 
   let wrapEl = $state(null);
   let closeTimer = null;
@@ -109,7 +125,7 @@
   {/if}
   <span>{brand.label}</span>
   {#if brand.badge}
-    <span class="brand-badge" data-color={brand.badgeColor}>{brand.badge}</span>
+    <Badge size="xs" variant={badgeVariant}>{brand.badge}</Badge>
   {/if}
   {#if interactive}
     <svg
@@ -228,41 +244,6 @@
     button.navbar-brand {
       min-height: var(--space-22); /* 44px */
     }
-  }
-
-  /* Status chip after the label — mirrors the section footer badges in NavBar
-     (same 9px uppercase treatment) so the two read as one vocabulary. Yellow
-     is the default; data-color overrides pick the other palette slots. */
-  .brand-badge {
-    font-size: 9px;
-    padding: 1px 6px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    flex-shrink: 0;
-    background-color: color-mix(in srgb, var(--color-base0A) 15%, transparent);
-    color: var(--color-base0A);
-  }
-
-  .brand-badge[data-color='blue'] {
-    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
-    color: var(--color-base0D);
-  }
-
-  .brand-badge[data-color='green'] {
-    background-color: color-mix(in srgb, var(--color-base0B) 15%, transparent);
-    color: var(--color-base0B);
-  }
-
-  .brand-badge[data-color='purple'] {
-    background-color: color-mix(in srgb, var(--color-base0E) 15%, transparent);
-    color: var(--color-base0E);
-  }
-
-  .brand-badge[data-color='red'] {
-    background-color: color-mix(in srgb, var(--color-base08) 15%, transparent);
-    color: var(--color-base08);
   }
 
   .brand-chevron {

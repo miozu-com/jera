@@ -23,6 +23,7 @@
   import { getContext } from 'svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
+  import Badge from '../primitives/Badge.svelte';
 
   let {
     href = null,
@@ -33,8 +34,8 @@
     expanded = $bindable(false),
     subroutes = [],
     badge = null,
-    // Colors the badge (blue|green|yellow|purple|red; default blue). Doubles as
-    // the status-marker signal: a badge WITH a color also earns a small dot on
+    // Colors the badge (blue|green|yellow|purple|red). Doubles as the
+    // status-marker signal: a badge WITH a color also earns a small dot on
     // the icon when the bar is collapsed, while plain counts (chat unread)
     // keep their old behavior of disappearing entirely.
     badgeColor = null,
@@ -53,6 +54,17 @@
 
   const leftbar = getContext('leftbar');
   const isCollapsed = $derived(leftbar?.collapsed ?? false);
+
+  // badgeColor slots map onto Badge variants — same palette, semantic names.
+  // No color = plain count badge → neutral info chip (chat unread as before).
+  const BADGE_VARIANTS = {
+    blue: 'primary',
+    green: 'success',
+    yellow: 'warning',
+    purple: 'accent',
+    red: 'error'
+  };
+  const badgeVariant = $derived(badgeColor ? BADGE_VARIANTS[badgeColor] : 'info');
 
   function handleClick(e) {
     if (expandable) {
@@ -94,7 +106,9 @@
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
+            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
+          </span>
         {/if}
         {@render trailing?.()}
       {/if}
@@ -120,7 +134,9 @@
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
+            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
+          </span>
         {/if}
         {@render trailing?.()}
         <span transition:fade={{ duration: 150 }}>
@@ -177,7 +193,9 @@
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
+            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
+          </span>
         {/if}
         {@render trailing?.()}
       {/if}
@@ -268,37 +286,12 @@
     overflow: hidden;
   }
 
-  .nav-badge {
-    padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-    color: var(--color-base0D);
-    border-radius: var(--radius-full);
+  /* Layout-only wrapper so the fade transition has an element to own; the
+     chip itself is jera Badge (xs) — same radius/typography as every other
+     badge in the app. */
+  .nav-badge-wrap {
+    display: inline-flex;
     flex-shrink: 0;
-  }
-
-  /* Same palette slots as NavBar's footer badges and NavBarBrand's chip. */
-  .nav-badge[data-color='green'] {
-    background-color: color-mix(in srgb, var(--color-base0B) 15%, transparent);
-    color: var(--color-base0B);
-  }
-
-  .nav-badge[data-color='yellow'] {
-    background-color: color-mix(in srgb, var(--color-base0A) 15%, transparent);
-    color: var(--color-base0A);
-  }
-
-  .nav-badge[data-color='purple'] {
-    background-color: color-mix(in srgb, var(--color-base0E) 15%, transparent);
-    color: var(--color-base0E);
-  }
-
-  .nav-badge[data-color='red'] {
-    background-color: color-mix(in srgb, var(--color-base08) 15%, transparent);
-    color: var(--color-base08);
   }
 
   /* Collapsed-bar status dot — sits on the icon's top-right corner (icon is
