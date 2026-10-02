@@ -1304,7 +1304,7 @@
         "brand": {
           "type": "object",
           "default": "{label:'Home'}",
-          "description": "Brand config: {icon, label, description, breadcrumbs}"
+          "description": "Brand config: {icon, label, badge?, badgeColor?, description, breadcrumbs} \u2014 badge renders a status chip after the label (color: blue|green|yellow|purple|red, yellow default)"
         },
         "onBrandClick": {
           "type": "function",
@@ -1324,8 +1324,8 @@
       },
       "snippets": ["renderIcon"],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-08-23",
+      "revision": 2,
+      "lastReviewed": "2026-10-02",
       "breaking": [],
       "docLevel": "none"
     },

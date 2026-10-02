@@ -12,7 +12,9 @@
   together instead of bloating the navbar shell.
 
   Props:
-    brand        - {icon, label, description, breadcrumbs}
+    brand        - {icon, label, badge?, badgeColor?, description, breadcrumbs}
+                   badge/badgeColor render a tiny status chip after the label
+                   (e.g. "Early alpha") — same palette as section footer badges.
     onBrandClick - Optional: called on tap/click instead of opening the panel
     renderIcon   - Snippet: (name, size) => renders an icon component
     open         - Bindable: whether the context panel is showing
@@ -106,6 +108,9 @@
     {@render renderIcon(brand.icon, 16)}
   {/if}
   <span>{brand.label}</span>
+  {#if brand.badge}
+    <span class="brand-badge" data-color={brand.badgeColor}>{brand.badge}</span>
+  {/if}
   {#if interactive}
     <svg
       class="brand-chevron"
@@ -223,6 +228,41 @@
     button.navbar-brand {
       min-height: var(--space-22); /* 44px */
     }
+  }
+
+  /* Status chip after the label — mirrors the section footer badges in NavBar
+     (same 9px uppercase treatment) so the two read as one vocabulary. Yellow
+     is the default; data-color overrides pick the other palette slots. */
+  .brand-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+    background-color: color-mix(in srgb, var(--color-base0A) 15%, transparent);
+    color: var(--color-base0A);
+  }
+
+  .brand-badge[data-color='blue'] {
+    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+    color: var(--color-base0D);
+  }
+
+  .brand-badge[data-color='green'] {
+    background-color: color-mix(in srgb, var(--color-base0B) 15%, transparent);
+    color: var(--color-base0B);
+  }
+
+  .brand-badge[data-color='purple'] {
+    background-color: color-mix(in srgb, var(--color-base0E) 15%, transparent);
+    color: var(--color-base0E);
+  }
+
+  .brand-badge[data-color='red'] {
+    background-color: color-mix(in srgb, var(--color-base08) 15%, transparent);
+    color: var(--color-base08);
   }
 
   .brand-chevron {
