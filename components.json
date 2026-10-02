@@ -1427,6 +1427,11 @@
           "default": "null",
           "description": "Badge text"
         },
+        "badgeColor": {
+          "type": "'blue'|'green'|'yellow'|'purple'|'red'",
+          "default": "null",
+          "description": "Badge color (null = blue). A colored badge is a status marker: it also renders a corner dot on the icon when the bar is collapsed, while plain count badges stay hidden until expand"
+        },
         "variant": {
           "type": "'default'|'warning'|'danger'|'success'",
           "default": "'default'",
@@ -1436,8 +1441,8 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-28",
+      "revision": 4,
+      "lastReviewed": "2026-10-02",
       "breaking": [],
       "docLevel": "standard"
     },

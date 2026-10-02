@@ -33,6 +33,11 @@
     expanded = $bindable(false),
     subroutes = [],
     badge = null,
+    // Colors the badge (blue|green|yellow|purple|red; default blue). Doubles as
+    // the status-marker signal: a badge WITH a color also earns a small dot on
+    // the icon when the bar is collapsed, while plain counts (chat unread)
+    // keep their old behavior of disappearing entirely.
+    badgeColor = null,
     preload = true,
     variant = 'default',
     onclick = null,
@@ -83,10 +88,13 @@
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
+      {#if isCollapsed && badge != null && badgeColor}
+        <span class="nav-status-dot" data-color={badgeColor}></span>
+      {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
         {/if}
         {@render trailing?.()}
       {/if}
@@ -106,10 +114,13 @@
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
+      {#if isCollapsed && badge != null && badgeColor}
+        <span class="nav-status-dot" data-color={badgeColor}></span>
+      {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
         {/if}
         {@render trailing?.()}
         <span transition:fade={{ duration: 150 }}>
@@ -160,10 +171,13 @@
       {#if Icon}
         <Icon size={18} class="nav-icon" />
       {/if}
+      {#if isCollapsed && badge != null && badgeColor}
+        <span class="nav-status-dot" data-color={badgeColor}></span>
+      {/if}
       {#if !isCollapsed}
         <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
         {#if badge != null}
-          <span class="nav-badge" transition:fade={{ duration: 150 }}>{badge}</span>
+          <span class="nav-badge" data-color={badgeColor} transition:fade={{ duration: 150 }}>{badge}</span>
         {/if}
         {@render trailing?.()}
       {/if}
@@ -214,6 +228,8 @@
     margin-left: 0.25rem;
     margin-right: 0.25rem;
     width: calc(100% - 0.5rem);
+    /* Anchor for the collapsed status dot. */
+    position: relative;
   }
 
   .nav-item.active {
@@ -256,10 +272,66 @@
     padding: 0.125rem 0.375rem;
     font-size: 0.625rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
     border-radius: var(--radius-full);
     flex-shrink: 0;
+  }
+
+  /* Same palette slots as NavBar's footer badges and NavBarBrand's chip. */
+  .nav-badge[data-color='green'] {
+    background-color: color-mix(in srgb, var(--color-base0B) 15%, transparent);
+    color: var(--color-base0B);
+  }
+
+  .nav-badge[data-color='yellow'] {
+    background-color: color-mix(in srgb, var(--color-base0A) 15%, transparent);
+    color: var(--color-base0A);
+  }
+
+  .nav-badge[data-color='purple'] {
+    background-color: color-mix(in srgb, var(--color-base0E) 15%, transparent);
+    color: var(--color-base0E);
+  }
+
+  .nav-badge[data-color='red'] {
+    background-color: color-mix(in srgb, var(--color-base08) 15%, transparent);
+    color: var(--color-base08);
+  }
+
+  /* Collapsed-bar status dot — sits on the icon's top-right corner (icon is
+     centered and 18px tall, so the offsets below land on that corner). The
+     2px ring in the sidebar background cuts the dot out of the icon edge,
+     iOS-badge style. Count badges (no badgeColor) intentionally get nothing:
+     they stay hidden until the bar expands, as before. */
+  .nav-status-dot {
+    position: absolute;
+    top: calc(50% - 11px);
+    left: calc(50% + 5px);
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-base0A);
+    box-shadow: 0 0 0 2px var(--color-base01);
+    pointer-events: none;
+  }
+
+  .nav-status-dot[data-color='blue'] {
+    background-color: var(--color-base0D);
+  }
+
+  .nav-status-dot[data-color='green'] {
+    background-color: var(--color-base0B);
+  }
+
+  .nav-status-dot[data-color='purple'] {
+    background-color: var(--color-base0E);
+  }
+
+  .nav-status-dot[data-color='red'] {
+    background-color: var(--color-base08);
   }
 
   .expand-icon {
