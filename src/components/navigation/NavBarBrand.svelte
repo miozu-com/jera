@@ -23,6 +23,7 @@
 -->
 <script>
   import Badge from '../primitives/Badge.svelte';
+  import { badgeVariant } from '../../utils/badge.js';
 
   let {
     brand = { label: 'Home', description: '', breadcrumbs: [] },
@@ -32,18 +33,9 @@
     onopen = () => {}
   } = $props();
 
-  // badgeColor slots map onto Badge variants — same palette as LeftBarItem's
-  // badges, so the header chip and the sidebar chip read as one element.
-  // Yellow default: an unspecified badge color is a status marker, and that
-  // is warning-shaped by convention (Ads "Early access" does the same).
-  const BADGE_VARIANTS = {
-    blue: 'primary',
-    green: 'success',
-    yellow: 'warning',
-    purple: 'accent',
-    red: 'error'
-  };
-  const badgeVariant = $derived(BADGE_VARIANTS[brand.badgeColor] ?? 'warning');
+  // Same color map as LeftBarItem. A brand badge is always a status marker,
+  // so no color falls back to 'warning' rather than LeftBarItem's 'info'.
+  const variant = $derived(badgeVariant(brand.badgeColor, 'warning'));
 
   let wrapEl = $state(null);
   let closeTimer = null;
@@ -125,7 +117,7 @@
   {/if}
   <span>{brand.label}</span>
   {#if brand.badge}
-    <Badge size="xs" variant={badgeVariant}>{brand.badge}</Badge>
+    <Badge size="xs" {variant}>{brand.badge}</Badge>
   {/if}
   {#if interactive}
     <svg

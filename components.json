@@ -1290,8 +1290,8 @@
       "snippets": ["actions", "center", "subnav", "renderIcon"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-09-14",
+      "revision": 6,
+      "lastReviewed": "2026-10-03",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1324,8 +1324,8 @@
       },
       "snippets": ["renderIcon"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-10-02",
+      "revision": 4,
+      "lastReviewed": "2026-10-03",
       "breaking": [],
       "docLevel": "none"
     },
@@ -1430,7 +1430,7 @@
         "badgeColor": {
           "type": "'blue'|'green'|'yellow'|'purple'|'red'",
           "default": "null",
-          "description": "Badge color (null = neutral info). Badges render as jera Badge (xs). A colored badge is a status marker: it also earns a corner dot on the icon when the bar is collapsed, while plain count badges stay hidden until expand"
+          "description": "Badge color (null = neutral info), mapped by utils/badge.js badgeVariant. Badges render as jera Badge (xs). A colored badge is a status marker: it also earns a corner dot on the icon when the bar is collapsed (its text is in the collapsed tooltip and a visually-hidden span), while plain count badges stay hidden until expand"
         },
         "variant": {
           "type": "'default'|'warning'|'danger'|'success'",
@@ -1441,9 +1441,15 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-10-02",
-      "breaking": [],
+      "revision": 6,
+      "lastReviewed": "2026-10-03",
+      "breaking": [
+        {
+          "revision": 5,
+          "date": "2026-10-02",
+          "change": "Every badge renders as jera Badge (xs): plain count badges (no badgeColor) changed from an uppercase full-radius pill to the Badge chip (radius, border, no uppercase) in dash, admin and miozu."
+        }
+      ],
       "docLevel": "standard"
     },
     {

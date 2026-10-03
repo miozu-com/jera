@@ -61,6 +61,7 @@
     "./utils": "./src/utils/index.js",
     "./utils/diff": "./src/utils/diff.js",
     "./utils/color": "./src/utils/color.js",
+    "./utils/badge": "./src/utils/badge.js",
     "./actions": "./src/actions/index.js",
     "./meta": "./src/meta/index.js"
   },

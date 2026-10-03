@@ -1,3 +1,4 @@
+<!-- file-size: justified -- one nav item in three element shapes (link, expandable, button) sharing one badge/dot/variant style sheet; the CSS is the long part. -->
 <!--
   @component LeftBarItem
 
@@ -24,6 +25,7 @@
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import Badge from '../primitives/Badge.svelte';
+  import { badgeVariant as variantFor } from '../../utils/badge.js';
 
   let {
     href = null,
@@ -34,10 +36,8 @@
     expanded = $bindable(false),
     subroutes = [],
     badge = null,
-    // Colors the badge (blue|green|yellow|purple|red). Doubles as the
-    // status-marker signal: a badge WITH a color also earns a small dot on
-    // the icon when the bar is collapsed, while plain counts (chat unread)
-    // keep their old behavior of disappearing entirely.
+    // blue|green|yellow|purple|red. A colored badge is a status marker: it
+    // also earns a dot on the icon when the bar is collapsed.
     badgeColor = null,
     preload = true,
     variant = 'default',
@@ -55,16 +55,14 @@
   const leftbar = getContext('leftbar');
   const isCollapsed = $derived(leftbar?.collapsed ?? false);
 
-  // badgeColor slots map onto Badge variants — same palette, semantic names.
-  // No color = plain count badge → neutral info chip (chat unread as before).
-  const BADGE_VARIANTS = {
-    blue: 'primary',
-    green: 'success',
-    yellow: 'warning',
-    purple: 'accent',
-    red: 'error'
-  };
-  const badgeVariant = $derived(badgeColor ? BADGE_VARIANTS[badgeColor] : 'info');
+  // No color = plain count badge → neutral info chip.
+  const badgeVariant = $derived(variantFor(badgeColor));
+  const statusDot = $derived(isCollapsed && badge != null && !!badgeColor);
+  // Collapsed, the item has no visible text: name it explicitly (tooltip + AT),
+  // status included. Expanded, the label and badge text name it.
+  const collapsedTitle = $derived(
+    isCollapsed ? (statusDot ? `${label} (${badge})` : label) : null
+  );
 
   function handleClick(e) {
     if (expandable) {
@@ -85,6 +83,30 @@
   }
 </script>
 
+<!-- Shared by the three element shapes below: icon (+ collapsed status dot),
+     then label, badge and the consumer's trailing snippet. -->
+{#snippet head()}
+  {@render leading?.()}
+  {#if Icon}
+    <Icon size={18} class="nav-icon" />
+  {/if}
+  {#if statusDot}
+    <span class="nav-status-dot" data-color={badgeColor} aria-hidden="true"></span>
+  {/if}
+{/snippet}
+
+{#snippet tail()}
+  {#if !isCollapsed}
+    <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
+    {#if badge != null}
+      <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
+        <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
+      </span>
+    {/if}
+    {@render trailing?.()}
+  {/if}
+{/snippet}
+
 <li>
   {#if href && !expandable}
     <a
@@ -93,25 +115,12 @@
       class:active
       class:collapsed={isCollapsed}
       data-variant={variant}
-      title={isCollapsed ? label : null}
+      title={collapsedTitle}
+      aria-label={collapsedTitle}
       data-sveltekit-preload-data={preloadAttr}
     >
-      {@render leading?.()}
-      {#if Icon}
-        <Icon size={18} class="nav-icon" />
-      {/if}
-      {#if isCollapsed && badge != null && badgeColor}
-        <span class="nav-status-dot" data-color={badgeColor}></span>
-      {/if}
-      {#if !isCollapsed}
-        <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
-        {#if badge != null}
-          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
-            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
-          </span>
-        {/if}
-        {@render trailing?.()}
-      {/if}
+      {@render head()}
+      {@render tail()}
       {@render children?.()}
     </a>
   {:else if expandable}
@@ -122,23 +131,12 @@
       onclick={handleClick}
       onmouseenter={handleMouseEnter}
       onmouseleave={handleMouseLeave}
-      title={isCollapsed ? label : null}
+      title={collapsedTitle}
+      aria-label={collapsedTitle}
     >
-      {@render leading?.()}
-      {#if Icon}
-        <Icon size={18} class="nav-icon" />
-      {/if}
-      {#if isCollapsed && badge != null && badgeColor}
-        <span class="nav-status-dot" data-color={badgeColor}></span>
-      {/if}
+      {@render head()}
+      {@render tail()}
       {#if !isCollapsed}
-        <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
-        {#if badge != null}
-          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
-            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
-          </span>
-        {/if}
-        {@render trailing?.()}
         <span transition:fade={{ duration: 150 }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -181,24 +179,11 @@
       class:collapsed={isCollapsed}
       data-variant={variant}
       onclick={handleClick}
-      title={isCollapsed ? label : null}
+      title={collapsedTitle}
+      aria-label={collapsedTitle}
     >
-      {@render leading?.()}
-      {#if Icon}
-        <Icon size={18} class="nav-icon" />
-      {/if}
-      {#if isCollapsed && badge != null && badgeColor}
-        <span class="nav-status-dot" data-color={badgeColor}></span>
-      {/if}
-      {#if !isCollapsed}
-        <span class="nav-label" transition:fade={{ duration: 150 }}>{label}</span>
-        {#if badge != null}
-          <span class="nav-badge-wrap" transition:fade={{ duration: 150 }}>
-            <Badge size="xs" variant={badgeVariant}>{badge}</Badge>
-          </span>
-        {/if}
-        {@render trailing?.()}
-      {/if}
+      {@render head()}
+      {@render tail()}
       {@render children?.()}
     </button>
   {/if}
@@ -210,6 +195,10 @@
   }
 
   .nav-item {
+    /* What the item sits on — LeftBar's background, tinted on hover/active —
+       so the collapsed status dot's cut-out ring matches it. */
+    --nav-surface: var(--color-surface, var(--color-base01));
+    --nav-ring: var(--nav-surface);
     width: calc(100% - 1rem);
     padding: 0.375rem 0.75rem;
     display: flex;
@@ -235,6 +224,7 @@
   }
 
   .nav-item:hover {
+    --nav-ring: color-mix(in srgb, var(--color-base0D) 5%, var(--nav-surface));
     color: var(--color-base0D);
     background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
   }
@@ -251,6 +241,7 @@
   }
 
   .nav-item.active {
+    --nav-ring: color-mix(in srgb, var(--color-base0D) 15%, var(--nav-surface));
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
     color: var(--color-base0D);
     font-weight: 500;
@@ -294,11 +285,9 @@
     flex-shrink: 0;
   }
 
-  /* Collapsed-bar status dot — sits on the icon's top-right corner (icon is
-     centered and 18px tall, so the offsets below land on that corner). The
-     2px ring in the sidebar background cuts the dot out of the icon edge,
-     iOS-badge style. Count badges (no badgeColor) intentionally get nothing:
-     they stay hidden until the bar expands, as before. */
+  /* Collapsed-bar status dot on the icon's top-right corner (18px icon). The
+     ring is the item's own surface, so it cuts the dot out of the icon edge
+     on a plain, hovered or active item alike. Count badges get no dot. */
   .nav-status-dot {
     position: absolute;
     top: calc(50% - 11px);
@@ -307,7 +296,7 @@
     height: 6px;
     border-radius: var(--radius-full);
     background-color: var(--color-base0A);
-    box-shadow: 0 0 0 2px var(--color-base01);
+    box-shadow: 0 0 0 2px var(--nav-ring);
     pointer-events: none;
   }
 

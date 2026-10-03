@@ -42,3 +42,5 @@ export {
 
 export { splitSentences, diffSentences, diffSummary } from './diff.js';
 export { normalizeHex } from './color.js';
+
+export { BADGE_COLOR_VARIANTS, badgeVariant } from './badge.js';

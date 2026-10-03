@@ -44,6 +44,8 @@
 <script>
   import ChipNav from './ChipNav.svelte';
   import NavBarBrand from './NavBarBrand.svelte';
+  import Badge from '../primitives/Badge.svelte';
+  import {badgeVariant} from '../../utils/badge.js';
 
   let {
     brand = { label: 'Home', description: '', breadcrumbs: [] },
@@ -171,6 +173,9 @@
                           {item.title}
                           {#if item.isNew}
                             <span class="badge-new">new</span>
+                          {/if}
+                          {#if item.badge}
+                            <Badge size="xs" variant={badgeVariant(item.badgeColor, 'warning')}>{item.badge}</Badge>
                           {/if}
                         </span>
                         <span class="card-desc">{item.desc}</span>
