@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 97,
+  "totalComponents": 98,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -1693,6 +1693,32 @@
       "lastReviewed": "2026-05-27",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "ResizeHandle",
+      "category": "layout",
+      "path": "src/components/layout/ResizeHandle.svelte",
+      "description": "Vertical separator dragged (pointer or keyboard) to resize an adjacent pane; owns the 1px rule it sits on",
+      "props": {
+        "value": { "type": "number", "default": "0", "bindable": true, "description": "Current pane width in px (bindable)" },
+        "min": { "type": "number", "default": "0", "description": "Minimum width in px" },
+        "max": { "type": "number", "default": "Infinity", "description": "Maximum width in px" },
+        "defaultValue": { "type": "number", "default": "undefined", "description": "Width restored by Enter or double-click" },
+        "side": { "type": "'start' | 'end'", "default": "'end'", "description": "Which side of the handle the resized pane is on (sets drag and arrow direction)" },
+        "step": { "type": "number", "default": "16", "description": "Arrow-key step in px; Shift multiplies by 4" },
+        "collapseThreshold": { "type": "number", "default": "undefined", "description": "Dragging below min minus this ends the drag and fires oncollapse" },
+        "label": { "type": "string", "default": "'Resize'", "description": "aria-label of the separator" },
+        "disabled": { "type": "boolean", "default": "false", "description": "No drag, no keyboard, not focusable" },
+        "class": { "type": "string", "default": "''", "description": "Extra classes; the consumer positions the handle" }
+      },
+      "snippets": [],
+      "events": ["onresizestart", "onresize", "onresizeend", "oncollapse", "onreset"],
+      "consumers": ["dash"],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-04",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "CodeBlock",
