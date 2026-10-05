@@ -38,6 +38,7 @@
 -->
 <script>
   import { getContext } from 'svelte';
+  import Avatar from '../primitives/Avatar.svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
 
@@ -180,15 +181,9 @@
               >
                 <!-- Avatar -->
                 <div class="item-avatar-container">
-                  {#if itemAvatar}
-                    <div class="item-avatar-wrapper">
-                      <img src={itemAvatar} alt={itemName} class="item-avatar-img" />
-                    </div>
-                  {:else}
-                    <div class="item-avatar" style="background: {getAvatarStyle(item)}">
-                      {getItemInitial(item)}
-                    </div>
-                  {/if}
+                  <!-- One avatar component app-wide: the item's image, else a
+                       generated avatar seeded by its id (unique, stable). -->
+                  <Avatar src={itemAvatar || ''} seed={getItemId(item)} name={itemName} size="sm" radius={6} />
                   {#if platform}
                     <div class="platform-badge {platform}">
                       {#if platform === 'instagram'}
@@ -390,34 +385,8 @@
     height: 2rem;
   }
 
-  .item-avatar-wrapper {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.375rem;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 
-  .item-avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 
-  .item-avatar {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.375rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: white;
-    box-shadow: var(--shadow-xs);
-  }
 
   .platform-badge {
     position: absolute;
