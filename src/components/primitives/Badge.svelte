@@ -22,6 +22,10 @@
   @example Solid, over media
   <Badge variant="success" tone="solid">Shopify</Badge>
   <Badge tone="solid">+2</Badge>
+
+  @example Label — a status or level in a settings row (4px, toned text)
+  <Badge tone="label" variant="success" size="sm">Customer-facing</Badge>
+  <Badge tone="label" variant="warning" size="sm">Owner only</Badge>
 -->
 <script>
   let {
@@ -108,48 +112,56 @@
 
   /* Variants — 10% bg, 30% border */
   .jera-badge-default {
+    --badge-tone: var(--color-base04);
     background: color-mix(in srgb, var(--color-base04) 10%, transparent);
     color: var(--color-base04);
     border-color: color-mix(in srgb, var(--color-base04) 30%, transparent);
   }
 
   .jera-badge-primary {
+    --badge-tone: var(--color-base0D);
     background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
     border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
   }
 
   .jera-badge-secondary {
+    --badge-tone: var(--color-base0C);
     background: color-mix(in srgb, var(--color-base0C) 10%, transparent);
     color: var(--color-base0C);
     border-color: color-mix(in srgb, var(--color-base0C) 30%, transparent);
   }
 
   .jera-badge-success {
+    --badge-tone: var(--color-base0B);
     background: color-mix(in srgb, var(--color-base0B) 10%, transparent);
     color: var(--color-base0B);
     border-color: color-mix(in srgb, var(--color-base0B) 30%, transparent);
   }
 
   .jera-badge-warning {
+    --badge-tone: var(--color-base0A);
     background: color-mix(in srgb, var(--color-base0A) 10%, transparent);
     color: var(--color-base0A);
     border-color: color-mix(in srgb, var(--color-base0A) 30%, transparent);
   }
 
   .jera-badge-error {
+    --badge-tone: var(--color-base08);
     background: color-mix(in srgb, var(--color-base08) 10%, transparent);
     color: var(--color-base08);
     border-color: color-mix(in srgb, var(--color-base08) 30%, transparent);
   }
 
   .jera-badge-info {
+    --badge-tone: var(--color-base0D);
     background: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     color: var(--color-base0D);
     border-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
   }
 
   .jera-badge-accent {
+    --badge-tone: var(--color-base0E);
     background: color-mix(in srgb, var(--color-base0E) 10%, transparent);
     color: var(--color-base0E);
     border-color: color-mix(in srgb, var(--color-base0E) 30%, transparent);
@@ -217,6 +229,19 @@
   :global([data-theme='miozu-light']) .jera-badge-tone-solid.jera-badge-warning,
   :global([data-theme='miozu-light']) .jera-badge-tone-solid.jera-badge-success {
     color: var(--color-base07);
+  }
+
+  /* Label: a level or status in a settings row (the agent window's access
+     levels, the knowledge page's audiences and surfaces). The house control
+     radius (4px, never a pill), a 1px border at the tone's 30%, a fill at 8%
+     over the app background, and text mixed 70% tone + 30% base07 so gold and
+     red stay legible on the light theme's cream. Appended after the variants,
+     so it overrides their 10% tint in one place via `--badge-tone`. */
+  .jera-badge-tone-label {
+    border-radius: var(--radius-default);
+    background: color-mix(in srgb, var(--badge-tone) 8%, var(--color-base00));
+    border-color: color-mix(in srgb, var(--badge-tone) 30%, transparent);
+    color: color-mix(in srgb, var(--badge-tone) 70%, var(--color-base07));
   }
 
   /* Indicator dot */
