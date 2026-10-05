@@ -1640,7 +1640,7 @@
       "snippets": ["leading", "action"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 5,
+      "revision": 6,
       "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
@@ -1719,6 +1719,27 @@
       "lastReviewed": "2026-10-04",
       "breaking": [],
       "docLevel": "minimal"
+    },
+    {
+      "name": "ScrollStrip",
+      "category": "layout",
+      "path": "src/components/layout/ScrollStrip.svelte",
+      "description": "Horizontal overflow strip for tabs/chips: no scrollbar (no height jump), edge fades only where content continues, mouse drag-to-scroll, wheel scrolls sideways, keeps the active item in view",
+      "props": {
+        "gap": { "type": "string", "default": "'0.25rem'", "description": "Space between items" },
+        "fade": { "type": "string", "default": "'1.5rem'", "description": "Width of the edge fade" },
+        "activeSelector": { "type": "string", "default": "''", "description": "Selector of the item to keep scrolled into view" },
+        "activeKey": { "type": "unknown", "default": "undefined", "description": "Change to re-run the scroll-into-view (e.g. the active id)" },
+        "class": { "type": "string", "default": "''", "description": "Extra classes" }
+      },
+      "snippets": ["children"],
+      "events": [],
+      "consumers": ["dash"],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-05",
+      "breaking": [],
+      "docLevel": "none"
     },
     {
       "name": "CodeBlock",

@@ -99,6 +99,12 @@
     min-width: 0;
   }
 
+  /* Beside a 20px icon the text gives way later (8rem, not 14rem): in a narrow
+     card the label wrapped under its own icon. */
+  .has-leading .setting-content {
+    flex-basis: 8rem;
+  }
+
   .setting-label {
     margin: 0 0 var(--space-1);
     font-size: var(--text-sm);
