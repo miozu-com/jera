@@ -614,11 +614,11 @@
         }
       },
       "snippets": ["children"],
-      "events": ["onchange"],
+      "events": ["onchange", "onclick"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-03-05",
+      "revision": 6,
+      "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -995,8 +995,8 @@
       "events": ["onclose"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-09-24",
+      "revision": 9,
+      "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
     },

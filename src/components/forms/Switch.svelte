@@ -8,6 +8,9 @@
 
   @example
   <Switch bind:checked={darkMode} size="lg" />
+
+  @example Controlled — the owner decides (confirm first, write, then update)
+  <Switch checked={on} onclick={e => { e.preventDefault(); ask(!on); }}>Quote it</Switch>
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -24,8 +27,27 @@
     class: className = '',
     children,
     onchange,
+    onclick,
     ...rest
   } = $props();
+
+  let input = $state();
+
+  /**
+   * Controlled use prevents the click and sets `checked` itself. The browser
+   * puts the box back only once the click's dispatch ends — after a microtask
+   * in which the owner may already have set the next `checked` — so the input
+   * would keep the old state while the track shows the new one (and assistive
+   * tech reads the input). Re-sync after the dispatch.
+   */
+  function handleClick(event) {
+    onclick?.(event);
+    if (event.defaultPrevented) {
+      setTimeout(() => {
+        if (input && input.checked !== Boolean(checked)) input.checked = Boolean(checked);
+      });
+    }
+  }
 
   const fallbackId = generateId();
   const inputId = $derived(id || fallbackId);
@@ -46,7 +68,9 @@
     {name}
     {disabled}
     bind:checked
+    bind:this={input}
     {onchange}
+    onclick={handleClick}
     class="switch-input"
     aria-checked={checked}
     {...rest}

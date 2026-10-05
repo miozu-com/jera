@@ -451,6 +451,7 @@
 
   .modal-footer {
     display: flex;
+    flex-wrap: wrap; /* more actions than fit a small dialog wrap; they never clip */
     gap: 0.75rem;
     margin-top: 1.5rem;
     justify-content: flex-end;
