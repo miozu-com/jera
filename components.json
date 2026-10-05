@@ -2553,8 +2553,8 @@
       },
       "snippets": ["icon", "linkLabel", "children", "actions"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-04-17",
+      "revision": 5,
+      "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
     },

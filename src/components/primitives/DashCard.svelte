@@ -135,14 +135,18 @@
   }
 
   .dash-card-link {
-    font-size: 0.6875rem;
-    color: var(--color-base04);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-base0D);
     text-decoration: none;
     transition: color var(--duration-fast) ease;
   }
 
   .dash-card-link:hover {
-    color: var(--color-base05);
+    color: var(--color-base06);
   }
 
   @media (prefers-reduced-motion: no-preference) {
