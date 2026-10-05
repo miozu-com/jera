@@ -72,13 +72,26 @@
 
   .has-leading {
     justify-content: flex-start;
+    column-gap: var(--space-6);
   }
 
+  /* One icon size app-wide (20px), top-aligned with the label's line box so it
+     reads as the row's mark rather than floating at the middle of a two-line
+     text block or of a stacked control. */
   .setting-leading {
     display: flex;
     align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    width: 1.25rem;
+    height: 1.25rem;
     color: color-mix(in srgb, var(--color-base04) 80%, transparent);
     flex-shrink: 0;
+  }
+
+  .setting-leading :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   .setting-content {
@@ -87,9 +100,10 @@
   }
 
   .setting-label {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-1);
     font-size: var(--text-sm);
-    font-weight: 500;
+    line-height: 1.25rem;
+    font-weight: 600;
     color: var(--color-base06);
   }
 

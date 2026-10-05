@@ -13,6 +13,14 @@
     </SettingItem>
   </SettingCard>
 
+  @example Title-row actions (right of the title)
+  <SettingCard title="Identity">
+    {#snippet actions()}
+      <Button variant="ghost" size="sm" aria-label="Explain identity">?</Button>
+    {/snippet}
+    ...
+  </SettingCard>
+
   @example Danger zone
   <SettingCard title="Danger Zone" variant="danger">
     <SettingItem label="Delete Account" description="This cannot be undone">
@@ -27,13 +35,23 @@
     title = '',
     variant = 'default',
     class: className = '',
-    children
+    /** Optional snippet rendered at the right of the title row (icon buttons, a badge). */
+    actions,
+    children,
+    ...rest
   } = $props();
 </script>
 
-<div class="setting-card setting-card-{variant} {className}">
-  {#if title}
-    <h3 class="card-title">{title}</h3>
+<div class="setting-card setting-card-{variant} {className}" {...rest}>
+  {#if title || actions}
+    <div class="card-header">
+      {#if title}
+        <h3 class="card-title">{title}</h3>
+      {/if}
+      {#if actions}
+        <div class="card-actions">{@render actions()}</div>
+      {/if}
+    </div>
   {/if}
   {#if children}
     <div class="card-content">
@@ -64,8 +82,25 @@
     border-color: color-mix(in srgb, var(--color-base08) 50%, transparent);
   }
 
-  .card-title {
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
     margin: 0 0 var(--space-10);
+    min-height: 1.75rem;
+  }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    margin: 0;
     font-size: var(--text-base);
     font-weight: 500;
     color: var(--color-base06);
