@@ -70,28 +70,57 @@
     padding-top: 0;
   }
 
+  /* With an icon: a grid, so the icon centres on the label + description
+     block (row 1) and a stacked control takes the full row below it — the
+     icon never lines up with a two-line text block's first line only, nor
+     with the middle of a tall control. */
   .has-leading {
-    justify-content: flex-start;
-    column-gap: var(--space-6);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--space-4);
+    row-gap: var(--space-4);
   }
 
-  /* One icon size app-wide (20px), top-aligned with the label's line box so it
-     reads as the row's mark rather than floating at the middle of a two-line
-     text block or of a stacked control. */
+  .has-leading > .setting-leading {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .has-leading > .setting-content {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .has-leading > .setting-action {
+    grid-column: 3;
+    grid-row: 1;
+    margin-left: 0;
+  }
+
+  .has-leading.setting-item-stacked > .setting-action {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  /* One mark app-wide: a soft accent tile sized to the label + description
+     (2.25rem), the icon 18px inside it. Colour from the theme, so it reads in
+     both light and dark. */
   .setting-leading {
     display: flex;
     align-items: center;
     justify-content: center;
-    align-self: flex-start;
-    width: 1.25rem;
-    height: 1.25rem;
-    color: color-mix(in srgb, var(--color-base04) 80%, transparent);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-md);
+    color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
     flex-shrink: 0;
   }
 
   .setting-leading :global(svg) {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .setting-content {
@@ -99,14 +128,8 @@
     min-width: 0;
   }
 
-  /* Beside a 20px icon the text gives way later (8rem, not 14rem): in a narrow
-     card the label wrapped under its own icon. */
-  .has-leading .setting-content {
-    flex-basis: 8rem;
-  }
-
   .setting-label {
-    margin: 0 0 var(--space-1);
+    margin: 0 0 0.125rem;
     font-size: var(--text-sm);
     line-height: 1.25rem;
     font-weight: 600;

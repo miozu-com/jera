@@ -1640,7 +1640,7 @@
       "snippets": ["leading", "action"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 6,
+      "revision": 7,
       "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
