@@ -70,6 +70,14 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
 
+**SettingCard:** `title`, `variant` (default|danger), `actions` snippet (right of the title row, e.g. an icon button). Title is 18/600 on a 2rem line so it fills a row holding 32px buttons.
+
+**SettingItem:** `label`, `description`, `stacked`, snippets `leading` (icon → 2.25rem accent tile, centred on label+description), `badge` (after the label: "Early alpha"), `action`. Reference look and rhythm: `knowledge/curated/guides/settings-panel-styleguide-guide.md`.
+
+**ScrollStrip:** horizontal overflow row for tabs/chips — no scrollbar (no height jump), edge fades only where content continues, mouse drag-to-scroll, wheel scrolls sideways, `activeSelector` + `activeKey` keep the active item in view.
+
+**Avatar:** `src`, `seed` (generated avatar, stable per id), `name` (initials fallback), `size` (xs|sm|md|lg|xl), `radius`. Use `seed={entity.id}` for agents/items without an image.
+
 **BottomPanel:** `bind:open`, `bind:minimized`, `bind:height`, `minHeight`, `maxHeight`, `minimizedHeight`, `offsetLeft`, `resizable`, `onresize`
 
 - Fixed bottom slide-up panel with drag-to-resize
