@@ -136,6 +136,7 @@ export { default as SettingCard } from "./components/layout/SettingCard.svelte";
 export { default as SettingItem } from "./components/layout/SettingItem.svelte";
 export { default as BottomPanel } from "./components/layout/BottomPanel.svelte";
 export { default as ResizeHandle } from "./components/layout/ResizeHandle.svelte";
+export { default as ScrollStrip } from "./components/layout/ScrollStrip.svelte";
 
 // --------------------------------------------
 // COMPONENTS - Documentation
