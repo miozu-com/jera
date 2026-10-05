@@ -2406,8 +2406,8 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 6,
-      "lastReviewed": "2026-09-06",
+      "revision": 7,
+      "lastReviewed": "2026-10-06",
       "breaking": [],
       "docLevel": "standard",
       "props": {
@@ -2435,6 +2435,11 @@
           "type": "boolean",
           "default": "false",
           "description": "Disable interaction"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the chip's button (applied since revision 7; before, accepted and dropped)"
         }
       },
       "snippets": ["icon"],

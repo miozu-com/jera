@@ -35,6 +35,8 @@
   </div>
 -->
 <script>
+  import { cn } from '../../utils/cn.svelte.js';
+
   let {
     label = '',
     active = false,
@@ -49,7 +51,7 @@
 
 <button
   type="button"
-  class="filter-chip filter-chip-{variant}"
+  class={cn('filter-chip', `filter-chip-${variant}`, className)}
   class:active
   class:disabled
   {disabled}
