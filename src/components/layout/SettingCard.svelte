@@ -99,10 +99,14 @@
     flex-shrink: 0;
   }
 
+  /* 18px on a 2rem line: the title row also holds the `actions` snippet
+     (32px icon buttons), so the title fills that line instead of floating
+     small beside it. */
   .card-title {
     margin: 0;
-    font-size: var(--text-base);
-    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: 2rem;
+    font-weight: 600;
     color: var(--color-base06);
   }
 

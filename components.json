@@ -1610,7 +1610,7 @@
       "snippets": ["children", "actions"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"
@@ -1637,10 +1637,10 @@
           "description": "Control on its own full-width row under the text"
         }
       },
-      "snippets": ["leading", "action"],
+      "snippets": ["leading", "action", "badge"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 7,
+      "revision": 8,
       "lastReviewed": "2026-10-05",
       "breaking": [],
       "docLevel": "standard"

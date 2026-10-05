@@ -17,6 +17,8 @@
     description = '',
     stacked = false,
     leading,
+    /** Optional snippet right after the label (a Badge: "Early alpha", "New"). */
+    badge,
     action,
     class: className = ''
   } = $props();
@@ -34,7 +36,9 @@
   {/if}
   <div class="setting-content">
     {#if label}
-      <h4 class="setting-label">{label}</h4>
+      <h4 class="setting-label">
+        {label}{#if badge}<span class="setting-badge">{@render badge()}</span>{/if}
+      </h4>
     {/if}
     {#if description}
       <p class="setting-description">{description}</p>
@@ -134,6 +138,12 @@
     line-height: 1.25rem;
     font-weight: 600;
     color: var(--color-base06);
+  }
+
+  .setting-badge {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: var(--space-3);
   }
 
   .setting-description {
