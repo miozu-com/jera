@@ -131,8 +131,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-10-05",
+      "revision": 9,
+      "lastReviewed": "2026-10-06",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
         "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
@@ -995,8 +995,8 @@
       "events": ["onclose"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 9,
-      "lastReviewed": "2026-10-05",
+      "revision": 10,
+      "lastReviewed": "2026-10-06",
       "breaking": [],
       "docLevel": "standard"
     },

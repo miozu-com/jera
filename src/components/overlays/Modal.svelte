@@ -305,6 +305,22 @@
     display: none;
   }
 
+  /* Fullscreen wins over fill: the 80dvh frame is for a framed dialog. Same
+     specificity as the fullscreen rules above plus one class, so it holds
+     whatever order they come in; `height: auto` with `inset: 0` fills the
+     viewport. Without it `fill` + `fullscreen="mobile"` was a 681px dialog on
+     an 851px phone with the page showing beneath (QA 2026-10-06), and
+     `fill` + `fullscreen` 720px on a 900px desktop. */
+  dialog.modal-fill.modal-fullscreen {
+    height: auto;
+  }
+
+  @media (max-width: 767px) {
+    dialog.modal-fill.modal-fullscreen-mobile {
+      height: auto;
+    }
+  }
+
   dialog.modal-fill > .modal-content {
     flex: 1 1 0%;
     min-height: 0;
@@ -404,6 +420,23 @@
   .modal-close:hover {
     background: var(--color-base02);
     color: var(--color-base07);
+  }
+
+  /* A 40px tap target where the dialog is a phone's whole screen (the 20px
+     icon in 4px padding was 28px — under the 40px every other control on a
+     phone gets). */
+  @media (max-width: 767px) {
+    .modal-close {
+      display: grid;
+      place-items: center;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+    }
+
+    /* A long title wraps before the larger button instead of running under it. */
+    .modal-title {
+      padding-right: 2.5rem;
+    }
   }
 
   .modal-content {

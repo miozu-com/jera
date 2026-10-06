@@ -90,9 +90,12 @@
   }
 
   /* Sizes */
+  /* The smallest size stays on the type scale: 11px (--text-2xs), never the
+     10px literal it was — the smallest text on a page is a caption, not
+     below one (settings styleguide; QA 2026-10-06, agent status chips). */
   .jera-badge-xs {
     padding: 0.0625rem 0.375rem;
-    font-size: 0.625rem;
+    font-size: var(--text-2xs, 0.6875rem);
   }
 
   .jera-badge-sm {
