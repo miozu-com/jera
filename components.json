@@ -47,12 +47,12 @@
         "loader": {
           "type": "{active, icon?, text?, style?, position?}",
           "default": "null",
-          "description": "Rich loading state \u2014 replaces content with custom icon/text. icon is a snippet, position is 'left'|'right'"
+          "description": "Rich loading state — replaces content with custom icon/text. icon is a snippet, position is 'left'|'right'"
         },
         "icon": {
           "type": "{icon, position?}",
           "default": "null",
-          "description": "Structured icon placement \u2014 icon is a snippet, position is 'left'|'right' (default left)"
+          "description": "Structured icon placement — icon is a snippet, position is 'left'|'right' (default left)"
         },
         "fullWidth": {
           "type": "boolean",
@@ -72,12 +72,20 @@
         "iconOnly": {
           "type": "boolean",
           "default": "false",
-          "description": "No text label \u2014 a square button the same height as size, horizontal padding dropped (pair with an aria-label)"
+          "description": "No text label — a square button the same height as size, horizontal padding dropped (pair with an aria-label)"
         }
       },
-      "snippets": ["children"],
-      "events": ["onclick"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 10,
       "lastReviewed": "2026-09-27",
@@ -127,9 +135,17 @@
           "description": "Additional CSS classes on the badge element"
         }
       },
-      "snippets": ["children"],
-      "events": ["onclick"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 9,
       "lastReviewed": "2026-10-06",
@@ -161,8 +177,14 @@
           "description": "Margin around divider"
         }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -216,13 +238,17 @@
           "description": "Custom CSS class"
         }
       },
-      "consumers": ["dash", "admin", "miozu"],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-09-16",
       "breaking": [
         "v2: Initials fallback recolored for WCAG AA. Text is --color-base00 (was a hardcoded white that measured 1.76:1 on dark-mode accents) and the tile is mixed 20% toward --color-base05. No API change; the tile reads slightly deeper in light mode and slightly softer in dark mode.",
-        "v3: The status dot is no longer clipped by the avatar's own border-radius \u2014 it rendered as a sliver, invisible at sm and below, which is why consumers hand-rolled their own. No API change; an avatar without `status` looks identical, and a consumer that worked around this can now pass `status`."
+        "v3: The status dot is no longer clipped by the avatar's own border-radius — it rendered as a sliver, invisible at sm and below, which is why consumers hand-rolled their own. No API change; an avatar without `status` looks identical, and a consumer that worked around this can now pass `status`."
       ],
       "docLevel": "complete"
     },
@@ -263,7 +289,9 @@
           "description": "Description text below the value (alias for secondary, takes priority)"
         }
       },
-      "consumers": ["dash"],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -287,7 +315,9 @@
           "description": "Button style"
         }
       },
-      "consumers": ["miozu"],
+      "consumers": [
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -311,7 +341,9 @@
           "description": "Control size"
         }
       },
-      "consumers": ["dash"],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -408,8 +440,18 @@
           "description": "Input height/font/radius, matching the Select/SearchInput scale"
         }
       },
-      "events": ["oninput", "onchange", "onkeydown", "onfocus", "onblur"],
-      "consumers": ["dash", "admin", "miozu"],
+      "events": [
+        "oninput",
+        "onchange",
+        "onkeydown",
+        "onfocus",
+        "onblur"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-09-27",
@@ -449,8 +491,13 @@
           "description": "Textarea padding/font, matching Input's scale"
         }
       },
-      "events": ["oninput", "onchange"],
-      "consumers": ["admin"],
+      "events": [
+        "oninput",
+        "onchange"
+      ],
+      "consumers": [
+        "admin"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-09-27",
@@ -525,8 +572,14 @@
           "description": "Mark field as required"
         }
       },
-      "events": ["onchange"],
-      "consumers": ["admin", "miozu", "dash"],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu",
+        "dash"
+      ],
       "stage": "stable",
       "revision": 8,
       "lastReviewed": "2026-09-27",
@@ -556,9 +609,16 @@
           "description": "Show error state"
         }
       },
-      "snippets": ["children"],
-      "events": ["onchange"],
-      "consumers": ["admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -613,9 +673,17 @@
           "description": "Additional CSS classes on the wrapper label"
         }
       },
-      "snippets": ["children"],
-      "events": ["onchange", "onclick"],
-      "consumers": ["dash", "admin"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange",
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-10-05",
@@ -670,8 +738,14 @@
           "description": "Show error border state"
         }
       },
-      "events": ["oninput", "onchange", "onclear"],
-      "consumers": ["admin"],
+      "events": [
+        "oninput",
+        "onchange",
+        "onclear"
+      ],
+      "consumers": [
+        "admin"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-09-26",
@@ -682,9 +756,13 @@
       "name": "Toast",
       "category": "feedback",
       "path": "src/components/feedback/Toast.svelte",
-      "description": "Enterprise toast system \u2014 singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
+      "description": "Enterprise toast system — singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
       "statePattern": "singleton: getToastState()",
-      "consumers": ["dash", "admin", "miozu"],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 7,
       "lastReviewed": "2026-03-28",
@@ -723,9 +801,18 @@
           "description": "Alert size"
         }
       },
-      "snippets": ["children", "icon", "actions"],
-      "events": ["onclose"],
-      "consumers": ["dash", "admin"],
+      "snippets": [
+        "children",
+        "icon",
+        "actions"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -793,7 +880,9 @@
           "description": "Spinner color"
         }
       },
-      "consumers": ["admin"],
+      "consumers": [
+        "admin"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-07",
@@ -832,8 +921,15 @@
           "description": "Custom CSS class on the root element"
         }
       },
-      "snippets": ["art", "icon", "actions"],
-      "consumers": ["admin", "dash"],
+      "snippets": [
+        "art",
+        "icon",
+        "actions"
+      ],
+      "consumers": [
+        "admin",
+        "dash"
+      ],
       "stage": "stable",
       "revision": 5,
       "lastReviewed": "2026-09-26",
@@ -882,7 +978,9 @@
           "description": "Enable shimmer animation"
         }
       },
-      "consumers": ["miozu"],
+      "consumers": [
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-07",
@@ -936,7 +1034,10 @@
           "description": "Custom CSS class on the container"
         }
       },
-      "consumers": ["dash", "miozu"],
+      "consumers": [
+        "dash",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-07",
@@ -991,9 +1092,19 @@
           "description": "Close on Escape key"
         }
       },
-      "snippets": ["children", "footer", "icon"],
-      "events": ["onclose"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children",
+        "footer",
+        "icon"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 10,
       "lastReviewed": "2026-10-06",
@@ -1038,9 +1149,15 @@
           "description": "Extra class on the dialog element"
         }
       },
-      "snippets": ["children"],
-      "events": ["onclose"],
-      "consumers": ["dash"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-06-13",
@@ -1069,8 +1186,13 @@
           "description": "Distance from trigger (px)"
         }
       },
-      "snippets": ["children", "content"],
-      "consumers": ["miozu"],
+      "snippets": [
+        "children",
+        "content"
+      ],
+      "consumers": [
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1105,8 +1227,13 @@
           "description": "Color variant"
         }
       },
-      "events": ["onconfirm", "oncancel"],
-      "consumers": ["dash"],
+      "events": [
+        "onconfirm",
+        "oncancel"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-06-16",
@@ -1176,15 +1303,21 @@
           "description": "Additional CSS classes on the tabs container"
         }
       },
-      "events": ["onchange"],
-      "consumers": ["dash", "admin", "miozu"],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-09-19",
+      "revision": 8,
+      "lastReviewed": "2026-10-07",
       "breaking": [
-        "v3: Segment variant \u2014 removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb.",
-        "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) \u2014 consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup.",
-        "v6: underline variant \u2014 the tablist is now full width (display: flex; width: 100%) so its rule spans its container instead of hugging the labels; tabs are taller and wider (padding-block space-3, padding-inline space-4) and the indicator is 2px, sitting on the rule. Visual only, no API change."
+        "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb.",
+        "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) — consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup.",
+        "v6: underline variant — the tablist is now full width (display: flex; width: 100%) so its rule spans its container instead of hugging the labels; tabs are taller and wider (padding-block space-3, padding-inline space-4) and the indicator is 2px, sitting on the rule. Visual only, no API change."
       ],
       "docLevel": "standard"
     },
@@ -1206,8 +1339,13 @@
           "description": "Allow multiple items open"
         }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1247,8 +1385,16 @@
           "description": "Badge text in header"
         }
       },
-      "snippets": ["children", "leading", "trailing", "indicator"],
-      "consumers": ["dash", "miozu"],
+      "snippets": [
+        "children",
+        "leading",
+        "trailing",
+        "indicator"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1287,8 +1433,16 @@
           "description": "Called on brand tap/click instead of opening the context panel (e.g. open a workspace switcher on mobile)"
         }
       },
-      "snippets": ["actions", "center", "subnav", "renderIcon"],
-      "consumers": ["dash", "admin"],
+      "snippets": [
+        "actions",
+        "center",
+        "subnav",
+        "renderIcon"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-10-03",
@@ -1299,12 +1453,12 @@
       "name": "NavBarBrand",
       "category": "navigation",
       "path": "src/components/navigation/NavBarBrand.svelte",
-      "description": "Internal NavBar brand \u2014 page context label with tap/hover breadcrumb panel",
+      "description": "Internal NavBar brand — page context label with tap/hover breadcrumb panel",
       "props": {
         "brand": {
           "type": "object",
           "default": "{label:'Home'}",
-          "description": "Brand config: {icon, label, badge?, badgeColor?, description, breadcrumbs} \u2014 badge renders a status chip after the label (color: blue|green|yellow|purple|red, yellow default)"
+          "description": "Brand config: {icon, label, badge?, badgeColor?, description, breadcrumbs} — badge renders a status chip after the label (color: blue|green|yellow|purple|red, yellow default)"
         },
         "onBrandClick": {
           "type": "function",
@@ -1314,7 +1468,7 @@
         "open": {
           "type": "boolean",
           "default": "false",
-          "description": "Bindable \u2014 whether the context panel is showing"
+          "description": "Bindable — whether the context panel is showing"
         },
         "onopen": {
           "type": "function",
@@ -1322,7 +1476,9 @@
           "description": "Called when the panel opens so the parent can close its own menus"
         }
       },
-      "snippets": ["renderIcon"],
+      "snippets": [
+        "renderIcon"
+      ],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-10-03",
@@ -1352,8 +1508,17 @@
           "description": "Cookie key for SSR persistence"
         }
       },
-      "snippets": ["header", "navigation", "footer", "children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "header",
+        "navigation",
+        "footer",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -1372,8 +1537,14 @@
           "description": "Section title"
         }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1438,8 +1609,16 @@
           "description": "Color variant"
         }
       },
-      "snippets": ["leading", "trailing", "children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "leading",
+        "trailing",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 6,
       "lastReviewed": "2026-10-03",
@@ -1485,8 +1664,13 @@
           "description": "Show add button"
         }
       },
-      "snippets": ["item", "children"],
-      "consumers": ["dash"],
+      "snippets": [
+        "item",
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-10-05",
@@ -1498,7 +1682,10 @@
       "category": "navigation",
       "path": "src/components/navigation/LeftBarToggle.svelte",
       "description": "Sidebar collapse toggle, reads LeftBar context",
-      "consumers": ["dash", "admin"],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-05",
@@ -1538,7 +1725,9 @@
         "footerContent",
         "children"
       ],
-      "consumers": ["admin"],
+      "consumers": [
+        "admin"
+      ],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -1582,8 +1771,16 @@
           "description": "Custom CSS class on the root element"
         }
       },
-      "snippets": ["icon", "actions", "search", "filters"],
-      "consumers": ["admin", "dash"],
+      "snippets": [
+        "icon",
+        "actions",
+        "search",
+        "filters"
+      ],
+      "consumers": [
+        "admin",
+        "dash"
+      ],
       "stage": "stable",
       "revision": 4,
       "lastReviewed": "2026-09-28",
@@ -1607,8 +1804,13 @@
           "description": "Card color variant"
         }
       },
-      "snippets": ["children", "actions"],
-      "consumers": ["dash"],
+      "snippets": [
+        "children",
+        "actions"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 5,
       "lastReviewed": "2026-10-05",
@@ -1637,8 +1839,14 @@
           "description": "Control on its own full-width row under the text"
         }
       },
-      "snippets": ["leading", "action", "badge"],
-      "consumers": ["dash"],
+      "snippets": [
+        "leading",
+        "action",
+        "badge"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
       "revision": 8,
       "lastReviewed": "2026-10-05",
@@ -1685,9 +1893,18 @@
           "description": "Left offset for sidebar clearance"
         }
       },
-      "snippets": ["header", "sidebar", "children"],
-      "events": ["onresize"],
-      "consumers": ["dash", "admin"],
+      "snippets": [
+        "header",
+        "sidebar",
+        "children"
+      ],
+      "events": [
+        "onresize"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-05-27",
@@ -1700,20 +1917,69 @@
       "path": "src/components/layout/ResizeHandle.svelte",
       "description": "Vertical separator dragged (pointer or keyboard) to resize an adjacent pane; owns the 1px rule it sits on",
       "props": {
-        "value": { "type": "number", "default": "0", "bindable": true, "description": "Current pane width in px (bindable)" },
-        "min": { "type": "number", "default": "0", "description": "Minimum width in px" },
-        "max": { "type": "number", "default": "Infinity", "description": "Maximum width in px" },
-        "defaultValue": { "type": "number", "default": "undefined", "description": "Width restored by Enter or double-click" },
-        "side": { "type": "'start' | 'end'", "default": "'end'", "description": "Which side of the handle the resized pane is on (sets drag and arrow direction)" },
-        "step": { "type": "number", "default": "16", "description": "Arrow-key step in px; Shift multiplies by 4" },
-        "collapseThreshold": { "type": "number", "default": "undefined", "description": "Dragging below min minus this ends the drag and fires oncollapse" },
-        "label": { "type": "string", "default": "'Resize'", "description": "aria-label of the separator" },
-        "disabled": { "type": "boolean", "default": "false", "description": "No drag, no keyboard, not focusable" },
-        "class": { "type": "string", "default": "''", "description": "Extra classes; the consumer positions the handle" }
+        "value": {
+          "type": "number",
+          "default": "0",
+          "bindable": true,
+          "description": "Current pane width in px (bindable)"
+        },
+        "min": {
+          "type": "number",
+          "default": "0",
+          "description": "Minimum width in px"
+        },
+        "max": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Maximum width in px"
+        },
+        "defaultValue": {
+          "type": "number",
+          "default": "undefined",
+          "description": "Width restored by Enter or double-click"
+        },
+        "side": {
+          "type": "'start' | 'end'",
+          "default": "'end'",
+          "description": "Which side of the handle the resized pane is on (sets drag and arrow direction)"
+        },
+        "step": {
+          "type": "number",
+          "default": "16",
+          "description": "Arrow-key step in px; Shift multiplies by 4"
+        },
+        "collapseThreshold": {
+          "type": "number",
+          "default": "undefined",
+          "description": "Dragging below min minus this ends the drag and fires oncollapse"
+        },
+        "label": {
+          "type": "string",
+          "default": "'Resize'",
+          "description": "aria-label of the separator"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "No drag, no keyboard, not focusable"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra classes; the consumer positions the handle"
+        }
       },
       "snippets": [],
-      "events": ["onresizestart", "onresize", "onresizeend", "oncollapse", "onreset"],
-      "consumers": ["dash"],
+      "events": [
+        "onresizestart",
+        "onresize",
+        "onresizeend",
+        "oncollapse",
+        "onreset"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-10-04",
@@ -1726,15 +1992,39 @@
       "path": "src/components/layout/ScrollStrip.svelte",
       "description": "Horizontal overflow strip for tabs/chips: no scrollbar (no height jump), edge fades only where content continues, mouse drag-to-scroll, wheel scrolls sideways, keeps the active item in view",
       "props": {
-        "gap": { "type": "string", "default": "'0.25rem'", "description": "Space between items" },
-        "fade": { "type": "string", "default": "'1.5rem'", "description": "Width of the edge fade" },
-        "activeSelector": { "type": "string", "default": "''", "description": "Selector of the item to keep scrolled into view" },
-        "activeKey": { "type": "unknown", "default": "undefined", "description": "Change to re-run the scroll-into-view (e.g. the active id)" },
-        "class": { "type": "string", "default": "''", "description": "Extra classes" }
+        "gap": {
+          "type": "string",
+          "default": "'0.25rem'",
+          "description": "Space between items"
+        },
+        "fade": {
+          "type": "string",
+          "default": "'1.5rem'",
+          "description": "Width of the edge fade"
+        },
+        "activeSelector": {
+          "type": "string",
+          "default": "''",
+          "description": "Selector of the item to keep scrolled into view"
+        },
+        "activeKey": {
+          "type": "unknown",
+          "default": "undefined",
+          "description": "Change to re-run the scroll-into-view (e.g. the active id)"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra classes"
+        }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "events": [],
-      "consumers": ["dash"],
+      "consumers": [
+        "dash"
+      ],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-10-05",
@@ -1768,7 +2058,10 @@
           "description": "Show line numbers via CSS counters"
         }
       },
-      "consumers": ["admin", "miozu"],
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1818,8 +2111,15 @@
           "description": "Show clear button when value present"
         }
       },
-      "snippets": ["leftIcon", "rightIcon"],
-      "events": ["oninput", "onchange", "onclear"],
+      "snippets": [
+        "leftIcon",
+        "rightIcon"
+      ],
+      "events": [
+        "oninput",
+        "onchange",
+        "onclear"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1874,7 +2174,10 @@
           "description": "Show error state"
         }
       },
-      "events": ["oninput", "onchange"],
+      "events": [
+        "oninput",
+        "onchange"
+      ],
       "stage": "beta",
       "revision": 5,
       "lastReviewed": "2026-09-21",
@@ -1942,8 +2245,12 @@
           "description": "Layout direction"
         }
       },
-      "snippets": ["children"],
-      "events": ["onchange"],
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -1994,7 +2301,9 @@
         }
       },
       "snippets": [],
-      "events": ["onchange"],
+      "events": [
+        "onchange"
+      ],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-05-25",
@@ -2038,7 +2347,10 @@
           "description": "Hint text below label"
         }
       },
-      "events": ["onchange", "onerror"],
+      "events": [
+        "onchange",
+        "onerror"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2098,7 +2410,10 @@
           "description": "Slider size"
         }
       },
-      "events": ["oninput", "onchange"],
+      "events": [
+        "oninput",
+        "onchange"
+      ],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-09-08",
@@ -2138,7 +2453,9 @@
           "description": "Input size"
         }
       },
-      "events": ["oncomplete"],
+      "events": [
+        "oncomplete"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2167,7 +2484,9 @@
           "description": "Disable upload"
         }
       },
-      "events": ["ondrop"],
+      "events": [
+        "ondrop"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2201,7 +2520,10 @@
           "description": "Disable tooltip"
         }
       },
-      "snippets": ["children", "content"],
+      "snippets": [
+        "children",
+        "content"
+      ],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-03-28",
@@ -2225,7 +2547,9 @@
           "description": "Color variant"
         }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2254,8 +2578,13 @@
           "description": "Show arrow icon"
         }
       },
-      "snippets": ["children", "icon"],
-      "events": ["onclick"],
+      "snippets": [
+        "children",
+        "icon"
+      ],
+      "events": [
+        "onclick"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2284,7 +2613,9 @@
           "description": "Disable interaction"
         }
       },
-      "snippets": ["trailing"],
+      "snippets": [
+        "trailing"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2328,7 +2659,9 @@
           "description": "Placeholder image src"
         }
       },
-      "events": ["onload"],
+      "events": [
+        "onload"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2392,8 +2725,13 @@
           "description": "Card density. 'sm' removes background, reduces padding, and uses lighter borders"
         }
       },
-      "snippets": ["icon", "badge"],
-      "events": ["onclick"],
+      "snippets": [
+        "icon",
+        "badge"
+      ],
+      "events": [
+        "onclick"
+      ],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-03-29",
@@ -2442,8 +2780,12 @@
           "description": "Extra class on the chip's button (applied since revision 7; before, accepted and dropped)"
         }
       },
-      "snippets": ["icon"],
-      "events": ["onclick"]
+      "snippets": [
+        "icon"
+      ],
+      "events": [
+        "onclick"
+      ]
     },
     {
       "name": "StatusLine",
@@ -2467,7 +2809,9 @@
           "description": "Array of strings or {text, icon} objects"
         }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2516,8 +2860,13 @@
           "description": "Display density"
         }
       },
-      "snippets": ["badge", "actions"],
-      "events": ["onclick"],
+      "snippets": [
+        "badge",
+        "actions"
+      ],
+      "events": [
+        "onclick"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2556,7 +2905,12 @@
           "description": "Subtitle text below the card title"
         }
       },
-      "snippets": ["icon", "linkLabel", "children", "actions"],
+      "snippets": [
+        "icon",
+        "linkLabel",
+        "children",
+        "actions"
+      ],
       "stage": "stable",
       "revision": 5,
       "lastReviewed": "2026-10-05",
@@ -2649,7 +3003,9 @@
       },
       "snippets": [],
       "events": [],
-      "consumers": ["dash"],
+      "consumers": [
+        "dash"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-09-05",
@@ -2674,7 +3030,10 @@
           "description": "Preferred menu position (auto-flips if near viewport edge)"
         }
       },
-      "snippets": ["trigger", "children"],
+      "snippets": [
+        "trigger",
+        "children"
+      ],
       "stage": "beta",
       "revision": 9,
       "lastReviewed": "2026-09-30",
@@ -2710,8 +3069,14 @@
           "description": "Additional CSS classes"
         }
       },
-      "snippets": ["icon", "meta", "children"],
-      "events": ["onclick"],
+      "snippets": [
+        "icon",
+        "meta",
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-09-28",
@@ -2769,7 +3134,10 @@
           "description": "Stick right pane on scroll"
         }
       },
-      "snippets": ["left", "right"],
+      "snippets": [
+        "left",
+        "right"
+      ],
       "stage": "beta",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -2808,7 +3176,9 @@
           "description": "Show hover anchor link"
         }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-03-05",
@@ -2819,7 +3189,7 @@
       "name": "Sidebar",
       "category": "navigation",
       "path": "src/components/navigation/Sidebar.svelte",
-      "description": "Legacy sidebar \u2014 replaced by LeftBar",
+      "description": "Legacy sidebar — replaced by LeftBar",
       "replacedBy": "LeftBar",
       "stage": "deprecated",
       "revision": 4,
@@ -2831,7 +3201,7 @@
       "name": "NavigationContainer",
       "category": "navigation",
       "path": "src/components/navigation/NavigationContainer.svelte",
-      "description": "Legacy enterprise nav \u2014 unused",
+      "description": "Legacy enterprise nav — unused",
       "stage": "deprecated",
       "revision": 2,
       "lastReviewed": "2026-03-28",
@@ -2842,7 +3212,7 @@
       "name": "TabNav",
       "category": "navigation",
       "path": "src/components/navigation/TabNav.svelte",
-      "description": "Legacy tab nav \u2014 use Tabs instead",
+      "description": "Legacy tab nav — use Tabs instead",
       "replacedBy": "Tabs",
       "stage": "deprecated",
       "revision": 3,
@@ -2854,7 +3224,7 @@
       "name": "ScrollNav",
       "category": "navigation",
       "path": "src/components/navigation/ScrollNav.svelte",
-      "description": "Legacy scroll wrapper \u2014 unused",
+      "description": "Legacy scroll wrapper — unused",
       "stage": "deprecated",
       "revision": 2,
       "lastReviewed": "2026-03-28",
@@ -2865,7 +3235,7 @@
       "name": "WorkspaceMenu",
       "category": "navigation",
       "path": "src/components/navigation/WorkspaceMenu.svelte",
-      "description": "Legacy workspace switcher \u2014 unused",
+      "description": "Legacy workspace switcher — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2876,7 +3246,7 @@
       "name": "SidebarSection",
       "category": "navigation",
       "path": "src/components/navigation/SidebarSection.svelte",
-      "description": "Legacy sidebar section \u2014 replaced by LeftBarSection",
+      "description": "Legacy sidebar section — replaced by LeftBarSection",
       "replacedBy": "LeftBarSection",
       "stage": "deprecated",
       "revision": 1,
@@ -2888,7 +3258,7 @@
       "name": "SidebarItem",
       "category": "navigation",
       "path": "src/components/navigation/SidebarItem.svelte",
-      "description": "Legacy sidebar item \u2014 replaced by LeftBarItem",
+      "description": "Legacy sidebar item — replaced by LeftBarItem",
       "replacedBy": "LeftBarItem",
       "stage": "deprecated",
       "revision": 1,
@@ -2900,7 +3270,7 @@
       "name": "SidebarGroup",
       "category": "navigation",
       "path": "src/components/navigation/SidebarGroup.svelte",
-      "description": "Legacy sidebar group \u2014 replaced by LeftBarGroup",
+      "description": "Legacy sidebar group — replaced by LeftBarGroup",
       "replacedBy": "LeftBarGroup",
       "stage": "deprecated",
       "revision": 1,
@@ -2912,7 +3282,7 @@
       "name": "SidebarPopover",
       "category": "navigation",
       "path": "src/components/navigation/SidebarPopover.svelte",
-      "description": "Legacy sidebar popover \u2014 unused",
+      "description": "Legacy sidebar popover — unused",
       "replacedBy": "LeftBarPopover",
       "stage": "deprecated",
       "revision": 1,
@@ -2924,7 +3294,7 @@
       "name": "SidebarToggle",
       "category": "navigation",
       "path": "src/components/navigation/SidebarToggle.svelte",
-      "description": "Legacy sidebar toggle \u2014 replaced by LeftBarToggle",
+      "description": "Legacy sidebar toggle — replaced by LeftBarToggle",
       "replacedBy": "LeftBarToggle",
       "stage": "deprecated",
       "revision": 1,
@@ -2936,7 +3306,7 @@
       "name": "SidebarSearch",
       "category": "navigation",
       "path": "src/components/navigation/SidebarSearch.svelte",
-      "description": "Legacy sidebar search \u2014 unused",
+      "description": "Legacy sidebar search — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2947,7 +3317,7 @@
       "name": "SidebarGroupSwitcher",
       "category": "navigation",
       "path": "src/components/navigation/SidebarGroupSwitcher.svelte",
-      "description": "Legacy sidebar group switcher \u2014 unused",
+      "description": "Legacy sidebar group switcher — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2958,7 +3328,7 @@
       "name": "SidebarAccountGroup",
       "category": "navigation",
       "path": "src/components/navigation/SidebarAccountGroup.svelte",
-      "description": "Legacy sidebar account group \u2014 unused",
+      "description": "Legacy sidebar account group — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2969,7 +3339,7 @@
       "name": "SidebarAccountItem",
       "category": "navigation",
       "path": "src/components/navigation/SidebarAccountItem.svelte",
-      "description": "Legacy sidebar account item \u2014 unused",
+      "description": "Legacy sidebar account item — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2980,7 +3350,7 @@
       "name": "SidebarNavigationItem",
       "category": "navigation",
       "path": "src/components/navigation/SidebarNavigationItem.svelte",
-      "description": "Legacy sidebar navigation item \u2014 unused",
+      "description": "Legacy sidebar navigation item — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -2991,7 +3361,7 @@
       "name": "LeftBarPopover",
       "category": "navigation",
       "path": "src/components/navigation/LeftBarPopover.svelte",
-      "description": "LeftBar context-aware popover \u2014 internal",
+      "description": "LeftBar context-aware popover — internal",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3002,7 +3372,7 @@
       "name": "ChipNav",
       "category": "navigation",
       "path": "src/components/navigation/ChipNav.svelte",
-      "description": "Internal chip navigation \u2014 used inside NavBar",
+      "description": "Internal chip navigation — used inside NavBar",
       "stage": "deprecated",
       "revision": 2,
       "lastReviewed": "2026-03-28",
@@ -3013,7 +3383,7 @@
       "name": "NavigationSearch",
       "category": "navigation",
       "path": "src/components/navigation/blocks/NavigationSearch.svelte",
-      "description": "Legacy enterprise nav search block \u2014 unused",
+      "description": "Legacy enterprise nav search block — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3024,7 +3394,7 @@
       "name": "NavigationSection",
       "category": "navigation",
       "path": "src/components/navigation/blocks/NavigationSection.svelte",
-      "description": "Legacy enterprise nav section block \u2014 unused",
+      "description": "Legacy enterprise nav section block — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3035,7 +3405,7 @@
       "name": "NavigationAccountGroup",
       "category": "navigation",
       "path": "src/components/navigation/blocks/NavigationAccountGroup.svelte",
-      "description": "Legacy enterprise nav account block \u2014 unused",
+      "description": "Legacy enterprise nav account block — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3046,7 +3416,7 @@
       "name": "NavigationGroupSwitcher",
       "category": "navigation",
       "path": "src/components/navigation/blocks/NavigationGroupSwitcher.svelte",
-      "description": "Legacy enterprise nav group switcher \u2014 unused",
+      "description": "Legacy enterprise nav group switcher — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3057,7 +3427,7 @@
       "name": "NavigationCustomBlock",
       "category": "navigation",
       "path": "src/components/navigation/blocks/NavigationCustomBlock.svelte",
-      "description": "Legacy enterprise nav custom block \u2014 unused",
+      "description": "Legacy enterprise nav custom block — unused",
       "stage": "deprecated",
       "revision": 1,
       "lastReviewed": "2026-02-22",
@@ -3134,7 +3504,7 @@
         "pasteTarget": {
           "type": "'document' | 'self' | 'none'",
           "default": "'document'",
-          "description": "Where \u2318V/Ctrl+V is claimed: 'document' also accepts a paste made while a field beside the zone has the caret, 'self' only when the zone itself is focused, 'none' disables paste"
+          "description": "Where ⌘V/Ctrl+V is claimed: 'document' also accepts a paste made while a field beside the zone has the caret, 'self' only when the zone itself is focused, 'none' disables paste"
         },
         "reorderable": {
           "type": "boolean",
@@ -3252,7 +3622,9 @@
           "description": "Additional CSS class for the root element"
         }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "stage": "stable",
       "revision": 3,
       "lastReviewed": "2026-03-28",
@@ -3263,7 +3635,7 @@
       "name": "DatePicker",
       "category": "forms",
       "path": "src/components/forms/DatePicker.svelte",
-      "description": "Calendar date picker with month navigation, min/max constraints. Zero dependencies \u2014 uses native Date + Intl.DateTimeFormat",
+      "description": "Calendar date picker with month navigation, min/max constraints. Zero dependencies — uses native Date + Intl.DateTimeFormat",
       "props": {
         "value": {
           "type": "string|null",
@@ -3339,7 +3711,7 @@
         "label": {
           "type": "string",
           "default": "'Tag input'",
-          "description": "Accessible name for the chip group \u2014 name it after the setting it edits"
+          "description": "Accessible name for the chip group — name it after the setting it edits"
         },
         "inputLabel": {
           "type": "string|null",
@@ -3411,7 +3783,7 @@
         },
         "for": {
           "type": "string",
-          "description": "The id of the control inside children \u2014 wires <label for>"
+          "description": "The id of the control inside children — wires <label for>"
         },
         "hint": {
           "type": "string|null",
@@ -3431,7 +3803,7 @@
         "counter": {
           "type": "{value: number, max: number, soft?: number}|null",
           "default": "null",
-          "description": "Live character/item counter \u2014 base04 under soft, base09 past soft, base08 past max"
+          "description": "Live character/item counter — base04 under soft, base09 past soft, base08 past max"
         },
         "class": {
           "type": "string",
@@ -3440,10 +3812,12 @@
         }
       },
       "snippets": {
-        "children": "The control \u2014 called with (describedById) so it can wire its own aria-describedby",
-        "meta": "Optional trailing slot beside the label \u2014 a provenance chip, a regenerate button"
+        "children": "The control — called with (describedById) so it can wire its own aria-describedby",
+        "meta": "Optional trailing slot beside the label — a provenance chip, a regenerate button"
       },
-      "consumers": ["dash"],
+      "consumers": [
+        "dash"
+      ],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-09-27",
@@ -3507,7 +3881,9 @@
           "description": "Additional CSS classes on the root"
         }
       },
-      "events": ["onchange"],
+      "events": [
+        "onchange"
+      ],
       "consumers": [],
       "stage": "beta",
       "revision": 1,
@@ -3542,7 +3918,9 @@
           "description": "Click handler"
         }
       },
-      "snippets": ["children"],
+      "snippets": [
+        "children"
+      ],
       "dependencies": [],
       "stage": "beta",
       "revision": 2,

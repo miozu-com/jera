@@ -455,6 +455,17 @@
     color: var(--color-base04);
   }
 
+  /* A segment sits in toolbars beside Input / Select / Button of the same size
+     class, so it takes their height (sm 2rem) instead of its padding's 30px. */
+  .tabs-segment.tabs-sm {
+    box-sizing: border-box;
+    height: 2rem;
+  }
+
+  .tabs-segment.tabs-sm .tab {
+    padding-block: 0;
+  }
+
   .tabs-segment .tab-active {
     background: transparent;
     box-shadow: none;
