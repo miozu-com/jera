@@ -217,3 +217,31 @@
 [data-theme="miozu-light"] {
   --tone-fair-text: oklch(0.52 0.12 70);
 }
+
+/* A verdict on any element: `data-verdict="good|fair|weak|bad|none"` sets
+   `--tone` (fills: bars, rings, dots) and `--tone-text` (numbers, words) for
+   it and everything inside it. One map, so no consumer re-declares it. */
+[data-verdict="good"] {
+  --tone: var(--tone-good);
+  --tone-text: var(--tone-good-text);
+}
+
+[data-verdict="fair"] {
+  --tone: var(--tone-fair);
+  --tone-text: var(--tone-fair-text);
+}
+
+[data-verdict="weak"] {
+  --tone: var(--tone-weak);
+  --tone-text: var(--tone-weak-text);
+}
+
+[data-verdict="bad"] {
+  --tone: var(--tone-bad);
+  --tone-text: var(--tone-bad-text);
+}
+
+[data-verdict="none"] {
+  --tone: var(--tone-none);
+  --tone-text: var(--tone-none-text);
+}
