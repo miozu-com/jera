@@ -185,6 +185,8 @@
  * - `--tone-*` is the fill (bars, rings, dots): the raw accent.
  * - `--tone-*-text` is for coloured numbers and words: the accent mixed 80%
  *   toward body text, which darkens it in light and lightens it in dark.
+ *   Mixed in OKLAB, not OKLCH: OKLCH interpolates hue, and the greys carry a
+ *   faint 265° hue, so yellow swung toward green (the "olive" of 2026-10-07).
  *   Measured 2026-10-07 against base00: light 5.0–6.9:1, dark 7.6–11.9:1
  *   (raw light yellow is 3.57:1 and raw light green 4.32:1, both under the
  *   4.5:1 text floor).
@@ -201,10 +203,10 @@
   --tone-bad: var(--color-base08);
   --tone-none: var(--color-base03);
 
-  --tone-good-text: color-mix(in oklch, var(--tone-good) 80%, var(--color-base05));
-  --tone-fair-text: color-mix(in oklch, var(--tone-fair) 80%, var(--color-base05));
-  --tone-weak-text: color-mix(in oklch, var(--tone-weak) 80%, var(--color-base05));
-  --tone-bad-text: color-mix(in oklch, var(--tone-bad) 80%, var(--color-base05));
+  --tone-good-text: color-mix(in oklab, var(--tone-good) 80%, var(--color-base05));
+  --tone-fair-text: color-mix(in oklab, var(--tone-fair) 80%, var(--color-base05));
+  --tone-weak-text: color-mix(in oklab, var(--tone-weak) 80%, var(--color-base05));
+  --tone-bad-text: color-mix(in oklab, var(--tone-bad) 80%, var(--color-base05));
   --tone-none-text: var(--color-base04);
 }
 
