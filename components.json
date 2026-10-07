@@ -1077,7 +1077,7 @@
       "snippets": ["children", "content"],
       "consumers": ["miozu"],
       "stage": "stable",
-      "revision": 3,
+      "revision": 4,
       "lastReviewed": "2026-10-07",
       "breaking": [],
       "docLevel": "standard"

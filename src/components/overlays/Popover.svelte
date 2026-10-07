@@ -29,8 +29,13 @@
     class: className = ''
   } = $props();
 
-  // Feature detection for CSS Anchor Positioning
-  const supportsAnchor = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--test');
+  // Feature detection for CSS Anchor Positioning, decided in the browser after
+  // mount: `CSS` is undefined on the server, so a module-level constant would
+  // differ between the server render and hydration.
+  let supportsAnchor = $state(false);
+  $effect(() => {
+    supportsAnchor = typeof CSS !== 'undefined' && CSS.supports('anchor-name', '--test');
+  });
 
   let visible = $state(false);
   let timeoutId = $state(null);
@@ -222,8 +227,15 @@
   }
 
   /* CSS Anchor Positioning (Chrome 125+) */
+  /* Fixed, not absolute: an absolutely positioned popover's containing block
+     is .popover-wrapper (position: relative), which is also its anchor, and
+     an element cannot be anchored to its own containing block — anchor()
+     fell back and the popover sat on its trigger, past the viewport edge
+     (dash Rows score popover, 2026-10-07). Fixed resolves against the
+     viewport and is not clipped by scroll containers. */
   .popover-anchor {
-    position: absolute;
+    position: fixed;
+    z-index: var(--z-popover);
     inset: unset;
 
     /* Position based on data-position attribute */
