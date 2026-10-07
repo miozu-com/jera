@@ -9,6 +9,8 @@
     <Button>Hover me</Button>
   </Popover>
 
+  @example Wider rich content (opt-in; the default cap is 18rem)
+  <Popover maxWidth="24rem">…</Popover>
   @example With custom content
   <Popover position="bottom">
     {#snippet content()}
@@ -26,6 +28,7 @@
     position = 'top',
     delay = { show: 100, hide: 100 },
     offset = 8,
+    maxWidth = null,
     class: className = ''
   } = $props();
 
@@ -184,7 +187,9 @@
       class:popover-anchor={supportsAnchor}
       class:popover-js={!supportsAnchor}
       data-position={position}
-      style={supportsAnchor ? `position-anchor: ${anchorName}; --offset: ${offset}px;` : ''}
+      style="{supportsAnchor ?
+        `position-anchor: ${anchorName}; --offset: ${offset}px;`
+      : ''}{maxWidth ? ` --popover-max: ${maxWidth};` : ''}"
       role="tooltip"
       in:fly={anim.in}
       out:fly={anim.out}
@@ -211,7 +216,7 @@
 
   .popover {
     min-width: 8rem;
-    max-width: 18rem;
+    max-width: var(--popover-max, 18rem);
     width: max-content;
     padding: 0.5rem 0.75rem;
     background: var(--color-base01);

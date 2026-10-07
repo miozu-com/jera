@@ -1058,6 +1058,11 @@
       "path": "src/components/overlays/Popover.svelte",
       "description": "Hover popover with CSS Anchor Positioning",
       "props": {
+        "maxWidth": {
+          "type": "string",
+          "default": "null",
+          "description": "Opt-in max width for rich content (default cap 18rem)"
+        },
         "content": {
           "type": "string",
           "default": "''",
@@ -1077,7 +1082,7 @@
       "snippets": ["children", "content"],
       "consumers": ["miozu"],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-10-07",
       "breaking": [],
       "docLevel": "standard"
