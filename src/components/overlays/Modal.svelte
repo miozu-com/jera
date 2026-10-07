@@ -471,13 +471,13 @@
   .modal-title {
     margin: 0 0 0.5rem 0;
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base07);
     line-height: 1.4;
   }
 
   .modal-body {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-base05);
     line-height: 1.5;
   }

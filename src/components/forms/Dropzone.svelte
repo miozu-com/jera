@@ -213,7 +213,7 @@
   .dropzone-file-name {
     margin: 0;
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base07);
     white-space: nowrap;
     overflow: hidden;

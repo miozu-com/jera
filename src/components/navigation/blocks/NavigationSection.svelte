@@ -154,11 +154,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted, var(--color-base04));
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     border: none;
     background: transparent;
     font-family: inherit;
@@ -182,7 +180,7 @@
 
   .section-count {
     padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     background: var(--color-surface-alt, var(--color-base02));
     color: var(--color-text-muted, var(--color-base05));
     border-radius: var(--radius-full);
@@ -223,7 +221,7 @@
   }
 
   .no-results-text {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted, var(--color-base05));
     font-style: italic;
   }

@@ -136,7 +136,7 @@
     margin: 0 0 0.125rem;
     font-size: var(--text-sm);
     line-height: 1.25rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
   }
 

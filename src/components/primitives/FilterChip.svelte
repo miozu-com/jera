@@ -76,7 +76,7 @@
     gap: var(--space-4);
     padding: var(--space-2) var(--space-6);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     background: transparent;
     border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-lg);
@@ -134,7 +134,7 @@
     height: 1.25rem;
     padding: 0 var(--space-2);
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     background: var(--color-base02);
     color: var(--color-base05);
     border-radius: var(--radius-default);

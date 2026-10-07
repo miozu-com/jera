@@ -290,7 +290,7 @@
   .confirm-title {
     margin: 0 0 var(--space-4) 0;
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base07);
   }
 

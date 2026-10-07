@@ -160,8 +160,8 @@
     background: color-mix(in srgb, var(--color-base00) 50%, transparent);
     border: none;
     font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     cursor: pointer;
     text-align: left;
@@ -193,8 +193,8 @@
   .accordion-badge {
     flex-shrink: 0;
     padding: 0.0625rem 0.375rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base04);
     background: color-mix(in srgb, var(--color-base04) 10%, transparent);
     border-radius: var(--radius-default);
@@ -235,7 +235,7 @@
 
   .accordion-body {
     padding: 1rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-base05);
     line-height: 1.6;
   }

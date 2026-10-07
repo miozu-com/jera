@@ -145,7 +145,7 @@
     background-color: transparent;
     color: var(--color-base04);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     transition:
       background-color var(--duration-fast) var(--ease-out),

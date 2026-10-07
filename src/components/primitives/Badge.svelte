@@ -84,7 +84,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     border-radius: var(--radius-sm);
     border: var(--border-width-thin) solid;
     white-space: nowrap;
@@ -103,17 +103,17 @@
 
   .jera-badge-sm {
     padding: 0.125rem 0.5rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 
   .jera-badge-md {
     padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 
   .jera-badge-lg {
     padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
   }
 
   /* Variants — 10% bg, 30% border */

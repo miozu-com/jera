@@ -190,7 +190,7 @@
     width: 100%;
     height: 100%;
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base0D);
   }
 
@@ -231,7 +231,7 @@
 
   .member-name {
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base06);
     white-space: nowrap;
     overflow: hidden;

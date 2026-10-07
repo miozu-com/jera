@@ -244,7 +244,7 @@
 
   .tag-input-sm .tag-chip {
     padding: 0.0625rem 0.375rem;
-    font-size: 0.6875rem;
+    font-size: var(--text-2xs);
   }
 
   .tag-input-sm .tag-field {
@@ -258,7 +258,7 @@
     padding: 0.125rem 0.5rem;
     border-radius: var(--radius-full, 9999px);
     font-size: var(--text-xs, 0.75rem);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     background: color-mix(in srgb, var(--_variant-color) 15%, transparent);
     color: var(--_variant-color);
     /* A pasted URL or a long unbroken string must not push the chip past the

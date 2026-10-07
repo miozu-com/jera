@@ -100,7 +100,7 @@
   /* Allow children to use these utility classes */
   :global(.status-line .status-highlight) {
     color: var(--color-base06);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   :global(.status-line .status-success) {

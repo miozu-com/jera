@@ -163,12 +163,12 @@
     gap: 8px;
   }
   .cardradio-title {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: var(--text-dense);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
   }
   .cardradio-sm .cardradio-title {
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
   .cardradio-dot {
     width: 14px;
@@ -186,7 +186,7 @@
     background: var(--color-base00);
   }
   .cardradio-desc {
-    font-size: 12px;
+    font-size: var(--text-xs);
     color: var(--color-base04);
     line-height: 1.45;
   }

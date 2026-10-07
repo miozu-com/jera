@@ -116,7 +116,7 @@
 
   .diff-block-label {
     font-size: var(--text-xs, 0.75rem);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base05);
   }
 
@@ -148,7 +148,7 @@
 
   .diff-row-mark {
     font-family: var(--font-mono, ui-monospace, monospace);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     text-align: center;
     user-select: none;
   }

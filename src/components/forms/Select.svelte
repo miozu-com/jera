@@ -85,7 +85,7 @@
     border: var(--border-width-default) solid var(--color-base02);
     background-color: var(--color-base00);
     color: var(--color-base07);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     font-family: inherit;
     cursor: pointer;
     transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
@@ -158,7 +158,7 @@
   .jera-select-xs .jera-select {
     height: 1.625rem;
     padding: 0 1.5rem 0 0.375rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     border-radius: var(--radius-default);
   }
 
@@ -172,7 +172,7 @@
   .jera-select-sm .jera-select {
     height: 2rem;
     padding: 0 1.75rem 0 0.5rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     border-radius: var(--radius-md);
   }
 
@@ -188,7 +188,7 @@
   .jera-select-lg .jera-select {
     height: 3rem;
     padding: 0 2.5rem 0 1rem;
-    font-size: 1rem;
+    font-size: var(--text-base);
     border-radius: var(--radius-lg);
   }
 

@@ -129,7 +129,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
@@ -197,7 +197,7 @@
   .subnav-item {
     display: block;
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted, var(--color-base05));
     text-decoration: none;
     border-radius: 0.375rem;
@@ -213,7 +213,7 @@
 
   .subnav-item.active {
     color: var(--color-primary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
 
@@ -221,8 +221,8 @@
     display: inline-block;
     margin-left: 0.5rem;
     padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
-    font-weight: 600;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
     border-radius: var(--radius-full);
     background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
     color: var(--color-primary);

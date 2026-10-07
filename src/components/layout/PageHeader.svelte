@@ -175,7 +175,7 @@
     align-self: flex-start;
     gap: var(--space-2);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
     text-decoration: none;
     border-radius: var(--radius-default);
@@ -229,7 +229,7 @@
   .page-title {
     margin: 0;
     font-size: var(--text-2xl);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     line-height: 1.2;
   }
@@ -268,15 +268,13 @@
 
   .stat-label {
     font-size: var(--text-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
   }
 
   .stat-value {
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
   }
 

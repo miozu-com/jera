@@ -218,11 +218,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted, var(--color-base04));
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all var(--nav-transition-duration) var(--nav-transition-easing);
     border: none;
@@ -263,7 +261,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--nav-item-color);
     cursor: pointer;
     border-radius: var(--nav-item-border-radius);
@@ -302,8 +300,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: white;
     background: linear-gradient(to bottom right, var(--nav-item-active-color), var(--color-primary));
   }
@@ -328,7 +326,7 @@
   }
 
   .account-name {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -353,7 +351,7 @@
 
   .subroute-item {
     padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted);
     cursor: pointer;
     border-radius: var(--nav-item-border-radius);
@@ -378,7 +376,7 @@
     width: 100%;
     padding: 0.5rem 0.75rem;
     margin-top: 0.25rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted);
     cursor: pointer;
     border-radius: var(--nav-item-border-radius);

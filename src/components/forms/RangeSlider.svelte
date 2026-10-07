@@ -89,7 +89,7 @@
   .slider-label {
     display: block;
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base05);
     margin-bottom: var(--space-4);
   }
@@ -252,7 +252,7 @@
   }
 
   .slider-current {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base05);
   }
 </style>

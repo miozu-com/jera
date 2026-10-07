@@ -106,7 +106,7 @@
     margin: 0;
     font-size: var(--text-lg);
     line-height: 2rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
   }
 

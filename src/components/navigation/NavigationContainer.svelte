@@ -194,7 +194,7 @@
     --nav-item-margin: 0 0.5rem 0.125rem 0.5rem;
     --nav-item-gap: 0.5rem;
     --nav-item-border-radius: 0.375rem;
-    --nav-item-font-size: 0.875rem;
+    --nav-item-font-size: var(--text-sm);
 
     /* Colors */
     --nav-item-color: var(--color-text, var(--color-base06));
@@ -218,7 +218,7 @@
 
     /* Badges */
     --nav-badge-padding: 0.125rem 0.375rem;
-    --nav-badge-font-size: 0.625rem;
+    --nav-badge-font-size: var(--text-2xs);
     --nav-badge-weight: 600;
     --nav-badge-opacity: 10%;
     --nav-badge-color: var(--color-primary);

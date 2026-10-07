@@ -117,8 +117,8 @@
     width: 2.75rem;
     height: 3rem;
     padding: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
     text-align: center;
     color: var(--color-base07);
     background: var(--color-base00);
@@ -131,13 +131,13 @@
   .pin-input-sm .pin-field {
     width: 2.25rem;
     height: 2.5rem;
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .pin-input-lg .pin-field {
     width: 3.25rem;
     height: 3.5rem;
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
   }
 
   .pin-field:focus-visible {

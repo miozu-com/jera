@@ -136,8 +136,8 @@
     justify-content: center;
     gap: 0.625rem;            /* gap-2.5 */
     padding: 0.5rem 1rem;     /* py-2 px-4 default */
-    font-size: 0.875rem;      /* text-sm default */
-    font-weight: 500;
+    font-size: var(--text-sm);      /* text-sm default */
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
@@ -351,25 +351,25 @@
      (owner, 2026-09-27). */
   .xs {
     padding: 0 0.5rem;
-    font-size: 0.75rem;        /* text-xs */
+    font-size: var(--text-xs);        /* text-xs */
     min-height: 1.625rem;
   }
 
   .sm {
     padding: 0 0.75rem;
-    font-size: 0.875rem;       /* text-sm */
+    font-size: var(--text-sm);       /* text-sm */
     min-height: 2rem;
   }
 
   .md {
     padding: 0 1rem;
-    font-size: 1rem;           /* text-base */
+    font-size: var(--text-base);           /* text-base */
     min-height: 2.5rem;
   }
 
   .lg {
     padding: 0 1.25rem;
-    font-size: 1.125rem;       /* text-lg */
+    font-size: var(--text-lg);       /* text-lg */
     min-height: 3rem;
   }
 

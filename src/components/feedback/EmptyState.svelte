@@ -194,14 +194,14 @@
   .empty-state-title {
     margin: 0 0 var(--space-4) 0;
     font-size: var(--text-xl);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base07);
     line-height: 1.3;
   }
 
   .empty-state-compact .empty-state-title {
     font-size: var(--text-base);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .empty-state-large .empty-state-title {

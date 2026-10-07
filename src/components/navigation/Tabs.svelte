@@ -390,7 +390,7 @@
     border: none;
     border-radius: var(--radius-sm);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
     cursor: pointer;
     transition: color var(--duration-fast) var(--ease-out);
@@ -434,7 +434,7 @@
 
   .tab-badge {
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base04);
   }
 
@@ -497,7 +497,7 @@
     margin-bottom: -1px;
     padding-block: var(--space-3);
     padding-inline: var(--space-4);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     transition:
       color var(--duration-fast) var(--ease-out),
       border-color var(--duration-fast) var(--ease-out);

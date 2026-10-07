@@ -47,7 +47,7 @@
 
 html {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-base);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

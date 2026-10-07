@@ -547,9 +547,9 @@
      Title + message
      ============================================================ */
   .toast-title {
-    font-weight: 500;
-    font-size: 0.875rem;
-    letter-spacing: 0.05em;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wider);
     line-height: 1.4;
     margin: 0;
     flex: 1;
@@ -562,8 +562,8 @@
   .toast-error .toast-title { color: var(--color-base08); }
 
   .toast-message {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
     margin: 0;
     color: var(--color-base05);
     padding-left: 1.4375rem; /* icon width + gap */
@@ -584,8 +584,8 @@
 
   .toast-action {
     padding: 0.375rem 0.75rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
+    font-size: var(--text-dense);
+    font-weight: var(--font-weight-medium);
     border: none;
     border-radius: var(--radius-md, 0.375rem);
     cursor: pointer;

@@ -390,7 +390,7 @@
   }
 
   .avatar-initials {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base0D);
   }
 
@@ -398,14 +398,14 @@
   .avatar-sm {
     width: 2rem;
     height: 2rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 
   /* Header avatar - 40px */
   .avatar-md {
     width: 2.5rem;
     height: 2.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
   }
 
   .trigger-info {
@@ -417,8 +417,8 @@
   }
 
   .trigger-workspace {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -428,7 +428,7 @@
   }
 
   .trigger-name {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-base05);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -504,8 +504,8 @@
   }
 
   .user-name {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -518,8 +518,8 @@
     display: inline-flex;
     align-items: center;
     padding: 0.125rem 0.5rem;
-    font-size: 0.625rem;
-    font-weight: 500;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-medium);
     border-radius: var(--radius-default);
     text-transform: capitalize;
   }
@@ -549,7 +549,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-base06);
     transition: all var(--duration-fast);
     cursor: pointer;

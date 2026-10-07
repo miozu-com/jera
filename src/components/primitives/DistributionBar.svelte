@@ -91,7 +91,7 @@
     display: flex;
     align-items: baseline;
     gap: 0.25rem;
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     color: var(--color-base04);
     text-transform: capitalize;
   }

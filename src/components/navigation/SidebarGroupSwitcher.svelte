@@ -150,11 +150,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted, var(--color-base04));
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all var(--duration-base) ease;
     border: none;
@@ -174,7 +172,7 @@
 
   .section-count {
     padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     background-color: var(--color-surface-alt, var(--color-base02));
     color: var(--color-text-muted, var(--color-base05));
     border-radius: var(--radius-full);
@@ -204,7 +202,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
@@ -224,7 +222,7 @@
   .group-item.active {
     background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
     color: var(--color-primary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .group-name {
@@ -233,7 +231,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .add-group {
@@ -244,7 +242,7 @@
     align-items: center;
     gap: 0.5rem;
     justify-content: center;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border-radius: 0.375rem;

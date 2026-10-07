@@ -280,7 +280,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
@@ -308,7 +308,7 @@
   .account-item.active {
     background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
     color: var(--color-primary);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   /* Connect account variant */
@@ -375,8 +375,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: white;
     box-shadow: var(--shadow-xs);
   }
@@ -466,7 +466,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted, var(--color-base05));
     cursor: pointer;
     border-radius: 0.375rem;
@@ -487,6 +487,6 @@
   .subroute-item.active {
     color: var(--color-primary);
     background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 </style>

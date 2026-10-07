@@ -78,13 +78,13 @@
   }
 
   .progress-label {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-base05);
   }
 
   .progress-value {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
     color: var(--color-base07);
   }
 

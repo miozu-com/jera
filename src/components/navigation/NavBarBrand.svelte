@@ -193,7 +193,7 @@
     gap: var(--space-3);
     padding: var(--space-3) var(--space-5);
     border-radius: var(--radius-md);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: var(--text-sm);
     line-height: 1.2;
     color: var(--color-base05);
@@ -307,7 +307,7 @@
 
   .crumb-current {
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     padding: var(--space-1) var(--space-3);
   }

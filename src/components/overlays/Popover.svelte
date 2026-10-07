@@ -211,7 +211,7 @@
     padding: 0.5rem 0.75rem;
     background: var(--color-base01);
     color: var(--color-base07);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     line-height: 1.5;
     border-radius: var(--radius-default);
     box-shadow: var(--shadow-lg);

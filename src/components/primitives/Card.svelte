@@ -79,7 +79,7 @@
   .card-title {
     margin: 0 0 var(--space-10) 0;
     font-size: var(--text-base);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base07);
     display: flex;
     align-items: center;

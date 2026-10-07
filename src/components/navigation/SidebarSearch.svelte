@@ -157,7 +157,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text, var(--color-base06));
     cursor: pointer;
     border-radius: 0.375rem;
@@ -176,7 +176,7 @@
   .search-label {
     flex: 1;
     text-align: left;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .search-input-wrapper {
@@ -200,7 +200,7 @@
     background-color: var(--color-surface-alt, var(--color-base02));
     border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 40%, transparent);
     border-radius: 0.375rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text, var(--color-base06));
     transition: all var(--duration-base) ease;
     font-family: inherit;

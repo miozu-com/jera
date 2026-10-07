@@ -98,11 +98,9 @@
   }
 
   .dash-card-title h3 {
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin: 0;
   }
 
@@ -119,9 +117,9 @@
   }
 
   .dash-card-subtitle {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-base04);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     letter-spacing: normal;
     text-transform: none;
     margin: 0;

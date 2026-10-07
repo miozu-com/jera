@@ -279,7 +279,7 @@
 
   .navbar :global(.chip-nav .chip) {
     padding: var(--space-3) var(--space-5);
-    font-size: 0.8125rem;
+    font-size: var(--text-dense);
   }
 
   .navbar-subnav-slot {
@@ -314,8 +314,8 @@
     background: transparent;
     color: var(--color-base04);
     font-family: inherit;
-    font-size: 0.8125rem;
-    font-weight: 500;
+    font-size: var(--text-dense);
+    font-weight: var(--font-weight-medium);
     line-height: 1.2;
     cursor: pointer;
     white-space: nowrap;
@@ -447,8 +447,8 @@
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    font-size: 0.8125rem;
-    font-weight: 500;
+    font-size: var(--text-dense);
+    font-weight: var(--font-weight-medium);
     color: var(--color-base06);
   }
 
@@ -457,20 +457,20 @@
   }
 
   .card-desc {
-    font-size: 0.6875rem;
+    font-size: var(--text-2xs);
     color: var(--color-base04);
     line-height: 1.4;
   }
 
   .badge-new {
-    font-size: 9px;
+    font-size: var(--text-2xs);
     padding: 1px 5px;
     border-radius: var(--radius-sm);
     background-color: color-mix(in srgb, var(--color-base0B) 18%, transparent);
     color: var(--color-base0B);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: var(--tracking-wide);
     flex-shrink: 0;
   }
 
@@ -485,12 +485,12 @@
   }
 
   .footer-badge {
-    font-size: 9px;
+    font-size: var(--text-2xs);
     padding: 1px 6px;
     border-radius: var(--radius-sm);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: var(--tracking-wide);
   }
 
   .footer-badge[data-color='blue'] {
@@ -519,7 +519,7 @@
   }
 
   .footer-count {
-    font-size: 0.6875rem;
+    font-size: var(--text-2xs);
     color: var(--color-base04);
   }
 
@@ -555,7 +555,7 @@
     background: transparent;
     font-family: inherit;
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 1.2;
     color: var(--color-base04);
     cursor: pointer;

@@ -44,13 +44,11 @@
   .section-header {
     padding: 0.25rem 0.75rem;
     margin-bottom: 0.25rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     line-height: 1rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base05);
     text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     white-space: nowrap;
     overflow: hidden;
   }

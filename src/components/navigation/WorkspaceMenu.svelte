@@ -247,10 +247,10 @@
   }
 
   .avatar-initials {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: white;
-    text-transform: uppercase;
+    text-transform: uppercase; /* type-lint: allow -- initials */
   }
 
   /* Workspace Info */
@@ -264,8 +264,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base07);
     white-space: nowrap;
     overflow: hidden;
@@ -274,11 +274,11 @@
 
   .workspace-badge {
     padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
-    font-weight: 600;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
     border-radius: 0.25rem;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: var(--tracking-wide);
   }
 
   .workspace-badge.badge-default {
@@ -297,7 +297,7 @@
   }
 
   .user-subtitle {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-text-muted, var(--color-base05));
     white-space: nowrap;
     overflow: hidden;
@@ -395,13 +395,13 @@
   }
 
   .user-name {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base07);
   }
 
   .user-email {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-text-muted, var(--color-base05));
     white-space: nowrap;
     overflow: hidden;

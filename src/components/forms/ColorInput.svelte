@@ -224,7 +224,7 @@
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: var(--text-sm, 0.875rem);
     color: var(--color-base07);
-    text-transform: uppercase;
+    text-transform: uppercase; /* type-lint: allow -- codes and initials */
     background: transparent;
     border: none;
     outline: none;

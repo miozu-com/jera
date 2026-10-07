@@ -76,7 +76,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
   }
 
   th {
@@ -84,7 +84,7 @@
     padding: 0.75rem 1rem;
     background: var(--color-base01);
     border-bottom: 1px solid var(--color-base02);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base05);
     white-space: nowrap;
   }
@@ -101,7 +101,7 @@
 
   .prop-name code {
     font-family: var(--font-mono, monospace);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base0E);
   }
 
@@ -112,7 +112,7 @@
 
   .prop-type code {
     font-family: var(--font-mono, monospace);
-    font-size: 0.8125rem;
+    font-size: var(--text-dense);
     color: var(--color-base04);
     background: var(--color-base01);
     padding: 0.125rem 0.375rem;
@@ -121,7 +121,7 @@
 
   .prop-default code {
     font-family: var(--font-mono, monospace);
-    font-size: 0.8125rem;
+    font-size: var(--text-dense);
     color: var(--color-base0B);
   }
 

@@ -177,7 +177,7 @@
   }
 
   .alert-title {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-size: var(--text-sm);
     margin-bottom: var(--space-2);
   }

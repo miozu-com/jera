@@ -127,16 +127,16 @@
   }
 
   .stat-value {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
-    letter-spacing: -0.02em;
+    letter-spacing: var(--tracking-tight);
     line-height: 1.2;
     transition: color var(--duration-base) ease;
   }
 
   .stat-unit {
     font-size: 0.6em;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     color: var(--color-base04);
   }
 
@@ -148,8 +148,6 @@
 
   .stat-label {
     color: var(--color-base04);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin-top: var(--space-2);
   }
 

@@ -665,7 +665,7 @@
 
   .upload-label {
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base05);
     text-align: center;
   }
@@ -733,7 +733,7 @@
     left: var(--space-2);
     padding: 0.0625rem 0.375rem;
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base00);
     background: var(--color-base0D);
     border-radius: var(--radius-sm);
@@ -847,7 +847,7 @@
     left: var(--space-2);
     padding: 0.125rem 0.375rem;
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base07);
     background: color-mix(in srgb, black 60%, transparent);
     border-radius: var(--radius-md);
@@ -864,7 +864,7 @@
     border: var(--border-width-default) dashed var(--color-base02);
     color: var(--color-base04);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     background: transparent;
     transition: border-color var(--duration-fast), background var(--duration-fast), color var(--duration-fast);
@@ -895,7 +895,7 @@
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base09);
   }
 

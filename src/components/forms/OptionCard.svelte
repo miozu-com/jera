@@ -44,7 +44,7 @@
     padding: 0.5rem 1rem;
     border-radius: var(--radius-lg, 0.5rem);
     font-size: var(--text-sm, 0.875rem);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
     background-color: var(--color-base00);
     border: var(--border-width-default) solid var(--color-base02);

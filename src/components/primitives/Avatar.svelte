@@ -144,12 +144,12 @@
   }
 
   /* Size variants */
-  .avatar-xs { width: 1.5rem; height: 1.5rem; font-size: 0.625rem; }
-  .avatar-sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
-  .avatar-md { width: 2.5rem; height: 2.5rem; font-size: 0.875rem; }
-  .avatar-lg { width: 3rem; height: 3rem; font-size: 1rem; }
-  .avatar-xl { width: 4rem; height: 4rem; font-size: 1.25rem; }
-  .avatar-2xl { width: 5rem; height: 5rem; font-size: 1.5rem; }
+  .avatar-xs { width: 1.5rem; height: 1.5rem; font-size: var(--text-2xs); }
+  .avatar-sm { width: 2rem; height: 2rem; font-size: var(--text-xs); }
+  .avatar-md { width: 2.5rem; height: 2.5rem; font-size: var(--text-sm); }
+  .avatar-lg { width: 3rem; height: 3rem; font-size: var(--text-base); }
+  .avatar-xl { width: 4rem; height: 4rem; font-size: var(--text-xl); }
+  .avatar-2xl { width: 5rem; height: 5rem; font-size: var(--text-2xl); }
 
   .avatar-image {
     width: 100%;
@@ -175,8 +175,8 @@
        Worst case across all 8 hues is now 5.05:1 light / 7.57:1 dark. */
     background: color-mix(in oklab, var(--avatar-accent) 80%, var(--color-base05));
     color: var(--color-base00);
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-wide);
   }
 
   .avatar-placeholder {

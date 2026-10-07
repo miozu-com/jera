@@ -142,7 +142,7 @@
   .tooltip-content {
     padding: var(--space-4) var(--space-6);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base06);
     background: var(--color-base01);
     border: var(--border-width-thin) solid var(--color-base02);

@@ -298,7 +298,7 @@
     border: var(--border-width-default) solid var(--color-base02);
     background-color: var(--color-base00);
     color: var(--color-base04);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     font-family: inherit;
     text-align: left;
     cursor: pointer;
@@ -429,7 +429,7 @@
 
   .month-label {
     font-size: var(--text-sm, 0.875rem);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     user-select: none;
   }
@@ -448,7 +448,7 @@
     justify-content: center;
     height: 1.75rem;
     font-size: var(--text-xs, 0.75rem);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
     user-select: none;
   }
@@ -495,14 +495,14 @@
   }
 
   .day-btn.is-today {
-    font-weight: 700;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base0D);
   }
 
   .day-btn.is-selected {
     background-color: var(--color-base0D);
     color: var(--color-base00);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .day-btn.is-selected:hover {
@@ -538,7 +538,7 @@
     background: transparent;
     color: var(--color-base0D);
     font-size: var(--text-xs, 0.75rem);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     font-family: inherit;
     cursor: pointer;
     transition:

@@ -92,12 +92,10 @@
   .section-header {
     padding: 0.25rem 0.75rem;
     margin-bottom: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted, var(--color-base05));
     text-align: left;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     white-space: nowrap;
     overflow: hidden;
     display: flex;
@@ -126,7 +124,7 @@
 
   .section-count {
     padding: 0.125rem 0.375rem;
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     background-color: var(--color-surface-alt, var(--color-base02));
     color: var(--color-text-muted, var(--color-base05));
     border-radius: var(--radius-full);

@@ -70,27 +70,27 @@
     align-items: center;
     gap: 0.5rem;
     margin: 0 0 0.5rem 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
   }
 
   h2.section-title {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--color-border, var(--color-base02));
   }
 
   h3.section-title {
-    font-size: 1.25rem;
+    font-size: var(--text-xl);
   }
 
   h4.section-title {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
   }
 
   h5.section-title,
   h6.section-title {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .anchor-link {

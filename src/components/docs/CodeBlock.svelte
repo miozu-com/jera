@@ -110,7 +110,7 @@
     padding: 0.5rem 1rem;
     background: var(--color-base00);
     border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 30%, transparent);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 
   .code-filename {
@@ -120,10 +120,10 @@
 
   .code-lang {
     color: var(--color-base04);
-    text-transform: uppercase;
-    font-size: 0.625rem;
-    letter-spacing: 0.12em;
-    font-weight: 500;
+    text-transform: uppercase; /* type-lint: allow -- codes and initials */
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-widest);
+    font-weight: var(--font-weight-medium);
     font-family: var(--font-mono, monospace);
     padding: 0.125rem 0.375rem;
     border-radius: 3px;
@@ -167,7 +167,7 @@
     padding: 1rem;
     background: transparent !important;
     font-family: var(--font-mono, monospace);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 

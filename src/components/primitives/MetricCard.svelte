@@ -182,9 +182,7 @@
   .metric-label {
     flex: 1;
     font-size: var(--text-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
   }
 
@@ -200,10 +198,10 @@
 
   .metric-value {
     font-size: var(--text-2xl);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: var(--tracking-tight);
   }
 
   .metric-value-success {
@@ -220,7 +218,7 @@
 
   .metric-unit {
     font-size: var(--text-lg);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
   }
 
@@ -232,8 +230,8 @@
 
   .metric-trend {
     font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-wide);
   }
 
   .metric-trend-up { color: var(--color-base0B); }

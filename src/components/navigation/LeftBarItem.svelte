@@ -206,9 +206,9 @@
     gap: 0.5rem;
     /* font-size and line-height MUST come after font-family to not be overwritten */
     font-family: inherit;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     line-height: 1.25rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base06);
     cursor: pointer;
     border-radius: 0.375rem;
@@ -244,7 +244,7 @@
     --nav-ring: color-mix(in srgb, var(--color-base0D) 15%, var(--nav-surface));
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
     color: var(--color-base0D);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   /* Light mode: darken active text to meet WCAG AA 4.5:1 contrast */
@@ -343,7 +343,7 @@
   .subnav-item {
     display: block;
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     line-height: 1.25rem;
     color: var(--color-base05);
     transition: all var(--duration-fast);
@@ -363,7 +363,7 @@
 
   .subnav-item.active {
     color: var(--color-base0D);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
   }
 

@@ -59,14 +59,14 @@
   }
 
   .fallback-text {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-text-muted, var(--color-base05));
     margin: 0 0 0.5rem 0;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
   }
 
   .fallback-details {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-text-muted, var(--color-base04));
     margin: 0;
     font-family: monospace;

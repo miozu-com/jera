@@ -199,7 +199,7 @@
 
   .upload-label {
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base05);
   }
 

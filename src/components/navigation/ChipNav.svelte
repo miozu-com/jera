@@ -80,9 +80,9 @@
     border-radius: var(--radius-md);
     background: transparent;
     font-family: inherit;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 1.2;
-    letter-spacing: 0.01em;
+    letter-spacing: var(--tracking-normal);
     color: var(--color-base04);
     text-decoration: none;
     white-space: nowrap;
@@ -120,8 +120,8 @@
     min-width: 1rem;
     height: 1rem;
     padding: 0 3px;
-    font-size: 9px;
-    font-weight: 600;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
     background: var(--color-base09);
     color: var(--color-base00);
     border-radius: var(--radius-full);

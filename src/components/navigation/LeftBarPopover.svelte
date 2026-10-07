@@ -85,12 +85,10 @@
 
   .popover-header {
     padding: 0.5rem 1rem;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     line-height: 1rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-base06);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 20%, transparent);
     background-color: color-mix(in srgb, var(--color-base01) 50%, transparent);
   }
@@ -104,7 +102,7 @@
   .popover-item {
     display: block;
     padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     line-height: 1.25rem;
     color: var(--color-base06);
     transition: all var(--duration-fast);

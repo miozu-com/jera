@@ -97,7 +97,7 @@
     align-items: center;
     gap: 0.375rem;
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-base0D);
     text-decoration: none;
     background: transparent;

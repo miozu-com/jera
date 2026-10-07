@@ -96,10 +96,8 @@
   }
 
   .divider-label {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--color-base04);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     white-space: nowrap;
   }
 </style>
