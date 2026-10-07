@@ -181,6 +181,12 @@
       align-items: flex-start;
       gap: var(--space-6);
     }
+
+    /* In a column the 14rem basis is a HEIGHT: every narrow row grew a
+       224px blank under its label (dash What it can do at 390px, 2026-10-07). */
+    .setting-item:not(.has-leading):not(.setting-item-stacked) > .setting-content {
+      flex-basis: auto;
+    }
   }
 
   /* Narrow CARD (SettingCard's content is a size container). 360px, not 640:
@@ -191,6 +197,12 @@
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-6);
+    }
+
+    /* In a column the 14rem basis is a HEIGHT: every narrow row grew a
+       224px blank under its label (dash What it can do at 390px, 2026-10-07). */
+    .setting-item:not(.has-leading):not(.setting-item-stacked) > .setting-content {
+      flex-basis: auto;
     }
   }
 </style>

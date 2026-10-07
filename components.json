@@ -1640,8 +1640,8 @@
       "snippets": ["leading", "action", "badge"],
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-10-05",
+      "revision": 9,
+      "lastReviewed": "2026-10-07",
       "breaking": [],
       "docLevel": "standard"
     },
