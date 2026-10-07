@@ -94,7 +94,7 @@
       "name": "Badge",
       "category": "primitives",
       "path": "src/components/primitives/Badge.svelte",
-      "description": "Status tag with semantic color variants, an optional indicator dot, and icon support. Tinted bordered style by default (10% bg, 30% border, 2px radius); tone=\"solid\" fills with the full accent for badges that sit on photos; tone=\"label\" is the settings label (4px radius, 8% fill, 30% border, text 70% tone + 30% base07) for levels, audiences and surfaces.",
+      "description": "Status tag with semantic color variants, an optional indicator dot, and icon support. Tinted bordered style by default (10% bg, 30% border, 2px radius); tone=\"solid\" fills with the full accent for badges that sit on photos; tone=\"label\" is the settings label (4px radius, 8% fill, 30% border, text 70% tone + 30% base07) for levels, audiences and surfaces. tone=\"outline\" is a neutral fact (no fill, base02 border, body text); shape=\"pill\" gives round ends for a row of filters or facts.",
       "props": {
         "variant": {
           "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'|'accent'",
@@ -102,9 +102,14 @@
           "description": "Color variant"
         },
         "tone": {
-          "type": "'tinted'|'solid'|'label'",
+          "type": "'tinted'|'solid'|'label'|'outline'",
           "default": "'tinted'",
           "description": "Fill treatment. tinted (default) is the 10% tint for a surface; solid fills with the full accent and puts the app background in the text, plus a 1px shadow — for badges over media. Neutral variants render a blurred scrim pill in solid. label is the settings-row label: 4px radius (--radius-default), 8% fill over base00, 30% border, text mixed 70% tone + 30% base07 so warning/error stay legible in the light theme."
+        },
+        "shape": {
+          "type": "'default'|'pill'",
+          "default": "'default'",
+          "description": "Round ends for a row of facts or filters (opt-in; statuses keep the house radius)"
         },
         "size": {
           "type": "'xs'|'sm'|'md'|'lg'",
@@ -131,8 +136,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 9,
-      "lastReviewed": "2026-10-06",
+      "revision": 10,
+      "lastReviewed": "2026-10-07",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
         "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."

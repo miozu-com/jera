@@ -23,6 +23,8 @@
   <Badge variant="success" tone="solid">Shopify</Badge>
   <Badge tone="solid">+2</Badge>
 
+  @example Outline pill — a read-only fact in a row of facts (filters, criteria)
+  <Badge tone="outline" shape="pill" size="sm">$15–$200</Badge>
   @example Label — a status or level in a settings row (4px, toned text)
   <Badge tone="label" variant="success" size="sm">Customer-facing</Badge>
   <Badge tone="label" variant="warning" size="sm">Owner only</Badge>
@@ -34,6 +36,7 @@
     variant = 'default',
     size = 'md',
     tone = 'tinted',
+    shape = 'default',
     indicator = false,
     class: className = '',
     onclick,
@@ -46,7 +49,7 @@
 {#if isInteractive}
   <button
     type="button"
-    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone} {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''} {className}"
     {onclick}
     {...rest}
   >
@@ -61,7 +64,7 @@
   </button>
 {:else}
   <span
-    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone} {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''} {className}"
     {...rest}
   >
     {#if indicator}
@@ -245,6 +248,34 @@
     background: color-mix(in srgb, var(--badge-tone) 8%, var(--color-base00));
     border-color: color-mix(in srgb, var(--badge-tone) 30%, transparent);
     color: color-mix(in srgb, var(--badge-tone) 70%, var(--color-base07));
+  }
+
+  /* Outline: a neutral fact, not a status. No fill, a quiet border, body-
+     colour text — readable at a glance where the tinted grey reads as
+     disabled (owner, 2026-10-07: "I don't like gray colored badge"). A
+     coloured variant keeps its tone on the text only. */
+  .jera-badge-tone-outline {
+    background: transparent;
+    border-color: var(--color-base02);
+    color: var(--color-base05);
+  }
+
+  .jera-badge-tone-outline:not(.jera-badge-default) {
+    color: color-mix(in srgb, var(--badge-tone) 75%, var(--color-base05));
+  }
+
+  /* Pill: opt-in round ends for a row of facts or filters. The house radius
+     stays the default for statuses and labels. */
+  .jera-badge-shape-pill {
+    border-radius: var(--radius-full);
+  }
+
+  .jera-badge-shape-pill.jera-badge-xs {
+    padding-inline: 0.5rem;
+  }
+
+  .jera-badge-shape-pill.jera-badge-sm {
+    padding-inline: 0.625rem;
   }
 
   /* Indicator dot */
