@@ -26,6 +26,8 @@
     size = 'md',
     class: className = '',
     error = false,
+    /** Blank is a value: a cleared box stays blank on blur and reports `''` (opt-in). */
+    allowEmpty = false,
     oninput,
     onchange,
     ...rest
@@ -74,6 +76,11 @@
   }
 
   function handleBlur(e) {
+    if (allowEmpty && (value === '' || value === null || value === undefined || value === '-')) {
+      value = '';
+      triggerChange();
+      return;
+    }
     const num = ensureNumber(value);
     value = Math.max(min, Math.min(num, max));
     triggerChange();
