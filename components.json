@@ -1043,12 +1043,12 @@
           "description": "Extra class on the dialog element"
         }
       },
-      "snippets": ["children"],
+      "snippets": ["children", "footer"],
       "events": ["onclose"],
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-06-13",
+      "revision": 4,
+      "lastReviewed": "2026-10-08",
       "breaking": [],
       "docLevel": "minimal"
     },

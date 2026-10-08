@@ -10,6 +10,10 @@
   handle down past a threshold to dismiss. ESC + backdrop click also close.
   Stateless — the consumer owns `open` (bind it).
 
+  `footer` (optional): actions pinned under the scrolling body (Apply, Clear),
+  always in reach however long the content is. Without it the markup is
+  unchanged.
+
   @example
   <Sheet bind:open={showSheet} ariaLabel="Workspaces">
     <nav>…</nav>
@@ -23,6 +27,7 @@
     showHandle = true,
     ariaLabel = '',
     children,
+    footer,
     onclose = () => {},
     class: className = '',
     ...rest
@@ -130,6 +135,11 @@
     <div class="sheet-body">
       {@render children?.()}
     </div>
+    {#if footer}
+      <div class="sheet-footer">
+        {@render footer()}
+      </div>
+    {/if}
   </div>
 </dialog>
 
@@ -231,6 +241,17 @@
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+
+  .sheet-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    justify-content: flex-end;
+    padding: var(--space-4) var(--space-6);
+    border-top: var(--border-width-thin) solid var(--color-base02);
   }
 
   /* Honour reduced-motion: no slide, instant show/hide. */
