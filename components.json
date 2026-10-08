@@ -1077,13 +1077,18 @@
           "type": "number",
           "default": "8",
           "description": "Distance from trigger (px)"
+        },
+        "tap": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Opt-in: a touch tap toggles the popover and keyboard focus shows it"
         }
       },
       "snippets": ["children", "content"],
       "consumers": ["miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-10-07",
+      "revision": 6,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },

@@ -9,6 +9,11 @@
     <Button>Hover me</Button>
   </Popover>
 
+  @example Tap on a phone, focus from the keyboard (opt-in)
+  <Popover content="Excludes storage fees" tap>
+    <button type="button" aria-label="Excludes storage fees">ⓘ</button>
+  </Popover>
+
   @example Wider rich content (opt-in; the default cap is 18rem)
   <Popover maxWidth="24rem">…</Popover>
   @example With custom content
@@ -29,6 +34,8 @@
     delay = { show: 100, hide: 100 },
     offset = 8,
     maxWidth = null,
+    /** Opt-in: a finger's tap toggles it and keyboard focus shows it (hover alone never reaches a phone). */
+    tap = false,
     class: className = ''
   } = $props();
 
@@ -86,6 +93,28 @@
         visible = false;
       }
     }, delay.hide);
+  }
+
+  // A tap focuses the button too; that focus must not open what the tap toggles.
+  let touching = false;
+
+  function handleFocusIn(event) {
+    if (!touching) handleMouseEnter(event);
+  }
+
+  function handleTap(event) {
+    touching = false;
+    if (event.pointerType !== 'touch') return;
+    if (visible) {
+      clearTimeout(timeoutId);
+      visible = false;
+    } else {
+      handleMouseEnter(event);
+    }
+  }
+
+  function handleFocusOut(event) {
+    if (!event.currentTarget.contains(event.relatedTarget)) handleMouseLeave();
   }
 
   function handlePopoverEnter() {
@@ -176,8 +205,14 @@
 <div
   class="popover-wrapper {className}"
   style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
-  onmouseenter={handleMouseEnter}
-  onmouseleave={handleMouseLeave}
+  onmouseenter={tap ? undefined : handleMouseEnter}
+  onmouseleave={tap ? undefined : handleMouseLeave}
+  onpointerenter={tap ? e => e.pointerType !== 'touch' && handleMouseEnter(e) : undefined}
+  onpointerleave={tap ? e => e.pointerType !== 'touch' && handleMouseLeave() : undefined}
+  onclick={tap ? handleTap : undefined}
+  onpointerdown={tap ? e => (touching = e.pointerType === 'touch') : undefined}
+  onfocusin={tap ? handleFocusIn : undefined}
+  onfocusout={tap ? handleFocusOut : undefined}
 >
   {@render children?.()}
 
