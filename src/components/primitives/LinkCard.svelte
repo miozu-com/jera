@@ -13,6 +13,12 @@
     {/snippet}
   </LinkCard>
 
+  @example With leading media and rich body (opt-in, revision 4)
+  <LinkCard href="/p/1" label="Leather wallet">
+    {#snippet leading()}<img src={photo} alt="" />{/snippet}
+    <strong>Leather wallet</strong><span>$25 vs target $18</span>
+  </LinkCard>
+
   @example Disabled
   <LinkCard href="/admin" label="Admin Panel" disabled />
 -->
@@ -23,13 +29,22 @@
     disabled = false,
     class: className = '',
     trailing,
+    leading,
+    children,
     ...rest
   } = $props();
 </script>
 
 {#if disabled}
   <div class="link-card link-card-disabled {className}" {...rest}>
-    <span class="link-card-label">{label}</span>
+    {#if leading}
+      <span class="link-card-leading">{@render leading()}</span>
+    {/if}
+    {#if children}
+      <span class="link-card-body">{@render children()}</span>
+    {:else}
+      <span class="link-card-label">{label}</span>
+    {/if}
     {#if trailing}
       <span class="link-card-trailing">
         {@render trailing()}
@@ -38,7 +53,14 @@
   </div>
 {:else}
   <a {href} class="link-card {className}" {...rest}>
-    <span class="link-card-label">{label}</span>
+    {#if leading}
+      <span class="link-card-leading">{@render leading()}</span>
+    {/if}
+    {#if children}
+      <span class="link-card-body">{@render children()}</span>
+    {:else}
+      <span class="link-card-label">{label}</span>
+    {/if}
     {#if trailing}
       <span class="link-card-trailing">
         {@render trailing()}
@@ -84,6 +106,21 @@
   .link-card-label {
     font-size: var(--text-sm);
     font-weight: var(--font-weight-medium);
+    color: var(--color-base05);
+  }
+
+  .link-card-leading {
+    display: flex;
+    flex: none;
+    margin-right: var(--space-3, 0.75rem);
+  }
+
+  .link-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
     color: var(--color-base05);
   }
 

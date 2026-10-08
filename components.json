@@ -2299,10 +2299,14 @@
           "description": "Disable interaction"
         }
       },
-      "snippets": ["trailing"],
+      "snippets": [
+        "trailing",
+        "leading",
+        "children"
+      ],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
+      "revision": 4,
+      "lastReviewed": "2026-10-08",
       "breaking": [],
       "docLevel": "standard"
     },
