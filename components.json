@@ -25,7 +25,7 @@
       "description": "Primary action trigger, polymorphic (a/button)",
       "props": {
         "variant": {
-          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'|'accent'",
+          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'|'accent'|'solid'",
           "default": "'primary'",
           "description": "Visual style variant"
         },
@@ -79,8 +79,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 11,
-      "lastReviewed": "2026-10-07",
+      "revision": 12,
+      "lastReviewed": "2026-10-09",
       "breaking": [
         {
           "revision": 10,
@@ -96,6 +96,8 @@
       "path": "src/components/primitives/Badge.svelte",
       "description": "Status tag with semantic color variants, an optional indicator dot, and icon support. Tinted bordered style by default (10% bg, 30% border, 2px radius); tone=\"solid\" fills with the full accent for badges that sit on photos; tone=\"label\" is the settings label (4px radius, 8% fill, 30% border, text 70% tone + 30% base07) for levels, audiences and surfaces. tone=\"outline\" is a neutral fact (no fill, base02 border, body text); shape=\"pill\" gives round ends for a row of filters or facts.",
       "props": {
+        "onremove": { "type": "() => void", "description": "Renders a \u00d7 button after the body; the badge becomes a span holding the body (a button when onclick) and the remove button" },
+        "removeLabel": { "type": "string", "default": "'Remove'", "description": "aria-label of the \u00d7 button" },
         "variant": {
           "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'|'accent'",
           "default": "'default'",
@@ -136,7 +138,7 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 12,
+      "revision": 13,
       "lastReviewed": "2026-10-09",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
@@ -415,9 +417,10 @@
       },
       "events": ["oninput", "onchange", "onkeydown", "onfocus", "onblur"],
       "consumers": ["dash", "admin", "miozu"],
+      "snippets": ["prefix", "suffix"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-09-27",
+      "revision": 7,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1235,6 +1238,7 @@
       "path": "src/components/navigation/AccordionItem.svelte",
       "description": "Expandable item with title and custom indicator",
       "props": {
+        "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: 32px transparent row, chevron first, no clipping" },
         "id": {
           "type": "string",
           "default": "auto",
@@ -1262,11 +1266,11 @@
           "description": "Badge text in header"
         }
       },
-      "snippets": ["children", "leading", "trailing", "indicator"],
+      "snippets": ["children", "leading", "trailing", "indicator", "meta"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
+      "revision": 4,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1929,8 +1933,8 @@
         }
       },
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1940,6 +1944,8 @@
       "path": "src/components/forms/RadioGroup.svelte",
       "description": "Radio group container with context for child Radio components",
       "props": {
+        "variant": { "type": "'default'|'segmented'", "default": "'default'", "description": "segmented: one 28px bordered control, the radios as equal segments" },
+        "block": { "type": "boolean", "default": "false", "description": "Segmented: full width" },
         "value": {
           "type": "any",
           "default": "null",
@@ -1965,8 +1971,8 @@
       "snippets": ["children"],
       "events": ["onchange"],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
+      "revision": 3,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2222,9 +2228,9 @@
         }
       },
       "snippets": ["children", "content"],
-      "stage": "beta",
-      "revision": 5,
-      "lastReviewed": "2026-10-07",
+      "stage": "stable",
+      "revision": 6,
+      "lastReviewed": "2026-10-09",
       "breaking": [],
       "docLevel": "standard"
     },

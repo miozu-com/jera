@@ -29,6 +29,12 @@
     {#snippet trailing()}<Badge variant="success">OK</Badge>{/snippet}
     Content here
   </AccordionItem>
+
+  @example Meta (interactive content right of the title, outside the trigger button) + small
+  <AccordionItem title="Competition" size="sm">
+    {#snippet meta()}<Badge onremove={clear}>≤ 20 sellers</Badge>{/snippet}
+    Content here
+  </AccordionItem>
 -->
 <script>
   import { getContext } from 'svelte';
@@ -45,6 +51,8 @@
     leading,
     trailing,
     indicator,
+    meta,
+    size = 'md',
     children,
     class: className = '',
     ...rest
@@ -70,12 +78,7 @@
   }
 </script>
 
-<div
-  class="accordion-item {className}"
-  class:accordion-item-solo={!inGroup}
-  class:accordion-item-disabled={disabled}
-  {...rest}
->
+{#snippet trigger()}
   <button
     type="button"
     id="trigger-{itemId}"
@@ -111,6 +114,23 @@
       {/if}
     </span>
   </button>
+{/snippet}
+
+<div
+  class="accordion-item {className}"
+  class:accordion-item-solo={!inGroup}
+  class:accordion-item-disabled={disabled}
+  class:accordion-item-sm={size === 'sm'}
+  {...rest}
+>
+  {#if meta}
+    <div class="accordion-header">
+      {@render trigger()}
+      <div class="accordion-meta">{@render meta()}</div>
+    </div>
+  {:else}
+    {@render trigger()}
+  {/if}
 
   {#if isOpen}
     <div
@@ -128,6 +148,76 @@
 </div>
 
 <style>
+  /* Header with meta: the trigger and the meta side by side; meta is never inside the button. */
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4, 0.5rem);
+    min-width: 0;
+  }
+
+  .accordion-header > .accordion-trigger {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+  }
+
+  .accordion-meta {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: var(--space-2, 0.25rem);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  /* Small: a 32px transparent row, chevron first, no fill, no clipping (tooltips may overhang). */
+  .accordion-item-sm,
+  .accordion-item-sm.accordion-item-solo {
+    overflow: visible;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .accordion-item-sm .accordion-trigger {
+    height: 2rem;
+    padding: 0;
+    gap: var(--space-2, 0.25rem);
+    background: transparent;
+    font-size: var(--text-sm);
+  }
+
+  .accordion-item-sm .accordion-trigger:hover:not(:disabled),
+  .accordion-item-sm .accordion-trigger-open {
+    background: transparent;
+  }
+
+  .accordion-item-sm .accordion-indicator {
+    order: -1;
+    transform: rotate(-90deg);
+  }
+
+  .accordion-item-sm .accordion-trigger:hover:not(:disabled) .accordion-indicator {
+    transform: rotate(-90deg);
+  }
+
+  .accordion-item-sm .accordion-indicator-open,
+  .accordion-item-sm .accordion-trigger:hover:not(:disabled) .accordion-indicator-open {
+    transform: none;
+  }
+
+  .accordion-item-sm > .accordion-content {
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .accordion-item-sm .accordion-body {
+    padding: var(--space-2, 0.25rem) 0 0;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+  }
+
   /* Item container */
   .accordion-item {
     border-bottom: 1px solid var(--color-base02);

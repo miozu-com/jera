@@ -9,6 +9,10 @@
   @example
   // Disable browser autofill (for sensitive fields)
   <Input bind:value={password} type="password" disableBrowserFeatures />
+
+  @example Prefix / suffix inside the field (units, currency)
+  <Input inputmode="numeric" placeholder="Any">{#snippet prefix()}$ {/snippet}</Input>
+  <Input inputmode="numeric">{#snippet suffix()}%{/snippet}</Input>
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -39,8 +43,12 @@
     onkeydown,
     onfocus,
     onblur,
+    prefix,
+    suffix,
     ...rest
   } = $props();
+
+  const affixed = $derived(!!(prefix || suffix));
 
   const finalAutocomplete = $derived(
     disableBrowserFeatures ? 'new-password' : autocomplete
@@ -51,11 +59,14 @@
       'input-base',
       `input-${size}`,
       error && 'input-error',
-      className
+      prefix && 'input-has-prefix',
+      suffix && 'input-has-suffix',
+      !affixed && className
     )
   );
 </script>
 
+{#snippet field()}
 <input
   class={inputClass}
   bind:this={ref}
@@ -83,8 +94,62 @@
   {onblur}
   {...rest}
 />
+{/snippet}
+
+{#if affixed}
+  <!-- Layout-only wrapper: the affixes sit inside the input's own border. -->
+  <span class={cn('input-affix', `input-affix-${size}`, className)}>
+    {#if prefix}<span class="input-prefix" aria-hidden="true">{@render prefix()}</span>{/if}
+    {@render field()}
+    {#if suffix}<span class="input-suffix" aria-hidden="true">{@render suffix()}</span>{/if}
+  </span>
+{:else}
+  {@render field()}
+{/if}
 
 <style>
+  .input-affix {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .input-prefix,
+  .input-suffix {
+    position: absolute;
+    inset-block: 0;
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-base04);
+    pointer-events: none;
+  }
+
+  .input-prefix {
+    inset-inline-start: 0.5rem;
+  }
+
+  .input-suffix {
+    inset-inline-end: 0.5rem;
+  }
+
+  .input-affix-xs .input-prefix,
+  .input-affix-xs .input-suffix,
+  .input-affix-sm .input-prefix,
+  .input-affix-sm .input-suffix {
+    font-size: var(--text-xs, 0.75rem);
+  }
+
+  .input-affix .input-has-prefix {
+    padding-inline-start: 1.375rem;
+  }
+
+  .input-affix .input-has-suffix {
+    padding-inline-end: 1.5rem;
+  }
+
   .input-base {
     width: 100%;
     height: 2.5rem;

@@ -11,6 +11,7 @@
   @example Basic
   <Button>Click me</Button>
   <Button variant="secondary" size="lg">Large Secondary</Button>
+  <Button variant="solid">Search</Button> (the one filled call to action)
 
   @example As link
   <Button href="/about">Link Button</Button>
@@ -192,6 +193,22 @@
   .primary:active:not(:disabled) {
     background-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
     border-color: color-mix(in srgb, var(--color-base0D) 80%, transparent);
+    transform: scale(0.98);
+  }
+
+  /* Solid - the one filled call to action on a screen (accent fill, app background text) */
+  .solid {
+    background-color: var(--color-base0D);
+    color: var(--color-base00);
+    border: var(--border-width-thin) solid var(--color-base0D);
+  }
+
+  .solid:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D) 88%, var(--color-base07));
+  }
+
+  .solid:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D) 80%, var(--color-base07));
     transform: scale(0.98);
   }
 

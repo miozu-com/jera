@@ -28,6 +28,9 @@
   @example Label — a status or level in a settings row (4px, toned text)
   <Badge tone="label" variant="success" size="sm">Customer-facing</Badge>
   <Badge tone="label" variant="warning" size="sm">Owner only</Badge>
+
+  @example Removable chip — the body opens, the × removes (two buttons, never nested)
+  <Badge tone="outline" shape="pill" size="sm" onclick={open} onremove={clear} removeLabel="Remove $20–$60">$20–$60</Badge>
 -->
 <script>
   let {
@@ -40,13 +43,41 @@
     indicator = false,
     class: className = '',
     onclick,
+    onremove,
+    removeLabel = 'Remove',
     ...rest
   } = $props();
 
   const isInteractive = $derived(!!onclick);
+  const base = $derived(
+    `jera-badge jera-badge-${variant} jera-badge-${size} jera-badge-tone-${tone}${shape === 'pill' ? ' jera-badge-shape-pill' : ''}`
+  );
 </script>
 
-{#if isInteractive}
+{#snippet body()}
+  {#if indicator}
+    <span class="badge-indicator"></span>
+  {/if}
+  {#if children}
+    {@render children()}
+  {:else if label}
+    {label}
+  {/if}
+{/snippet}
+
+{#if onremove}
+  <!-- Removable: a span holding the body (a button when `onclick`) and the ×. -->
+  <span class="{base} jera-badge-removable {className}" {...rest}>
+    {#if onclick}
+      <button type="button" class="badge-body" {onclick}>{@render body()}</button>
+    {:else}
+      <span class="badge-body">{@render body()}</span>
+    {/if}
+    <button type="button" class="badge-remove" aria-label={removeLabel} title={removeLabel} onclick={onremove}>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </span>
+{:else if isInteractive}
   <button
     type="button"
     class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''} {className}"
@@ -79,6 +110,56 @@
 {/if}
 
 <style>
+  /* Removable: the badge keeps its look; its two parts are bare buttons. */
+  .jera-badge-removable {
+    gap: 0.125rem;
+    padding-inline-end: 0.125rem;
+  }
+
+  .badge-body,
+  .badge-remove {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .badge-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span.badge-body {
+    cursor: default;
+  }
+
+  .badge-remove {
+    flex: none;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border-radius: var(--radius-full, 999px);
+    color: var(--color-base04);
+  }
+
+  .badge-remove:hover {
+    color: var(--color-base06);
+    background: color-mix(in srgb, var(--color-base04) 15%, transparent);
+  }
+
+  .badge-body:focus-visible,
+  .badge-remove:focus-visible {
+    outline: 2px solid var(--color-base0D);
+    outline-offset: 1px;
+    border-radius: var(--radius-sm);
+  }
+
   .jera-badge {
     display: inline-flex;
     align-items: center;

@@ -26,6 +26,7 @@
   const isChecked = $derived(group?.value === value);
   const isDisabled = $derived(disabled || group?.disabled);
   const name = $derived(group?.name || '');
+  const segmented = $derived(group?.variant === 'segmented');
 
   function handleChange() {
     if (!isDisabled && group) {
@@ -35,7 +36,7 @@
 </script>
 
 <label
-  class={cn('radio-label', isDisabled && 'radio-disabled', className)}
+  class={cn('radio-label', segmented && 'radio-segment', isDisabled && 'radio-disabled', className)}
   for={radioId}
 >
   <input
@@ -49,8 +50,10 @@
     class="radio-input"
     {...rest}
   />
-  <span class="radio-control"></span>
-  {#if label || description}
+  {#if !segmented}<span class="radio-control"></span>{/if}
+  {#if segmented}
+    <span class="radio-segment-text">{label}</span>
+  {:else if label || description}
     <span class="radio-content">
       {#if label}
         <span class="radio-text">{label}</span>
@@ -139,5 +142,40 @@
     font-size: var(--text-xs);
     color: var(--color-base04);
     line-height: 1.4;
+  }
+
+  /* Segmented (inside RadioGroup variant="segmented"). */
+  .radio-segment {
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-width: 0;
+    padding: 0 var(--space-4, 0.5rem);
+    border-radius: var(--radius-sm);
+    color: var(--color-base05);
+    transition: var(--transition-colors);
+  }
+
+  .radio-segment-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+  }
+
+  .radio-segment:hover:not(.radio-disabled) {
+    color: var(--color-base06);
+  }
+
+  .radio-segment:has(.radio-input:checked) {
+    color: var(--color-base06);
+    background: var(--color-base02);
+  }
+
+  .radio-segment:has(.radio-input:focus-visible) {
+    box-shadow: var(--focus-ring-shadow);
   }
 </style>
