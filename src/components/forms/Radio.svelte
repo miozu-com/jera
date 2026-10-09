@@ -170,9 +170,11 @@
     color: var(--color-base06);
   }
 
+  /* Selected = raised, not tinted: a grey tint reads disabled. */
   .radio-segment:has(.radio-input:checked) {
     color: var(--color-base06);
-    background: var(--color-base02);
+    background: var(--color-base00);
+    box-shadow: var(--shadow-sm);
   }
 
   .radio-segment:has(.radio-input:focus-visible) {

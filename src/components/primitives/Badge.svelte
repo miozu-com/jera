@@ -148,6 +148,12 @@
     color: var(--color-base04);
   }
 
+  /* A removable sm badge stays as tall as a plain sm badge. */
+  .jera-badge-sm .badge-remove {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
   .badge-remove:hover {
     color: var(--color-base06);
     background: color-mix(in srgb, var(--color-base04) 15%, transparent);

@@ -81,7 +81,7 @@
     gap: 0.125rem;
     border: var(--border-width-default) solid var(--color-base02);
     border-radius: var(--radius-md);
-    background: var(--color-base00);
+    background: var(--color-base01);
     max-width: 100%;
   }
 
