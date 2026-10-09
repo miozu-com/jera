@@ -319,8 +319,13 @@
     font-family: inherit;
   }
 
-  button.jera-badge:hover {
+  button.jera-badge:hover:not(:disabled) {
     opacity: 0.85;
+  }
+
+  button.jera-badge:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   button.jera-badge:focus-visible {
