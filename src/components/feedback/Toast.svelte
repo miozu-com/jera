@@ -509,10 +509,14 @@
   /* ============================================================
      Content layout
      ============================================================ */
+  /* The dismiss ring is positioned over the top-right corner: a title long
+     enough to wrap must stop short of it, not run underneath. */
   .toast-content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    padding-inline-end: 1.25rem;
   }
 
   .toast-header {

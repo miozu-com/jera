@@ -691,8 +691,8 @@
       "statePattern": "singleton: getToastState()",
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-10-07",
+      "revision": 9,
+      "lastReviewed": "2026-10-09",
       "breaking": [
         {
           "revision": 5,
