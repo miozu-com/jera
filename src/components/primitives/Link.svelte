@@ -13,6 +13,9 @@
   @example Without icon
   <Link href="/docs" showIcon={false}>Documentation</Link>
 
+  @example Small meta link (opt-in) — a quiet trailing link in a dense row
+  <Link href="/settings/" size="sm" tone="meta">Open settings</Link>
+
   @example Custom icon
   <Link href="/external" external>
     {#snippet icon()}
@@ -26,6 +29,10 @@
     href = null,
     external = false,
     showIcon = true,
+    /** 'md' (default) | 'sm' — sm: 12px/500, a 12px icon, tighter gap (opt-in). */
+    size = 'md',
+    /** 'link' (default) | 'meta' — meta: quiet text (`--link-meta-color`, else base04) that darkens on hover (opt-in). */
+    tone = 'link',
     class: className = '',
     onclick,
     children,
@@ -35,10 +42,14 @@
 
   const target = external ? '_blank' : undefined;
   const rel = external ? 'noopener noreferrer' : undefined;
+  const optIn = $derived(
+    `${size === 'sm' ? ' link-sm' : ''}${tone === 'meta' ? ' link-meta' : ''}`
+  );
+  const iconSize = $derived(size === 'sm' ? 12 : 14);
 </script>
 
 {#if href}
-  <a {href} {target} {rel} class="link {className}" {...rest}>
+  <a {href} {target} {rel} class="link{optIn} {className}" {onclick} {...rest}>
     {#if children}
       {@render children()}
     {/if}
@@ -48,8 +59,8 @@
       {:else}
         <svg
           class="link-icon"
-          width="14"
-          height="14"
+          width={iconSize}
+          height={iconSize}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -64,7 +75,7 @@
     {/if}
   </a>
 {:else}
-  <button type="button" class="link {className}" {onclick} {...rest}>
+  <button type="button" class="link{optIn} {className}" {onclick} {...rest}>
     {#if children}
       {@render children()}
     {/if}
@@ -74,8 +85,8 @@
       {:else}
         <svg
           class="link-icon"
-          width="14"
-          height="14"
+          width={iconSize}
+          height={iconSize}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -109,6 +120,28 @@
 
   .link:hover {
     color: color-mix(in srgb, var(--color-base0D) 80%, transparent);
+  }
+
+  /* Small + meta (opt-in): a quiet trailing link in a dense row. */
+  .link-sm {
+    gap: 0.25rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+  }
+
+  .link-meta {
+    color: var(--link-meta-color, var(--color-base04));
+  }
+
+  .link-meta:hover {
+    color: var(--color-base06);
+  }
+
+  .link-meta:focus-visible {
+    outline: none;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--focus-ring-shadow, 0 0 0 2px var(--color-base0D));
   }
 
   .link-icon {

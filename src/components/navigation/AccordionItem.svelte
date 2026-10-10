@@ -33,6 +33,12 @@
   @example Quiet secondary disclosure (opt-in)
   <AccordionItem title="Edit attributes" size="sm" tone="quiet">…</AccordionItem>
 
+  @example Meta line (opt-in) — a reply's folded lookups
+  <AccordionItem title="Thought 4 s · 3 lookups" size="sm" tone="meta" flush>…</AccordionItem>
+
+  @example Flush (opt-in) — the trigger and body keep the parent's left reading line, no fill
+  <AccordionItem title="Filters · 3 set" size="sm" tone="quiet" flush>…</AccordionItem>
+
   @example Meta (interactive content right of the title, outside the trigger button) + small
   <AccordionItem title="Competition" size="sm">
     {#snippet meta()}<Badge onremove={clear}>≤ 20 sellers</Badge>{/snippet}
@@ -56,8 +62,10 @@
     indicator,
     meta,
     size = 'md',
-    /** 'default' | 'quiet' — a secondary disclosure: dense 500-weight base05 title, 12px chevron (opt-in). */
+    /** 'default' | 'quiet' | 'meta' — quiet: a secondary disclosure, dense 500-weight base05 title, 12px chevron; meta: a 12px/400 meta line (`--accordion-meta-color`, else base04) that reads as a note, not a heading (opt-in). */
     tone = 'default',
+    /** Flush (opt-in): no inline padding and no fill on trigger and body — the item keeps its container's left edge. */
+    flush = false,
     children,
     class: className = '',
     ...rest
@@ -126,7 +134,9 @@
   class:accordion-item-solo={!inGroup}
   class:accordion-item-disabled={disabled}
   class:accordion-item-sm={size === 'sm'}
-  class:accordion-item-quiet={tone === 'quiet'}
+  class:accordion-item-quiet={tone === 'quiet' || tone === 'meta'}
+  class:accordion-item-meta={tone === 'meta'}
+  class:accordion-item-flush={flush}
   {...rest}
 >
   {#if meta}
@@ -233,9 +243,46 @@
     color: var(--color-base05);
   }
 
+  /* Meta tone (opt-in): the fold is a note line — 12px, regular, meta colour. */
+  .accordion-item-meta .accordion-trigger,
+  .accordion-item-meta .accordion-trigger:hover:not(:disabled) {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-normal);
+    color: var(--accordion-meta-color, var(--color-base04));
+  }
+
+  .accordion-item-meta .accordion-trigger:hover:not(:disabled) .accordion-title {
+    color: var(--color-base06);
+  }
+
+  .accordion-item-meta .accordion-indicator {
+    color: inherit;
+  }
+
   .accordion-item-quiet .accordion-indicator :global(svg) {
     width: 12px;
     height: 12px;
+  }
+
+  /* Flush (opt-in): the container's reading line, no fill, no inline inset. */
+  .accordion-item-flush,
+  .accordion-item-flush.accordion-item-solo,
+  .accordion-item-flush > .accordion-content {
+    background: transparent;
+    border-bottom: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .accordion-item-flush .accordion-trigger,
+  .accordion-item-flush .accordion-trigger:hover:not(:disabled),
+  .accordion-item-flush .accordion-trigger-open {
+    padding-inline: 0;
+    background: transparent;
+  }
+
+  .accordion-item-flush .accordion-body {
+    padding: var(--space-2, 0.25rem) 0 0;
   }
 
   /* Item container */

@@ -914,9 +914,9 @@
           "description": "Maximum value"
         },
         "size": {
-          "type": "'sm'|'md'|'lg'",
+          "type": "'xs'|'sm'|'md'|'lg'",
           "default": "'md'",
-          "description": "Track height (sm 4px, md 8px, lg 12px)"
+          "description": "Track height (xs 2px, sm 4px, md 8px, lg 12px)"
         },
         "variant": {
           "type": "'primary'|'success'|'warning'|'error'|'info'",
@@ -946,8 +946,8 @@
       },
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-10-07",
+      "revision": 6,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1238,7 +1238,8 @@
       "path": "src/components/navigation/AccordionItem.svelte",
       "description": "Expandable item with title and custom indicator",
       "props": {
-        "tone": { "type": "'default'|'quiet'", "default": "'default'", "description": "quiet: dense 500-weight base05 title, 12px chevron (opt-in secondary disclosure)" },
+        "flush": {"type": "boolean", "default": "false", "description": "No inline padding and no fill on trigger and body: keeps the container's left edge (opt-in)"},
+        "tone": { "type": "'default'|'quiet'|'meta'", "default": "'default'", "description": "quiet: dense 500-weight base05 title, 12px chevron (opt-in secondary disclosure); meta: a 12px/400 note line in --accordion-meta-color (else base04) (opt-in)" },
         "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: 32px transparent row, chevron first, no clipping" },
         "id": {
           "type": "string",
@@ -1270,7 +1271,7 @@
       "snippets": ["children", "leading", "trailing", "indicator", "meta"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 5,
+      "revision": 6,
       "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard"
@@ -2239,8 +2240,14 @@
       "name": "Card",
       "category": "primitives",
       "path": "src/components/primitives/Card.svelte",
-      "description": "Bordered container with optional title and semantic color variants",
+      "description": "Bordered container with optional title and semantic color variants; density=\"compact\" (opt-in) is a dense feed record: one neutral frame with a head row (optionally a collapsible <button aria-expanded> toggle), a status slot, a body and an actions row",
       "props": {
+        "density": {"type": "'default'|'compact'", "default": "'default'", "description": "compact: padding 10×12, radius-md, base01 fill, base02 border, no hover border; head/status/actions snippets (opt-in)"},
+        "as": {"type": "'div'|'article'|'section'", "default": "'div'", "description": "Compact only: the element rendered"},
+        "collapsible": {"type": "boolean", "default": "false", "description": "Compact only: the head row toggles the body and actions"},
+        "collapsed": {"type": "boolean", "default": "false", "bindable": true, "description": "Compact + collapsible: only the head row shows"},
+        "ontoggle": {"type": "(collapsed: boolean) => void", "default": "null", "description": "Compact + collapsible: called after a toggle"},
+        "toggleLabel": {"type": "string|null", "default": "null", "description": "Compact + collapsible: aria-label for the toggle"},
         "title": {
           "type": "string",
           "default": "''",
@@ -2252,10 +2259,10 @@
           "description": "Color variant"
         }
       },
-      "snippets": ["children"],
+      "snippets": ["children", "head", "status", "summary", "actions"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
+      "revision": 4,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2265,6 +2272,8 @@
       "path": "src/components/primitives/Link.svelte",
       "description": "Polymorphic link/button with arrow icon that shifts on hover",
       "props": {
+        "size": {"type": "'md'|'sm'", "default": "'md'", "description": "sm: 12px/500, 12px icon, tighter gap (opt-in)"},
+        "tone": {"type": "'link'|'meta'", "default": "'link'", "description": "meta: quiet text (--link-meta-color, else base04), darkens on hover (opt-in)"},
         "href": {
           "type": "string|null",
           "default": "null",
@@ -2284,8 +2293,8 @@
       "snippets": ["children", "icon"],
       "events": ["onclick"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
+      "revision": 4,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard"
     },

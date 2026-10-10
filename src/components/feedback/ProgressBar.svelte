@@ -9,6 +9,9 @@
   @example With label
   <ProgressBar value={65} showLabel />
 
+  @example Hairline (opt-in) — a 2px running line under a live count
+  <ProgressBar value={42} max={95} size="xs" />
+
   @example Custom color
   <ProgressBar value={80} variant="success" />
 -->
@@ -95,6 +98,7 @@
     overflow: hidden;
   }
 
+  .progress-xs { height: 2px; }
   .progress-sm { height: 0.25rem; }
   .progress-md { height: 0.5rem; }
   .progress-lg { height: 0.75rem; }
