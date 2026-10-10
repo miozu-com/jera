@@ -30,6 +30,9 @@
     Content here
   </AccordionItem>
 
+  @example Quiet secondary disclosure (opt-in)
+  <AccordionItem title="Edit attributes" size="sm" tone="quiet">…</AccordionItem>
+
   @example Meta (interactive content right of the title, outside the trigger button) + small
   <AccordionItem title="Competition" size="sm">
     {#snippet meta()}<Badge onremove={clear}>≤ 20 sellers</Badge>{/snippet}
@@ -53,6 +56,8 @@
     indicator,
     meta,
     size = 'md',
+    /** 'default' | 'quiet' — a secondary disclosure: dense 500-weight base05 title, 12px chevron (opt-in). */
+    tone = 'default',
     children,
     class: className = '',
     ...rest
@@ -121,6 +126,7 @@
   class:accordion-item-solo={!inGroup}
   class:accordion-item-disabled={disabled}
   class:accordion-item-sm={size === 'sm'}
+  class:accordion-item-quiet={tone === 'quiet'}
   {...rest}
 >
   {#if meta}
@@ -216,6 +222,20 @@
     font-size: inherit;
     color: inherit;
     line-height: inherit;
+  }
+
+  /* Quiet tone (opt-in): a secondary disclosure that never outweighs a card title. */
+  .accordion-item-quiet .accordion-trigger {
+    height: auto;
+    padding: var(--space-1) 0;
+    font-size: var(--text-dense, var(--text-xs));
+    font-weight: var(--font-weight-medium);
+    color: var(--color-base05);
+  }
+
+  .accordion-item-quiet .accordion-indicator :global(svg) {
+    width: 12px;
+    height: 12px;
   }
 
   /* Item container */

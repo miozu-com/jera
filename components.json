@@ -1238,6 +1238,7 @@
       "path": "src/components/navigation/AccordionItem.svelte",
       "description": "Expandable item with title and custom indicator",
       "props": {
+        "tone": { "type": "'default'|'quiet'", "default": "'default'", "description": "quiet: dense 500-weight base05 title, 12px chevron (opt-in secondary disclosure)" },
         "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: 32px transparent row, chevron first, no clipping" },
         "id": {
           "type": "string",
@@ -1269,8 +1270,8 @@
       "snippets": ["children", "leading", "trailing", "indicator", "meta"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-09",
+      "revision": 5,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2436,11 +2437,12 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 9,
+      "revision": 10,
       "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard",
       "props": {
+        "dashed": { "type": "boolean", "default": "false", "description": "Dashed border while inactive: an empty slot to fill (opt-in)" },
         "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: dense-row chip, --text-dense, 24px tall (opt-in)" },
         "shape": { "type": "'default'|'pill'", "default": "'default'", "description": "pill: fully rounded (opt-in)" },
         "label": {

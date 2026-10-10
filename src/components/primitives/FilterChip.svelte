@@ -26,6 +26,9 @@
   @example Compact pill (opt-in): a question chip on a dense card
   <FilterChip size="sm" shape="pill" label="Real size?" title="What are its real dimensions?" />
 
+  @example Dashed (opt-in): an unanswered gap, not a fact
+  <FilterChip size="sm" shape="pill" dashed label="Real size?" />
+
   @example Group of filters
   <div class="filter-group">
     {#each filters as filter}
@@ -50,6 +53,8 @@
     size = 'md',
     /** 'default' (radius-lg) | 'pill' — fully rounded (opt-in). */
     shape = 'default',
+    /** Dashed border while inactive — an empty slot to fill (opt-in). */
+    dashed = false,
     class: className = '',
     icon,
     onclick,
@@ -63,6 +68,7 @@
   class={cn('filter-chip', `filter-chip-${variant}`, className)}
   class:filter-chip-sm={size === 'sm'}
   class:filter-chip-pill={shape === 'pill'}
+  class:filter-chip-dashed={dashed}
   class:active
   class:disabled
   {disabled}
@@ -101,6 +107,10 @@
     min-height: 1.5rem;
     padding: 0 var(--space-3);
     font-size: var(--text-dense, var(--text-xs));
+  }
+
+  .filter-chip-dashed:not(.active) {
+    border-style: dashed;
   }
 
   .filter-chip-pill {
