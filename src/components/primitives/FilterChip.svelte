@@ -23,6 +23,9 @@
     {/snippet}
   </FilterChip>
 
+  @example Compact pill (opt-in): a question chip on a dense card
+  <FilterChip size="sm" shape="pill" label="Real size?" title="What are its real dimensions?" />
+
   @example Group of filters
   <div class="filter-group">
     {#each filters as filter}
@@ -43,15 +46,23 @@
     count = null,
     variant = 'default',
     disabled = false,
+    /** 'md' (default) | 'sm' — dense-row chip, --text-dense, 24px tall (opt-in). */
+    size = 'md',
+    /** 'default' (radius-lg) | 'pill' — fully rounded (opt-in). */
+    shape = 'default',
     class: className = '',
     icon,
-    onclick
+    onclick,
+    ...rest
   } = $props();
 </script>
 
 <button
   type="button"
+  {...rest}
   class={cn('filter-chip', `filter-chip-${variant}`, className)}
+  class:filter-chip-sm={size === 'sm'}
+  class:filter-chip-pill={shape === 'pill'}
   class:active
   class:disabled
   {disabled}
@@ -83,6 +94,17 @@
     color: var(--color-base04);
     cursor: pointer;
     transition: var(--transition-colors);
+  }
+
+  .filter-chip-sm {
+    gap: var(--space-2);
+    min-height: 1.5rem;
+    padding: 0 var(--space-3);
+    font-size: var(--text-dense, var(--text-xs));
+  }
+
+  .filter-chip-pill {
+    border-radius: var(--radius-full, 999px);
   }
 
   .filter-chip:hover:not(.disabled):not(.active) {

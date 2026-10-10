@@ -44,7 +44,8 @@
    *   counter?: {value: number, max: number, soft?: number} | null,
    *   class?: string,
    *   children?: import('svelte').Snippet<[string]>,
-   *   meta?: import('svelte').Snippet
+   *   meta?: import('svelte').Snippet,
+   *   layout?: 'stacked' | 'inline'
    * }}
    */
   let {
@@ -57,6 +58,8 @@
     class: className = '',
     children,
     meta,
+    /** 'stacked' (default) | 'inline' — a short label on the control's row (opt-in). */
+    layout = 'stacked',
     ...rest
   } = $props();
 
@@ -76,7 +79,7 @@
   });
 </script>
 
-<div class={cn('form-field', className)} {...rest}>
+<div class={cn('form-field', className)} class:form-field-inline={layout === 'inline'} {...rest}>
   <div class="form-field-head">
     <label for={forId} class="form-field-label">
       {label}
@@ -109,6 +112,18 @@
 </div>
 
 <style>
+  /* Inline: label and control share one row; the footer spans both columns. */
+  .form-field.form-field-inline {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0.5rem;
+  }
+
+  .form-field-inline .form-field-footer {
+    grid-column: 1 / -1;
+  }
+
   .form-field {
     display: flex;
     flex-direction: column;

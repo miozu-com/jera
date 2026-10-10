@@ -2436,11 +2436,13 @@
       "path": "src/components/primitives/FilterChip.svelte",
       "description": "Toggleable filter chip with active state indicator",
       "stage": "beta",
-      "revision": 8,
-      "lastReviewed": "2026-10-07",
+      "revision": 9,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "standard",
       "props": {
+        "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: dense-row chip, --text-dense, 24px tall (opt-in)" },
+        "shape": { "type": "'default'|'pill'", "default": "'default'", "description": "pill: fully rounded (opt-in)" },
         "label": {
           "type": "string",
           "default": "''",
@@ -3435,6 +3437,7 @@
       "path": "src/components/forms/FormField.svelte",
       "description": "Label-pairing wrapper for one editable row: label, control, hint/error, live counter, provenance/AI meta slot",
       "props": {
+        "layout": { "type": "'stacked'|'inline'", "default": "'stacked'", "description": "inline: a short label on the control's row (opt-in)" },
         "label": {
           "type": "string",
           "description": "The field's visible label (--text-xs medium base04)"
@@ -3475,8 +3478,8 @@
       },
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 2,
-      "lastReviewed": "2026-09-27",
+      "revision": 3,
+      "lastReviewed": "2026-10-10",
       "breaking": [],
       "docLevel": "minimal"
     },
