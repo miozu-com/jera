@@ -109,7 +109,9 @@
     gap: 0.375rem;
     font-size: var(--text-xs);
     font-weight: var(--font-weight-medium);
-    color: var(--color-base0D);
+    /* `--link-color` (opt-in): a surface whose link role is a mixed tone
+       (the console's `--ct-link`, legible at 12px in dark). Unset: base0D. */
+    color: var(--link-color, var(--color-base0D));
     text-decoration: none;
     background: transparent;
     border: none;

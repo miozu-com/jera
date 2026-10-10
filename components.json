@@ -2298,8 +2298,8 @@
       "snippets": ["children", "icon"],
       "events": ["onclick"],
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-10-10",
+      "revision": 5,
+      "lastReviewed": "2026-10-11",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -3494,8 +3494,8 @@
       },
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 3,
-      "lastReviewed": "2026-10-10",
+      "revision": 4,
+      "lastReviewed": "2026-10-11",
       "breaking": [],
       "docLevel": "minimal"
     },

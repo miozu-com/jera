@@ -113,9 +113,11 @@
 
 <style>
   /* Inline: label and control share one row; the footer spans both columns. */
+  /* `--form-field-label-track` (opt-in): a fixed label column, so the controls
+     of a stack of inline fields share one left edge. Unset, it is `auto`. */
   .form-field.form-field-inline {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: var(--form-field-label-track, auto) minmax(0, 1fr);
     align-items: center;
     column-gap: 0.5rem;
   }
@@ -138,10 +140,12 @@
     gap: 0.5rem;
   }
 
+  /* `--form-field-label-color` (opt-in): a consumer whose labels are the
+     label role (12/500 base05) rather than meta. Unset, it is base04. */
   .form-field-label {
     font-size: var(--text-xs);
     font-weight: var(--font-weight-medium);
-    color: var(--color-base04);
+    color: var(--form-field-label-color, var(--color-base04));
   }
 
   .form-field-required {
