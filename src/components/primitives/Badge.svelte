@@ -1,3 +1,4 @@
+<!-- file-size: justified -- one tag in three element shapes (removable chip, button, span) sharing one variant/tone/shape/size style sheet; the CSS is the long part. -->
 <!--
   @component Badge
 
@@ -29,6 +30,10 @@
   <Badge tone="label" variant="success" size="sm">Customer-facing</Badge>
   <Badge tone="label" variant="warning" size="sm">Owner only</Badge>
 
+  @example Ink (opt-in, outline tone) — the fact that leads (strong) or a guess (muted)
+  <Badge tone="outline" shape="pill" size="sm" ink="strong">suede</Badge>
+  <Badge tone="outline" shape="pill" size="sm" ink="muted">~18 L ?</Badge>
+
   @example Removable chip — the body opens, the × removes (two buttons, never nested)
   <Badge tone="outline" shape="pill" size="sm" onclick={open} onremove={clear} removeLabel="Remove $20–$60">$20–$60</Badge>
 -->
@@ -40,6 +45,8 @@
     size = 'md',
     tone = 'tinted',
     shape = 'default',
+    /** Outline ink (opt-in): 'strong' — base06 text, the fact that leads; 'muted' — `--badge-muted-color` (else base04), a guess. */
+    ink = null,
     indicator = false,
     class: className = '',
     onclick,
@@ -50,7 +57,7 @@
 
   const isInteractive = $derived(!!onclick);
   const base = $derived(
-    `jera-badge jera-badge-${variant} jera-badge-${size} jera-badge-tone-${tone}${shape === 'pill' ? ' jera-badge-shape-pill' : ''}`
+    `jera-badge jera-badge-${variant} jera-badge-${size} jera-badge-tone-${tone}${shape === 'pill' ? ' jera-badge-shape-pill' : ''}${ink ? ` jera-badge-ink-${ink}` : ''}`
   );
 </script>
 
@@ -80,7 +87,7 @@
 {:else if isInteractive}
   <button
     type="button"
-    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''} {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''}{ink ? ` jera-badge-ink-${ink}` : ''} {className}"
     {onclick}
     {...rest}
   >
@@ -95,7 +102,7 @@
   </button>
 {:else}
   <span
-    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''} {className}"
+    class="jera-badge jera-badge-{variant} jera-badge-{size} jera-badge-tone-{tone}{shape === 'pill' ? ' jera-badge-shape-pill' : ''}{ink ? ` jera-badge-ink-${ink}` : ''} {className}"
     {...rest}
   >
     {#if indicator}
@@ -349,6 +356,16 @@
 
   .jera-badge-tone-outline:not(.jera-badge-default) {
     color: color-mix(in srgb, var(--badge-tone) 75%, var(--color-base05));
+  }
+
+  /* Ink (opt-in, outline): the fact a row leads with reads strongest; a guess
+     keeps its weight and recedes by colour alone (one lever). */
+  .jera-badge-tone-outline.jera-badge-ink-strong {
+    color: var(--color-base06);
+  }
+
+  .jera-badge-tone-outline.jera-badge-ink-muted {
+    color: var(--badge-muted-color, var(--color-base04));
   }
 
   /* Pill: opt-in round ends for a row of facts or filters. The house radius

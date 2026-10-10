@@ -113,6 +113,11 @@
           "default": "'default'",
           "description": "Round ends for a row of facts or filters (opt-in; statuses keep the house radius)"
         },
+        "ink": {
+          "type": "'strong'|'muted'|null",
+          "default": "null",
+          "description": "Outline ink (opt-in): strong — base06 text for the fact a row leads with; muted — --badge-muted-color (else base04) for a guess. Unused, the markup is unchanged."
+        },
         "size": {
           "type": "'xs'|'sm'|'md'|'lg'",
           "default": "'md'",
@@ -138,8 +143,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 14,
-      "lastReviewed": "2026-10-09",
+      "revision": 15,
+      "lastReviewed": "2026-10-10",
       "breaking": [
         "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
         "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
