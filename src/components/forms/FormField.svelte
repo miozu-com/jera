@@ -172,10 +172,12 @@
     color: var(--color-base04);
   }
 
+  /* `--form-field-error-color` (opt-in): a consumer whose error text needs a
+     readable mix at 12px (the console's `--tone-bad-text`). Unset, it is base08. */
   .form-field-error {
     margin: 0;
     font-size: var(--text-xs);
-    color: var(--color-base08);
+    color: var(--form-field-error-color, var(--color-base08));
   }
 
   .form-field-counter {

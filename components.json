@@ -3501,7 +3501,7 @@
       },
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-10-11",
       "breaking": [],
       "docLevel": "minimal"
