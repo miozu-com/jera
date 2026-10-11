@@ -43,6 +43,12 @@
   <Card density="compact" fixed collapsed>
     {#snippet head(isCollapsed)}Publish a product · Expired{/snippet}
   </Card>
+
+  @example Compact + statusCorner — on a narrow container the folded row's status (a link) leaves the row for its bottom-end corner, so the head keeps the full width; the head's last line leaves room at its end
+  <Card density="compact" collapsible collapsed statusCorner>
+    {#snippet head(isCollapsed)}<span>Search Amazon for Citizen watches</span><span style="padding-inline-end: 7rem">200 found › 78 picks</span>{/snippet}
+    {#snippet status()}<a href="/run/">See all 78 picks</a>{/snippet}
+  </Card>
 -->
 <script>
   let {
@@ -62,6 +68,12 @@
     fixed = false,
     /** Compact: accessible label for the toggle button when the head text alone is not enough. */
     toggleLabel = null,
+    /**
+     * Compact + folded, under a 28rem container (opt-in): the status snippet leaves the head's row
+     * for its bottom-end corner (inset `--card-compact-corner-inset`, default `--space-2`), so the
+     * head keeps the row's full width; the head's last line leaves room at its end for the status.
+     */
+    statusCorner = false,
     class: className = '',
     head,
     status,
@@ -90,7 +102,11 @@
     {...rest}
   >
     {#if head || status}
-      <div class="card-compact-head" class:card-compact-head-toggle={toggles}>
+      <div
+        class="card-compact-head"
+        class:card-compact-head-toggle={toggles}
+        class:card-compact-head-corner={statusCorner}
+      >
         {#if toggles}
           <button
             type="button"
@@ -277,6 +293,20 @@
     align-items: center;
     gap: var(--space-3);
     min-width: 0;
+  }
+
+  /* statusCorner (opt-in): a narrow folded row gives the head the full width;
+     the status sits in the row's bottom-end corner, clear of the chevron. */
+  @container (max-width: 28rem) {
+    .card-compact-collapsed .card-compact-head-corner > .card-compact-status {
+      position: absolute;
+      inset-inline-end: 0;
+      bottom: var(--card-compact-corner-inset, var(--space-2));
+    }
+
+    .card-compact-collapsed .card-compact-head-corner.card-compact-head-toggle > .card-compact-status {
+      inset-inline-end: calc(12px + var(--space-3));
+    }
   }
 
   .card-compact-chevron {

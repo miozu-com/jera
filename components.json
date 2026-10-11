@@ -2259,6 +2259,7 @@
         "ontoggle": {"type": "(collapsed: boolean) => void", "default": "null", "description": "Compact + collapsible: called after a toggle"},
         "fixed": {"type": "boolean", "default": "false", "description": "Compact: draw the folded row (with collapsed) with no toggle button and no chevron — a record with nothing to open (opt-in)"},
         "toggleLabel": {"type": "string|null", "default": "null", "description": "Compact + collapsible: aria-label for the toggle"},
+        "statusCorner": {"type": "boolean", "default": "false", "description": "Compact + folded, under a 28rem container (opt-in): the status snippet sits in the row's bottom-end corner (inset --card-compact-corner-inset, default --space-2) so the head keeps the full width; the head's last line leaves room at its end"},
         "title": {
           "type": "string",
           "default": "''",
@@ -2272,7 +2273,7 @@
       },
       "snippets": ["children", "head", "status", "summary", "actions"],
       "stage": "beta",
-      "revision": 5,
+      "revision": 6,
       "lastReviewed": "2026-10-11",
       "breaking": [],
       "docLevel": "standard"
