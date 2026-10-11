@@ -38,6 +38,11 @@
     {#snippet status()}<a href="/settings/">Open settings</a>{/snippet}
     <p>Body</p>
   </Card>
+
+  @example Compact + fixed — the folded row of a record with nothing to open: no toggle, no chevron
+  <Card density="compact" fixed collapsed>
+    {#snippet head(isCollapsed)}Publish a product · Expired{/snippet}
+  </Card>
 -->
 <script>
   let {
@@ -53,6 +58,8 @@
     collapsed = $bindable(false),
     /** Compact + collapsible: called with the new collapsed value after a toggle. */
     ontoggle = null,
+    /** Compact: draw the folded row (`collapsed`) with no toggle and no chevron — a record with nothing under its head (opt-in). */
+    fixed = false,
     /** Compact: accessible label for the toggle button when the head text alone is not enough. */
     toggleLabel = null,
     class: className = '',
@@ -65,7 +72,8 @@
   } = $props();
 
   const tag = $derived(['article', 'section', 'div'].includes(as) ? as : 'div');
-  const folded = $derived(collapsible && collapsed);
+  const toggles = $derived(collapsible && !fixed);
+  const folded = $derived((collapsible || fixed) && collapsed);
 
   function toggle() {
     collapsed = !collapsed;
@@ -78,12 +86,12 @@
     this={tag}
     class="card-compact {className}"
     class:card-compact-collapsed={folded}
-    data-collapsed={collapsible ? String(folded) : undefined}
+    data-collapsed={collapsible || fixed ? String(folded) : undefined}
     {...rest}
   >
     {#if head || status}
-      <div class="card-compact-head" class:card-compact-head-toggle={collapsible}>
-        {#if collapsible}
+      <div class="card-compact-head" class:card-compact-head-toggle={toggles}>
+        {#if toggles}
           <button
             type="button"
             class="card-compact-toggle"
@@ -99,7 +107,7 @@
         {#if status}
           <div class="card-compact-status">{@render status(folded)}</div>
         {/if}
-        {#if collapsible}
+        {#if toggles}
           <span class="card-compact-chevron" class:card-compact-chevron-open={!folded} aria-hidden="true">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
           </span>

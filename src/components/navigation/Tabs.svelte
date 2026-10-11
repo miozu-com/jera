@@ -10,7 +10,8 @@
   tablist (roving tabindex).
 
   When the tabs are wider than their container they scroll horizontally and the
-  active tab is kept in view.
+  active tab is kept in view — or, with `wrap` (meant for `pills`), break onto
+  a second row so a short set is never cut at the edge.
 
   @example Basic usage
   <Tabs
@@ -52,6 +53,7 @@
     color = 'primary',
     fullWidth = false,
     scrollable = true,
+    wrap = false,
     panelId = '',
     idPrefix = '',
     label = '',
@@ -147,7 +149,7 @@
     void active;
     void tabs.length;
     void scrollerEl;
-    if (!scrollable) return;
+    if (!scrollable || wrap) return;
     const smooth = hasMeasured;
     hasMeasured = true;
     scrollActiveIntoView(smooth);
@@ -236,10 +238,11 @@
   });
 </script>
 
-<div class="tabs-scroll" class:tabs-scroll-on={scrollable} bind:this={scrollerEl}>
+<div class="tabs-scroll" class:tabs-scroll-on={scrollable && !wrap} bind:this={scrollerEl}>
   <div
     class="tabs tabs-{variant} tabs-{size} {className}"
     class:tabs-full-width={fullWidth}
+    class:tabs-wrap={wrap}
     role="tablist"
     aria-label={label || undefined}
     bind:this={tablistEl}
@@ -326,6 +329,16 @@
   .tabs-full-width {
     display: flex;
     width: 100%;
+  }
+
+  /* ---- Wrap (opt-in) ----
+     The tabs break onto a second row instead of scrolling: a short set
+     (periods, filters) on a narrow card stays whole, never clipped at the
+     edge. Meant for the indicator-less `pills` variant. */
+  .tabs-wrap {
+    flex-wrap: wrap;
+    max-width: 100%;
+    row-gap: var(--space-2);
   }
 
   .tabs-full-width .tab {
