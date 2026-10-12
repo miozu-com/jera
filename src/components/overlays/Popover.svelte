@@ -16,6 +16,15 @@
 
   @example Wider rich content (opt-in; the default cap is 18rem)
   <Popover maxWidth="24rem">…</Popover>
+  @example Click to open (opt-in) — a status badge whose rows carry actions
+  The trigger toggles `open`; Escape and a press outside close it. The panel
+  is a `role="dialog"` named by `label`, aligned to the trigger's start edge
+  with `align="start"`. The content snippet receives `close`.
+  <Popover trigger="click" bind:open label="Needs you" position="top" align="start">
+    <Badge onclick={() => (open = !open)} aria-haspopup="dialog" aria-expanded={open}>1 needs you</Badge>
+    {#snippet content(close)}<Button onclick={close}>Review</Button>{/snippet}
+  </Popover>
+
   @example With custom content
   <Popover position="bottom">
     {#snippet content()}
@@ -36,8 +45,45 @@
     maxWidth = null,
     /** Opt-in: a finger's tap toggles it and keyboard focus shows it (hover alone never reaches a phone). */
     tap = false,
+    /** Opt-in: 'click' — the consumer's trigger toggles `open`; hover does nothing; a dialog, not a tooltip. */
+    trigger = 'hover',
+    /** Click mode only: whether the panel is open (bindable). */
+    open = $bindable(false),
+    /** Click mode only: the dialog's accessible name. */
+    label = '',
+    /** Opt-in: 'start' lines the panel up with the trigger's start edge instead of centring it. */
+    align = 'center',
     class: className = ''
   } = $props();
+
+  const clickMode = $derived(trigger === 'click');
+  let wrapperEl = $state(null);
+
+  function close() {
+    open = false;
+  }
+
+  /** Escape closes a click panel and hands focus back to its trigger. */
+  function handleKeydown(event) {
+    if (event.key !== 'Escape' || !open) return;
+    open = false;
+    wrapperEl?.querySelector('button, [tabindex]')?.focus();
+  }
+
+  /** A press anywhere outside the trigger and the panel closes it. */
+  function handleOutside(event) {
+    if (open && wrapperEl && !wrapperEl.contains(event.target)) open = false;
+  }
+
+  // The JS fallback positions a click panel once it is drawn.
+  $effect(() => {
+    if (!clickMode || !open || supportsAnchor) return;
+    triggerEl = wrapperEl?.firstElementChild ?? wrapperEl;
+    const id = requestAnimationFrame(() => requestAnimationFrame(positionPopover));
+    return () => cancelAnimationFrame(id);
+  });
+
+  const shown = $derived(clickMode ? open : visible);
 
   // Feature detection for CSS Anchor Positioning, decided in the browser after
   // mount: `CSS` is undefined on the server, so a module-level constant would
@@ -143,11 +189,11 @@
 
     switch (position) {
       case 'top':
-        left = triggerCenterX - popoverWidth / 2;
+        left = align === 'start' ? triggerRect.left : triggerCenterX - popoverWidth / 2;
         top = triggerRect.top - popoverHeight - offset;
         break;
       case 'bottom':
-        left = triggerCenterX - popoverWidth / 2;
+        left = align === 'start' ? triggerRect.left : triggerCenterX - popoverWidth / 2;
         top = triggerRect.bottom + offset;
         break;
       case 'left':
@@ -188,7 +234,7 @@
   }
 
   function handleScroll() {
-    if (visible && triggerEl && popoverEl && !supportsAnchor) {
+    if (shown && triggerEl && popoverEl && !supportsAnchor) {
       requestAnimationFrame(positionPopover);
     }
   }
@@ -198,15 +244,18 @@
 <svelte:window
   bind:innerWidth={windowWidth}
   bind:innerHeight={windowHeight}
-  onscroll={!supportsAnchor && visible ? handleScroll : undefined}
-  onresize={!supportsAnchor && visible ? handleScroll : undefined}
+  onscroll={!supportsAnchor && shown ? handleScroll : undefined}
+  onresize={!supportsAnchor && shown ? handleScroll : undefined}
+  onkeydown={clickMode && open ? handleKeydown : undefined}
+  onpointerdown={clickMode && open ? handleOutside : undefined}
 />
 
 <div
   class="popover-wrapper {className}"
+  bind:this={wrapperEl}
   style={supportsAnchor ? `anchor-name: ${anchorName};` : ''}
-  onmouseenter={tap ? undefined : handleMouseEnter}
-  onmouseleave={tap ? undefined : handleMouseLeave}
+  onmouseenter={tap || clickMode ? undefined : handleMouseEnter}
+  onmouseleave={tap || clickMode ? undefined : handleMouseLeave}
   onpointerenter={tap ? e => e.pointerType !== 'touch' && handleMouseEnter(e) : undefined}
   onpointerleave={tap ? e => e.pointerType !== 'touch' && handleMouseLeave() : undefined}
   onclick={tap ? handleTap : undefined}
@@ -216,26 +265,28 @@
 >
   {@render children?.()}
 
-  {#if visible}
+  {#if shown}
     <div
       class="popover"
       class:popover-anchor={supportsAnchor}
       class:popover-js={!supportsAnchor}
       data-position={position}
+      data-align={align === 'start' ? 'start' : undefined}
       style="{supportsAnchor ?
         `position-anchor: ${anchorName}; --offset: ${offset}px;`
       : ''}{maxWidth ? ` --popover-max: ${maxWidth};` : ''}"
-      role="tooltip"
+      role={clickMode ? 'dialog' : 'tooltip'}
+      aria-label={clickMode && label ? label : undefined}
       in:fly={anim.in}
       out:fly={anim.out}
       bind:this={popoverEl}
-      onmouseenter={handlePopoverEnter}
-      onmouseleave={handlePopoverLeave}
+      onmouseenter={clickMode ? undefined : handlePopoverEnter}
+      onmouseleave={clickMode ? undefined : handlePopoverLeave}
     >
       {#if typeof content === 'string'}
         {content}
       {:else if typeof content === 'function'}
-        {@render content()}
+        {@render content(close)}
       {:else}
         {content}
       {/if}
@@ -301,6 +352,13 @@
       left: calc(anchor(right) + var(--offset));
       top: anchor(center);
       translate: 0 -50%;
+    }
+
+    /* Start-aligned (opt-in): the panel's start edge on the trigger's. */
+    &[data-align='start'][data-position='top'],
+    &[data-align='start'][data-position='bottom'] {
+      left: anchor(left);
+      translate: 0 0;
     }
 
     /* Auto-flip when near viewport edges */

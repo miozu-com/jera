@@ -460,13 +460,18 @@
           "type": "'sm'|'md'|'lg'",
           "default": "'md'",
           "description": "Textarea padding/font, matching Input's scale"
+        },
+        "unstyled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Opt-in: no border, background, padding or focus ring (the surrounding frame owns them); keeps the text style, placeholder colour and autoResize"
         }
       },
       "events": ["oninput", "onchange"],
-      "consumers": ["admin"],
+      "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-09-27",
+      "revision": 7,
+      "lastReviewed": "2026-10-12",
       "breaking": [
         {
           "revision": 6,
@@ -1064,7 +1069,7 @@
       "name": "Popover",
       "category": "overlays",
       "path": "src/components/overlays/Popover.svelte",
-      "description": "Hover popover with CSS Anchor Positioning",
+      "description": "Hover popover with CSS Anchor Positioning; opt-in click mode for a panel of actions",
       "props": {
         "maxWidth": {
           "type": "string",
@@ -1090,13 +1095,34 @@
           "type": "boolean",
           "default": "false",
           "description": "Opt-in: a touch tap toggles the popover and keyboard focus shows it"
+        },
+        "trigger": {
+          "type": "'hover'|'click'",
+          "default": "'hover'",
+          "description": "Opt-in 'click': the consumer's trigger toggles `open`; Escape and a press outside close it; the panel is a role=dialog and its content snippet receives `close`"
+        },
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Click mode: whether the panel is open (bindable)"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Click mode: the dialog's accessible name"
+        },
+        "align": {
+          "type": "'center'|'start'",
+          "default": "'center'",
+          "description": "Opt-in 'start': the panel lines up with the trigger's start edge (top/bottom positions)"
         }
       },
       "snippets": ["children", "content"],
-      "consumers": ["miozu"],
+      "consumers": ["miozu", "dash"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-10-09",
+      "revision": 7,
+      "lastReviewed": "2026-10-12",
       "breaking": [],
       "docLevel": "standard"
     },

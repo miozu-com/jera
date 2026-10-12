@@ -9,6 +9,12 @@
   @example
   // Auto-resize based on content
   <Textarea bind:value={notes} autoResize />
+
+  @example
+  // Unstyled (opt-in): no border, background, padding or focus ring — the
+  // frame around it owns those (a chat composer whose box also holds chips).
+  // Keeps the text styles, the placeholder colour and autoResize.
+  <div class="my-frame"><Textarea unstyled autoResize rows={2} /></div>
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -41,7 +47,7 @@
   const supportsFieldSizing = typeof CSS !== 'undefined' && CSS.supports('field-sizing', 'content');
 
   const textareaClass = $derived(
-    unstyled ? className : cn(
+    unstyled ? cn('textarea-unstyled', autoResize && 'textarea-auto-resize', className) : cn(
       'textarea-base',
       `textarea-${size}`,
       autoResize && 'textarea-auto-resize',
@@ -117,6 +123,33 @@
     border-radius: var(--radius-lg);
   }
 
+  /* Unstyled (opt-in): the frame owns border, background, padding and the
+     focus ring; the text keeps the field's own type and colour. */
+  .textarea-unstyled {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-base07);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    resize: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .textarea-unstyled::placeholder {
+    color: var(--color-base04);
+  }
+
+  .textarea-unstyled:disabled {
+    cursor: not-allowed;
+  }
+
   .textarea-base::placeholder {
     color: var(--color-base04);
   }
@@ -172,7 +205,8 @@
      belongs to the input method and not to the viewport — a narrow desktop
      window has no zoom behaviour to avoid. */
   @media (pointer: coarse) {
-    .textarea-base {
+    .textarea-base,
+    .textarea-unstyled {
       font-size: max(16px, var(--text-sm));
     }
   }
