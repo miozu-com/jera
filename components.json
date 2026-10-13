@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 98,
+  "totalComponents": 100,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -699,6 +699,95 @@
       "lastReviewed": "2026-09-26",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "Combobox",
+      "category": "forms",
+      "path": "src/components/forms/Combobox.svelte",
+      "description": "Search field with a listbox of consumer-fetched results (APG list-autocomplete combobox): keyboard, focus and dismiss handled, data owned by the consumer",
+      "props": {
+        "query": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "The input text (bindable)"
+        },
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Whether the list shows (bindable); typing, focus, click and ArrowDown open it"
+        },
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "Results, controlled by the consumer (it fetches on onquery)"
+        },
+        "getKey": {
+          "type": "(item) => string|number",
+          "default": "item => item.id ?? item.value",
+          "description": "Stable key per item; keys must be unique"
+        },
+        "value": {
+          "type": "string|number|null",
+          "default": "null",
+          "description": "Key of the chosen item, marked aria-selected with a check"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Spinner in the field; the empty line waits until it is false"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Search…'",
+          "description": "Placeholder text"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'",
+          "default": "'sm'",
+          "description": "Field and row size (SearchInput scale)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the field; the list never opens"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "id of the input (for a FormField label)"
+        },
+        "label": {
+          "type": "string",
+          "default": "undefined",
+          "description": "aria-label of the listbox when there is no visible label"
+        },
+        "debounce": {
+          "type": "number",
+          "default": "250",
+          "description": "ms before onquery fires while typing; empty text fires at once"
+        },
+        "inputEl": {
+          "type": "HTMLInputElement|null",
+          "default": "null",
+          "bindable": true,
+          "description": "The input element (bindable), for focus management"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the wrapper"
+        }
+      },
+      "snippets": ["item", "empty", "header"],
+      "events": ["onquery", "onpick", "onopen", "ondismiss"],
+      "consumers": ["dash"],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-13",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "Toast",

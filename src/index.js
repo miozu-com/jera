@@ -66,6 +66,7 @@ export { default as CardRadioGroup } from "./components/forms/CardRadioGroup.sve
 export { default as FileUpload } from "./components/forms/FileUpload.svelte";
 export { default as RangeSlider } from "./components/forms/RangeSlider.svelte";
 export { default as SearchInput } from "./components/forms/SearchInput.svelte";
+export { default as Combobox } from "./components/forms/Combobox.svelte";
 export { default as PinInput } from "./components/forms/PinInput.svelte";
 export { default as Dropzone } from "./components/forms/Dropzone.svelte";
 export { default as ImageDropzone } from "./components/forms/ImageDropzone.svelte";

@@ -53,6 +53,7 @@ Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 - [Checkbox](./src/components/forms/Checkbox.svelte): Checkbox with label via children snippet
 - [Input](./src/components/forms/Input.svelte): Flexible text input with full browser feature control, error states, and aria-invalid accessibility
 - [SearchInput](./src/components/forms/SearchInput.svelte): Search field with icon, clear button, loading state
+- [Combobox](./src/components/forms/Combobox.svelte): Search field with a listbox of consumer-fetched results (APG list-autocomplete combobox): keyboard, focus and dismiss handled, data owned by the consumer
 - [Select](./src/components/forms/Select.svelte): Native select element styled with base16 tokens
 - [Switch](./src/components/forms/Switch.svelte): Accessible toggle switch for boolean values with smooth CSS transitions
 - [Textarea](./src/components/forms/Textarea.svelte): Multiline text input with optional auto-resize

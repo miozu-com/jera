@@ -5,6 +5,23 @@ All notable changes to `@miozu/jera` are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 This project is pre-1.0: breaking changes bump the **minor** version.
 
+## [Unreleased]
+
+### Added
+
+- **Combobox** (beta, `@miozu/jera/components/forms/Combobox`): a search field
+  with a listbox of results the consumer fetches (`onquery`, debounced; empty
+  text fires at once) and passes back as `items`. WAI-ARIA APG list-autocomplete
+  combobox: focus stays in the input, `aria-activedescendant` tracks the active
+  option, ArrowDown opens (`onopen`) and moves, Enter picks (`onpick`; return
+  `false` to keep the list open and browse into a branch), Escape closes and
+  keeps the text before SearchInput's own Escape clears it, Tab away and a
+  press outside close (`ondismiss`), a polite live region reads the result
+  count. Snippets `item(item, active)`, `empty`, `header`. Rows are 44px on
+  coarse pointers. Key and debounce decisions live in `combobox.rules.js`.
+- Tests can render components: `tests/helpers/svelte-server.js` compiles
+  `.svelte` / `.svelte.js` on import for `svelte/server` (no new dependency).
+
 ## [0.10.0] - 2026-08-23
 
 First release since `0.8.9` (published 2026-02-09). `0.9.0` was bumped in the
