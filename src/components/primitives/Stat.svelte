@@ -46,10 +46,6 @@
   {href}
   class="stat stat-{size} {status ? `stat-${status}` : ''} {href ? 'stat-link' : ''} {className}"
 >
-  {#if status}
-    <span class="stat-dot stat-dot-{status}"></span>
-  {/if}
-
   <div class="stat-content">
     <div class="stat-value">
       {value}{#if unit}<span class="stat-unit">{unit}</span>{/if}
@@ -59,7 +55,9 @@
       <div class="stat-secondary">{resolvedSecondary}</div>
     {/if}
 
-    <div class="stat-label">{label}</div>
+    <div class="stat-label">
+      {#if status}<span class="stat-dot stat-dot-{status}" aria-hidden="true"></span>{/if}<span>{label}</span>
+    </div>
 
     {#if showBar}
       <div class="stat-bar">
@@ -147,6 +145,9 @@
   }
 
   .stat-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
     color: var(--color-base04);
     margin-top: var(--space-2);
   }
@@ -155,15 +156,15 @@
     margin-top: var(--space-4);
   }
 
-  /* Status dot */
+  /* Status dot: in the label row, not absolutely positioned (that pinned it
+     to the nearest positioned ancestor's corner, e.g. a dialog's). Centred
+     on the label's first line (1lh), so a wrapped label hangs beside it. */
   .stat-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
     flex-shrink: 0;
-    position: absolute;
-    top: var(--space-6);
-    right: var(--space-6);
+    width: var(--space-3);
+    height: var(--space-3);
+    margin-top: calc((1lh - var(--space-3)) / 2);
+    border-radius: var(--radius-full);
   }
 
   .stat-dot-success { background: var(--color-base0B); }

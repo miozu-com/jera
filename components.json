@@ -257,7 +257,7 @@
         "status": {
           "type": "''|'success'|'warning'|'error'|'info'",
           "default": "''",
-          "description": "Status color"
+          "description": "Status color (value text) plus a dot inline before the label"
         },
         "size": {
           "type": "'sm'|'md'|'lg'",
@@ -277,8 +277,8 @@
       },
       "consumers": ["dash"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-07",
+      "revision": 5,
+      "lastReviewed": "2026-10-13",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -488,7 +488,7 @@
       "name": "Select",
       "category": "forms",
       "path": "src/components/forms/Select.svelte",
-      "description": "Native select element styled with base16 tokens",
+      "description": "Native select element styled with base16 tokens. The hidden placeholder option uses value=\"\", so an option with an empty value cannot be selected: give a \"none\" option a sentinel value such as 'none'",
       "props": {
         "options": {
           "type": "array",
@@ -550,8 +550,8 @@
       "events": ["onchange"],
       "consumers": ["admin", "miozu", "dash"],
       "stage": "stable",
-      "revision": 9,
-      "lastReviewed": "2026-10-07",
+      "revision": 10,
+      "lastReviewed": "2026-10-13",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -2064,8 +2064,8 @@
         }
       },
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-10-09",
+      "revision": 5,
+      "lastReviewed": "2026-10-13",
       "breaking": [],
       "docLevel": "standard"
     },

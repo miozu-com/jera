@@ -163,7 +163,10 @@
     white-space: nowrap;
     font-size: var(--text-xs);
     font-weight: var(--font-weight-medium);
-    line-height: 1;
+    /* Not --leading-none: with overflow: hidden a 1em line box clips the
+       descenders of y/g/p. --leading-normal (18px at text-xs) fits the
+       segment's 22px inner height, and the flex parent centres it. */
+    line-height: var(--leading-normal);
   }
 
   .radio-segment:hover:not(.radio-disabled) {

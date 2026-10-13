@@ -233,6 +233,8 @@ Custom dropdown with keyboard navigation.
 
 Events: `onchange(option)` — receives the full option object
 
+The hidden placeholder option uses `value=""`, so an option with an empty value cannot be selected. For a "none" choice use a sentinel value such as `'none'`.
+
 ```svelte
 <Select
   options={[{value: 'a', label: 'Option A'}, {value: 'b', label: 'Option B'}]}

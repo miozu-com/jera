@@ -14,6 +14,10 @@
     bind:value={selected}
     placeholder="Select an option"
   />
+
+  Note: the hidden placeholder option uses `value=""`, so an option whose
+  value is the empty string cannot be selected. For a "none" choice use a
+  sentinel value such as `'none'` and map it in your own code.
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
