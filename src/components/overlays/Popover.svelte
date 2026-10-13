@@ -19,7 +19,10 @@
   @example Click to open (opt-in) — a status badge whose rows carry actions
   The trigger toggles `open`; Escape and a press outside close it. The panel
   is a `role="dialog"` named by `label`, aligned to the trigger's start edge
-  with `align="start"`. The content snippet receives `close`.
+  with `align="start"`. The content snippet receives `close`. Opening moves
+  focus into the panel; every close but a press outside hands it back to the
+  trigger. Escape closes the innermost panel only (a dialog opened from the
+  panel keeps its own Escape).
   <Popover trigger="click" bind:open label="Needs you" position="top" align="start">
     <Badge onclick={() => (open = !open)} aria-haspopup="dialog" aria-expanded={open}>1 needs you</Badge>
     {#snippet content(close)}<Button onclick={close}>Review</Button>{/snippet}
@@ -59,21 +62,73 @@
   const clickMode = $derived(trigger === 'click');
   let wrapperEl = $state(null);
 
+  const FOCUSABLE =
+    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
   function close() {
     open = false;
   }
 
-  /** Escape closes a click panel and hands focus back to its trigger. */
-  function handleKeydown(event) {
-    if (event.key !== 'Escape' || !open) return;
-    open = false;
-    wrapperEl?.querySelector('button, [tabindex]')?.focus();
+  /** The consumer's trigger: the first focusable element of the wrapper outside the panel. */
+  function triggerTarget() {
+    for (const el of wrapperEl?.querySelectorAll(FOCUSABLE) ?? []) {
+      if (!popoverEl?.contains(el)) return el;
+    }
+    return null;
   }
 
-  /** A press anywhere outside the trigger and the panel closes it. */
-  function handleOutside(event) {
-    if (open && wrapperEl && !wrapperEl.contains(event.target)) open = false;
+  /**
+   * Escape closes the innermost click panel only. Not this one when the key
+   * was already handled, when it came from a dialog that is not this panel and
+   * does not hold it (a dialog opened from the panel, a nested popover, a modal
+   * elsewhere), or when this panel holds an open nested panel (that one closes).
+   */
+  function handleKeydown(event) {
+    if (event.key !== 'Escape' || !open || event.defaultPrevented) return;
+    const from = event.target instanceof Element ? event.target : null;
+    const host = from?.closest('[role="dialog"], dialog');
+    if (host && host !== popoverEl && !host.contains(wrapperEl)) return;
+    if (popoverEl?.querySelector('[role="dialog"], dialog[open]')) return;
+    event.preventDefault();
+    open = false;
   }
+
+  /** A press anywhere outside the trigger and the panel closes it; focus stays where it was pressed. */
+  let pressedOutside = false;
+  function handleOutside(event) {
+    if (open && wrapperEl && !wrapperEl.contains(event.target)) {
+      pressedOutside = true;
+      open = false;
+    }
+  }
+
+  // Focus follows the panel (click mode): into it when it opens — its first
+  // control, else the panel itself — and back to the trigger on every close
+  // (Escape, the content's `close`, the consumer setting `open = false`) when
+  // focus was in the panel or would be lost with it. A press outside leaves
+  // focus where the press put it.
+  let wasOpen = false;
+  $effect(() => {
+    if (!clickMode) return;
+    if (open && !wasOpen) {
+      wasOpen = true;
+      const id = requestAnimationFrame(() => {
+        const first = popoverEl?.querySelector(FOCUSABLE) ?? popoverEl;
+        first?.focus({ preventScroll: true });
+      });
+      return () => cancelAnimationFrame(id);
+    }
+    if (!open && wasOpen) {
+      wasOpen = false;
+      const outside = pressedOutside;
+      pressedOutside = false;
+      if (outside || typeof document === 'undefined') return;
+      const active = document.activeElement;
+      if (!active || active === document.body || popoverEl?.contains(active)) {
+        triggerTarget()?.focus({ preventScroll: true });
+      }
+    }
+  });
 
   // The JS fallback positions a click panel once it is drawn.
   $effect(() => {
@@ -266,6 +321,7 @@
   {@render children?.()}
 
   {#if shown}
+    <!-- svelte-ignore a11y_no_noninteractive_tabindex -- -1 in click mode only: a dialog takes programmatic focus when it holds no control -->
     <div
       class="popover"
       class:popover-anchor={supportsAnchor}
@@ -277,6 +333,7 @@
       : ''}{maxWidth ? ` --popover-max: ${maxWidth};` : ''}"
       role={clickMode ? 'dialog' : 'tooltip'}
       aria-label={clickMode && label ? label : undefined}
+      tabindex={clickMode ? -1 : undefined}
       in:fly={anim.in}
       out:fly={anim.out}
       bind:this={popoverEl}
@@ -315,6 +372,11 @@
     pointer-events: auto;
     word-wrap: break-word;
     hyphens: auto;
+  }
+
+  /* Click mode: the panel takes focus only when it holds no control of its own. */
+  .popover[role='dialog']:focus {
+    outline: none;
   }
 
   /* CSS Anchor Positioning (Chrome 125+) */

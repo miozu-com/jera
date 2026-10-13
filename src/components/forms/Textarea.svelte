@@ -13,7 +13,8 @@
   @example
   // Unstyled (opt-in): no border, background, padding or focus ring — the
   // frame around it owns those (a chat composer whose box also holds chips).
-  // Keeps the text styles, the placeholder colour and autoResize.
+  // Keeps the text styles, the placeholder colour and autoResize. Every one of
+  // these is a zero-specificity default: a class you pass overrides it.
   <div class="my-frame"><Textarea unstyled autoResize rows={2} /></div>
 -->
 <script>
@@ -124,8 +125,12 @@
   }
 
   /* Unstyled (opt-in): the frame owns border, background, padding and the
-     focus ring; the text keeps the field's own type and colour. */
-  .textarea-unstyled {
+     focus ring; the text keeps the field's own type and colour. Zero
+     specificity (`:where`): these are defaults, and any class the consumer
+     puts on the field wins over every one of them — an `unstyled` Textarea
+     styled by its consumer before revision 7 (dash's product description
+     editor: its own padding, line height and vertical resize) keeps its look. */
+  :where(.textarea-unstyled) {
     display: block;
     width: 100%;
     margin: 0;
@@ -142,11 +147,11 @@
     box-shadow: none;
   }
 
-  .textarea-unstyled::placeholder {
+  :where(.textarea-unstyled)::placeholder {
     color: var(--color-base04);
   }
 
-  .textarea-unstyled:disabled {
+  :where(.textarea-unstyled):disabled {
     cursor: not-allowed;
   }
 

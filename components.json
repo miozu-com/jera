@@ -464,18 +464,22 @@
         "unstyled": {
           "type": "boolean",
           "default": "false",
-          "description": "Opt-in: no border, background, padding or focus ring (the surrounding frame owns them); keeps the text style, placeholder colour and autoResize"
+          "description": "Opt-in: no border, background, padding or focus ring (the surrounding frame owns them); keeps the text style, placeholder colour and autoResize. Zero-specificity defaults: a class on the field overrides any of them"
         }
       },
       "events": ["oninput", "onchange"],
       "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-10-12",
+      "revision": 8,
+      "lastReviewed": "2026-10-13",
       "breaking": [
         {
           "revision": 6,
           "change": "Border radius changed from --radius-lg (8px) to --radius-md (6px) so a Textarea beside an Input/Select no longer draws a visibly larger corner."
+        },
+        {
+          "revision": 7,
+          "change": "`unstyled` used to render a bare browser textarea (only the consumer's class). Since revision 7 it applies frame-less defaults: no border, background, padding, margin, radius, outline or box-shadow; display block, width 100%, resize none; text base07 at --text-sm / line-height 1.5; placeholder base04; 16px on touch pointers. Revision 8 makes them zero-specificity (:where), so a consumer class still wins; a consumer that relied on the browser's own border, resize handle or focus outline must draw them."
         }
       ],
       "docLevel": "standard"
@@ -1099,7 +1103,7 @@
         "trigger": {
           "type": "'hover'|'click'",
           "default": "'hover'",
-          "description": "Opt-in 'click': the consumer's trigger toggles `open`; Escape and a press outside close it; the panel is a role=dialog and its content snippet receives `close`"
+          "description": "Opt-in 'click': the consumer's trigger toggles `open`; Escape (innermost panel only) and a press outside close it; opening moves focus into the panel and every close but a press outside returns it to the trigger; the panel is a role=dialog and its content snippet receives `close`"
         },
         "open": {
           "type": "boolean",
@@ -1121,8 +1125,8 @@
       "snippets": ["children", "content"],
       "consumers": ["miozu", "dash"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-10-12",
+      "revision": 8,
+      "lastReviewed": "2026-10-13",
       "breaking": [],
       "docLevel": "standard"
     },
