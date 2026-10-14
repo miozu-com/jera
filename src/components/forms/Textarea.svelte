@@ -147,6 +147,14 @@
     box-shadow: none;
   }
 
+  /* The frame shows focus (its own :focus-within ring). Apps set a global
+     `:focus-visible` outline, and a textarea always matches it, so the
+     zero-specificity default above loses and a second ring draws inside the
+     frame — this one rule has to out-rank it. */
+  .textarea-unstyled:focus-visible {
+    outline: none;
+  }
+
   :where(.textarea-unstyled)::placeholder {
     color: var(--color-base04);
   }

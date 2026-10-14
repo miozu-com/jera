@@ -470,8 +470,8 @@
       "events": ["oninput", "onchange"],
       "consumers": ["admin", "dash"],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-10-13",
+      "revision": 9,
+      "lastReviewed": "2026-10-14",
       "breaking": [
         {
           "revision": 6,
