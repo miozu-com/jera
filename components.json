@@ -73,14 +73,20 @@
           "type": "boolean",
           "default": "false",
           "description": "No text label \u2014 a square button the same height as size, horizontal padding dropped (pair with an aria-label)"
+        },
+        "ref": {
+          "type": "HTMLButtonElement|HTMLAnchorElement|null",
+          "default": "null",
+          "bindable": true,
+          "description": "The rendered element (bind:ref), e.g. to anchor a popover or measure it"
         }
       },
       "snippets": ["children"],
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 12,
-      "lastReviewed": "2026-10-09",
+      "revision": 13,
+      "lastReviewed": "2026-10-15",
       "breaking": [
         {
           "revision": 10,
@@ -576,14 +582,24 @@
           "type": "boolean",
           "default": "false",
           "description": "Show error state"
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mixed state: draws a bar and sets the input's indeterminate (read as mixed)"
+        },
+        "size": {
+          "type": "'sm'|'md'",
+          "default": "'md'",
+          "description": "Box size: md 1.125rem, sm 1rem for dense table rows"
         }
       },
       "snippets": ["children"],
       "events": ["onchange"],
-      "consumers": ["admin", "miozu"],
+      "consumers": ["admin", "miozu", "dash"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-10-15",
       "breaking": [],
       "docLevel": "standard"
     },

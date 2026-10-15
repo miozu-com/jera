@@ -8,6 +8,9 @@
 
   @example
   <Checkbox bind:checked={enabled} disabled>Disabled option</Checkbox>
+
+  @example A table's select-all: no label, small, mixed while some rows are on
+  <Checkbox size="sm" checked={allOn} indeterminate={someOn} aria-label="Select all" />
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -18,6 +21,11 @@
     disabled = false,
     required = false,
     error = false,
+    /** Mixed state (some of a group on): draws a bar and sets the input's own
+        `indeterminate`, which assistive tech reads as "mixed". */
+    indeterminate = false,
+    /** 'md' (1.125rem box) or 'sm' (1rem box, for dense table rows). */
+    size = 'md',
     name = '',
     id,
     class: className = '',
@@ -27,6 +35,14 @@
   } = $props();
 
   const inputId = id || generateId();
+  let input = $state(null);
+
+  // The DOM property has no attribute; a click clears it natively, so it is set
+  // again whenever the checked state changes too.
+  $effect(() => {
+    checked;
+    if (input) input.indeterminate = indeterminate;
+  });
   const checkboxClass = $derived(cn(
     'checkbox-box',
     error && 'checkbox-error'
@@ -34,7 +50,7 @@
 </script>
 
 <label
-  class={cn('checkbox-wrapper', disabled && 'checkbox-disabled', className)}
+  class={cn('checkbox-wrapper', size === 'sm' && 'checkbox-sm', disabled && 'checkbox-disabled', className)}
   for={inputId}
 >
   <input
@@ -43,6 +59,7 @@
     {name}
     {disabled}
     {required}
+    bind:this={input}
     bind:checked
     {onchange}
     class="checkbox-input"
@@ -53,7 +70,7 @@
   <span class={checkboxClass}>
     <svg
       class="checkbox-icon"
-      class:checkbox-icon-visible={checked}
+      class:checkbox-icon-visible={checked || indeterminate}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -61,7 +78,11 @@
       stroke-linecap="round"
       stroke-linejoin="round"
     >
-      <path d="M20 6 9 17l-5-5" />
+      {#if indeterminate}
+        <path d="M5 12h14" />
+      {:else}
+        <path d="M20 6 9 17l-5-5" />
+      {/if}
     </svg>
   </span>
 
@@ -110,7 +131,8 @@
     transition: var(--transition-all);
   }
 
-  .checkbox-input:checked + .checkbox-box {
+  .checkbox-input:checked + .checkbox-box,
+  .checkbox-input:indeterminate + .checkbox-box {
     background-color: var(--color-base0D);
     border-color: var(--color-base0D);
   }
@@ -146,6 +168,16 @@
   .checkbox-icon-visible {
     opacity: 1;
     transform: scale(1);
+  }
+
+  .checkbox-sm .checkbox-box {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .checkbox-sm .checkbox-icon {
+    width: 0.625rem;
+    height: 0.625rem;
   }
 
   .checkbox-label {

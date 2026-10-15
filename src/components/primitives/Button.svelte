@@ -49,6 +49,9 @@
         padding stretching it wider than it is tall. Pass a snippet-free
         `children` (the icon alone) and an `aria-label`. */
     iconOnly = false,
+    /** The rendered `<button>` or `<a>` (bindable), for a consumer that anchors a
+        popover to it or measures it: `<Button bind:ref={opener}>`. */
+    ref = $bindable(null),
     ...restProps
   } = $props();
 
@@ -109,6 +112,7 @@
 
 {#if isLink}
   <a
+    bind:this={ref}
     {href}
     class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''} {className}"
     aria-disabled={isDisabled || undefined}
@@ -118,6 +122,7 @@
   </a>
 {:else}
   <button
+    bind:this={ref}
     {type}
     class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''} {className}"
     disabled={isDisabled}
