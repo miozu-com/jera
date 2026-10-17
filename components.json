@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 102,
+  "totalComponents": 104,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -802,6 +802,195 @@
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-10-13",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "ChoiceGrid",
+      "category": "forms",
+      "path": "src/components/forms/ChoiceGrid.svelte",
+      "description": "Grid of square choice tiles (photos, swatches): single (APG radio group) or multi (checkbox group) pick, roving tabindex with 2-D arrow keys, min/max, veto via onselect, optional dashed add tile; selection rules in choice.rules.js",
+      "props": {
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "The choices, one tile each"
+        },
+        "key": {
+          "type": "(item) => any",
+          "default": "item => item",
+          "description": "Unique key per item; strings are their own key"
+        },
+        "label": {
+          "type": "(item, index) => string|null",
+          "default": "(item, i) => `Option ${i + 1}`",
+          "description": "Accessible name of a tile; null for none"
+        },
+        "disabled": {
+          "type": "(item) => boolean",
+          "default": "() => false",
+          "description": "Tile renders aria-disabled and cannot be picked"
+        },
+        "mode": {
+          "type": "'multi'|'single'",
+          "default": "'multi'",
+          "description": "multi = checkbox group, single = radio group (arrows also pick)"
+        },
+        "selected": {
+          "type": "array",
+          "default": "[]",
+          "bindable": true,
+          "description": "Picked keys (bindable); single mode holds 0 or 1"
+        },
+        "min": {
+          "type": "number",
+          "default": "undefined",
+          "description": "Fewest picks that may remain; 1 in single mode, 0 in multi when unset"
+        },
+        "max": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Most picks (multi); unpicked tiles become aria-disabled once reached"
+        },
+        "tileMin": {
+          "type": "string",
+          "default": "'4.5rem'",
+          "description": "Floor of the auto-fill tile track"
+        },
+        "addDisabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the add tile"
+        },
+        "addLabel": {
+          "type": "string",
+          "default": "undefined",
+          "description": "aria-label of the add tile when its content is not text"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the group"
+        }
+      },
+      "snippets": [
+        "tile",
+        "addTile"
+      ],
+      "events": [
+        "onselect",
+        "onchange",
+        "onadd"
+      ],
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-17",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "ChoiceList",
+      "category": "forms",
+      "path": "src/components/forms/ChoiceList.svelte",
+      "description": "Titled card of choice rows (thumbnail + label): multi mode = jera Checkbox rows, none mode = plain rows with per-row actions; min/max/veto from choice.rules.js, footer snippet gets the count, maxHeight scroll, bare and framed variants",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Heading; also names the list"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "''",
+          "description": "One quiet line under the title"
+        },
+        "headingLevel": {
+          "type": "number",
+          "default": "2",
+          "description": "Heading level of the title (2-6)"
+        },
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "The choices, one row each"
+        },
+        "key": {
+          "type": "(item) => any",
+          "default": "item => item.key ?? item",
+          "description": "Unique key per item"
+        },
+        "label": {
+          "type": "(item) => string",
+          "default": "item => item.label",
+          "description": "Row text"
+        },
+        "disabled": {
+          "type": "(item) => boolean",
+          "default": "() => false",
+          "description": "Row checkbox unavailable"
+        },
+        "mode": {
+          "type": "'multi'|'none'",
+          "default": "'multi'",
+          "description": "Checkbox rows, or plain rows with the actions snippet"
+        },
+        "selected": {
+          "type": "array",
+          "default": "[]",
+          "bindable": true,
+          "description": "Picked keys (bindable)"
+        },
+        "min": {
+          "type": "number",
+          "default": "0",
+          "description": "Fewest picks that may remain"
+        },
+        "max": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Most picks; unpicked rows disable once reached"
+        },
+        "thumbSize": {
+          "type": "number",
+          "default": "40",
+          "description": "Thumbnail square size in px"
+        },
+        "framed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Bordered, padded rows"
+        },
+        "maxHeight": {
+          "type": "string|null",
+          "default": "null",
+          "description": "CSS length; rows scroll past it"
+        },
+        "bare": {
+          "type": "boolean",
+          "default": "false",
+          "description": "No card chrome (host card draws it)"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the root"
+        }
+      },
+      "snippets": [
+        "leading",
+        "rowLabel",
+        "actions",
+        "footer"
+      ],
+      "events": [
+        "onselect",
+        "onchange"
+      ],
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-17",
       "breaking": [],
       "docLevel": "minimal"
     },

@@ -76,6 +76,8 @@ export { default as TagInput } from "./components/forms/TagInput.svelte";
 export { default as OptionCard } from "./components/forms/OptionCard.svelte";
 export { default as FormField } from "./components/forms/FormField.svelte";
 export { default as ColorInput } from "./components/forms/ColorInput.svelte";
+export { default as ChoiceGrid } from "./components/forms/ChoiceGrid.svelte";
+export { default as ChoiceList } from "./components/forms/ChoiceList.svelte";
 
 // --------------------------------------------
 // COMPONENTS - Feedback

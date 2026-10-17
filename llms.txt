@@ -116,6 +116,8 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [Dropzone](./src/components/forms/Dropzone.svelte): Single-file drag-and-drop zone with file preview and type validation
 - [FileUpload](./src/components/forms/FileUpload.svelte): Drag-and-drop upload zone with file list, size validation, and multi-file support
 - [FormField](./src/components/forms/FormField.svelte): Label-pairing wrapper for one editable row: label, control, hint/error, live counter, provenance/AI meta slot
+- [ChoiceGrid](./src/components/forms/ChoiceGrid.svelte): Grid of square choice tiles (photos, swatches): single (radio group) or multi (checkbox group) pick, roving tabindex with arrow keys, min/max, veto via onselect, optional add tile
+- [ChoiceList](./src/components/forms/ChoiceList.svelte): Titled card of choice rows (thumbnail + label): Checkbox rows with a footer that gets the count, or plain rows with per-row actions
 - [ColorInput](./src/components/forms/ColorInput.svelte): Hex colour field: native <input type=color> swatch plus hex text field, form border standard
 - [IconInput](./src/components/forms/IconInput.svelte): Input with leading/trailing icon slots, loading spinner, and clear button
 - [ImageDropzone](./src/components/forms/ImageDropzone.svelte): Drag-and-drop image upload with preview grid and file validation

@@ -66,6 +66,12 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Checkbox:** `bind:checked`, `disabled`, `error`, `name`, `onchange`, children snippet for label
 
+**ChoiceGrid / ChoiceList (beta):** one selection model (`forms/choice.rules.js`) — `items`, `key(item)`, `bind:selected` (array of keys), `min`, `max`, `disabled(item)`, `onselect(item, next)` returning `false` vetoes, `onchange(next)`.
+
+- **ChoiceGrid** — square tiles; `mode` multi (checkbox group) | single (APG radio group, arrows pick; `min` defaults to 1); roving tabindex with 2-D arrows; `tile(item, {selected, disabled, index})` snippet (default `<img src={item}>`), `addTile` + `onadd` dashed action tile; name it via `aria-label`/`aria-labelledby`.
+- **ChoiceList** — titled card of rows; `mode` multi (Checkbox rows) | none (plain rows + `actions(item)`); snippets `leading`, `rowLabel`, `footer({selected, count})`; `bare`, `framed`, `maxHeight`, `thumbSize`. A refused pick never flips the box (click `preventDefault`).
+- Image sizing, copy and app rules stay in the consumer (snippets, `onselect`).
+
 **ToolPanel (beta):** `label`, `panelLabel`, `count` (+ sr `countLabel`), `hideLabel`, `compactLabel`, `size`, `variant`, `width`, `align` (end|start), `bind:open`, `sheet`, `hideTrigger`; snippets `icon`, `extra`, `children`, `footer(close)`, `trigger(attrs)`; `ontoggle(open)`; `bind:this` → `close()`. Native `popover="auto"` (top layer, light dismiss, Escape, focus return), anchor positioning with a JS fallback.
 
 **HoverCard (beta):** one card per container — `frame`, `resolve(el)`, `selector` (default `[data-hover-card]`), `focusSelector` (default `th`), `width`, `align` (start|end|fn), `delays {open, next, close}`, snippet `body({detail, width, close})`, `onopen`/`onclose`.
