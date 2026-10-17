@@ -882,7 +882,7 @@
         "onchange",
         "onadd"
       ],
-      "consumers": [],
+      "consumers": ["dash"],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-10-17",
@@ -987,7 +987,7 @@
         "onselect",
         "onchange"
       ],
-      "consumers": [],
+      "consumers": ["dash"],
       "stage": "beta",
       "revision": 1,
       "lastReviewed": "2026-10-17",
@@ -1461,7 +1461,7 @@
       "events": [
         "ontoggle"
       ],
-      "consumers": [],
+      "consumers": ["dash"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-10-17",
@@ -1527,7 +1527,7 @@
         "onopen",
         "onclose"
       ],
-      "consumers": [],
+      "consumers": ["dash"],
       "stage": "beta",
       "revision": 2,
       "lastReviewed": "2026-10-17",
