@@ -19,6 +19,24 @@ This project is pre-1.0: breaking changes bump the **minor** version.
   press outside close (`ondismiss`), a polite live region reads the result
   count. Snippets `item(item, active)`, `empty`, `header`. Rows are 44px on
   coarse pointers. Key and debounce decisions live in `combobox.rules.js`.
+- **ToolPanel** (beta, `@miozu/jera/components/overlays/ToolPanel`): a toolbar
+  button that opens a non-modal form panel (filters, columns, refine). Native
+  `popover="auto"` (top layer, light dismiss, Escape, focus return), CSS anchor
+  positioning with a JS fallback, fixed width, scrolling body, pinned
+  `footer(close)`, `count` pill, a custom `trigger(attrs)` face, or a bottom
+  `Sheet` on phones. The icon-only face names itself with the count ("Filters,
+  3 active"); a panel with no control takes focus itself.
+- **HoverCard** (beta, `@miozu/jera/components/overlays/HoverCard`): one
+  explanatory card for a whole container (a data table), wired by event
+  delegation, drawn in the top layer, with open/next/close delays. Opens on
+  keyboard focus of headers (`:focus-visible` only), closes on scrolls that
+  move the target, consumes Escape. `body` must be non-interactive.
+- **ChoiceGrid** (beta, `@miozu/jera/components/forms/ChoiceGrid`): square
+  tiles picked as a multi (checkbox group) or single (radio group) choice,
+  2-D roving arrows, `min`/`max`, `onselect` veto, optional add tile.
+- **ChoiceList** (beta, `@miozu/jera/components/forms/ChoiceList`): a titled
+  card of rows, ticked (multi) or carrying actions only (none), on the same
+  selection model (`choice.rules.js`) as ChoiceGrid.
 - Tests can render components: `tests/helpers/svelte-server.js` compiles
   `.svelte` / `.svelte.js` on import for `svelte/server` (no new dependency).
 

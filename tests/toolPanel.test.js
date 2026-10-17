@@ -118,3 +118,26 @@ test("HoverCard: a manual-popover tooltip, empty until a target resolves", () =>
   assert.match(attr(card, "style"), /--hover-card-w: 300px/);
   assert.doesNotMatch(body, /never/);
 });
+
+test("ToolPanel: an icon-only face with a count names both (aria-label replaces the pill)", () => {
+  const body = html(ToolPanel, { label: "Filters", hideLabel: true, count: 3 });
+  assert.equal(attr(tag(body, /popovertarget=/), "aria-label"), "Filters, 3 active");
+  const none = html(ToolPanel, { label: "Filters", hideLabel: true, count: 0 });
+  assert.equal(attr(tag(none, /popovertarget=/), "aria-label"), "Filters");
+});
+
+test("ToolPanel: the panel can take focus itself when it holds no control", () => {
+  const body = html(ToolPanel, { label: "About", children: snippet("<p>text only</p>") });
+  assert.equal(attr(tag(body, /role="dialog"/), "tabindex"), "-1");
+});
+
+test("HoverCard: a caller id never replaces the card id aria-describedby points at", () => {
+  const body = html(HoverCard, {
+    frame: null,
+    resolve: () => null,
+    body: snippet(""),
+    id: "theirs",
+  });
+  const card = tag(body, /role="tooltip"/);
+  assert.match(attr(card, "id"), /^jera-hover-card-/);
+});

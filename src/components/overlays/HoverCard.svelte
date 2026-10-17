@@ -11,10 +11,19 @@
     (120 ms) when hopping from one target to the next; closes `delays.close`
     (200 ms) after the pointer leaves, unless it moved onto the card.
   - Elements matching `focusSelector` (default `th`: a sortable header's
-    button) also open on keyboard focus, so definitions are reachable without
+    button) also open on keyboard focus (`:focus-visible` only, so a mouse
+    click on a header does not pop it), so definitions are reachable without
     a mouse. While open the target is described by the card
     (`aria-describedby`).
-  - Any scroll, or Escape, closes it. Never opens on touch.
+  - A scroll that moves the target (the page, the frame, any ancestor) closes
+    it; scrolling an unrelated region does not. Escape closes it and is
+    consumed (capture phase, `preventDefault` + `stopPropagation`), so the
+    same press does not also close an enclosing Modal or popover. Never opens
+    on touch.
+  - `body` must be non-interactive: the card is `role="tooltip"`, lives in
+    the top layer outside the tab order, and closes when focus leaves the
+    target, so a keyboard user can never reach a link or button inside it.
+    Put actions on the row or cell itself, or use a Popover / ToolPanel.
   - `align`: `start` hangs the card from the target's left edge, `end` from its
     right edge (right-aligned figure columns); a function decides per element.
   - Opacity-only motion, none under `prefers-reduced-motion`. Every listener,
@@ -80,6 +89,15 @@
   let closeTimer = 0;
   let placeFrame = 0;
 
+  /** `:focus-visible` is keyboard focus; older engines without it count all focus. */
+  const keyboardFocus = (el) => {
+    try {
+      return el.matches(':focus-visible');
+    } catch {
+      return true;
+    }
+  };
+
   const targetOf = (node) => (node instanceof Element ? node.closest(selector) : null);
   const alignFor = (el) => (typeof align === 'function' ? align(el) : align);
   const opensOnFocus = (el) => !!focusSelector && el.matches(focusSelector);
@@ -88,8 +106,10 @@
     if (!card) return;
     const r = el.getBoundingClientRect();
     const h = card.offsetHeight;
-    const from = alignFor(el) === 'end' ? r.right - width : r.left;
-    const left = Math.min(Math.max(8, from), window.innerWidth - width - 8);
+    // The rendered width: CSS clamps the card to the viewport, the prop does not.
+    const w = card.offsetWidth || width;
+    const from = alignFor(el) === 'end' ? r.right - w : r.left;
+    const left = Math.max(8, Math.min(from, window.innerWidth - w - 8));
     const below = r.bottom + gap;
     const top = below + h <= window.innerHeight - 8 ? below : Math.max(8, r.top - gap - h);
     card.style.left = `${Math.round(left)}px`;
@@ -114,10 +134,20 @@
     if (current !== el) describe(el);
     current = el;
     detail = d;
-    if (!card.matches(':popover-open')) card.showPopover();
     cancelAnimationFrame(placeFrame);
+    if (card.matches(':popover-open')) {
+      // Hopping: move to the new target now (old size), refine once it laid out.
+      place(el);
+    } else {
+      // First open: hidden until placed, so no frame renders at a stale spot.
+      card.style.visibility = 'hidden';
+      card.showPopover();
+    }
     // Measure once the new content has laid out.
-    placeFrame = requestAnimationFrame(() => current === el && place(el));
+    placeFrame = requestAnimationFrame(() => {
+      if (current === el) place(el);
+      if (card) card.style.visibility = '';
+    });
     onopen?.(el, d);
   }
 
@@ -125,6 +155,7 @@
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
     cancelAnimationFrame(placeFrame);
+    if (card) card.style.visibility = '';
     const was = current;
     if (was) undescribe(was);
     current = null;
@@ -164,31 +195,39 @@
     };
     const focus = (e) => {
       const el = targetOf(e.target);
-      if (el && host.contains(el) && opensOnFocus(el)) show(el);
+      if (el && host.contains(el) && opensOnFocus(el) && keyboardFocus(e.target)) show(el);
     };
     const blur = () => {
       if (current && opensOnFocus(current)) close();
     };
     const key = (e) => {
-      if (e.key === 'Escape' && current) close();
+      if (e.key !== 'Escape' || !current) return;
+      // Consumed: one press closes the card, not also the dialog around it.
+      e.preventDefault();
+      e.stopPropagation();
+      close();
     };
-    const scrolled = () => {
-      if (current) close();
+    const scrolled = (e) => {
+      if (!current) return;
+      const t = e.target;
+      // Only a scroll that moves the target: the document, or an ancestor of it.
+      if (t === document || (t instanceof Node && t.contains(current))) close();
     };
 
     host.addEventListener('pointerover', over);
     host.addEventListener('pointerout', out);
     host.addEventListener('focusin', focus);
     host.addEventListener('focusout', blur);
-    document.addEventListener('keydown', key);
-    // Capture: any scroll (the frame, the page, an ancestor) moves the target.
+    // Capture: runs before a Modal's or popover's own Escape handling.
+    document.addEventListener('keydown', key, { capture: true });
+    // Capture: scroll does not bubble; filtered to scrollers that move the target.
     document.addEventListener('scroll', scrolled, { passive: true, capture: true });
     return () => {
       host.removeEventListener('pointerover', over);
       host.removeEventListener('pointerout', out);
       host.removeEventListener('focusin', focus);
       host.removeEventListener('focusout', blur);
-      document.removeEventListener('keydown', key);
+      document.removeEventListener('keydown', key, { capture: true });
       document.removeEventListener('scroll', scrolled, { capture: true });
       close();
     };
@@ -196,6 +235,7 @@
 </script>
 
 <div
+  {...rest}
   id={cardId}
   bind:this={card}
   popover="manual"
@@ -204,7 +244,6 @@
   style:--hover-card-w="{width}px"
   onpointerenter={() => clearTimeout(closeTimer)}
   onpointerleave={closeSoon}
-  {...rest}
 >
   {#if detail != null}{@render body({ detail, width, close })}{/if}
 </div>

@@ -7,13 +7,14 @@
   Engine: the native Popover API (`popover="auto"`): true top layer, the
   browser's auto-popover stack, light dismiss, Escape, and focus back to the
   button for free. Focus is never trapped; on open it moves to the panel's
-  first control. Placed with CSS anchor positioning where supported, else from
+  first control, or to the panel itself when it holds none (a text-only tip). Placed with CSS anchor positioning where supported, else from
   the button's rectangle when it opens (and on resize/scroll while open only).
 
   Faces:
   - default: a jera `Button` with an `icon` snippet, the label, an `extra`
-    snippet and a `count` pill. `hideLabel` makes it icon-only (the label
-    becomes its `aria-label`); `compactLabel` hides the label visually while
+    snippet and a `count` pill. `hideLabel` makes it icon-only (the label,
+    plus the count and `countLabel` when there is one, becomes its
+    `aria-label`: "Filters, 3 active"); `compactLabel` hides the label visually while
     true (drive it from your own pane width).
   - `trigger(attrs)` snippet: your own button. Spread `attrs` onto it
     (`popovertarget`, `aria-expanded`, `aria-controls`, `aria-haspopup`,
@@ -111,6 +112,9 @@
     anchored = typeof CSS !== 'undefined' && CSS.supports?.('anchor-name', '--x') === true;
   });
 
+  /** Icon-only face: aria-label replaces the content, so the count goes in it. */
+  const iconOnlyName = $derived(count ? `${label}, ${count} ${countLabel}` : label);
+
   /** The trigger's focusable element (the jera Button or the consumer's own). */
   const triggerEl = () => anchor?.querySelector(FOCUSABLE) ?? null;
 
@@ -139,7 +143,10 @@
     if (!anchored) place();
     // `toggle` arrives a task after the click: never pull focus out of the
     // panel when the user is already in it.
-    if (!panel?.contains(focused)) panel?.querySelector(FOCUSABLE)?.focus({ preventScroll: true });
+    if (panel && !panel.contains(focused)) {
+      // No control inside: focus the panel (tabindex -1) so the dialog is entered and announced.
+      /** @type {HTMLElement} */ (panel.querySelector(FOCUSABLE) ?? panel).focus({ preventScroll: true });
+    }
   }
 
   // `bind:open` drives the popover; the browser's own toggles write `open`
@@ -162,7 +169,11 @@
   // while the panel is open and are removed on close.
   $effect(() => {
     if (sheet || anchored || !open) return;
-    const follow = () => place();
+    // Scrolling inside the panel's own body does not move the trigger.
+    const follow = (e) => {
+      if (e.type === 'scroll' && e.target instanceof Node && panel?.contains(e.target)) return;
+      place();
+    };
     window.addEventListener('resize', follow, { passive: true });
     window.addEventListener('scroll', follow, { passive: true, capture: true });
     return () => {
@@ -226,7 +237,7 @@
       {size}
       {variant}
       iconOnly={hideLabel}
-      aria-label={hideLabel ? label : undefined}
+      aria-label={hideLabel ? iconOnlyName : undefined}
       {...triggerAttrs}
     >
       {@render face()}
@@ -259,6 +270,7 @@
     popover="auto"
     role="dialog"
     aria-label={name}
+    tabindex="-1"
     class="jera-tool-panel {className}"
     class:anchored
     class:start={align === 'start'}
@@ -300,6 +312,11 @@
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
+  }
+
+  /* Focused only as the fallback target when it holds no control: no ring on the whole panel. */
+  .jera-tool-panel:focus {
+    outline: none;
   }
 
   .jera-tool-panel {

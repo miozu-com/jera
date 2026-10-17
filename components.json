@@ -1397,7 +1397,7 @@
         "hideLabel": {
           "type": "boolean",
           "default": "false",
-          "description": "Icon-only trigger; the label becomes its aria-label"
+          "description": "Icon-only trigger; the label (plus count and countLabel when set: \"Filters, 3 active\") becomes its aria-label"
         },
         "compactLabel": {
           "type": "boolean",
@@ -1463,7 +1463,7 @@
       ],
       "consumers": [],
       "stage": "beta",
-      "revision": 1,
+      "revision": 2,
       "lastReviewed": "2026-10-17",
       "breaking": [],
       "docLevel": "minimal"
@@ -1492,7 +1492,7 @@
         "focusSelector": {
           "type": "string|null",
           "default": "'th'",
-          "description": "Targets that also open on keyboard focus (null: pointer only)"
+          "description": "Targets that also open on keyboard focus, :focus-visible only (null: pointer only)"
         },
         "width": {
           "type": "number",
@@ -1529,7 +1529,7 @@
       ],
       "consumers": [],
       "stage": "beta",
-      "revision": 1,
+      "revision": 2,
       "lastReviewed": "2026-10-17",
       "breaking": [],
       "docLevel": "minimal"
