@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 100,
+  "totalComponents": 102,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -1171,6 +1171,177 @@
       "stage": "beta",
       "revision": 4,
       "lastReviewed": "2026-10-08",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "ToolPanel",
+      "category": "overlays",
+      "path": "src/components/overlays/ToolPanel.svelte",
+      "description": "Toolbar button that opens a non-modal form panel (filters, columns, refine): native popover=auto top layer with light dismiss, Escape and focus return, CSS anchor positioning with a JS fallback, fixed width, scrolling body with a pinned footer(close), count pill, custom trigger(attrs) face, or a bottom Sheet on phones",
+      "props": {
+        "label": {
+          "type": "string",
+          "required": true,
+          "description": "Button text and the panel's default accessible name"
+        },
+        "panelLabel": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Accessible name of the panel (and the sheet title) when it differs from label"
+        },
+        "title": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Native tooltip on the trigger"
+        },
+        "count": {
+          "type": "number|string|null",
+          "default": "null",
+          "description": "Count pill after the label (null or 0 hides it)"
+        },
+        "countLabel": {
+          "type": "string",
+          "default": "'active'",
+          "description": "Screen-reader suffix after the count (\"3 active\")"
+        },
+        "hideLabel": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Icon-only trigger; the label becomes its aria-label"
+        },
+        "compactLabel": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Hide the label visually while true (drive it from the host's own width); it stays for screen readers"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'xs'",
+          "description": "Trigger Button size"
+        },
+        "variant": {
+          "type": "string",
+          "default": "'ghost'",
+          "description": "Trigger Button variant"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the trigger"
+        },
+        "width": {
+          "type": "number",
+          "default": "296",
+          "description": "Panel width in px (clamped to the viewport minus 16px)"
+        },
+        "align": {
+          "type": "'end'|'start'",
+          "default": "'end'",
+          "description": "Which edge of the trigger the panel lines up with"
+        },
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Whether the panel (or sheet) is open (bindable)"
+        },
+        "sheet": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Open a bottom Sheet instead of the anchored panel (a phone)"
+        },
+        "hideTrigger": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Sheet only: render no trigger; the host opens it through open"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the panel (or the Sheet dialog); rest props go there too"
+        }
+      },
+      "snippets": [
+        "children",
+        "icon",
+        "extra",
+        "footer",
+        "trigger"
+      ],
+      "events": [
+        "ontoggle"
+      ],
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-17",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "HoverCard",
+      "category": "overlays",
+      "path": "src/components/overlays/HoverCard.svelte",
+      "description": "One explanatory card per container (a data table): event delegation on frame for elements matching selector, resolve(el) supplies the detail, body snippet renders it in the top layer (popover=manual, role=tooltip); open/next/close delays, keyboard focus on headers, Escape and scroll close, never on touch",
+      "props": {
+        "frame": {
+          "type": "HTMLElement|null",
+          "default": "null",
+          "description": "Container whose descendants open the card (event delegation)"
+        },
+        "resolve": {
+          "type": "(el) => any",
+          "required": true,
+          "description": "The detail for a target element, or null for nothing to show"
+        },
+        "selector": {
+          "type": "string",
+          "default": "'[data-hover-card]'",
+          "description": "Which descendants of frame open the card"
+        },
+        "focusSelector": {
+          "type": "string|null",
+          "default": "'th'",
+          "description": "Targets that also open on keyboard focus (null: pointer only)"
+        },
+        "width": {
+          "type": "number",
+          "default": "288",
+          "description": "Card width in px"
+        },
+        "align": {
+          "type": "'start'|'end'|((el) => 'start'|'end')",
+          "default": "'start'",
+          "description": "Hang the card from the target's start or end edge; a function decides per element"
+        },
+        "delays": {
+          "type": "{open?, next?, close?}",
+          "default": "{open: 400, next: 120, close: 200}",
+          "description": "Open delay on a resting pointer, delay when hopping between targets, grace before closing (ms)"
+        },
+        "gap": {
+          "type": "number",
+          "default": "6",
+          "description": "Distance between the target and the card in px"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Extra class on the card; rest props go there too"
+        }
+      },
+      "snippets": [
+        "body"
+      ],
+      "events": [
+        "onopen",
+        "onclose"
+      ],
+      "consumers": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-17",
       "breaking": [],
       "docLevel": "minimal"
     },

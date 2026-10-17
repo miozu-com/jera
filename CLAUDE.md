@@ -66,6 +66,12 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Checkbox:** `bind:checked`, `disabled`, `error`, `name`, `onchange`, children snippet for label
 
+**ToolPanel (beta):** `label`, `panelLabel`, `count` (+ sr `countLabel`), `hideLabel`, `compactLabel`, `size`, `variant`, `width`, `align` (end|start), `bind:open`, `sheet`, `hideTrigger`; snippets `icon`, `extra`, `children`, `footer(close)`, `trigger(attrs)`; `ontoggle(open)`; `bind:this` → `close()`. Native `popover="auto"` (top layer, light dismiss, Escape, focus return), anchor positioning with a JS fallback.
+
+**HoverCard (beta):** one card per container — `frame`, `resolve(el)`, `selector` (default `[data-hover-card]`), `focusSelector` (default `th`), `width`, `align` (start|end|fn), `delays {open, next, close}`, snippet `body({detail, width, close})`, `onopen`/`onclose`.
+
+**Which overlay:** ToolPanel = a toolbar button opening a form panel (fixed width, scrolling body, pinned footer). Popover `trigger="click"` = a small action panel on a trigger you render yourself (badge, inline status). Popover hover / Tooltip = a hint on one element. HoverCard = one explanatory card for many cells. Dropdown = a `role="menu"` of actions. Modal / Sheet = modal tasks.
+
 **LeftBar:** `bind:collapsed`, `persistKey`, snippets: `header`, `navigation`, `footer`
 
 **LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`

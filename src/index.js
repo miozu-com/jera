@@ -103,6 +103,8 @@ export { default as DiffBlock } from "./components/feedback/DiffBlock.svelte";
 
 export { default as Modal } from "./components/overlays/Modal.svelte";
 export { default as Sheet } from "./components/overlays/Sheet.svelte";
+export { default as ToolPanel } from "./components/overlays/ToolPanel.svelte";
+export { default as HoverCard } from "./components/overlays/HoverCard.svelte";
 export { default as Popover } from "./components/overlays/Popover.svelte";
 export { default as Dropdown } from "./components/overlays/Dropdown.svelte";
 export { default as DropdownItem } from "./components/overlays/DropdownItem.svelte";

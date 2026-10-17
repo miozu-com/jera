@@ -132,6 +132,8 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [DropdownDivider](./src/components/overlays/DropdownDivider.svelte): Horizontal separator line for dropdown menu groups
 - [DropdownItem](./src/components/overlays/DropdownItem.svelte): Menu item with role=menuitem, keyboard support, icon and danger variant
 - [Sheet](./src/components/overlays/Sheet.svelte): Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss)
+- [ToolPanel](./src/components/overlays/ToolPanel.svelte): Toolbar button that opens a non-modal form panel (filters, columns): native popover=auto, anchor positioning, fixed width, scrolling body with pinned footer, count pill, custom trigger, or a bottom Sheet on phones
+- [HoverCard](./src/components/overlays/HoverCard.svelte): One explanatory card per container (a data table) by event delegation: resolve(el) supplies the detail, body snippet renders it in the top layer; delays, header focus, Escape/scroll close, never on touch
 
 ### Navigation (Ready)
 - [NavBarBrand](./src/components/navigation/NavBarBrand.svelte): Internal NavBar brand — page context label with tap/hover breadcrumb panel
