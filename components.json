@@ -3210,7 +3210,7 @@
       "name": "Dropdown",
       "category": "overlays",
       "path": "src/components/overlays/Dropdown.svelte",
-      "description": "Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA",
+      "description": "Portaled action menu with viewport-aware positioning, keyboard navigation (scoped to the focused menu or submenu, Home/End), and ARIA",
       "props": {
         "open": {
           "type": "boolean",
@@ -3226,8 +3226,8 @@
       },
       "snippets": ["trigger", "children"],
       "stage": "beta",
-      "revision": 9,
-      "lastReviewed": "2026-09-30",
+      "revision": 10,
+      "lastReviewed": "2026-10-17",
       "breaking": [
         "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
       ],
@@ -3237,7 +3237,7 @@
       "name": "DropdownItem",
       "category": "overlays",
       "path": "src/components/overlays/DropdownItem.svelte",
-      "description": "Menu item with role=menuitem, keyboard support, icon and danger variant",
+      "description": "Menu item with role=menuitem (menuitemradio / menuitemcheckbox when checked is set), keyboard support, icon and danger variant",
       "props": {
         "variant": {
           "type": "'default'|'danger'",
@@ -3254,6 +3254,16 @@
           "default": "undefined",
           "description": "Right-aligned small base04 text after the label (a price, a shortcut)"
         },
+        "checked": {
+          "type": "boolean",
+          "default": "undefined",
+          "description": "Set true/false for a checkable item: menuitemradio with aria-checked and a leading check mark slot. Leave unset for a plain action"
+        },
+        "checkType": {
+          "type": "'radio'|'checkbox'",
+          "default": "'radio'",
+          "description": "Role when checked is set: menuitemradio (one of a group: views, sort) or menuitemcheckbox (independent toggle)"
+        },
         "class": {
           "type": "string",
           "default": "''",
@@ -3263,10 +3273,54 @@
       "snippets": ["icon", "meta", "children"],
       "events": ["onclick"],
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-09-28",
+      "revision": 5,
+      "lastReviewed": "2026-10-17",
       "breaking": [],
       "docLevel": "standard"
+    },
+    {
+      "name": "DropdownSub",
+      "category": "overlays",
+      "path": "src/components/overlays/DropdownSub.svelte",
+      "description": "Cascading submenu item for Dropdown: a menuitem with aria-haspopup=menu that opens a nested role=menu to the side. ArrowRight/Enter/Space opens and focuses the first item, ArrowLeft/Escape closes back to the item, hover opens after a delay and closes after a grace, flips left near the viewport edge",
+      "props": {
+        "label": {
+          "type": "string|Snippet",
+          "required": true,
+          "description": "Trigger item text; also names the nested menu (aria-labelledby)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the item and its submenu"
+        },
+        "meta": {
+          "type": "string|Snippet",
+          "default": "undefined",
+          "description": "Small base04 text before the chevron (the current value, e.g. 'Rows')"
+        },
+        "openDelay": {
+          "type": "number",
+          "default": "150",
+          "description": "Hover delay in ms before the submenu opens"
+        },
+        "closeDelay": {
+          "type": "number",
+          "default": "300",
+          "description": "Grace in ms after the pointer leaves before the submenu closes"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the trigger item (rest props go there too)"
+        }
+      },
+      "snippets": ["icon", "label", "meta", "children"],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-10-17",
+      "breaking": [],
+      "docLevel": "minimal"
     },
     {
       "name": "DropdownDivider",

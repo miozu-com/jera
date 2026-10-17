@@ -9,6 +9,22 @@ This project is pre-1.0: breaking changes bump the **minor** version.
 
 ### Added
 
+- **DropdownSub** (beta, `@miozu/jera/components/overlays/DropdownSub`): a
+  cascading submenu inside a Dropdown ("Views ▸", "Sort ▸"). The item is a
+  `menuitem` with `aria-haspopup="menu"` / `aria-expanded`; the nested
+  `role="menu"` is named by it. ArrowRight, Enter or Space opens and focuses
+  the first item; ArrowLeft or Escape closes back to the item. Hover opens
+  after `openDelay` (150ms); leaving starts a `closeDelay` grace (300ms) that a
+  pointer reaching the submenu cancels, and a transparent bridge spans the gap.
+  Flips left near the viewport edge and shifts up near the bottom. Timers are
+  cleared on unmount.
+- **DropdownItem** `checked` / `checkType` (r5): `checked` true or false makes
+  the item a `menuitemradio` (or `menuitemcheckbox`) with `aria-checked` and a
+  fixed leading check-mark slot. Items without `checked` render as before.
+- **Dropdown** (r10): ArrowUp/ArrowDown move within the menu that holds focus
+  (the panel or a submenu, never across levels), Home/End jump to the ends, and
+  radio/checkbox item roles take part in navigation and first-item focus.
+
 - **Combobox** (beta, `@miozu/jera/components/forms/Combobox`): a search field
   with a listbox of results the consumer fetches (`onquery`, debounced; empty
   text fires at once) and passes back as `items`. WAI-ARIA APG list-autocomplete

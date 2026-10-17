@@ -16,6 +16,11 @@
     <DropdownItem onclick={handleEdit}>Edit</DropdownItem>
     <DropdownItem onclick={handleDelete} variant="danger">Delete</DropdownItem>
   </Dropdown>
+
+  Nested menus: put a `DropdownSub` among the items; it opens a cascading
+  submenu to the side (ArrowRight / ArrowLeft, hover with a grace delay).
+  The submenu sits inside the panel, so never give `.dropdown-content` an
+  `overflow` from a consumer stylesheet, or the submenu is clipped.
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -130,6 +135,19 @@
     floatingStyle = `top:${top}px;left:${left}px`;
   }
 
+  // Every item role a menu can hold (DropdownItem `checked` renders the radio /
+  // checkbox roles, DropdownSub renders a menuitem with a nested menu).
+  const ITEM_SELECTOR = ['menuitem', 'menuitemradio', 'menuitemcheckbox']
+    .map(role => `[role="${role}"]:not([disabled])`)
+    .join(', ');
+
+  /** Enabled items whose nearest menu is `menu` (skips nested submenus). */
+  function menuItems(menu) {
+    return Array.from(menu.querySelectorAll(ITEM_SELECTOR)).filter(
+      el => el.closest('[role="menu"]') === menu
+    );
+  }
+
   // Keyboard navigation within items.
   // Escape is handled here — on the open menu's subtree — rather than with a
   // document-level listener, because consumers open a Modal from a menu item
@@ -142,15 +160,24 @@
       e.preventDefault();
       e.stopPropagation();
       closeAndFocusTrigger();
-    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      const items = Array.from(contentEl.querySelectorAll('[role="menuitem"]:not([disabled])'));
+    } else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) {
+      // Scope to the menu holding focus: the panel itself, or a DropdownSub's
+      // nested menu. Items of deeper submenus are not siblings.
+      const active = document.activeElement;
+      const menu = active?.closest?.('[role="menu"]');
+      const scope = menu && contentEl.contains(menu) ? menu : contentEl;
+      const items = menuItems(scope);
       if (items.length === 0) return;
+      e.preventDefault();
 
-      const current = items.indexOf(document.activeElement);
+      const current = items.indexOf(active);
       let next;
 
-      if (e.key === 'ArrowDown') {
+      if (e.key === 'Home') {
+        next = 0;
+      } else if (e.key === 'End') {
+        next = items.length - 1;
+      } else if (e.key === 'ArrowDown') {
         next = current < items.length - 1 ? current + 1 : 0;
       } else {
         next = current > 0 ? current - 1 : items.length - 1;
@@ -169,7 +196,7 @@
         // Focus first item (always, regardless of positioning method).
         // Fall back to the menu container so an item-less menu still holds
         // focus — otherwise Escape would never reach handleContentKeydown.
-        const firstItem = contentEl?.querySelector('[role="menuitem"]:not([disabled])');
+        const firstItem = contentEl ? menuItems(contentEl)[0] : null;
         (firstItem ?? contentEl)?.focus();
       });
     }

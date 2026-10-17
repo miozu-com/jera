@@ -111,6 +111,7 @@ export { default as Popover } from "./components/overlays/Popover.svelte";
 export { default as Dropdown } from "./components/overlays/Dropdown.svelte";
 export { default as DropdownItem } from "./components/overlays/DropdownItem.svelte";
 export { default as DropdownDivider } from "./components/overlays/DropdownDivider.svelte";
+export { default as DropdownSub } from "./components/overlays/DropdownSub.svelte";
 export { default as ConfirmDialog } from "./components/overlays/ConfirmDialog.svelte";
 
 // --------------------------------------------

@@ -14,6 +14,14 @@
 
   `meta` is a string or a snippet, rendered after the label in small base04
   text. It is part of the item's accessible name, so keep it short.
+
+  @example Checked items (a view or sort choice)
+  <DropdownItem checked={sort === 'price'} onclick={() => (sort = 'price')}>Price</DropdownItem>
+
+  Setting `checked` (true or false) makes the item a `menuitemradio` with
+  `aria-checked` and a leading check mark slot; `checkType="checkbox"` makes it
+  a `menuitemcheckbox` for independent toggles. Leave `checked` unset for a
+  plain action item.
 -->
 <script>
   import { cn } from '../../utils/cn.svelte.js';
@@ -23,11 +31,18 @@
     disabled = false,
     icon,
     meta,
+    checked = undefined,
+    checkType = 'radio',
     children,
     onclick,
     class: className = '',
     ...rest
   } = $props();
+
+  const checkable = $derived(checked !== undefined && checked !== null);
+  const role = $derived(
+    !checkable ? 'menuitem' : checkType === 'checkbox' ? 'menuitemcheckbox' : 'menuitemradio'
+  );
 
   function handleClick(e) {
     if (!disabled) onclick?.(e);
@@ -43,7 +58,8 @@
 
 <button
   type="button"
-  role="menuitem"
+  {role}
+  aria-checked={checkable ? !!checked : undefined}
   class={cn(
     'dropdown-item',
     `dropdown-item-${variant}`,
@@ -56,6 +72,24 @@
   tabindex={disabled ? -1 : 0}
   {...rest}
 >
+  {#if checkable}
+    <span class="dropdown-item-check" aria-hidden="true">
+      {#if checked}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+      {/if}
+    </span>
+  {/if}
   {#if icon}
     <span class="dropdown-item-icon">
       {@render icon()}
@@ -115,6 +149,17 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+  }
+
+  /* Fixed slot so checked and unchecked rows keep one left edge. */
+  .dropdown-item-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 0.875rem;
+    margin-right: calc(var(--space-2) * -1);
+    color: var(--color-base0D);
   }
 
   .dropdown-item-label {

@@ -130,9 +130,10 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [TagInput](./src/components/forms/TagInput.svelte): Tag/chip input with add/remove, deduplication, and variant colors
 
 ### Overlays (Ready)
-- [Dropdown](./src/components/overlays/Dropdown.svelte): Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA
+- [Dropdown](./src/components/overlays/Dropdown.svelte): Portaled action menu with viewport-aware positioning, keyboard navigation (scoped to the focused menu or submenu, Home/End), and ARIA
 - [DropdownDivider](./src/components/overlays/DropdownDivider.svelte): Horizontal separator line for dropdown menu groups
-- [DropdownItem](./src/components/overlays/DropdownItem.svelte): Menu item with role=menuitem, keyboard support, icon and danger variant
+- [DropdownItem](./src/components/overlays/DropdownItem.svelte): Menu item with role=menuitem (menuitemradio / menuitemcheckbox when checked is set), keyboard support, icon and danger variant
+- [DropdownSub](./src/components/overlays/DropdownSub.svelte): Cascading submenu item for Dropdown: menuitem with aria-haspopup=menu opening a nested role=menu to the side (ArrowRight/Enter opens, ArrowLeft/Escape closes, hover delay + grace, flips near the viewport edge)
 - [Sheet](./src/components/overlays/Sheet.svelte): Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss)
 - [ToolPanel](./src/components/overlays/ToolPanel.svelte): Toolbar button that opens a non-modal form panel (filters, columns): native popover=auto, anchor positioning, fixed width, scrolling body with pinned footer, count pill, custom trigger, or a bottom Sheet on phones
 - [HoverCard](./src/components/overlays/HoverCard.svelte): One explanatory card per container (a data table) by event delegation: resolve(el) supplies the detail, body snippet renders it in the top layer; delays, header focus, Escape/scroll close, never on touch

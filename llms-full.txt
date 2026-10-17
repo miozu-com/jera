@@ -829,8 +829,16 @@ Hover tooltip.
 Props: `text`, `position = 'top'`, `delay = 50`, `disabled`, `class`
 Snippets: `children` (trigger), `content` (rich tooltip)
 
-### Dropdown / DropdownItem / DropdownDivider
-Menu dropdown system. Dropdown wraps items, DropdownItem is each option, DropdownDivider separates groups.
+### Dropdown / DropdownItem / DropdownDivider / DropdownSub
+Menu dropdown system. Dropdown wraps items, DropdownItem is each option, DropdownDivider separates groups, DropdownSub is an item that opens a cascading submenu to the side.
+DropdownItem: `checked` (true/false → menuitemradio with a check mark; unset → plain action), `checkType = 'radio'|'checkbox'`.
+DropdownSub: `label` (string|snippet), `meta`, `icon`, `disabled`, `openDelay = 150`, `closeDelay = 300`; children are the submenu items. ArrowRight/Enter/Space opens and focuses the first item; ArrowLeft/Escape closes back to the item; hover opens after the delay, leaving starts a grace; flips left near the viewport edge.
+```svelte
+<DropdownSub label="Views" meta="Rows">
+  <DropdownItem checked={view === 'rows'} onclick={() => (view = 'rows')}>Rows</DropdownItem>
+  <DropdownItem checked={view === 'grid'} onclick={() => (view = 'grid')}>Grid</DropdownItem>
+</DropdownSub>
+```
 
 ### Card, Link, LinkCard, LazyImage, MetricCard, FilterChip, StatusLine, MemberCard, DashCard, DistributionBar
 Primitive components built but not yet adopted by consumer projects. See source files for API.
