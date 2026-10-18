@@ -1320,7 +1320,7 @@
       "name": "Sheet",
       "category": "overlays",
       "path": "src/components/overlays/Sheet.svelte",
-      "description": "Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss)",
+      "description": "Bottom-sheet overlay (native dialog top-layer, drag-to-dismiss); side=right drawer on wide screens",
       "props": {
         "open": {
           "type": "boolean",
@@ -1343,6 +1343,11 @@
           "default": "true",
           "description": "Show the drag-to-dismiss grab handle"
         },
+        "side": {
+          "type": "'bottom'|'right'",
+          "default": "'bottom'",
+          "description": "Edge the sheet comes from. 'right' is a full-height 26rem drawer from 40rem up (bottom sheet below); 'bottom' is unchanged"
+        },
         "ariaLabel": {
           "type": "string",
           "default": "''",
@@ -1358,8 +1363,8 @@
       "events": ["onclose"],
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-10-08",
+      "revision": 5,
+      "lastReviewed": "2026-10-19",
       "breaking": [],
       "docLevel": "minimal"
     },

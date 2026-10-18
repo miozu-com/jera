@@ -14,6 +14,11 @@
   always in reach however long the content is. Without it the markup is
   unchanged.
 
+  `side` (opt-in, rev 5): 'right' renders a full-height panel on the inline-end
+  edge, `min(26rem, 100vw)` wide, sliding in from the right, no grab handle —
+  a detail drawer on a desktop screen. Below 40rem it falls back to the bottom
+  sheet, so the consumer never branches. 'bottom' (default) is unchanged.
+
   @example
   <Sheet bind:open={showSheet} ariaLabel="Workspaces">
     <nav>…</nav>
@@ -25,6 +30,7 @@
     closeOnBackdrop = true,
     closeOnEscape = true,
     showHandle = true,
+    side = 'bottom',
     ariaLabel = '',
     children,
     footer,
@@ -103,6 +109,7 @@
   bind:this={dialogEl}
   class={['sheet', className]}
   class:sheet-dragging={dragging}
+  class:sheet-right={side === 'right'}
   style="--sheet-y: {dragY}px"
   aria-label={ariaLabel || undefined}
   aria-modal="true"
@@ -213,6 +220,31 @@
   @starting-style {
     dialog.sheet[open]::backdrop {
       opacity: 0;
+    }
+  }
+
+  /* side="right": a full-height drawer from 40rem up; the bottom sheet below. */
+  @media (min-width: 40rem) {
+    dialog.sheet.sheet-right .sheet-panel {
+      top: 0;
+      left: auto;
+      width: min(26rem, 100vw);
+      max-height: none;
+      border-top: none;
+      border-inline-start: var(--border-width-default) solid var(--color-base03);
+      border-radius: 0;
+      transform: translateX(0);
+    }
+    @starting-style {
+      dialog.sheet.sheet-right[open] .sheet-panel {
+        transform: translateX(100%);
+      }
+    }
+    dialog.sheet.sheet-right:not([open]) .sheet-panel {
+      transform: translateX(100%);
+    }
+    dialog.sheet.sheet-right .sheet-handle-zone {
+      display: none;
     }
   }
 
