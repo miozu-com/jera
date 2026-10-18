@@ -31,8 +31,8 @@
   />
   Renders a segmented pair: an <a> (leading/icon, label, badge) and a
   sibling chevron <button aria-expanded aria-controls> that never navigates,
-  both full row height, sharing the row's outer radius, a 1px border-token
-  separator between them, hover/active/focus per segment. `expandable`
+  both full row height, sharing the row's outer radius, no visible separator
+  between them (spacing only), hover/active/focus per segment. `expandable`
   without `href` keeps the button-only shape.
 
   @example Sub-route icons, counts and an attention row (r9)
@@ -48,7 +48,7 @@
   />
   A sub-route takes an optional `icon` (component, 16px, base04), `badge`
   (a count, in the row's colour), `variant` ('warning' | 'danger' | 'success',
-  the item variants' colours) and `divider` (a thin border-token rule above).
+  the item variants' colours) and `divider` (a little space above, no rule).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -361,7 +361,7 @@
 
   /* Split row: a segmented pair. The item is only the frame (outer radius,
      clip); the link and the chevron are two full-height segments with their
-     own hover/active surfaces and focus rings, a border-token rule between. */
+     own hover/active surfaces and focus rings, no visible separator. */
   .nav-item.split {
     padding: 0;
     gap: 0;
@@ -425,7 +425,6 @@
     margin: 0;
     padding: 0;
     border: none;
-    border-left: var(--border-width-thin) solid var(--color-base02);
     border-radius: 0;
     background: transparent;
     color: var(--color-base05);
@@ -524,7 +523,6 @@
   .subnav-list > li.divided {
     margin-top: 0.25rem;
     padding-top: 0.25rem;
-    border-top: var(--border-width-thin) solid var(--color-base02);
   }
 
   .subnav-item {

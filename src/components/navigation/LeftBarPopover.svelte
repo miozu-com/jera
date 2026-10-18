@@ -17,7 +17,7 @@
 
   Items take the same optional fields as LeftBarItem's subroutes: `icon`
   (component, 16px, base04), `badge` (a count), `variant` ('warning' |
-  'danger' | 'success') and `divider` (a thin rule above the item).
+  'danger' | 'success') and `divider` (a little space above the item, no rule).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -113,7 +113,6 @@
   .popover-list > li.divided {
     margin-top: 0.25rem;
     padding-top: 0.25rem;
-    border-top: var(--border-width-thin) solid var(--color-base02);
   }
 
   .popover-item {

@@ -1977,7 +1977,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 9,
+      "revision": 10,
       "lastReviewed": "2026-10-18",
       "breaking": [
         {
@@ -3607,7 +3607,7 @@
       "path": "src/components/navigation/LeftBarPopover.svelte",
       "description": "LeftBar context-aware popover \u2014 internal",
       "stage": "deprecated",
-      "revision": 3,
+      "revision": 4,
       "lastReviewed": "2026-10-18",
       "docLevel": "none",
       "breaking": []
