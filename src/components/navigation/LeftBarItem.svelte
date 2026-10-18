@@ -574,7 +574,8 @@
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
   }
 
-  :global([data-theme="miozu-light"]) .subnav-item.active {
+  /* Not on a variant row: a lit Needs you keeps its warning colour. */
+  :global([data-theme="miozu-light"]) .subnav-item.active:not([data-variant]) {
     color: color-mix(in srgb, var(--color-base0D) 60%, black);
   }
 

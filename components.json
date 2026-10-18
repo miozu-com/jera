@@ -1977,7 +1977,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 12,
+      "revision": 13,
       "lastReviewed": "2026-10-18",
       "breaking": [
         {
