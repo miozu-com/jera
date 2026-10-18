@@ -1946,7 +1946,7 @@
         "subroutes": {
           "type": "array",
           "default": "[]",
-          "description": "Sub-navigation items ({label, href, icon?, badge?, variant?, divider?}); the lit one (isActiveRoute) carries aria-current=page. icon: a component drawn at 16px in base04; badge: a count in the row's colour; variant: 'warning'|'danger'|'success' (the item variants' colours, icon and count included); divider: a thin border-token rule above the row"
+          "description": "Sub-navigation items ({label, href, icon?, badge?, badgeLabel?, variant?, divider?}); the lit one (isActiveRoute) carries aria-current=page. icon: a component drawn at 16px in base04; badge: a count in the row's colour \u2014 without a variant it is quiet (a muted number: a data count on the row it describes), with one it takes the variant colour (a call to act); badgeLabel: what the count means (\"17 products need fixing\"), the row's hover title and its accessible name (label + meaning), set only while the badge is drawn; variant: 'warning'|'danger'|'success' (the item variants' colours, icon and count included); divider: marks the attention row (no space, no rule since r11)"
         },
         "isActiveRoute": {
           "type": "(href: string) => boolean",
@@ -1963,6 +1963,11 @@
           "default": "null",
           "description": "Badge text"
         },
+        "badgeLabel": {
+          "type": "string",
+          "default": "null",
+          "description": "What the badge means (\"7 decisions waiting\"): expanded, the link's hover title and accessible name (label + meaning) while the badge is drawn; collapsed, it replaces the bare number in the status tooltip"
+        },
         "badgeColor": {
           "type": "'blue'|'green'|'yellow'|'purple'|'red'",
           "default": "null",
@@ -1977,7 +1982,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 14,
+      "revision": 15,
       "lastReviewed": "2026-10-18",
       "breaking": [
         {
@@ -3607,7 +3612,7 @@
       "path": "src/components/navigation/LeftBarPopover.svelte",
       "description": "LeftBar context-aware popover \u2014 internal",
       "stage": "deprecated",
-      "revision": 5,
+      "revision": 6,
       "lastReviewed": "2026-10-18",
       "docLevel": "none",
       "breaking": []

@@ -48,10 +48,32 @@
     ]}
   />
   A sub-route takes an optional `icon` (component, 16px, base04), `badge`
-  (a count, in the row's colour), `variant` ('warning' | 'danger' | 'success',
+  (a count, in the row's colour), `badgeLabel` (what the count means, e.g.
+  "17 products need fixing": the row's hover title and part of its accessible
+  name, so focus reads it too), `variant` ('warning' | 'danger' | 'success',
   the item variants' colours) and `divider` (marks the attention row with a
   `divided` class; since r11 it adds no space and no rule — the row keeps the
   same gap as its siblings and stands out by colour and icon only).
+  Without a `variant` the count is quiet: a muted number, not a chip — a data
+  count on the row it describes; a `variant` row is a call to act.
+
+  @example A quiet data count and a decisions row (r13)
+  <LeftBarItem
+    href="/agents/atlas"
+    label="Atlas"
+    expandable
+    badge={expanded ? null : 7}
+    badgeColor="yellow"
+    badgeLabel="7 decisions waiting"
+    subroutes={[
+      { label: 'Catalog', href: '/agents/atlas/catalog', badge: 17,
+        badgeLabel: '17 products need fixing' },
+      { label: 'Needs you', href: '/agents/atlas?needs=1', badge: 7,
+        badgeLabel: '7 decisions waiting', variant: 'warning', divider: true }
+    ]}
+  />
+  `badgeLabel` on the item names its own `badge` the same way (title +
+  accessible name of the link).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -72,6 +94,8 @@
     // blue|green|yellow|purple|red. A colored badge is a status marker: it
     // also earns a dot on the icon when the bar is collapsed.
     badgeColor = null,
+    // What the badge means ("7 decisions waiting"): hover title + accessible name.
+    badgeLabel = null,
     preload = true,
     variant = 'default',
     onclick = null,
@@ -101,8 +125,17 @@
   // Collapsed, the item has no visible text: name it explicitly (tooltip + AT),
   // status included. Expanded, the label and badge text name it.
   const collapsedTitle = $derived(
-    isCollapsed ? (statusDot ? `${label} (${badge})` : label) : null
+    isCollapsed ? (statusDot ? `${label} (${badgeLabel ?? badge})` : label) : null
   );
+  // Expanded, a badge with a meaning names it: the hover title, and the link's
+  // accessible name (label + meaning, instead of a bare number).
+  const badgeHint = $derived(!isCollapsed && badge != null && badgeLabel ? badgeLabel : null);
+  const itemTitle = $derived(collapsedTitle ?? badgeHint);
+  const itemName = $derived(collapsedTitle ?? (badgeHint ? `${label}, ${badgeHint}` : null));
+
+  /** A sub-route's hint, when its count is drawn and says what it counts. */
+  const routeHint = route =>
+    route.badge != null && route.badge !== '' && route.badgeLabel ? route.badgeLabel : null;
 
   function handleClick(e) {
     if (expandable) {
@@ -176,6 +209,7 @@
       {#each subroutes as route}
         {@const routeActive = isActiveRoute(route.href)}
         {@const RouteIcon = route.icon ?? null}
+        {@const hint = routeHint(route)}
         <li class:divided={route.divider}>
           <a
             href={route.href}
@@ -183,6 +217,8 @@
             class:active={routeActive}
             data-variant={route.variant ?? undefined}
             aria-current={routeActive ? 'page' : undefined}
+            title={hint ?? undefined}
+            aria-label={hint ? `${route.label}, ${hint}` : undefined}
             data-sveltekit-preload-data={preloadAttr}
           >
             {#if RouteIcon}
@@ -211,8 +247,8 @@
         {href}
         class="nav-link"
         aria-current={active ? 'page' : undefined}
-        title={collapsedTitle}
-        aria-label={collapsedTitle}
+        title={itemTitle}
+        aria-label={itemName}
         data-sveltekit-preload-data={preloadAttr}
         onclick={e => onclick?.(e)}
         onmouseenter={handleMouseEnter}
@@ -244,8 +280,8 @@
       class:active
       class:collapsed={isCollapsed}
       data-variant={variant}
-      title={collapsedTitle}
-      aria-label={collapsedTitle}
+      title={itemTitle}
+      aria-label={itemName}
       data-sveltekit-preload-data={preloadAttr}
     >
       {@render head()}

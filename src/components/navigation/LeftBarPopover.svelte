@@ -16,7 +16,8 @@
   />
 
   Items take the same optional fields as LeftBarItem's subroutes: `icon`
-  (component, 16px, base04), `badge` (a count), `variant` ('warning' |
+  (component, 16px, base04), `badge` (a count), `badgeLabel` (what it counts:
+  the item's title and part of its accessible name, r6), `variant` ('warning' |
   'danger' | 'success') and `divider` (marks the attention item; since r5 no extra space, no rule).
 -->
 <script>
@@ -54,8 +55,15 @@
     <ul class="popover-list">
       {#each items as item}
         {@const ItemIcon = item.icon ?? null}
+        {@const hint = item.badge != null && item.badge !== '' && item.badgeLabel ? item.badgeLabel : null}
         <li class:divided={item.divider}>
-          <a href={item.href} class="popover-item" data-variant={item.variant ?? undefined}>
+          <a
+            href={item.href}
+            class="popover-item"
+            data-variant={item.variant ?? undefined}
+            title={hint ?? undefined}
+            aria-label={hint ? `${item.label}, ${hint}` : undefined}
+          >
             {#if ItemIcon}
               <ItemIcon size={16} class="popover-icon" />
             {/if}
