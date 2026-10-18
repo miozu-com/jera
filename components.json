@@ -1915,7 +1915,7 @@
         "href": {
           "type": "string",
           "default": "null",
-          "description": "Navigation URL"
+          "description": "Navigation URL. With `expandable` it renders a split row: an <a> (leading/icon, label, badge) plus a sibling chevron <button aria-expanded aria-controls> that folds the subroutes and never navigates"
         },
         "label": {
           "type": "string",
@@ -1935,7 +1935,7 @@
         "expandable": {
           "type": "boolean",
           "default": "false",
-          "description": "Show expand arrow"
+          "description": "Show expand arrow. Without `href`: the whole row is the fold button; with `href`: split row (see href)"
         },
         "expanded": {
           "type": "boolean",
@@ -1946,7 +1946,17 @@
         "subroutes": {
           "type": "array",
           "default": "[]",
-          "description": "Sub-navigation items"
+          "description": "Sub-navigation items ({label, href}); the lit one (isActiveRoute) carries aria-current=page"
+        },
+        "isActiveRoute": {
+          "type": "(href: string) => boolean",
+          "default": "() => false",
+          "description": "Which subroute is lit"
+        },
+        "toggleLabel": {
+          "type": "string",
+          "default": "null",
+          "description": "Split rows only: the chevron button's accessible name (default `Show {label} pages`)"
         },
         "badge": {
           "type": "string|number",
@@ -1967,8 +1977,8 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-10-07",
+      "revision": 8,
+      "lastReviewed": "2026-10-18",
       "breaking": [
         {
           "revision": 5,

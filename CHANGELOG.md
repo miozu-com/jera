@@ -9,6 +9,13 @@ This project is pre-1.0: breaking changes bump the **minor** version.
 
 ### Added
 
+- **LeftBarItem** split row (r8): `expandable` with `href` renders the name as
+  an `<a>` (leading/icon, label, badge; `aria-current="page"` when `active`)
+  and a sibling chevron `<button aria-expanded aria-controls>` that folds the
+  subroutes and never navigates — middle-click, prefetch and screen readers
+  keep working on the name. New `toggleLabel` names the chevron (default
+  `Show {label} pages`); the lit subroute carries `aria-current="page"`.
+  `expandable` without `href` keeps the single-button shape. Not breaking.
 - **DropdownSub** (beta, `@miozu/jera/components/overlays/DropdownSub`): a
   cascading submenu inside a Dropdown ("Views ▸", "Sort ▸"). The item is a
   `menuitem` with `aria-haspopup="menu"` / `aria-expanded`; the nested

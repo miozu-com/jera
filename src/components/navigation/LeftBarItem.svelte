@@ -1,4 +1,4 @@
-<!-- file-size: justified -- one nav item in three element shapes (link, expandable, button) sharing one badge/dot/variant style sheet; the CSS is the long part. -->
+<!-- file-size: justified -- one nav item in four element shapes (link, split link + toggle, expandable, button) sharing one badge/dot/variant style sheet; the CSS is the long part. -->
 <!--
   @component LeftBarItem
 
@@ -19,6 +19,19 @@
       { label: 'Errors', href: '/errors' }
     ]}
   />
+
+  @example Split: the name is a link, the chevron folds (expandable + href)
+  <LeftBarItem
+    href="/agents/atlas"
+    label="Atlas"
+    expandable
+    bind:expanded={atlasExpanded}
+    active={onAtlas && !onAtlasChild}
+    subroutes={[{ label: 'Needs fixing', href: '/agents/atlas/fix' }]}
+  />
+  Renders an <a> (leading/icon, label, badge) and a sibling chevron
+  <button aria-expanded aria-controls> that never navigates. `expandable`
+  without `href` keeps the button-only shape.
 -->
 <script>
   import { getContext } from 'svelte';
@@ -43,6 +56,8 @@
     variant = 'default',
     onclick = null,
     isActiveRoute = () => false,
+    // Split rows only: the chevron's accessible name.
+    toggleLabel = null,
     class: className = '',
     leading,
     trailing,
@@ -50,7 +65,12 @@
   } = $props();
 
   // Preload attribute for SvelteKit
-  const preloadAttr = preload ? 'hover' : undefined;
+  const preloadAttr = $derived(preload ? 'hover' : undefined);
+
+  // expandable + href: the name navigates, a sibling button folds.
+  const split = $derived(expandable && !!href);
+  const uid = $props.id();
+  const subnavId = `${uid}-subnav`;
 
   const leftbar = getContext('leftbar');
   const isCollapsed = $derived(leftbar?.collapsed ?? false);
@@ -70,6 +90,10 @@
       expanded = !expanded;
     }
     onclick?.(e);
+  }
+
+  function toggle() {
+    expanded = !expanded;
   }
 
   function handleMouseEnter(e) {
@@ -107,8 +131,85 @@
   {/if}
 {/snippet}
 
+{#snippet chevron()}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="expand-icon"
+    class:rotate-180={expanded}
+    aria-hidden="true"
+  >
+    <polyline points="6 9 12 15 18 9"></polyline>
+  </svg>
+{/snippet}
+
+{#snippet subnav(id)}
+  {#if expanded && !isCollapsed && subroutes.length > 0}
+    <ul {id} class="subnav-list" transition:slide={{ duration: 200, easing: cubicOut }}>
+      {#each subroutes as route}
+        {@const routeActive = isActiveRoute(route.href)}
+        <li>
+          <a
+            href={route.href}
+            class="subnav-item"
+            class:active={routeActive}
+            aria-current={routeActive ? 'page' : undefined}
+            data-sveltekit-preload-data={preloadAttr}
+          >
+            {route.label}
+          </a>
+        </li>
+      {/each}
+    </ul>
+  {/if}
+{/snippet}
+
 <li>
-  {#if href && !expandable}
+  {#if split}
+    <div
+      class="nav-item split {className}"
+      class:active
+      class:collapsed={isCollapsed}
+      data-variant={variant}
+    >
+      <a
+        {href}
+        class="nav-link"
+        aria-current={active ? 'page' : undefined}
+        title={collapsedTitle}
+        aria-label={collapsedTitle}
+        data-sveltekit-preload-data={preloadAttr}
+        onclick={e => onclick?.(e)}
+        onmouseenter={handleMouseEnter}
+        onmouseleave={handleMouseLeave}
+      >
+        {@render head()}
+        {@render tail()}
+        {@render children?.()}
+      </a>
+      {#if !isCollapsed}
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-expanded={expanded}
+          aria-controls={subnavId}
+          aria-label={toggleLabel ?? `Show ${label} pages`}
+          onclick={toggle}
+          transition:fade={{ duration: 150 }}
+        >
+          {@render chevron()}
+        </button>
+      {/if}
+    </div>
+    {@render subnav(subnavId)}
+  {:else if href && !expandable}
     <a
       {href}
       class="nav-item {className}"
@@ -138,40 +239,12 @@
       {@render tail()}
       {#if !isCollapsed}
         <span transition:fade={{ duration: 150 }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="expand-icon"
-            class:rotate-180={expanded}
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+          {@render chevron()}
         </span>
       {/if}
       {@render children?.()}
     </button>
-    {#if expanded && !isCollapsed && subroutes.length > 0}
-      <ul class="subnav-list" transition:slide={{ duration: 200, easing: cubicOut }}>
-        {#each subroutes as route}
-          <li>
-            <a
-              href={route.href}
-              class="subnav-item"
-              class:active={isActiveRoute(route.href)}
-            >
-              {route.label}
-            </a>
-          </li>
-        {/each}
-      </ul>
-    {/if}
+    {@render subnav(undefined)}
   {:else}
     <button
       class="nav-item {className}"
@@ -259,6 +332,63 @@
   .nav-item.expandable:hover {
     color: var(--color-base0D);
     background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
+  }
+
+  /* Split row: the item is the hover/active surface; the link fills it and
+     the chevron button sits at its end as its own tab stop. */
+  .nav-item.split {
+    padding: 0;
+    gap: 0;
+    cursor: default;
+  }
+
+  .nav-link {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.25rem 0.375rem 0.75rem;
+    color: inherit;
+    text-decoration: none;
+    border-radius: inherit;
+    position: relative;
+  }
+
+  .nav-item.split.collapsed .nav-link {
+    justify-content: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .nav-link:focus-visible,
+  .nav-toggle:focus-visible {
+    outline: var(--border-width-default) solid var(--color-base0D);
+    outline-offset: calc(-1 * var(--border-width-default));
+  }
+
+  .nav-toggle {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.375rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-default);
+    background: transparent;
+    color: var(--color-base05);
+    cursor: pointer;
+  }
+
+  .nav-toggle:hover {
+    color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+  }
+
+  .nav-toggle .expand-icon {
+    margin-left: 0;
   }
 
   .nav-item :global(svg.nav-icon) {
