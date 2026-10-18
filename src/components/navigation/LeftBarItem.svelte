@@ -48,7 +48,9 @@
   />
   A sub-route takes an optional `icon` (component, 16px, base04), `badge`
   (a count, in the row's colour), `variant` ('warning' | 'danger' | 'success',
-  the item variants' colours) and `divider` (a little space above, no rule).
+  the item variants' colours) and `divider` (marks the attention row with a
+  `divided` class; since r11 it adds no space and no rule — the row keeps the
+  same gap as its siblings and stands out by colour and icon only).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -518,11 +520,6 @@
     flex-direction: column;
     list-style: none;
     padding: 0;
-  }
-
-  .subnav-list > li.divided {
-    margin-top: 0.25rem;
-    padding-top: 0.25rem;
   }
 
   .subnav-item {
