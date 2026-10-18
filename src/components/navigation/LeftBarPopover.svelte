@@ -14,6 +14,10 @@
       { label: 'Errors', href: '/errors' }
     ]}
   />
+
+  Items take the same optional fields as LeftBarItem's subroutes: `icon`
+  (component, 16px, base04), `badge` (a count), `variant` ('warning' |
+  'danger' | 'success') and `divider` (a thin rule above the item).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -49,9 +53,16 @@
     </div>
     <ul class="popover-list">
       {#each items as item}
-        <li>
-          <a href={item.href} class="popover-item">
-            {item.label}
+        {@const ItemIcon = item.icon ?? null}
+        <li class:divided={item.divider}>
+          <a href={item.href} class="popover-item" data-variant={item.variant ?? undefined}>
+            {#if ItemIcon}
+              <ItemIcon size={16} class="popover-icon" />
+            {/if}
+            <span class="popover-label">{item.label}</span>
+            {#if item.badge != null && item.badge !== ''}
+              <span class="popover-badge">{item.badge}</span>
+            {/if}
           </a>
         </li>
       {/each}
@@ -99,8 +110,16 @@
     margin: 0;
   }
 
+  .popover-list > li.divided {
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    border-top: var(--border-width-thin) solid var(--color-base02);
+  }
+
   .popover-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.5rem 1rem;
     font-size: var(--text-sm);
     line-height: 1.25rem;
@@ -117,5 +136,56 @@
 
   .popover-item:active {
     background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  }
+
+  .popover-item :global(svg.popover-icon) {
+    flex-shrink: 0;
+    color: var(--color-base04);
+  }
+
+  .popover-item:hover :global(svg.popover-icon) {
+    color: currentColor;
+  }
+
+  .popover-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .popover-badge {
+    flex-shrink: 0;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-base04);
+  }
+
+  .popover-item[data-variant="warning"],
+  .popover-item[data-variant="warning"] .popover-badge,
+  .popover-item[data-variant="warning"] :global(svg.popover-icon) {
+    color: var(--color-base0A);
+  }
+
+  .popover-item[data-variant="warning"]:hover {
+    background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+  }
+
+  .popover-item[data-variant="danger"],
+  .popover-item[data-variant="danger"] .popover-badge,
+  .popover-item[data-variant="danger"] :global(svg.popover-icon) {
+    color: var(--color-base08);
+  }
+
+  .popover-item[data-variant="danger"]:hover {
+    background-color: color-mix(in srgb, var(--color-base08) 10%, transparent);
+  }
+
+  .popover-item[data-variant="success"],
+  .popover-item[data-variant="success"] .popover-badge,
+  .popover-item[data-variant="success"] :global(svg.popover-icon) {
+    color: var(--color-base0B);
+  }
+
+  .popover-item[data-variant="success"]:hover {
+    background-color: color-mix(in srgb, var(--color-base0B) 10%, transparent);
   }
 </style>

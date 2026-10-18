@@ -1915,7 +1915,7 @@
         "href": {
           "type": "string",
           "default": "null",
-          "description": "Navigation URL. With `expandable` it renders a split row: an <a> (leading/icon, label, badge) plus a sibling chevron <button aria-expanded aria-controls> that folds the subroutes and never navigates"
+          "description": "Navigation URL. With `expandable` it renders a split row: a segmented pair of an <a> (leading/icon, label, badge) and a sibling chevron <button aria-expanded aria-controls> that folds the subroutes and never navigates; both full row height, sharing the row's radius, a 1px border-token separator between, hover/active/focus per segment"
         },
         "label": {
           "type": "string",
@@ -1946,7 +1946,7 @@
         "subroutes": {
           "type": "array",
           "default": "[]",
-          "description": "Sub-navigation items ({label, href}); the lit one (isActiveRoute) carries aria-current=page"
+          "description": "Sub-navigation items ({label, href, icon?, badge?, variant?, divider?}); the lit one (isActiveRoute) carries aria-current=page. icon: a component drawn at 16px in base04; badge: a count in the row's colour; variant: 'warning'|'danger'|'success' (the item variants' colours, icon and count included); divider: a thin border-token rule above the row"
         },
         "isActiveRoute": {
           "type": "(href: string) => boolean",
@@ -1977,7 +1977,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 8,
+      "revision": 9,
       "lastReviewed": "2026-10-18",
       "breaking": [
         {
@@ -3607,8 +3607,8 @@
       "path": "src/components/navigation/LeftBarPopover.svelte",
       "description": "LeftBar context-aware popover \u2014 internal",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-18",
       "docLevel": "none",
       "breaking": []
     },

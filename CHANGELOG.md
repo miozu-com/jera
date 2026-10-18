@@ -9,6 +9,14 @@ This project is pre-1.0: breaking changes bump the **minor** version.
 
 ### Added
 
+- **LeftBarItem** sub-route icons and attention rows (r9): a `subroutes[]`
+  entry takes optional `icon` (a component, drawn at 16px in base04),
+  `badge` (a count in the row's colour), `variant` (`warning` | `danger` |
+  `success`, the item variants' colours on text, icon and count) and
+  `divider` (a thin border-token rule above it). Entries without them render
+  as before. **LeftBarPopover** (r3) items take the same fields, so the
+  collapsed bar's hover flyout matches.
+
 - **LeftBarItem** split row (r8): `expandable` with `href` renders the name as
   an `<a>` (leading/icon, label, badge; `aria-current="page"` when `active`)
   and a sibling chevron `<button aria-expanded aria-controls>` that folds the
@@ -62,6 +70,17 @@ This project is pre-1.0: breaking changes bump the **minor** version.
   selection model (`choice.rules.js`) as ChoiceGrid.
 - Tests can render components: `tests/helpers/svelte-server.js` compiles
   `.svelte` / `.svelte.js` on import for `svelte/server` (no new dependency).
+
+### Changed
+
+- **LeftBarItem** (r9): the split row (`expandable` + `href`) is a segmented
+  pair — the name link and the chevron button are both full row height and
+  share the row's outer radius, with a `--border-width-thin` / base02
+  separator between them; hover, active and focus ring are per segment (the
+  chevron is no longer an inset 24px button with margins). Item and sub-row
+  radius is `--radius-default` (was a literal 0.375rem). Sub-rows are flex
+  rows (icon, label, count). Not breaking for props; the split row's look
+  changes in dash.
 
 ## [0.10.0] - 2026-08-23
 

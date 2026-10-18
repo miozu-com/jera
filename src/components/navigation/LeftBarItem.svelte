@@ -29,9 +29,26 @@
     active={onAtlas && !onAtlasChild}
     subroutes={[{ label: 'Needs fixing', href: '/agents/atlas/fix' }]}
   />
-  Renders an <a> (leading/icon, label, badge) and a sibling chevron
-  <button aria-expanded aria-controls> that never navigates. `expandable`
+  Renders a segmented pair: an <a> (leading/icon, label, badge) and a
+  sibling chevron <button aria-expanded aria-controls> that never navigates,
+  both full row height, sharing the row's outer radius, a 1px border-token
+  separator between them, hover/active/focus per segment. `expandable`
   without `href` keeps the button-only shape.
+
+  @example Sub-route icons, counts and an attention row (r9)
+  <LeftBarItem
+    href="/agents/genji"
+    label="Genji"
+    expandable
+    subroutes={[
+      { label: 'Pipeline', href: '/agents/genji/pipeline', icon: Workflow },
+      { label: 'Needs you', href: '/agents/genji/console', icon: BellRing,
+        badge: 3, variant: 'warning', divider: true }
+    ]}
+  />
+  A sub-route takes an optional `icon` (component, 16px, base04), `badge`
+  (a count, in the row's colour), `variant` ('warning' | 'danger' | 'success',
+  the item variants' colours) and `divider` (a thin border-token rule above).
 -->
 <script>
   import { getContext } from 'svelte';
@@ -155,15 +172,23 @@
     <ul {id} class="subnav-list" transition:slide={{ duration: 200, easing: cubicOut }}>
       {#each subroutes as route}
         {@const routeActive = isActiveRoute(route.href)}
-        <li>
+        {@const RouteIcon = route.icon ?? null}
+        <li class:divided={route.divider}>
           <a
             href={route.href}
             class="subnav-item"
             class:active={routeActive}
+            data-variant={route.variant ?? undefined}
             aria-current={routeActive ? 'page' : undefined}
             data-sveltekit-preload-data={preloadAttr}
           >
-            {route.label}
+            {#if RouteIcon}
+              <RouteIcon size={16} class="subnav-icon" />
+            {/if}
+            <span class="subnav-label">{route.label}</span>
+            {#if route.badge != null && route.badge !== ''}
+              <span class="subnav-badge">{route.badge}</span>
+            {/if}
           </a>
         </li>
       {/each}
@@ -284,7 +309,7 @@
     font-weight: var(--font-weight-medium);
     color: var(--color-base06);
     cursor: pointer;
-    border-radius: 0.375rem;
+    border-radius: var(--radius-default);
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     transition: all var(--duration-fast);
@@ -334,12 +359,36 @@
     background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
   }
 
-  /* Split row: the item is the hover/active surface; the link fills it and
-     the chevron button sits at its end as its own tab stop. */
+  /* Split row: a segmented pair. The item is only the frame (outer radius,
+     clip); the link and the chevron are two full-height segments with their
+     own hover/active surfaces and focus rings, a border-token rule between. */
   .nav-item.split {
     padding: 0;
     gap: 0;
+    align-items: stretch;
     cursor: default;
+  }
+
+  .nav-item.split:hover,
+  .nav-item.split.active {
+    background-color: transparent;
+  }
+
+  .nav-item.split:hover {
+    color: var(--color-base06);
+  }
+
+  .nav-item.split.active {
+    color: var(--color-base0D);
+  }
+
+  .nav-item.split .nav-link:hover {
+    color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
+  }
+
+  .nav-item.split.active .nav-link {
+    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
   }
 
   .nav-link {
@@ -348,11 +397,11 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 0.25rem 0.375rem 0.75rem;
+    padding: 0.375rem 0.5rem 0.375rem 0.75rem;
     color: inherit;
     text-decoration: none;
-    border-radius: inherit;
     position: relative;
+    transition: background-color var(--duration-fast), color var(--duration-fast);
   }
 
   .nav-item.split.collapsed .nav-link {
@@ -369,22 +418,24 @@
 
   .nav-toggle {
     flex-shrink: 0;
+    align-self: stretch;
     display: grid;
     place-items: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.375rem;
+    width: 1.75rem;
+    margin: 0;
     padding: 0;
     border: none;
-    border-radius: var(--radius-default);
+    border-left: var(--border-width-thin) solid var(--color-base02);
+    border-radius: 0;
     background: transparent;
     color: var(--color-base05);
     cursor: pointer;
+    transition: background-color var(--duration-fast), color var(--duration-fast);
   }
 
   .nav-toggle:hover {
     color: var(--color-base0D);
-    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-base0D) 8%, transparent);
   }
 
   .nav-toggle .expand-icon {
@@ -470,8 +521,16 @@
     padding: 0;
   }
 
+  .subnav-list > li.divided {
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    border-top: var(--border-width-thin) solid var(--color-base02);
+  }
+
   .subnav-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.25rem 0.5rem;
     font-size: var(--text-sm);
     line-height: 1.25rem;
@@ -482,8 +541,34 @@
     cursor: pointer;
     background: transparent;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: var(--radius-default);
     text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .subnav-item :global(svg.subnav-icon) {
+    flex-shrink: 0;
+    color: var(--color-base04);
+    transition: color var(--duration-fast);
+  }
+
+  .subnav-item:hover :global(svg.subnav-icon),
+  .subnav-item.active :global(svg.subnav-icon) {
+    color: currentColor;
+  }
+
+  .subnav-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .subnav-badge {
+    flex-shrink: 0;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-base04);
   }
 
   .subnav-item:hover {
@@ -499,6 +584,40 @@
 
   :global([data-theme="miozu-light"]) .subnav-item.active {
     color: color-mix(in srgb, var(--color-base0D) 60%, black);
+  }
+
+  /* Sub-route variants: the item variants' colours, icon and count included. */
+  .subnav-item[data-variant="warning"],
+  .subnav-item[data-variant="warning"] .subnav-badge,
+  .subnav-item[data-variant="warning"] :global(svg.subnav-icon) {
+    color: var(--color-base0A);
+  }
+
+  .subnav-item[data-variant="warning"]:hover,
+  .subnav-item[data-variant="warning"].active {
+    background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
+  }
+
+  .subnav-item[data-variant="danger"],
+  .subnav-item[data-variant="danger"] .subnav-badge,
+  .subnav-item[data-variant="danger"] :global(svg.subnav-icon) {
+    color: var(--color-base08);
+  }
+
+  .subnav-item[data-variant="danger"]:hover,
+  .subnav-item[data-variant="danger"].active {
+    background-color: color-mix(in srgb, var(--color-base08) 10%, transparent);
+  }
+
+  .subnav-item[data-variant="success"],
+  .subnav-item[data-variant="success"] .subnav-badge,
+  .subnav-item[data-variant="success"] :global(svg.subnav-icon) {
+    color: var(--color-base0B);
+  }
+
+  .subnav-item[data-variant="success"]:hover,
+  .subnav-item[data-variant="success"].active {
+    background-color: color-mix(in srgb, var(--color-base0B) 10%, transparent);
   }
 
   /* Variants */

@@ -83,3 +83,43 @@ test("href without expandable stays a plain link", () => {
   assert.equal(attr(link, "href"), "/home/");
   assert.doesNotMatch(body, /<button/);
 });
+
+const { default: Glyph } = await import("./fixtures/Glyph.svelte");
+
+test("split: a segmented pair — the link and the chevron are siblings in one frame", () => {
+  const body = html({ href: "/a/", label: "Atlas", expandable: true, subroutes });
+  // One frame holds exactly the two segments: the link, then the toggle.
+  assert.match(
+    body,
+    /<div[^>]*class="nav-item split[^"]*"[^>]*>\s*(?:<!--[^>]*-->\s*)*<a[^>]*class="nav-link[\s\S]*?<\/a>\s*(?:<!--[^>]*-->\s*)*<button[^>]*class="nav-toggle/
+  );
+});
+
+test("subroutes: icon, badge, variant and divider render on the sub-row", () => {
+  const body = html({
+    href: "/a/",
+    label: "Genji",
+    expandable: true,
+    expanded: true,
+    subroutes: [
+      { label: "Pipeline", href: "/a/pipeline/", icon: Glyph },
+      { label: "Needs you", href: "/a/needs/", icon: Glyph, badge: 3, variant: "warning", divider: true },
+    ],
+  });
+  const glyphs = body.match(/<svg[^>]*class="subnav-icon[^"]*"[^>]*data-glyph/g) ?? [];
+  assert.equal(glyphs.length, 2);
+  assert.match(body, /width="16"/);
+  const needs = tag(body, /href="\/a\/needs\/"/);
+  assert.equal(attr(needs, "data-variant"), "warning");
+  assert.equal(attr(tag(body, /href="\/a\/pipeline\/"/), "data-variant"), null);
+  assert.match(body, /<li class="[^"]*\bdivided\b[^"]*">\s*(?:<!--[^>]*-->\s*)*<a[^>]*href="\/a\/needs\/"/);
+  assert.match(body, /<span class="subnav-badge[^"]*">3<\/span>/);
+  // Plain sub-routes keep a bare label and no badge.
+  assert.equal((body.match(/subnav-badge/g) ?? []).length, 1);
+});
+
+test("subroutes without the new fields render as before (label only)", () => {
+  const body = html({ href: "/a/", label: "Atlas", expandable: true, expanded: true, subroutes });
+  assert.doesNotMatch(body, /subnav-icon|subnav-badge|data-variant="warning"|\bdivided\b/);
+  assert.match(body, /<span class="subnav-label[^"]*">Needs fixing<\/span>/);
+});
