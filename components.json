@@ -1915,7 +1915,7 @@
         "href": {
           "type": "string",
           "default": "null",
-          "description": "Navigation URL. With `expandable` it renders a split row: a segmented pair of an <a> (leading/icon, label, badge) and a sibling chevron <button aria-expanded aria-controls> that folds the subroutes and never navigates; both full row height, sharing the row's radius, a 1px border-token separator between, hover/active/focus per segment"
+          "description": "Navigation URL. With `expandable` it renders a split row: a segmented pair of an <a> (leading/icon, label, badge) and a sibling chevron <button aria-expanded aria-controls> that folds the subroutes and never navigates; both full row height, sharing the row's radius, no visible separator; hover and active tint the whole row as one --radius-default shape, colour and focus ring per segment"
         },
         "label": {
           "type": "string",
@@ -1977,7 +1977,7 @@
       "snippets": ["leading", "trailing", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 11,
+      "revision": 12,
       "lastReviewed": "2026-10-18",
       "breaking": [
         {
@@ -2036,8 +2036,8 @@
       "description": "Sidebar collapse toggle, reads LeftBar context",
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-03-05",
+      "revision": 4,
+      "lastReviewed": "2026-10-18",
       "breaking": [],
       "docLevel": "standard",
       "props": {

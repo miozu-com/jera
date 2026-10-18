@@ -32,7 +32,8 @@
   Renders a segmented pair: an <a> (leading/icon, label, badge) and a
   sibling chevron <button aria-expanded aria-controls> that never navigates,
   both full row height, sharing the row's outer radius, no visible separator
-  between them (spacing only), hover/active/focus per segment. `expandable`
+  between them (spacing only). Hover and active tint the whole row as one
+  shape (r12); colour and focus ring are per segment. `expandable`
   without `href` keeps the button-only shape.
 
   @example Sub-route icons, counts and an attention row (r9)
@@ -361,9 +362,13 @@
     background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
   }
 
-  /* Split row: a segmented pair. The item is only the frame (outer radius,
-     clip); the link and the chevron are two full-height segments with their
-     own hover/active surfaces and focus rings, no visible separator. */
+  /* Split row: a segmented pair that reads as ONE row. The item is the frame
+     (outer radius, clip) and carries the hover and active tints itself, so
+     the name and the chevron are one --radius-default shape in every state —
+     never a tinted name segment with a square edge beside a bare chevron,
+     which read as a different radius from the plain rows (owner 2026-10-18).
+     A segment only takes the accent colour on its own hover; its focus ring
+     follows the frame's outer corners. No visible separator. */
   .nav-item.split {
     padding: 0;
     gap: 0;
@@ -371,26 +376,18 @@
     cursor: default;
   }
 
-  .nav-item.split:hover,
-  .nav-item.split.active {
-    background-color: transparent;
-  }
-
   .nav-item.split:hover {
     color: var(--color-base06);
+    background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
   }
 
   .nav-item.split.active {
     color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
   }
 
   .nav-item.split .nav-link:hover {
     color: var(--color-base0D);
-    background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
-  }
-
-  .nav-item.split.active .nav-link {
-    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
   }
 
   .nav-link {
@@ -403,7 +400,8 @@
     color: inherit;
     text-decoration: none;
     position: relative;
-    transition: background-color var(--duration-fast), color var(--duration-fast);
+    border-radius: var(--radius-default) 0 0 var(--radius-default);
+    transition: color var(--duration-fast);
   }
 
   .nav-item.split.collapsed .nav-link {
@@ -427,16 +425,15 @@
     margin: 0;
     padding: 0;
     border: none;
-    border-radius: 0;
+    border-radius: 0 var(--radius-default) var(--radius-default) 0;
     background: transparent;
     color: var(--color-base05);
     cursor: pointer;
-    transition: background-color var(--duration-fast), color var(--duration-fast);
+    transition: color var(--duration-fast);
   }
 
   .nav-toggle:hover {
     color: var(--color-base0D);
-    background-color: color-mix(in srgb, var(--color-base0D) 8%, transparent);
   }
 
   .nav-toggle .expand-icon {

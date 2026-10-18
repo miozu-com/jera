@@ -68,7 +68,7 @@
     align-items: center;
     justify-content: center;
     color: var(--color-base04);
-    border-radius: 0.25rem;
+    border-radius: var(--radius-default);
     transition: all var(--duration-fast);
     background: transparent;
     border: none;
