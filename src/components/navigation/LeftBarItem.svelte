@@ -378,6 +378,11 @@
 
   .nav-item.split:hover {
     color: var(--color-base06);
+  }
+
+  /* The name segment's hover tints the whole row; the chevron's hover tints
+     only its own segment (owner 2026-10-18). */
+  .nav-item.split:has(.nav-link:hover) {
     background-color: color-mix(in srgb, var(--color-base0D) 5%, transparent);
   }
 
@@ -434,6 +439,11 @@
 
   .nav-toggle:hover {
     color: var(--color-base0D);
+    background-color: color-mix(in srgb, var(--color-base0D) 8%, transparent);
+  }
+
+  .nav-toggle:hover .expand-icon {
+    color: var(--color-base0D);
   }
 
   .nav-toggle .expand-icon {
@@ -462,6 +472,17 @@
   .nav-badge-wrap {
     display: inline-flex;
     flex-shrink: 0;
+  }
+
+  /* A nav count is a compact square chip: 1rem tall, at least as wide, one
+     step smaller type than Badge xs (owner 2026-10-18). */
+  .nav-badge-wrap :global(.jera-badge.jera-badge-xs) {
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.1875rem;
+    justify-content: center;
+    font-size: 0.625rem;
+    line-height: 1;
   }
 
   /* Collapsed-bar status dot on the icon's top-right corner (18px icon). The
@@ -513,6 +534,7 @@
   /* Subnav */
   .subnav-list {
     margin-left: 1.75rem;
+    margin-right: 0.5rem;
     display: flex;
     flex-direction: column;
     list-style: none;
