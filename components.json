@@ -1881,7 +1881,7 @@
       "snippets": ["header", "navigation", "footer", "children"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 4,
+      "revision": 5,
       "lastReviewed": "2026-03-28",
       "breaking": [],
       "docLevel": "standard"

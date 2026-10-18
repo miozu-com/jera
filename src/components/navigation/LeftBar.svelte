@@ -200,6 +200,9 @@
     gap: 0.75rem;
     flex: 1;
     overflow-y: auto;
+    /* Never a sideways scrollbar: a row that is too wide truncates or wraps,
+       it does not scroll the bar (owner 2026-10-18, zoomed in with More open). */
+    overflow-x: hidden;
     padding-top: 0;
     padding-bottom: 0;
   }
