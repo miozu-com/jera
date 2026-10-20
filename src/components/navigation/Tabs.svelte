@@ -297,14 +297,16 @@
      item it has always been and no consumer layout shifts. When enabled the
      wrapper becomes the scroll container; the 3px padding (cancelled by the
      matching negative margin) keeps the focus ring from being clipped by the
-     scroll container's overflow. */
+     scroll container's overflow. The max-width adds the 6px back: with
+     border-box sizing, `100%` alone left the content box 6px narrower than
+     the tabs, so the last tab was clipped even when everything fit. */
   .tabs-scroll {
     display: contents;
   }
 
   .tabs-scroll-on {
     display: block;
-    max-width: 100%;
+    max-width: calc(100% + 6px);
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-x: contain;

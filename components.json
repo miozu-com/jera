@@ -1707,8 +1707,8 @@
       "events": ["onchange"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 10,
-      "lastReviewed": "2026-10-11",
+      "revision": 11,
+      "lastReviewed": "2026-10-20",
       "breaking": [
         "v3: Segment variant \u2014 removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb.",
         "v5: the tablist now renders inside a scroll wrapper div while `scrollable` (default true) \u2014 consumer CSS using a direct-child selector against .tabs must be updated; pass scrollable={false} for the previous flat markup.",
