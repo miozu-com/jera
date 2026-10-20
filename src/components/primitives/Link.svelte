@@ -16,6 +16,9 @@
   @example Small meta link (opt-in) — a quiet trailing link in a dense row
   <Link href="/settings/" size="sm" tone="meta">Open settings</Link>
 
+  @example Inherit (opt-in) — a link inside a headline, at the headline's size and weight, underlined
+  <h2>Need even more credits? <b><Link size="inherit" showIcon={false} onclick={contact}>Contact sales</Link></b></h2>
+
   @example Custom icon
   <Link href="/external" external>
     {#snippet icon()}
@@ -29,7 +32,8 @@
     href = null,
     external = false,
     showIcon = true,
-    /** 'md' (default) | 'sm' — sm: 12px/500, a 12px icon, tighter gap (opt-in). */
+    /** 'md' (default) | 'sm' | 'inherit' — sm: 12px/500, a 12px icon, tighter gap (opt-in).
+        inherit: the surrounding text's font (size, weight, line height), underlined, a 1em icon (opt-in). */
     size = 'md',
     /** 'link' (default) | 'meta' — meta: quiet text (`--link-meta-color`, else base04) that darkens on hover (opt-in). */
     tone = 'link',
@@ -40,12 +44,16 @@
     ...rest
   } = $props();
 
-  const target = external ? '_blank' : undefined;
-  const rel = external ? 'noopener noreferrer' : undefined;
+  const target = $derived(external ? '_blank' : undefined);
+  const rel = $derived(external ? 'noopener noreferrer' : undefined);
   const optIn = $derived(
-    `${size === 'sm' ? ' link-sm' : ''}${tone === 'meta' ? ' link-meta' : ''}`
+    `${size === 'sm' ? ' link-sm' : ''}${size === 'inherit' ? ' link-inherit' : ''}${tone === 'meta' ? ' link-meta' : ''}`
   );
-  const iconSize = $derived(size === 'sm' ? 12 : 14);
+  const iconSize = $derived(
+    size === 'sm' ? 12
+    : size === 'inherit' ? '1em'
+    : 14
+  );
 </script>
 
 {#if href}
@@ -130,6 +138,17 @@
     font-size: var(--text-xs);
     font-weight: var(--font-weight-medium);
     white-space: nowrap;
+  }
+
+  /* Inherit (opt-in): a link inside a headline or a sentence takes that text's
+     font and says it is a link by its underline. */
+  .link-inherit {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
   }
 
   .link-meta {

@@ -1,7 +1,7 @@
-<!-- file-size: justified -- one button, nine colour variants (primary through
-     accent) each needing base/hover/active rules plus four size classes and the
-     loading/icon-only states; the length is per-variant CSS repetition, not a
-     second concern to split out. -->
+<!-- file-size: justified -- one button, eleven colour variants (primary through
+     accent, solid, tint) each needing base/hover/active rules plus four size
+     classes, the round shape and the loading/icon-only states; the length is
+     per-variant CSS repetition, not a second concern to split out. -->
 <!--
   @component Button
 
@@ -12,6 +12,10 @@
   <Button>Click me</Button>
   <Button variant="secondary" size="lg">Large Secondary</Button>
   <Button variant="solid">Search</Button> (the one filled call to action)
+  <Button variant="tint">Choose plan</Button> (a quiet accent-tinted action beside a solid one)
+
+  @example Round (opt-in)
+  <Button iconOnly shape="round" variant="secondary" aria-label="Remove a seat">−</Button>
 
   @example As link
   <Button href="/about">Link Button</Button>
@@ -49,6 +53,9 @@
         padding stretching it wider than it is tall. Pass a snippet-free
         `children` (the icon alone) and an `aria-label`. */
     iconOnly = false,
+    /** 'default' | 'round' — round (opt-in): a full radius, so an `iconOnly`
+        button is a disc and a text button a pill (stepper −/+ pairs). */
+    shape = 'default',
     /** The rendered `<button>` or `<a>` (bindable), for a consumer that anchors a
         popover to it or measures it: `<Button bind:ref={opener}>`. */
     ref = $bindable(null),
@@ -114,7 +121,7 @@
   <a
     bind:this={ref}
     {href}
-    class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''} {className}"
+    class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''}{shape === 'round' ? ' round' : ''} {className}"
     aria-disabled={isDisabled || undefined}
     {...restProps}
   >
@@ -124,7 +131,7 @@
   <button
     bind:this={ref}
     {type}
-    class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''} {className}"
+    class="jera-btn {variant} {size} {fullWidth ? 'full-width' : ''} {iconOnly ? 'icon-only' : ''}{shape === 'round' ? ' round' : ''} {className}"
     disabled={isDisabled}
     aria-busy={loading || isLoaderActive || undefined}
     {onclick}
@@ -198,6 +205,24 @@
   .primary:active:not(:disabled) {
     background-color: color-mix(in srgb, var(--color-base0D) 30%, transparent);
     border-color: color-mix(in srgb, var(--color-base0D) 80%, transparent);
+    transform: scale(0.98);
+  }
+
+  /* Tint (opt-in) - an accent-tinted action in body text colour, no border:
+     the quiet companion of one `solid` (a row of plan cards, Lusha-style).
+     Disabled and focus come from the base rules like every variant. */
+  .tint {
+    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    color: var(--color-base06);
+    border: var(--border-width-thin) solid transparent;
+  }
+
+  .tint:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D) 16%, transparent);
+  }
+
+  .tint:active:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-base0D) 22%, transparent);
     transform: scale(0.98);
   }
 
@@ -407,6 +432,11 @@
   .icon-only {
     aspect-ratio: 1;
     padding-inline: 0;
+  }
+
+  /* Round (opt-in): a disc with `icon-only`, a pill with a label. */
+  .jera-btn.round {
+    border-radius: var(--radius-full);
   }
 
   /* Spinner */

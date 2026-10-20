@@ -25,9 +25,9 @@
       "description": "Primary action trigger, polymorphic (a/button)",
       "props": {
         "variant": {
-          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'|'accent'|'solid'",
+          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'|'accent'|'solid'|'tint'",
           "default": "'primary'",
-          "description": "Visual style variant"
+          "description": "Visual style variant. tint (opt-in): 10% accent tint, body-text colour (base06), no border — the quiet companion of one solid"
         },
         "size": {
           "type": "'xs'|'sm'|'md'|'lg'",
@@ -74,6 +74,11 @@
           "default": "false",
           "description": "No text label \u2014 a square button the same height as size, horizontal padding dropped (pair with an aria-label)"
         },
+        "shape": {
+          "type": "'default'|'round'",
+          "default": "'default'",
+          "description": "round (opt-in): full radius \u2014 a disc with iconOnly (stepper \u2212/+), a pill with a label"
+        },
         "ref": {
           "type": "HTMLButtonElement|HTMLAnchorElement|null",
           "default": "null",
@@ -85,8 +90,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 13,
-      "lastReviewed": "2026-10-15",
+      "revision": 14,
+      "lastReviewed": "2026-10-20",
       "breaking": [
         {
           "revision": 10,
@@ -2799,7 +2804,7 @@
       "path": "src/components/primitives/Link.svelte",
       "description": "Polymorphic link/button with arrow icon that shifts on hover",
       "props": {
-        "size": {"type": "'md'|'sm'", "default": "'md'", "description": "sm: 12px/500, 12px icon, tighter gap (opt-in)"},
+        "size": {"type": "'md'|'sm'|'inherit'", "default": "'md'", "description": "sm: 12px/500, 12px icon, tighter gap (opt-in). inherit: the surrounding text's font size, weight and line height, underlined (offset 0.12em), 1em icon — a link inside a headline (opt-in)"},
         "tone": {"type": "'link'|'meta'", "default": "'link'", "description": "meta: quiet text (--link-meta-color, else base04), darkens on hover (opt-in)"},
         "href": {
           "type": "string|null",
@@ -2820,8 +2825,8 @@
       "snippets": ["children", "icon"],
       "events": ["onclick"],
       "stage": "beta",
-      "revision": 5,
-      "lastReviewed": "2026-10-11",
+      "revision": 6,
+      "lastReviewed": "2026-10-20",
       "breaking": [],
       "docLevel": "standard"
     },
