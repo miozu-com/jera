@@ -113,15 +113,14 @@ Standard Base16 naming: `base00`-`base0F` (hex digits).
 ```svelte
 <!-- Root layout -->
 <script>
-  import { Toast, createToastContext } from '@miozu/jera';
-  createToastContext();
+  import Toast from '@miozu/jera/components/feedback/Toast';
 </script>
 <Toast />
 
-<!-- Any component -->
+<!-- Any component, reactive class or .js file -->
 <script>
-  import { getToastContext } from '@miozu/jera';
-  const toast = getToastContext();
+  import { getToastState } from '@miozu/jera/components/feedback/Toast';
+  const toast = getToastState();
   toast.success('Saved!');
 </script>
 ```

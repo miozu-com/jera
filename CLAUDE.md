@@ -54,7 +54,7 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 - **fill** — Anchors dialog to stable height (80dvh). Prevents collapse when content changes (empty states, search results). Uses flex column: header/footer pinned, body stretches + scrolls.
 
-**Toast:** Singleton — `getToastState()` from any file. Dual progress: `'ring'` (default) or `'bar'`. Title-first convenience: `toast.success('Saved', 'Changes applied')`. Error default 6s. Pause-on-hover. Svelte `fly` transitions. Popover top-layer.
+**Toast:** Singleton — `getToastState()` from any file (browser: one shared instance; SSR: fresh per call). Dual progress: `'ring'` (default) or `'bar'`. Title-first convenience: `toast.success('Saved', 'Changes applied')`. Error default 6s. Pause-on-hover. Svelte `fly` transitions. Popover top-layer.
 
 **Tabs:** `tabs=[{id, label, badge?, icon?, panelId?}]`, `bind:active`, `variant` (default|segment|underline|pills), `size` (sm|md|lg), `fullWidth`, `onchange`
 
@@ -279,7 +279,8 @@ export function resetFooState() {
 3. **`$state()`** for primitives only (strings, numbers, booleans)
 4. **Convenience methods** — `toast.success(title, msg?)` not just `toast.show({...})`
 5. **Reset function** — `resetXState()` for testing / cleanup
-6. **Backward compat** — deprecated context wrappers can delegate to singleton
+6. **No context, no shims** — jera has no `setContext`/`getContext` (0.11.0). A module singleton is only for one-per-app state (Toast, Theme)
+7. **SSR-safe** — the getter returns the cached instance only when `isBrowser()` (`src/utils/env.js`); on the server every call gets a fresh, never-cached instance, so one request's state never reaches the next
 
 ### Animation Rules
 

@@ -1004,12 +1004,16 @@
       "category": "feedback",
       "path": "src/components/feedback/Toast.svelte",
       "description": "Enterprise toast system \u2014 singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
-      "statePattern": "singleton: getToastState()",
+      "statePattern": "singleton: getToastState() (browser-cached; SSR: fresh instance per call)",
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 9,
-      "lastReviewed": "2026-10-09",
+      "revision": 10,
+      "lastReviewed": "2026-10-21",
       "breaking": [
+        {
+          "revision": 10,
+          "change": "0.11.0: createToastContext() and getToastContext() removed (no context in jera). Use getToastState(). On the server getToastState() now returns a fresh, never-cached instance per call."
+        },
         {
           "revision": 5,
           "change": "Convenience methods changed from (message, options?) to (title, messageOrOptions?, options?). Context API deprecated in favor of getToastState() singleton."
@@ -1725,7 +1729,7 @@
       "name": "Accordion",
       "category": "navigation",
       "path": "src/components/navigation/Accordion.svelte",
-      "description": "Collapsible content sections",
+      "description": "Collapsible content sections; hands its AccordionState to the children(accordion) snippet, each AccordionItem takes it as the accordion prop",
       "props": {
         "expanded": {
           "type": "array",
@@ -1739,12 +1743,17 @@
           "description": "Allow multiple items open"
         }
       },
-      "snippets": ["children"],
+      "snippets": ["children(accordion: AccordionState)"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 2,
-      "lastReviewed": "2026-03-05",
-      "breaking": [],
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 3,
+          "change": "0.11.0: no context. children is a snippet with one argument (the AccordionState); pass it to each AccordionItem: {#snippet children(accordion)}<AccordionItem {accordion} … />{/snippet}. An item left without it throws in dev (client)."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -1753,6 +1762,7 @@
       "path": "src/components/navigation/AccordionItem.svelte",
       "description": "Expandable item with title and custom indicator",
       "props": {
+        "accordion": {"type": "AccordionState", "default": "null", "description": "The group's state from Accordion's children(accordion) snippet; omit for a solo item (own bind:expanded)"},
         "flush": {"type": "boolean", "default": "false", "description": "No inline padding and no fill on trigger and body: keeps the container's left edge (opt-in)"},
         "tone": { "type": "'default'|'quiet'|'meta'", "default": "'default'", "description": "quiet: dense 500-weight base05 title, 12px chevron (opt-in secondary disclosure); meta: a 12px/400 note line in --accordion-meta-color (else base04) (opt-in)" },
         "size": { "type": "'md'|'sm'", "default": "'md'", "description": "sm: 32px transparent row, chevron first, no clipping" },
@@ -1786,9 +1796,14 @@
       "snippets": ["children", "leading", "trailing", "indicator", "meta"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-10-10",
-      "breaking": [],
+      "revision": 7,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 7,
+          "change": "0.11.0: group membership is the accordion prop (was context). Without it the item is solo, as outside an Accordion before."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -2441,8 +2456,13 @@
       "name": "Radio",
       "category": "forms",
       "path": "src/components/forms/Radio.svelte",
-      "description": "Single radio button with animated dot indicator (use inside RadioGroup)",
+      "description": "Single radio button with animated dot indicator; takes its RadioGroupState as the required group prop",
       "props": {
+        "group": {
+          "type": "RadioGroupState",
+          "required": true,
+          "description": "The group's state from RadioGroup's children(group) snippet. Missing: throws in dev, renders nothing in production"
+        },
         "value": {
           "type": "any",
           "required": true,
@@ -2465,16 +2485,21 @@
         }
       },
       "stage": "beta",
-      "revision": 5,
-      "lastReviewed": "2026-10-13",
-      "breaking": [],
+      "revision": 6,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 6,
+          "change": "0.11.0: group prop required (was read from context). Without it Radio throws in dev and renders nothing in production."
+        }
+      ],
       "docLevel": "standard"
     },
     {
       "name": "RadioGroup",
       "category": "forms",
       "path": "src/components/forms/RadioGroup.svelte",
-      "description": "Radio group container with context for child Radio components",
+      "description": "Radio group container; hands its RadioGroupState to the children(group) snippet, each Radio takes it as the group prop",
       "props": {
         "variant": { "type": "'default'|'segmented'", "default": "'default'", "description": "segmented: one 28px bordered control, the radios as equal segments" },
         "block": { "type": "boolean", "default": "false", "description": "Segmented: full width" },
@@ -2500,12 +2525,17 @@
           "description": "Layout direction"
         }
       },
-      "snippets": ["children"],
+      "snippets": ["children(group: RadioGroupState)"],
       "events": ["onchange"],
       "stage": "beta",
-      "revision": 4,
-      "lastReviewed": "2026-10-09",
-      "breaking": [],
+      "revision": 5,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 5,
+          "change": "0.11.0: no context. children is a snippet with one argument (the RadioGroupState); pass it to each Radio: {#snippet children(group)}<Radio {group} value=… />{/snippet}."
+        }
+      ],
       "docLevel": "standard"
     },
     {

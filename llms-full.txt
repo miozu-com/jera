@@ -307,22 +307,23 @@ Events: `oninput`, `onchange`, `onclear`, `...rest`
 
 ### Toast
 
-Notification system. Uses Svelte context for app-wide access.
+Notification system. A module singleton: `getToastState()` works from any
+component, reactive class or `.js` file (no context). In the browser it is one
+shared instance; during SSR every call returns a fresh, never-cached instance.
 
 **Setup:**
 ```svelte
 <!-- +layout.svelte -->
 <script>
-  import { Toast, createToastContext } from '@miozu/jera';
-  const toast = createToastContext();
+  import Toast from '@miozu/jera/components/feedback/Toast';
 </script>
 <Toast />
 
-<!-- Any child component -->
+<!-- Anywhere -->
 <script>
-  import { getToastContext } from '@miozu/jera';
-  const toast = getToastContext();
-  toast.success('Saved!');
+  import { getToastState } from '@miozu/jera/components/feedback/Toast';
+  const toast = getToastState();
+  toast.success('Saved', 'Changes applied');
   toast.error('Failed', { duration: 6000 });
 </script>
 ```
@@ -539,7 +540,17 @@ Events: `onchange(tab)` — receives the full tab object
 
 ### Accordion
 
-Collapsible content sections.
+Collapsible content sections. Owns an `AccordionState` and hands it to the
+children snippet; each AccordionItem takes it as the `accordion` prop (no context).
+
+```svelte
+<Accordion bind:expanded multiple>
+  {#snippet children(accordion)}
+    <AccordionItem {accordion} id="a" title="First">…</AccordionItem>
+    <AccordionItem {accordion} id="b" title="Second">…</AccordionItem>
+  {/snippet}
+</Accordion>
+```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -547,12 +558,14 @@ Collapsible content sections.
 | multiple | boolean | false | Allow multiple items open |
 | class | string | '' | Additional CSS classes |
 
-Snippets: `children` (AccordionItem components)
+Snippets: `children(accordion: AccordionState)` (AccordionItem components).
+`AccordionState`: `expanded`, `multiple`, `isExpanded(id)`, `toggle(id)`, `open(id)`, `close(id)`.
 
 ### AccordionItem
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| accordion | AccordionState | null | The group's state from `children(accordion)`; omit for a solo item |
 | id | string | auto-generated | Unique identifier |
 | title | string | '' | Header text |
 | expanded | boolean | $bindable(false) | Open state (standalone mode) |
@@ -797,13 +810,25 @@ Numeric input with increment/decrement buttons.
 Props: `value = $bindable(0)`, `min = -Infinity`, `max = Infinity`, `step = 1`, `placeholder`, `disabled`, `size = 'md'`, `error`, `class`
 
 ### Radio
-Radio button (must be inside RadioGroup context).
-Props: `value` (required), `label`, `description`, `disabled`, `id`, `class`
+Radio button. Takes its group's `RadioGroupState` as the required `group` prop
+(from RadioGroup's `children(group)` snippet); without it, throws in dev and renders nothing in production.
+Props: `group` (required), `value` (required), `label`, `description`, `disabled`, `id`, `class`
 
 ### RadioGroup
-Radio group container with vertical/horizontal layout.
-Props: `value = $bindable(null)`, `name`, `disabled`, `orientation = 'vertical'`, `class`
-Events: `onchange`
+Radio group container with vertical/horizontal/segmented layout. Hands its
+`RadioGroupState` (`value`, `name`, `disabled`, `variant`, `isChecked(v)`, `change(v)`) to the children snippet.
+Props: `value = $bindable(null)`, `name`, `disabled`, `orientation = 'vertical'`, `variant = 'default'`, `block`, `class`
+Snippets: `children(group)`
+Events: `onchange({target: {name, value}})`
+
+```svelte
+<RadioGroup bind:value={plan} name="plan">
+  {#snippet children(group)}
+    <Radio {group} value="monthly" label="Monthly" />
+    <Radio {group} value="yearly" label="Yearly" />
+  {/snippet}
+</RadioGroup>
+```
 
 ### FileUpload
 File upload with drag-drop and validation.
