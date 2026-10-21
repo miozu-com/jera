@@ -125,7 +125,7 @@ Built and tested but not yet used in production. Available for immediate adoptio
 - [OptionCard](./src/components/forms/OptionCard.svelte): Selectable option card for multi-choice layouts
 - [PinInput](./src/components/forms/PinInput.svelte): OTP/PIN code entry with per-digit inputs, auto-advance, and paste support
 - [Radio](./src/components/forms/Radio.svelte): Single radio button with animated dot indicator (use inside RadioGroup)
-- [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group container with context for child Radio components
+- [RadioGroup](./src/components/forms/RadioGroup.svelte): Radio group container; hands its RadioGroupState to children(group), each Radio takes it as the `group` prop
 - [RangeSlider](./src/components/forms/RangeSlider.svelte): Styled range input with fill bar, labels, and custom value formatting
 - [TagInput](./src/components/forms/TagInput.svelte): Tag/chip input with add/remove, deduplication, and variant colors
 

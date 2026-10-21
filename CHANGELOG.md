@@ -7,8 +7,193 @@ This project is pre-1.0: breaking changes bump the **minor** version.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-21
+
+### BREAKING — no Svelte context
+
+jera no longer calls `setContext`, `getContext`, `hasContext` or
+`createContext` anywhere. State lives in reactive classes (`.svelte.js`,
+`$state` fields, methods as the only writers). A parent hands its instance to
+the children you place through a **snippet argument**
+(`{#snippet children(x)}`), and each child takes it as an explicit **prop**.
+There are no fallbacks: a child that needs an instance and does not get one
+throws a clear error in dev (`import.meta.env.DEV`) and renders nothing in
+production.
+
+- **LeftBar family.** New `LeftBarState` class (`collapsed`, `hoverPopover`,
+  `toggle()`, `expand()`, `collapse()`, `persist()`, `restore()`,
+  `showPopover()`, `hidePopover()`, `keepPopoverOpen()`, `destroy()`),
+  exported from `LeftBar.svelte` and the root barrel. LeftBar passes it to
+  every snippet: `header(bar)`, `navigation(bar)`, `footer(bar)`,
+  `children(bar)`. `LeftBarItem`, `LeftBarSection`, `LeftBarGroup`,
+  `LeftBarToggle` and `LeftBarPopover` take the required `bar` prop. LeftBar
+  takes an optional `bar` (it builds one from `initialCollapsed ?? collapsed`,
+  `persistKey`, `cookieKey` when absent); `bind:collapsed`, `initialCollapsed`
+  SSR seeding and localStorage/cookie persistence are unchanged. LeftBar
+  renders the collapsed hover flyout from `popoverMap` itself.
+  `LeftBarToggle` is now `type="button"` with an `aria-label` and forwards
+  `...rest`; `LeftBarSection` forwards `...rest`.
+- **RadioGroup / Radio.** New `RadioGroupState` (`value`, `name`, `disabled`,
+  `variant`, `isChecked(v)`, `change(v)`), exported from `RadioGroup.svelte`
+  and the root barrel. `children` is a snippet with one argument; `Radio`
+  takes the required `group` prop. `bind:value`, `onchange`, native
+  `input[name]` grouping and keyboard behaviour are unchanged; ids come from
+  `$props.id()` (server and client match).
+- **Accordion / AccordionItem.** New `AccordionState` (`expanded`,
+  `multiple`, `isExpanded`, `toggle`, `open`, `close`), exported from
+  `Accordion.svelte` and the barrels. `children` is a snippet with one
+  argument; `AccordionItem` takes the `accordion` prop. Without it an item is
+  a standalone section with its own `bind:expanded` (as before outside an
+  Accordion); an item left without it **inside** an Accordion throws in dev
+  after mount. Accordion forwards `...rest`. ids/ARIA wiring unchanged.
+- **Toast.** `createToastContext()` and `getToastContext()` are removed. Use
+  `getToastState(config?)`: one shared instance in the browser; on the server
+  a fresh, never-cached instance per call (no state leaks between requests).
+  Config passed on the server is not kept.
+- **NavigationContainer and blocks** (deprecated family). No navigation or
+  Sidebar context: NavigationContainer takes a new `collapsed` prop and passes
+  `navigationState` and `collapsed` to every block (and to a block's own
+  `component`) as props. `NavigationCustomBlock` passes `navigationState` and
+  `isCollapsed` to its component (no `sidebar` object). `NAVIGATION_CONTEXT_KEY`
+  is removed.
+- **WorkspaceMenu** takes a `collapsed` prop (was read from the Sidebar
+  context); the unused `in-sidebar` class is gone.
+- **DropdownContainer**: no API change (dropped an unused `getContext`
+  import); pass `isCollapsed={bar.collapsed}` inside a LeftBar header.
+
+### Removed — Sidebar family archived
+
+`Sidebar`, `SidebarItem`, `SidebarGroup`, `SidebarSection`, `SidebarToggle`,
+`SidebarPopover`, `SidebarSearch`, `SidebarAccountGroup`, `SidebarAccountItem`
+and `SidebarGroupSwitcher` (marked "replaced by LeftBar" since April) moved to
+`_archive/` with their git history and are no longer exported or published.
+`createSidebarState` / `SIDEBAR_CONTEXT_KEY` (`utils/sidebar.svelte.js`, no
+users) are archived with them. Use the LeftBar family.
+`SidebarNavigationItem` was still rendered by `NavigationSection`, so it moved
+to `components/navigation/blocks/NavigationItem.svelte` (context removed).
+
+### Fixed
+
+- `utils/navigation.svelte.js` no longer imports `$app/environment`, so
+  NavigationState works outside SvelteKit (and under `node --test`).
+
+### Migration
+
+Apply per family. Every child that used to find its parent through context now
+gets the instance from the parent's snippet argument.
+
+**LeftBar**
+
+```svelte
+<!-- before (0.10) -->
+<LeftBar bind:collapsed initialCollapsed={data.sidebarCollapsed} persistKey="sidebarCollapsed" {popoverMap}>
+  {#snippet header()}<UserDropdown isCollapsed={collapsed} />{/snippet}
+  {#snippet navigation()}
+    <LeftBarSection title="Misc"><LeftBarItem href="/a/" label="Atlas" /></LeftBarSection>
+  {/snippet}
+  {#snippet footer()}<LeftBarToggle />{/snippet}
+</LeftBar>
+
+<!-- after (0.11) -->
+<LeftBar bind:collapsed initialCollapsed={data.sidebarCollapsed} persistKey="sidebarCollapsed" {popoverMap}>
+  {#snippet header(bar)}<UserDropdown isCollapsed={bar.collapsed} />{/snippet}
+  {#snippet navigation(bar)}
+    <LeftBarSection {bar} title="Misc"><LeftBarItem {bar} href="/a/" label="Atlas" /></LeftBarSection>
+  {/snippet}
+  {#snippet footer(bar)}<LeftBarToggle {bar} />{/snippet}
+</LeftBar>
+```
+
+A component of your own that rendered LeftBar children and read
+`getContext('leftbar')` must take `bar` as a prop and pass it on:
+
+```svelte
+<!-- before -->
+<script>const leftbar = getContext('leftbar');</script>
+<LeftBarItem href="/x/" label="X" />
+<!-- after -->
+<script>let { bar } = $props();</script>
+<LeftBarItem {bar} href="/x/" label="X" />
+<!-- caller: {#snippet navigation(bar)}<MyRows {bar} />{/snippet} -->
+```
+
+**RadioGroup**
+
+```svelte
+<!-- before -->
+<RadioGroup bind:value={plan} name="plan">
+  <Radio value="monthly" label="Monthly" />
+  <Radio value="yearly" label="Yearly" />
+</RadioGroup>
+<!-- after -->
+<RadioGroup bind:value={plan} name="plan">
+  {#snippet children(group)}
+    <Radio {group} value="monthly" label="Monthly" />
+    <Radio {group} value="yearly" label="Yearly" />
+  {/snippet}
+</RadioGroup>
+```
+
+**Accordion** (standalone `AccordionItem` with no `Accordion` needs no change)
+
+```svelte
+<!-- before -->
+<Accordion bind:expanded multiple>
+  <AccordionItem id="a" title="A">…</AccordionItem>
+</Accordion>
+<!-- after -->
+<Accordion bind:expanded multiple>
+  {#snippet children(accordion)}
+    <AccordionItem {accordion} id="a" title="A">…</AccordionItem>
+  {/snippet}
+</Accordion>
+```
+
+**Toast**
+
+```js
+// before
+import { createToastContext, getToastContext } from '@miozu/jera';
+const toast = createToastContext(); // or getToastContext()
+// after
+import { getToastState } from '@miozu/jera/components/feedback/Toast';
+const toast = getToastState();
+```
+
+**Sidebar → LeftBar** (archived family)
+
+| 0.10 | 0.11 |
+| --- | --- |
+| `Sidebar` | `LeftBar` |
+| `SidebarSection` | `LeftBarSection {bar}` |
+| `SidebarItem` | `LeftBarItem {bar}` |
+| `SidebarGroup` | `LeftBarGroup {bar}` |
+| `SidebarToggle` | `LeftBarToggle {bar}` |
+| `SidebarPopover` | rendered by LeftBar from `popoverMap` |
+| `createSidebarState()` | `new LeftBarState({ collapsed, persistKey, cookieKey })` |
+
+**NavigationContainer / WorkspaceMenu / DropdownContainer** (inside a LeftBar)
+
+```svelte
+<!-- before -->
+<Sidebar>
+  {#snippet header()}<WorkspaceMenu … />{/snippet}
+  <NavigationContainer navigationState={s} blocks={b} />
+</Sidebar>
+<!-- after -->
+<LeftBar>
+  {#snippet header(bar)}<WorkspaceMenu collapsed={bar.collapsed} … />{/snippet}
+  {#snippet navigation(bar)}
+    <NavigationContainer navigationState={s} collapsed={bar.collapsed} blocks={b} />
+  {/snippet}
+</LeftBar>
+<!-- DropdownContainer: isCollapsed={bar.collapsed} -->
+```
+
 ### Added
 
+- `requireInstance()` (the dev-throw / prod-nothing guard the children use)
+  and `isBrowser()` in `@miozu/jera/utils`.
 - **LeftBarItem** sub-route icons and attention rows (r9): a `subroutes[]`
   entry takes optional `icon` (a component, drawn at 16px in base04),
   `badge` (a count in the row's colour), `variant` (`warning` | `danger` |
