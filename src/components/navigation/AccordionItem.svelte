@@ -3,13 +3,16 @@
 
   Collapsible content section. Works in two modes:
 
-  **Group** — inside an <Accordion>, state is managed by the parent context.
-  **Solo** — standalone, manages its own state via bind:expanded.
+  **Group** — pass the `accordion` prop (the AccordionState from Accordion's
+  `children(accordion)` snippet); the group decides which items are open.
+  **Solo** — no `accordion` prop: manages its own state via bind:expanded.
 
   @example Group (inside Accordion)
   <Accordion>
-    <AccordionItem title="Section 1">Content</AccordionItem>
-    <AccordionItem title="Section 2" badge="5">Content</AccordionItem>
+    {#snippet children(accordion)}
+      <AccordionItem {accordion} title="Section 1">Content</AccordionItem>
+      <AccordionItem {accordion} title="Section 2" badge="5">Content</AccordionItem>
+    {/snippet}
   </Accordion>
 
   @example Solo (standalone)
@@ -46,11 +49,12 @@
   </AccordionItem>
 -->
 <script>
-  import { getContext } from 'svelte';
   import { slide } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
 
   let {
+    /** AccordionState from Accordion's `children(accordion)` snippet; omit for a solo item. */
+    accordion = null,
     id,
     title = '',
     expanded: expandedProp = $bindable(false),
@@ -71,13 +75,11 @@
     ...rest
   } = $props();
 
-  const accordion = getContext('accordion');
-  const itemId = id || `acc-${Math.random().toString(36).slice(2, 9)}`;
-  const inGroup = !!accordion;
+  const uid = $props.id();
+  const itemId = $derived(id || `acc-${uid}`);
+  const inGroup = $derived(!!accordion);
 
-  const isOpen = $derived(
-    inGroup ? (accordion.isExpanded(itemId) ?? false) : expandedProp
-  );
+  const isOpen = $derived(inGroup ? accordion.isExpanded(itemId) : expandedProp);
 
   function handleClick() {
     if (disabled) return;
