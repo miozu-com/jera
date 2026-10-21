@@ -59,11 +59,14 @@
   let root = $state(null);
 
   // Dev guard for the 0.11 migration: an item left without {accordion} renders
-  // as a solo disclosure and silently leaves the group.
+  // as a solo disclosure and silently leaves the group. Client-only (it runs
+  // after mount). Only items in the group's own flow count: a solo item nested
+  // inside another item's body (its nearest item/accordion ancestor is that
+  // item, not this root) is a deliberate inner disclosure.
   $effect(() => {
     if (!import.meta.env?.DEV || !root) return;
     const orphan = [...root.querySelectorAll('.accordion-item-solo')].find(
-      (el) => el.parentElement?.closest('.jera-accordion') === root
+      (el) => el.parentElement?.closest('.jera-accordion, .accordion-item') === root
     );
     if (orphan) {
       throw new Error(

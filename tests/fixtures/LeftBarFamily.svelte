@@ -7,7 +7,7 @@
   import LeftBarGroup from '../../src/components/navigation/LeftBarGroup.svelte';
   import LeftBarToggle from '../../src/components/navigation/LeftBarToggle.svelte';
 
-  let { bar = null, collapsed = false, initialCollapsed = undefined } = $props();
+  let { bar = null, collapsed = undefined, initialCollapsed = undefined } = $props();
 </script>
 
 <LeftBar {bar} {collapsed} {initialCollapsed}>

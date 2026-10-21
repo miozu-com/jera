@@ -30,6 +30,13 @@
   // script: import LeftBar, { LeftBarState } from '@miozu/jera/components/navigation/LeftBar';
   //         const bar = new LeftBarState({ collapsed: data.sidebarCollapsed, persistKey: 'nav' });
   <LeftBar {bar}>…</LeftBar>
+
+  When you pass `bar`, the bar is the source of truth: LeftBar never writes
+  `collapsed` into it unless you also pass `collapsed` (bind:collapsed), it
+  does not call `bar.restore()` on mount (call it yourself if you want the
+  localStorage value), and `initialCollapsed`/`persistKey`/`cookieKey` on
+  LeftBar are ignored (give them to the LeftBarState). The instance is read
+  once; swapping `bar` later is ignored — key the LeftBar to replace it.
 -->
 <script module>
   export { LeftBarState } from './leftBar.svelte.js';
@@ -43,7 +50,8 @@
   let {
     /** Optional LeftBarState; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. */
     bar: barProp = null,
-    collapsed = $bindable(false),
+    /** undefined = not passed (an external `bar` then keeps its own value). */
+    collapsed = $bindable(),
     initialCollapsed = undefined,
     persistKey = null,
     cookieKey = null,
@@ -61,18 +69,20 @@
     () =>
       barProp ??
       new LeftBarState({
-        collapsed: initialCollapsed !== undefined ? initialCollapsed : collapsed,
+        collapsed: initialCollapsed ?? collapsed ?? false,
         persistKey,
         cookieKey
       })
   );
 
-  // Sync parent → state (only when not SSR-initialized)
+  // Sync parent → state: only a value the consumer actually passed, and
+  // never over SSR seeding. With no `collapsed`, an external bar keeps its own
+  // value (the bindable default must not reset a bar built collapsed).
   $effect(() => {
-    if (initialCollapsed === undefined) {
-      const next = collapsed;
-      untrack(() => (bar.collapsed = next));
-    }
+    if (initialCollapsed !== undefined && !barProp) return;
+    const next = collapsed;
+    if (next === undefined) return;
+    untrack(() => (bar.collapsed = next));
   });
 
   // Sync state → parent
@@ -80,9 +90,10 @@
     collapsed = bar.collapsed;
   });
 
-  // Load saved state from localStorage on mount (fallback for non-cookie scenarios)
+  // Load saved state from localStorage on mount (fallback for non-cookie
+  // scenarios). An external bar belongs to its owner: they call restore().
   onMount(() => {
-    if (initialCollapsed === undefined) bar.restore();
+    if (!barProp && initialCollapsed === undefined) bar.restore();
     return () => bar.destroy();
   });
 </script>

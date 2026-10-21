@@ -80,7 +80,15 @@ test("collapsed without initialCollapsed renders the same as today", () => {
   assert.equal(attr(tag(body, /data-header/), "data-collapsed"), "true");
 });
 
-test("a bar passed in is the one the children see", () => {
+test("neither collapsed nor initialCollapsed: the bar it builds starts expanded", () => {
+  const body = html();
+  assert.doesNotMatch(tag(body, /class="workspace-sidebar[^"]*"/), /\bcollapsed\b/);
+  assert.equal(attr(tag(body, /data-header/), "data-collapsed"), "false");
+});
+
+// Without `collapsed`, LeftBar never writes into an external bar (client effect,
+// checked in a jsdom mount outside this suite): a bar built collapsed stays so.
+test("a bar passed in (no collapsed prop) is the one the children see", () => {
   const bar = new LeftBarState({ collapsed: true });
   const body = html({ bar });
   assert.match(tag(body, /class="workspace-sidebar[^"]*"/), /\bcollapsed\b/);

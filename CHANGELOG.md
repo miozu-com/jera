@@ -30,22 +30,35 @@ production.
   takes an optional `bar` (it builds one from `initialCollapsed ?? collapsed`,
   `persistKey`, `cookieKey` when absent); `bind:collapsed`, `initialCollapsed`
   SSR seeding and localStorage/cookie persistence are unchanged. LeftBar
-  renders the collapsed hover flyout from `popoverMap` itself.
+  renders the collapsed hover flyout from `popoverMap` itself. When you pass
+  your own `bar`, it is the source of truth: LeftBar writes `collapsed` into
+  it only if you also pass `collapsed`/`bind:collapsed`, does not call
+  `bar.restore()` on mount (call it yourself), ignores LeftBar's
+  `initialCollapsed`/`persistKey`/`cookieKey` (give them to `LeftBarState`),
+  and reads the instance once (key the LeftBar to swap it).
   `LeftBarToggle` is now `type="button"` with an `aria-label` and forwards
-  `...rest`; `LeftBarSection` forwards `...rest`.
+  `...rest`; a consumer `onclick` runs first and the toggle still happens
+  unless it calls `event.preventDefault()`. `LeftBarSection` forwards
+  `...rest`.
 - **RadioGroup / Radio.** New `RadioGroupState` (`value`, `name`, `disabled`,
   `variant`, `isChecked(v)`, `change(v)`), exported from `RadioGroup.svelte`
   and the root barrel. `children` is a snippet with one argument; `Radio`
   takes the required `group` prop. `bind:value`, `onchange`, native
   `input[name]` grouping and keyboard behaviour are unchanged; ids come from
-  `$props.id()` (server and client match).
+  `$props.id()` (server and client match). **Rendered ids change**: they were
+  `Math.random()` based (not hydration-safe) and are now deterministic
+  (`radio-s1`, `radio-s2`, … on the server); tests or selectors that matched
+  the old ids must use the label or `name`/`value` instead.
 - **Accordion / AccordionItem.** New `AccordionState` (`expanded`,
   `multiple`, `isExpanded`, `toggle`, `open`, `close`), exported from
   `Accordion.svelte` and the barrels. `children` is a snippet with one
   argument; `AccordionItem` takes the `accordion` prop. Without it an item is
   a standalone section with its own `bind:expanded` (as before outside an
   Accordion); an item left without it **inside** an Accordion throws in dev
-  after mount. Accordion forwards `...rest`. ids/ARIA wiring unchanged.
+  after mount (client only: server rendering does not detect it, and in
+  production such an item silently renders as a solo section). A solo item
+  nested inside another item's body is a deliberate inner disclosure and is
+  not flagged. Accordion forwards `...rest`. ids/ARIA wiring unchanged.
 - **Toast.** `createToastContext()` and `getToastContext()` are removed. Use
   `getToastState(config?)`: one shared instance in the browser; on the server
   a fresh, never-cached instance per call (no state leaks between requests).

@@ -16,8 +16,15 @@
     /** The LeftBarState from LeftBar's snippet argument (required). */
     bar = null,
     class: className = '',
+    /** Runs before the toggle; call `event.preventDefault()` to skip it. */
+    onclick = undefined,
     ...rest
   } = $props();
+
+  function handleClick(event) {
+    onclick?.(event);
+    if (!event.defaultPrevented) bar.toggle();
+  }
 
   const wired = $derived(requireInstance(bar, 'LeftBarToggle', 'bar', 'LeftBar', 'footer'));
   const isCollapsed = $derived(bar?.collapsed ?? false);
@@ -28,7 +35,7 @@
 <button
   type="button"
   class="collapse-toggle {className}"
-  onclick={() => bar.toggle()}
+  onclick={handleClick}
   title={label}
   aria-label={label}
   {...rest}

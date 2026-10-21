@@ -1889,13 +1889,13 @@
         "bar": {
           "type": "LeftBarState",
           "default": "null",
-          "description": "Optional state instance; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. Exported as `LeftBarState` from this module."
+          "description": "Optional state instance; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. When passed it is the source of truth: read once, no restore() on mount, LeftBar initialCollapsed/persistKey/cookieKey ignored. Exported as `LeftBarState` from this module."
         },
         "collapsed": {
           "type": "boolean",
-          "default": "false",
+          "default": "undefined",
           "bindable": true,
-          "description": "Sidebar collapsed state (bindable)"
+          "description": "Sidebar collapsed state (bindable). Not passed: the built bar starts expanded, and an external `bar` keeps its own value (LeftBar only writes a passed value into it)."
         },
         "initialCollapsed": {
           "type": "boolean",
@@ -2165,6 +2165,11 @@
           "type": "LeftBarState",
           "required": true,
           "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        },
+        "onclick": {
+          "type": "(event: MouseEvent) => void",
+          "default": "undefined",
+          "description": "Runs before the toggle; call event.preventDefault() to skip toggling."
         },
         "class": {
           "type": "string",
