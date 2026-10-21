@@ -10,12 +10,12 @@
   @example
   // In your root layout — just mount the component
   <script>
-    import { Toast } from '@miozu/jera';
+    import Toast from '@miozu/jera/components/feedback/Toast';
   </script>
   <Toast />
 
   // In any file (component, reactive state, utility)
-  import { getToastState } from '@miozu/jera';
+  import { getToastState } from '@miozu/jera/components/feedback/Toast';
   const toast = getToastState();
 
   toast.success('Saved', 'Your changes were applied');
@@ -30,6 +30,8 @@
   });
 -->
 <script module>
+  import { isBrowser } from '../../utils/env.js';
+
   /**
    * ToastController — singleton reactive state for toast notifications.
    *
@@ -108,25 +110,31 @@
     error = (title, msgOrOpts, opts) => this.#shorthand('error', title, msgOrOpts, opts);
   }
 
-  // Singleton
+  // Singleton — browser only. On the server every request shares this module,
+  // so a cached instance would carry one request's toasts into the next:
+  // there each call gets a fresh, never-cached controller (it renders empty).
   let _instance = null;
+
+  function configure(controller, config) {
+    if (!config) return controller;
+    if (config.position) controller.position = config.position;
+    if (config.progressStyle) controller.progressStyle = config.progressStyle;
+    if (config.defaultDuration != null) controller.defaultDuration = config.defaultDuration;
+    if (config.defaultErrorDuration != null) controller.defaultErrorDuration = config.defaultErrorDuration;
+    if (config.maxToasts != null) controller.maxToasts = config.maxToasts;
+    return controller;
+  }
 
   /**
    * Get or create the toast state singleton.
+   * In the browser: one shared instance (config applies on the first call only).
+   * On the server: a fresh instance per call, never cached.
    * @param {Object} [config] - Initial configuration (only applied on first call)
    * @returns {ToastController}
    */
   export function getToastState(config) {
-    if (!_instance) {
-      _instance = new ToastController();
-      if (config) {
-        if (config.position) _instance.position = config.position;
-        if (config.progressStyle) _instance.progressStyle = config.progressStyle;
-        if (config.defaultDuration != null) _instance.defaultDuration = config.defaultDuration;
-        if (config.defaultErrorDuration != null) _instance.defaultErrorDuration = config.defaultErrorDuration;
-        if (config.maxToasts != null) _instance.maxToasts = config.maxToasts;
-      }
-    }
+    if (!isBrowser()) return configure(new ToastController(), config);
+    if (!_instance) _instance = configure(new ToastController(), config);
     return _instance;
   }
 
@@ -134,22 +142,6 @@
   export function resetToastState() {
     if (_instance) _instance.dismissAll();
     _instance = null;
-  }
-
-  // Backward compat — context API still works if preferred
-  import {getContext, setContext} from 'svelte';
-  const TOAST_KEY = Symbol('jera-toast');
-
-  /** @deprecated Use getToastState() singleton instead */
-  export function createToastContext(config) {
-    const controller = getToastState(config);
-    setContext(TOAST_KEY, controller);
-    return controller;
-  }
-
-  /** @deprecated Use getToastState() singleton instead */
-  export function getToastContext() {
-    return getContext(TOAST_KEY) ?? getToastState();
   }
 </script>
 
