@@ -281,7 +281,7 @@ export function resetFooState() {
 3. **`$state()`** for primitives only (strings, numbers, booleans)
 4. **Convenience methods** — `toast.success(title, msg?)` not just `toast.show({...})`
 5. **Reset function** — `resetXState()` for testing / cleanup
-6. **No context, no shims** — jera has no `setContext`/`getContext` (0.11.0). A module singleton is only for one-per-app state (Toast, Theme)
+6. **No context, no shims** — jera has no `setContext`/`getContext` (0.11.0). A module singleton is only for one-per-app state (Toast, Theme). The missing-instance dev throw (`utils/requireInstance.js`) and the Accordion orphan guard read `import.meta.env?.DEV`, which only Vite (or a bundler that defines it) provides — without it they are **silent** and a missing instance just renders nothing. Tests set it via `tests/helpers/dev-env.js`
 7. **SSR-safe** — the getter returns the cached instance only when `isBrowser()` (`src/utils/env.js`); on the server every call gets a fresh, never-cached instance, so one request's state never reaches the next
 
 ### Animation Rules

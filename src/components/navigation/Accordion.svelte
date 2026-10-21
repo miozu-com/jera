@@ -6,6 +6,11 @@
   `accordion` prop (no context). An AccordionItem without the prop is a solo
   disclosure — inside an Accordion that is a mistake, and dev throws on it.
 
+  The dev guard is a one-time DOM scan after mount (client only, Vite's
+  `import.meta.env.DEV`). Blind spots: an item mounted later (async or lazily
+  imported content) is never checked, and an item portaled out of the
+  Accordion's subtree is invisible to it. Both render as silent solo sections.
+
   @example Single-open (default)
   <Accordion>
     {#snippet children(accordion)}

@@ -35,7 +35,12 @@ production.
   it only if you also pass `collapsed`/`bind:collapsed`, does not call
   `bar.restore()` on mount (call it yourself), ignores LeftBar's
   `initialCollapsed`/`persistKey`/`cookieKey` (give them to `LeftBarState`),
-  and reads the instance once (key the LeftBar to swap it).
+  and reads the instance once (key the LeftBar to swap it). **One
+  `LeftBarState` per LeftBar**: the state carries that bar's collapsed value,
+  flyout and timers, so do not share one instance between two bars. With
+  `initialCollapsed`, only the first parent -> bar sync is skipped (the SSR
+  seed wins the first paint over a stale bound value); later parent writes to
+  `collapsed` reach the bar.
   `LeftBarToggle` is now `type="button"` with an `aria-label` and forwards
   `...rest`; a consumer `onclick` runs first and the toggle still happens
   unless it calls `event.preventDefault()`. `LeftBarSection` forwards
@@ -58,7 +63,12 @@ production.
   after mount (client only: server rendering does not detect it, and in
   production such an item silently renders as a solo section). A solo item
   nested inside another item's body is a deliberate inner disclosure and is
-  not flagged. Accordion forwards `...rest`. ids/ARIA wiring unchanged.
+  not flagged. The guard is a one-time DOM scan with two blind spots: an
+  item mounted **after** the Accordion (async or lazily imported content) is
+  never checked, and an item **portaled** out of the Accordion's subtree
+  (top layer, `document.body`) is invisible to it. Both render as silent solo
+  sections, so grep for `AccordionItem` without `{accordion}` when migrating.
+  Accordion forwards `...rest`. ids/ARIA wiring unchanged.
 - **Toast.** `createToastContext()` and `getToastContext()` are removed. Use
   `getToastState(config?)`: one shared instance in the browser; on the server
   a fresh, never-cached instance per call (no state leaks between requests).
@@ -73,6 +83,20 @@ production.
   context); the unused `in-sidebar` class is gone.
 - **DropdownContainer**: no API change (dropped an unused `getContext`
   import); pass `isCollapsed={bar.collapsed}` inside a LeftBar header.
+
+### Rollout
+
+The **merge** is the breaking event, not the npm publish. Consumers that link
+jera from source (`"@miozu/jera": "link:../jera"`: dash, admin, miozu.com)
+build against 0.11 the moment this lands on jera `main`, with no version pin
+to protect them: every un-migrated `Radio`, `AccordionItem` or LeftBar child
+throws in dev and renders nothing in production at once. Either migrate the
+consumers in the same change (land their branches with the jera merge), or
+pin them to `@miozu/jera@0.10.x` from npm until they are migrated.
+
+The dev throws (and the Accordion orphan guard) read `import.meta.env.DEV`,
+which Vite provides. Without it (a bundler or runtime that does not define
+`import.meta.env`) they are silent: a missing instance just renders nothing.
 
 ### Removed — Sidebar family archived
 
