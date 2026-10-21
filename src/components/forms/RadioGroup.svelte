@@ -1,23 +1,33 @@
 <!--
   @component RadioGroup
 
-  A group container for Radio buttons.
+  A group container for Radio buttons. It owns one RadioGroupState and hands it
+  to the children snippet; every Radio takes it as the `group` prop (no context).
 
   @example
   <RadioGroup bind:value={selected} name="options">
-    <Radio value="a" label="Option A" />
-    <Radio value="b" label="Option B" />
-    <Radio value="c" label="Option C" />
+    {#snippet children(group)}
+      <Radio {group} value="a" label="Option A" />
+      <Radio {group} value="b" label="Option B" />
+      <Radio {group} value="c" label="Option C" />
+    {/snippet}
   </RadioGroup>
 
   @example Segmented (one compact control, 28px; full width with `block`)
   <RadioGroup bind:value={mode} name="mode" variant="segmented" aria-label="Mode">
-    <Radio value="resale" label="Resale" />
-    <Radio value="any" label="Any" />
+    {#snippet children(group)}
+      <Radio {group} value="resale" label="Resale" />
+      <Radio {group} value="any" label="Any" />
+    {/snippet}
   </RadioGroup>
 -->
+<script module>
+  export { RadioGroupState } from './radioGroup.svelte.js';
+</script>
+
 <script>
-  import { setContext } from 'svelte';
+  import { untrack } from 'svelte';
+  import { RadioGroupState } from './radioGroup.svelte.js';
 
   let {
     value = $bindable(null),
@@ -26,23 +36,31 @@
     orientation = 'vertical',
     variant = 'default',
     block = false,
+    /** Snippet `(group: RadioGroupState)` — pass `group` to each Radio. */
     children,
     onchange,
     class: className = '',
     ...rest
   } = $props();
 
-  function setValue(newValue) {
-    value = newValue;
-    onchange?.({ target: { name, value: newValue } });
-  }
+  // Created once with the initial props (that is what the server renders);
+  // the effect below keeps it in step when the props change.
+  const group = untrack(
+    () =>
+      new RadioGroupState({
+        value,
+        name,
+        disabled,
+        variant,
+        onchange: (next) => {
+          value = next;
+          onchange?.({ target: { name: group.name, value: next } });
+        }
+      })
+  );
 
-  setContext('radioGroup', {
-    get value() { return value; },
-    get name() { return name; },
-    get disabled() { return disabled; },
-    get variant() { return variant; },
-    setValue
+  $effect.pre(() => {
+    group.sync({ value, name, disabled, variant });
   });
 </script>
 
@@ -53,7 +71,7 @@
   aria-disabled={disabled}
   {...rest}
 >
-  {@render children?.()}
+  {@render children?.(group)}
 </div>
 
 <style>

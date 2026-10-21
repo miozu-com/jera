@@ -1,16 +1,25 @@
 <!--
   @component Radio
 
-  A radio button input. Use within RadioGroup for proper grouping.
+  A radio button input. Takes its group's state as the required `group` prop:
+  render it inside RadioGroup's children snippet and pass the snippet argument.
+  Without `group` it throws in dev and renders nothing in production.
 
   @example
-  <Radio value="option1" label="Option 1" />
+  <RadioGroup bind:value name="plan">
+    {#snippet children(group)}
+      <Radio {group} value="monthly" label="Monthly" />
+      <Radio {group} value="yearly" label="Yearly" />
+    {/snippet}
+  </RadioGroup>
 -->
 <script>
-  import { getContext } from 'svelte';
   import { cn } from '../../utils/cn.svelte.js';
+  import { requireInstance } from '../../utils/requireInstance.js';
 
   let {
+    /** RadioGroupState from RadioGroup's `children(group)` snippet (required). */
+    group,
     value,
     label = '',
     description = '',
@@ -20,21 +29,21 @@
     ...rest
   } = $props();
 
-  const group = getContext('radioGroup');
+  // Throws in dev with the fix spelled out; in production the radio renders nothing.
+  const wired = $derived(requireInstance(group, 'Radio', 'group', 'RadioGroup'));
 
-  const radioId = id || `radio-${Math.random().toString(36).slice(2, 9)}`;
-  const isChecked = $derived(group?.value === value);
-  const isDisabled = $derived(disabled || group?.disabled);
-  const name = $derived(group?.name || '');
+  const uid = $props.id();
+  const radioId = $derived(id || `radio-${uid}`);
+  const isChecked = $derived(group?.isChecked(value) ?? false);
+  const isDisabled = $derived(disabled || !!group?.disabled);
   const segmented = $derived(group?.variant === 'segmented');
 
   function handleChange() {
-    if (!isDisabled && group) {
-      group.setValue(value);
-    }
+    if (!isDisabled) group.change(value);
   }
 </script>
 
+{#if wired}
 <label
   class={cn('radio-label', segmented && 'radio-segment', isDisabled && 'radio-disabled', className)}
   for={radioId}
@@ -42,7 +51,7 @@
   <input
     type="radio"
     id={radioId}
-    {name}
+    name={group.name}
     {value}
     checked={isChecked}
     disabled={isDisabled}
@@ -64,6 +73,7 @@
     </span>
   {/if}
 </label>
+{/if}
 
 <style>
   .radio-label {
