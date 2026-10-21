@@ -3,12 +3,13 @@
 
   Enterprise workspace/organization switcher with dropdown menu.
   Works in sidebar headers, top navbars, or standalone.
-  Auto-detects Sidebar context for collapse-aware behavior.
+  Collapse-aware through the `collapsed` prop (in a LeftBar: `collapsed={bar.collapsed}`).
 
-  @example Basic usage in Sidebar
-  <Sidebar>
-    {#snippet header()}
+  @example Basic usage in a LeftBar header
+  <LeftBar>
+    {#snippet header(bar)}
       <WorkspaceMenu
+        collapsed={bar.collapsed}
         workspace={{ name: 'Acme Corp', logo: '/acme.png' }}
         user={{ name: 'John Doe', email: 'john@acme.com', avatar: '/john.jpg' }}
       >
@@ -20,7 +21,7 @@
         {/snippet}
       </WorkspaceMenu>
     {/snippet}
-  </Sidebar>
+  </LeftBar>
 
   @example In top navbar (standalone)
   <nav class="top-nav">
@@ -35,8 +36,7 @@
   <WorkspaceMenu workspace={{ name: 'My Workspace', initials: 'MW' }} />
 -->
 <script>
-  import { getContext, onMount } from 'svelte';
-  import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
+  import { onMount } from 'svelte';
   import { clickOutside } from '../../actions/index.js';
 
   let {
@@ -45,14 +45,13 @@
     badge = null,
     showChevron = true,
     position = 'bottom-start',
+    /** The surrounding bar is collapsed to its icon rail: trigger shows the logo only. */
+    collapsed = false,
     class: className = '',
     menu
   } = $props();
 
-  // Try to get sidebar context (may be null if used outside sidebar)
-  const sidebar = getContext(SIDEBAR_CONTEXT_KEY);
-  const isCollapsed = $derived(sidebar?.collapsed ?? false);
-  const isInSidebar = $derived(sidebar !== undefined);
+  const isCollapsed = $derived(!!collapsed);
 
   // Dropdown state
   let isOpen = $state(false);
@@ -99,7 +98,6 @@
 <div
   class="workspace-menu {className}"
   class:collapsed={isCollapsed}
-  class:in-sidebar={isInSidebar}
   use:clickOutside={close}
 >
   <button

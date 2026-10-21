@@ -4,6 +4,10 @@
   Enterprise-grade navigation container with pluggable block architecture.
   Supports multiple navigation patterns, themes, and enterprise features.
 
+  Each block receives `navigationState` and `collapsed` as props from the
+  container (no Svelte context). Inside a LeftBar, pass the bar's state:
+  `{#snippet navigation(bar)} <NavigationContainer collapsed={bar.collapsed} … />`.
+
   @example Basic usage
   <NavigationContainer
     navigationState={navState}
@@ -25,10 +29,7 @@
   />
 -->
 <script>
-  import { setContext, getContext } from 'svelte';
   import { fade } from 'svelte/transition';
-  import { NAVIGATION_CONTEXT_KEY } from '../../utils/navigation.svelte.js';
-  import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
 
   // Block components
   import NavigationSearch from './blocks/NavigationSearch.svelte';
@@ -39,6 +40,8 @@
 
   let {
     navigationState,
+    /** The surrounding bar is collapsed to its icon rail (e.g. `bar.collapsed`). */
+    collapsed = false,
     blocks = [],
     theme = 'default',
     plugins = [],
@@ -48,12 +51,7 @@
     class: className = ''
   } = $props();
 
-  // Set navigation context for child components
-  setContext(NAVIGATION_CONTEXT_KEY, navigationState);
-
-  // Get sidebar context if available
-  const sidebarContext = getContext(SIDEBAR_CONTEXT_KEY);
-  const isCollapsed = $derived(sidebarContext?.collapsed ?? false);
+  const isCollapsed = $derived(!!collapsed);
 
   // Built-in block type registry
   const blockComponents = {
@@ -163,6 +161,7 @@
         <BlockComponent
           {block}
           {navigationState}
+          collapsed={isCollapsed}
           onEvent={(type, data) => handleBlockEvent(block.id, type, data)}
           {...(block.props || {})}
         />

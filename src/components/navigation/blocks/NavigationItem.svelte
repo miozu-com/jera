@@ -1,18 +1,22 @@
 <!--
-  @component SidebarNavigationItem
+  @component NavigationItem
+
+  Recursive item of the NavigationSection block (was SidebarNavigationItem,
+  renamed 0.11.0 when the Sidebar family was archived). NavigationSection
+  renders it with `navigationState` and `collapsed` as props (no context).
 
   Enterprise-grade recursive navigation item with unlimited depth nesting.
   Supports sophisticated navigation hierarchies with intelligent expansion,
   search highlighting, and permission-based visibility.
 
   @example Basic item
-  <SidebarNavigationItem
+  <NavigationItem
     item={{ id: 'home', label: 'Home', href: '/', icon: HomeIcon }}
     navigationState={navState}
   />
 
   @example Recursive with children
-  <SidebarNavigationItem
+  <NavigationItem
     item={{
       id: 'settings',
       label: 'Settings',
@@ -26,7 +30,7 @@
   />
 
   @example With permissions
-  <SidebarNavigationItem
+  <NavigationItem
     item={{
       id: 'admin',
       label: 'Admin',
@@ -37,16 +41,15 @@
   />
 -->
 <script>
-  import { getContext } from 'svelte';
   import { fly, slide } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { SIDEBAR_CONTEXT_KEY } from '../../utils/sidebar.svelte.js';
-  import { NAVIGATION_CONTEXT_KEY } from '../../utils/navigation.svelte.js';
-  import SidebarNavigationItem from './SidebarNavigationItem.svelte';
+  import NavigationItem from './NavigationItem.svelte';
 
   let {
     item,
     navigationState = null,
+    /** The surrounding bar is collapsed (icon rail): labels and badges hide. */
+    collapsed = false,
     depth = 0,
     maxDepth = 10,
     onNavigate = null,
@@ -56,13 +59,9 @@
     class: className = ''
   } = $props();
 
-  // Get sidebar context for collapse state
-  const sidebar = getContext(SIDEBAR_CONTEXT_KEY);
-  const isCollapsed = $derived(sidebar?.collapsed ?? false);
+  const isCollapsed = $derived(!!collapsed);
 
-  // Get navigation state from context if not provided
-  const contextNavState = getContext(NAVIGATION_CONTEXT_KEY);
-  const navState = navigationState || contextNavState;
+  const navState = $derived(navigationState);
 
   // Computed properties
   const hasChildren = $derived((item.children?.length || 0) > 0);
@@ -124,11 +123,6 @@
       // Set as active in navigation state
       if (navState) {
         navState.setActive(item);
-      }
-
-      // Close mobile sidebar if applicable
-      if (sidebar?.closeMobileOverlay) {
-        sidebar.closeMobileOverlay();
       }
     } else if (hasChildren) {
       // If no href but has children, toggle expansion
@@ -268,9 +262,10 @@
         transition:slide={{ duration: 200, easing: cubicOut }}
       >
         {#each item.children as child}
-          <SidebarNavigationItem
+          <NavigationItem
             item={child}
             {navigationState}
+            {collapsed}
             depth={depth + 1}
             {maxDepth}
             {onNavigate}

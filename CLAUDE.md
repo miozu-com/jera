@@ -80,9 +80,11 @@ Uses Base16 naming: `base00`-`base0F` (hex digits).
 
 **Which overlay:** ToolPanel = a toolbar button opening a form panel (fixed width, scrolling body, pinned footer). Popover `trigger="click"` = a small action panel on a trigger you render yourself (badge, inline status). Popover hover / Tooltip = a hint on one element. HoverCard = one explanatory card for many cells. Dropdown = a `role="menu"` of actions. Modal / Sheet = modal tasks.
 
-**LeftBar:** `bind:collapsed`, `persistKey`, snippets: `header`, `navigation`, `footer`
+**LeftBar:** `bind:collapsed`, `initialCollapsed` (SSR cookie), `persistKey`, `cookieKey`, `popoverMap`, optional `bar` (a `LeftBarState`, exported from the LeftBar module; created when absent); snippets `header(bar)`, `navigation(bar)`, `footer(bar)` — the snippet argument is the bar's state.
 
-**LeftBarItem:** `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
+**LeftBar children** (LeftBarItem, LeftBarSection, LeftBarGroup, LeftBarToggle, LeftBarPopover): required `bar` prop from that snippet argument — `{#snippet navigation(bar)} <LeftBarItem {bar} … />`. Missing `bar`: throws in dev, renders nothing in prod (`utils/requireInstance.js`). A wrapper component of your own takes `bar` and forwards it. Collapse-aware components outside the family take a boolean: `DropdownContainer isCollapsed={bar.collapsed}`, `WorkspaceMenu collapsed={bar.collapsed}`, `NavigationContainer collapsed={bar.collapsed}` (it passes `navigationState` + `collapsed` to its blocks as props). The Sidebar family is archived (`_archive/`, 0.11.0).
+
+**LeftBarItem:** `bar`, `href`, `label`, `icon`, `active`, `badge`, `expandable`, `subroutes`
 
 **SettingCard:** `title`, `variant` (default|danger), `actions` snippet (right of the title row, e.g. an icon button). Title is 18/600 on a 2rem line so it fills a row holding 32px buttons.
 

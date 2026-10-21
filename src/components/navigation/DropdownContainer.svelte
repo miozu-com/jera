@@ -4,11 +4,15 @@
   A user/account dropdown with avatar trigger for use in LeftBar header.
   Exact 1:1 match with admin.selify.ai AdminUserDropdown styles.
 
+  Collapse-aware through the `isCollapsed` prop; in a LeftBar header pass the
+  bar's state from the snippet argument: `{#snippet header(bar)}` →
+  `isCollapsed={bar.collapsed}`.
+
   @example Basic usage
   <DropdownContainer
     user={{ full_name: 'John Doe', avatar_url: '/avatar.jpg', role_name: 'admin' }}
     title="Admin Dashboard"
-    {isCollapsed}
+    isCollapsed={bar.collapsed}
     {themeState}
     onSignOut={handleSignOut}
   >
@@ -21,7 +25,7 @@
   </DropdownContainer>
 -->
 <script>
-  import { onMount, getContext } from 'svelte';
+  import { onMount } from 'svelte';
 
   let {
     user = null,

@@ -17,15 +17,9 @@ export {
 } from './reactive.svelte.js';
 
 export {
-  createSidebarState,
-  SIDEBAR_CONTEXT_KEY
-} from './sidebar.svelte.js';
-
-export {
   NavigationState,
   createNavigationState,
-  createActiveChecker,
-  NAVIGATION_CONTEXT_KEY
+  createActiveChecker
 } from './navigation.svelte.js';
 
 export {
@@ -44,3 +38,5 @@ export { splitSentences, diffSentences, diffSummary } from './diff.js';
 export { normalizeHex } from './color.js';
 
 export { BADGE_COLOR_VARIANTS, badgeVariant } from './badge.js';
+export { isBrowser } from './env.js';
+export { requireInstance } from './requireInstance.js';

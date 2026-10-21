@@ -76,11 +76,11 @@ Used in production across dash.selify.ai, admin.selify.ai, and miozu.com.
 - [Accordion](./src/components/navigation/Accordion.svelte): Collapsible content sections
 - [AccordionItem](./src/components/navigation/AccordionItem.svelte): Expandable item with title and custom indicator
 - [DropdownContainer](./src/components/navigation/DropdownContainer.svelte): User account menu with theme toggle and sign out
-- [LeftBar](./src/components/navigation/LeftBar.svelte): Collapsible sidebar with context and persistence
+- [LeftBar](./src/components/navigation/LeftBar.svelte): Collapsible sidebar; owns a LeftBarState and passes it to its snippets (no context)
 - [LeftBarGroup](./src/components/navigation/LeftBarGroup.svelte): Dynamic item group with search and avatar support
 - [LeftBarItem](./src/components/navigation/LeftBarItem.svelte): Nav item with icon, badge, expandable subroutes
 - [LeftBarSection](./src/components/navigation/LeftBarSection.svelte): Grouped navigation section with title
-- [LeftBarToggle](./src/components/navigation/LeftBarToggle.svelte): Sidebar collapse toggle, reads LeftBar context
+- [LeftBarToggle](./src/components/navigation/LeftBarToggle.svelte): Sidebar collapse toggle; takes the LeftBarState as `bar`
 - [NavBar](./src/components/navigation/NavBar.svelte): Horizontal mega-menu navigation bar
 - [Tabs](./src/components/navigation/Tabs.svelte): Tab navigation with animated sliding indicator, WAI-ARIA keyboard support, and horizontal overflow scrolling
 
@@ -151,10 +151,10 @@ Built and tested but not yet used in production. Available for immediate adoptio
 Previous implementations replaced by newer versions. Kept for backward compatibility.
 
 ### Navigation (Legacy -- replaced by LeftBar)
-- Sidebar, TabNav, SidebarSection, SidebarItem, SidebarGroup, SidebarPopover, SidebarToggle
+- TabNav. The Sidebar family (Sidebar, SidebarSection, SidebarItem, SidebarGroup, SidebarPopover, SidebarToggle, SidebarSearch, SidebarGroupSwitcher, SidebarAccountGroup, SidebarAccountItem) was removed in 0.11.0 and lives in `_archive/` (not published) — use LeftBar.
 
 ### Navigation (Legacy)
-- NavigationContainer, ScrollNav, WorkspaceMenu, SidebarSearch, SidebarGroupSwitcher, SidebarAccountGroup, SidebarAccountItem, SidebarNavigationItem, LeftBarPopover, ChipNav, NavigationSearch, NavigationSection, NavigationAccountGroup, NavigationGroupSwitcher, NavigationCustomBlock
+- NavigationContainer, ScrollNav, WorkspaceMenu, NavigationItem, LeftBarPopover, ChipNav, NavigationSearch, NavigationSection, NavigationAccountGroup, NavigationGroupSwitcher, NavigationCustomBlock
 
 ## Utilities
 - [cn()](./src/utils/cn.svelte.js): Class name concatenation with falsy filtering

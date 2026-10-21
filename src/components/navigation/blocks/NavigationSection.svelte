@@ -4,24 +4,21 @@
   Enterprise navigation section block with recursive item support.
 -->
 <script>
-  import { getContext } from 'svelte';
   import { slide, fly } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { SIDEBAR_CONTEXT_KEY } from '../../../utils/sidebar.svelte.js';
-  import { NAVIGATION_CONTEXT_KEY } from '../../../utils/navigation.svelte.js';
-  import SidebarNavigationItem from '../SidebarNavigationItem.svelte';
+  import NavigationItem from './NavigationItem.svelte';
 
   let {
     block,
+    /** The NavigationState, handed down by NavigationContainer. */
     navigationState = null,
+    /** The surrounding bar is collapsed, handed down by NavigationContainer. */
+    collapsed = false,
     onEvent = null
   } = $props();
 
-  const sidebar = getContext(SIDEBAR_CONTEXT_KEY);
-  const navContext = getContext(NAVIGATION_CONTEXT_KEY);
-  const navState = navigationState || navContext;
-
-  const isCollapsed = $derived(sidebar?.collapsed ?? false);
+  const navState = $derived(navigationState);
+  const isCollapsed = $derived(!!collapsed);
 
   // Block configuration with defaults
   const config = $derived({
@@ -123,9 +120,10 @@
       transition:slide={{ duration: 200, easing: cubicOut }}
     >
       {#each filteredItems as item (item.id)}
-        <SidebarNavigationItem
+        <NavigationItem
           {item}
           {navigationState}
+          {collapsed}
           maxDepth={config.maxDepth}
           onNavigate={handleItemNavigate}
           onToggle={handleItemToggle}

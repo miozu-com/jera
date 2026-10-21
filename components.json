@@ -4,7 +4,7 @@
   "description": "Zero-dependency, AI-first component library for Svelte 5",
   "framework": "svelte5",
   "cssSystem": "scoped-css-base16",
-  "totalComponents": 104,
+  "totalComponents": 95,
   "stageDefinitions": {
     "draft": "Under development, API may change",
     "beta": "Functional, not yet in production consumers",
@@ -1884,13 +1884,28 @@
       "name": "LeftBar",
       "category": "navigation",
       "path": "src/components/navigation/LeftBar.svelte",
-      "description": "Collapsible sidebar with context and persistence",
+      "description": "Collapsible sidebar; owns a LeftBarState and hands it to its snippets (no context)",
       "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "default": "null",
+          "description": "Optional state instance; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. Exported as `LeftBarState` from this module."
+        },
         "collapsed": {
           "type": "boolean",
           "default": "false",
           "bindable": true,
           "description": "Sidebar collapsed state (bindable)"
+        },
+        "initialCollapsed": {
+          "type": "boolean",
+          "default": "undefined",
+          "description": "SSR-seeded collapsed value (cookie); wins over collapsed and skips the localStorage restore"
+        },
+        "popoverMap": {
+          "type": "Record<string, Array>",
+          "default": "{}",
+          "description": "Flyout items per expandable item label, shown while collapsed"
         },
         "persistKey": {
           "type": "string",
@@ -1903,12 +1918,27 @@
           "description": "Cookie key for SSR persistence"
         }
       },
-      "snippets": ["header", "navigation", "footer", "children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "header(bar)",
+        "navigation(bar)",
+        "footer(bar)",
+        "children(bar)"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-10-18",
-      "breaking": [],
+      "revision": 6,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 6,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. LeftBar creates a LeftBarState (or takes yours via `bar`) and passes it as the argument of its header/navigation/footer/children snippets; children take it as the `bar` prop. `collapsed` stays bindable and `initialCollapsed` still seeds SSR. LeftBarState is exported from the LeftBar module."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -1917,18 +1947,35 @@
       "path": "src/components/navigation/LeftBarSection.svelte",
       "description": "Grouped navigation section with title",
       "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "required": true,
+          "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        },
         "title": {
           "type": "string",
           "default": "''",
           "description": "Section title"
         }
       },
-      "snippets": ["children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
-      "breaking": [],
+      "revision": 4,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 4,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Takes the LeftBarState as the required `bar` prop (from LeftBar's snippet argument, e.g. {#snippet navigation(bar)} ... {bar}). Without it: throws in dev, renders nothing in prod."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -1937,6 +1984,11 @@
       "path": "src/components/navigation/LeftBarItem.svelte",
       "description": "Nav item with icon, badge, expandable subroutes",
       "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "required": true,
+          "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        },
         "href": {
           "type": "string",
           "default": "null",
@@ -2004,16 +2056,29 @@
           "description": "Color variant"
         }
       },
-      "snippets": ["leading", "trailing", "children"],
-      "consumers": ["dash", "admin", "miozu"],
+      "snippets": [
+        "leading",
+        "trailing",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
       "stage": "stable",
-      "revision": 15,
-      "lastReviewed": "2026-10-18",
+      "revision": 16,
+      "lastReviewed": "2026-10-21",
       "breaking": [
         {
           "revision": 5,
           "date": "2026-10-02",
           "change": "Every badge renders as jera Badge (xs): plain count badges (no badgeColor) changed from an uppercase full-radius pill to the Badge chip (radius, border, no uppercase) in dash, admin and miozu."
+        },
+        {
+          "revision": 16,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Takes the LeftBarState as the required `bar` prop (from LeftBar's snippet argument, e.g. {#snippet navigation(bar)} ... {bar}). Without it: throws in dev, renders nothing in prod."
         }
       ],
       "docLevel": "standard"
@@ -2024,6 +2089,11 @@
       "path": "src/components/navigation/LeftBarGroup.svelte",
       "description": "Dynamic item group with search and avatar support",
       "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "required": true,
+          "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        },
         "title": {
           "type": "string",
           "default": "''",
@@ -2051,26 +2121,51 @@
           "description": "Show add button"
         }
       },
-      "snippets": ["item", "children"],
-      "consumers": ["dash"],
+      "snippets": [
+        "item",
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-07",
-      "breaking": [],
+      "revision": 5,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 5,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Takes the LeftBarState as the required `bar` prop (from LeftBar's snippet argument, e.g. {#snippet navigation(bar)} ... {bar}). Without it: throws in dev, renders nothing in prod. The no-op closeMobileOverlay call (a Sidebar-only hook) is gone."
+        }
+      ],
       "docLevel": "standard"
     },
     {
       "name": "LeftBarToggle",
       "category": "navigation",
       "path": "src/components/navigation/LeftBarToggle.svelte",
-      "description": "Sidebar collapse toggle, reads LeftBar context",
-      "consumers": ["dash", "admin"],
+      "description": "Sidebar collapse toggle; takes the LeftBarState as `bar`",
+      "consumers": [
+        "dash",
+        "admin"
+      ],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-18",
-      "breaking": [],
+      "revision": 5,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 5,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Takes the LeftBarState as the required `bar` prop (from LeftBar's snippet argument, e.g. {#snippet navigation(bar)} ... {bar}). Without it: throws in dev, renders nothing in prod. Now type=button with aria-label (Expand/Collapse sidebar); forwards ...rest."
+        }
+      ],
       "docLevel": "standard",
       "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "required": true,
+          "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        },
         "class": {
           "type": "string",
           "default": "''",
@@ -2104,11 +2199,19 @@
         "footerContent",
         "children"
       ],
-      "consumers": ["admin"],
+      "consumers": [
+        "admin"
+      ],
       "stage": "stable",
-      "revision": 5,
-      "lastReviewed": "2026-10-07",
-      "breaking": [],
+      "revision": 6,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 6,
+          "date": "2026-10-21",
+          "change": "0.11.0: dropped the unused getContext import; collapse state is the `isCollapsed` prop (in a LeftBar header: isCollapsed={bar.collapsed}). No API change."
+        }
+      ],
       "docLevel": "standard"
     },
     {
@@ -3475,27 +3578,32 @@
       "docLevel": "standard"
     },
     {
-      "name": "Sidebar",
-      "category": "navigation",
-      "path": "src/components/navigation/Sidebar.svelte",
-      "description": "Legacy sidebar \u2014 replaced by LeftBar",
-      "replacedBy": "LeftBar",
-      "stage": "deprecated",
-      "revision": 4,
-      "lastReviewed": "2026-04-17",
-      "breaking": [],
-      "docLevel": "none"
-    },
-    {
       "name": "NavigationContainer",
       "category": "navigation",
       "path": "src/components/navigation/NavigationContainer.svelte",
       "description": "Legacy enterprise nav \u2014 unused",
       "stage": "deprecated",
-      "revision": 3,
-      "lastReviewed": "2026-10-07",
-      "breaking": [],
-      "docLevel": "none"
+      "revision": 4,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 4,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. No longer sets the navigation context or reads the Sidebar context; takes `collapsed` as a prop and passes `navigationState` + `collapsed` to every block (and to a block's own component) as props."
+        }
+      ],
+      "docLevel": "none",
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "description": "Handed to every block as a prop"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "TabNav",
@@ -3526,136 +3634,75 @@
       "path": "src/components/navigation/WorkspaceMenu.svelte",
       "description": "Legacy workspace switcher \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "breaking": [],
-      "docLevel": "none"
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Collapse-aware through the `collapsed` prop instead of the Sidebar context; the `in-sidebar` class (no styles used it) is gone."
+        }
+      ],
+      "docLevel": "none",
+      "props": {
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
-      "name": "SidebarSection",
+      "name": "NavigationItem",
       "category": "navigation",
-      "path": "src/components/navigation/SidebarSection.svelte",
-      "description": "Legacy sidebar section \u2014 replaced by LeftBarSection",
-      "replacedBy": "LeftBarSection",
+      "path": "src/components/navigation/blocks/NavigationItem.svelte",
+      "description": "Recursive item of the NavigationSection block (was SidebarNavigationItem) \u2014 internal",
       "stage": "deprecated",
       "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarItem",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarItem.svelte",
-      "description": "Legacy sidebar item \u2014 replaced by LeftBarItem",
-      "replacedBy": "LeftBarItem",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarGroup",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarGroup.svelte",
-      "description": "Legacy sidebar group \u2014 replaced by LeftBarGroup",
-      "replacedBy": "LeftBarGroup",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarPopover",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarPopover.svelte",
-      "description": "Legacy sidebar popover \u2014 unused",
-      "replacedBy": "LeftBarPopover",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarToggle",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarToggle.svelte",
-      "description": "Legacy sidebar toggle \u2014 replaced by LeftBarToggle",
-      "replacedBy": "LeftBarToggle",
-      "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarSearch",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarSearch.svelte",
-      "description": "Legacy sidebar search \u2014 unused",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarGroupSwitcher",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarGroupSwitcher.svelte",
-      "description": "Legacy sidebar group switcher \u2014 unused",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarAccountGroup",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarAccountGroup.svelte",
-      "description": "Legacy sidebar account group \u2014 unused",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarAccountItem",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarAccountItem.svelte",
-      "description": "Legacy sidebar account item \u2014 unused",
-      "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
-      "docLevel": "none",
-      "breaking": []
-    },
-    {
-      "name": "SidebarNavigationItem",
-      "category": "navigation",
-      "path": "src/components/navigation/SidebarNavigationItem.svelte",
-      "description": "Legacy sidebar navigation item \u2014 unused",
-      "stage": "deprecated",
-      "revision": 1,
-      "lastReviewed": "2026-02-22",
-      "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 2,
+          "date": "2026-10-21",
+          "change": "0.11.0: renamed from SidebarNavigationItem and moved to navigation/blocks/ when the Sidebar family was archived. No Svelte context: `navigationState` and `collapsed` are props (NavigationSection passes both). The Sidebar-only closeMobileOverlay call is gone."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "LeftBarPopover",
       "category": "navigation",
       "path": "src/components/navigation/LeftBarPopover.svelte",
-      "description": "LeftBar context-aware popover \u2014 internal",
+      "description": "Collapsed LeftBar hover flyout; rendered by LeftBar with its `bar` \u2014 internal",
       "stage": "deprecated",
-      "revision": 6,
-      "lastReviewed": "2026-10-18",
+      "revision": 7,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 7,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Takes the LeftBarState as the required `bar` prop (from LeftBar's snippet argument, e.g. {#snippet navigation(bar)} ... {bar}). Without it: throws in dev, renders nothing in prod. LeftBar renders it itself with its own bar."
+        }
+      ],
+      "props": {
+        "bar": {
+          "type": "LeftBarState",
+          "required": true,
+          "description": "The owning bar's state, from LeftBar's snippet argument: {#snippet navigation(bar)} <X {bar} />. Missing: throws in dev, renders nothing in prod."
+        }
+      }
     },
     {
       "name": "ChipNav",
@@ -3674,10 +3721,27 @@
       "path": "src/components/navigation/blocks/NavigationSearch.svelte",
       "description": "Legacy enterprise nav search block \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Reads `navigationState` and `collapsed` only from props (NavigationContainer passes both); the context fallbacks are gone."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "NavigationSection",
@@ -3685,10 +3749,27 @@
       "path": "src/components/navigation/blocks/NavigationSection.svelte",
       "description": "Legacy enterprise nav section block \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Reads `navigationState` and `collapsed` only from props (NavigationContainer passes both); the context fallbacks are gone. Renders NavigationItem (was SidebarNavigationItem)."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "NavigationAccountGroup",
@@ -3696,10 +3777,27 @@
       "path": "src/components/navigation/blocks/NavigationAccountGroup.svelte",
       "description": "Legacy enterprise nav account block \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Reads `navigationState` and `collapsed` only from props (NavigationContainer passes both); the context fallbacks are gone."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "NavigationGroupSwitcher",
@@ -3707,10 +3805,27 @@
       "path": "src/components/navigation/blocks/NavigationGroupSwitcher.svelte",
       "description": "Legacy enterprise nav group switcher \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Reads `navigationState` and `collapsed` only from props (NavigationContainer passes both); the context fallbacks are gone."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "NavigationCustomBlock",
@@ -3718,10 +3833,27 @@
       "path": "src/components/navigation/blocks/NavigationCustomBlock.svelte",
       "description": "Legacy enterprise nav custom block \u2014 unused",
       "stage": "deprecated",
-      "revision": 2,
-      "lastReviewed": "2026-10-07",
+      "revision": 3,
+      "lastReviewed": "2026-10-21",
       "docLevel": "none",
-      "breaking": []
+      "breaking": [
+        {
+          "revision": 3,
+          "date": "2026-10-21",
+          "change": "0.11.0: no Svelte context. Reads `navigationState` and `collapsed` only from props (NavigationContainer passes both); the context fallbacks are gone. Custom components receive `navigationState` and `isCollapsed` (no `sidebar` object any more)."
+        }
+      ],
+      "props": {
+        "navigationState": {
+          "type": "NavigationState",
+          "default": "null"
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "description": "The surrounding bar is collapsed (in a LeftBar: bar.collapsed)"
+        }
+      }
     },
     {
       "name": "ImageDropzone",
@@ -4230,6 +4362,16 @@
     {
       "name": "createActiveChecker",
       "description": "Route matching utility",
+      "stage": "stable"
+    },
+    {
+      "name": "LeftBarState",
+      "description": "Reactive class a LeftBar hands to its children (collapsed + persistence, hover flyout timers); export of the LeftBar module",
+      "stage": "stable"
+    },
+    {
+      "name": "requireInstance",
+      "description": "Dev-throw / prod-render-nothing guard for compound children missing their parent's instance prop",
       "stage": "stable"
     }
   ],

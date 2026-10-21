@@ -4,23 +4,20 @@
   Enterprise group switcher block for investment groups or similar.
 -->
 <script>
-  import { getContext } from 'svelte';
   import { slide } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { SIDEBAR_CONTEXT_KEY } from '../../../utils/sidebar.svelte.js';
-  import { NAVIGATION_CONTEXT_KEY } from '../../../utils/navigation.svelte.js';
 
   let {
     block,
+    /** The NavigationState, handed down by NavigationContainer. */
     navigationState = null,
+    /** The surrounding bar is collapsed, handed down by NavigationContainer. */
+    collapsed = false,
     onEvent = null
   } = $props();
 
-  const sidebar = getContext(SIDEBAR_CONTEXT_KEY);
-  const navContext = getContext(NAVIGATION_CONTEXT_KEY);
-  const navState = navigationState || navContext;
-
-  const isCollapsed = $derived(sidebar?.collapsed ?? false);
+  const navState = $derived(navigationState);
+  const isCollapsed = $derived(!!collapsed);
 
   const config = $derived({
     title: block.title || 'Groups',

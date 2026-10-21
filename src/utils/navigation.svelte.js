@@ -18,7 +18,9 @@
  * });
  */
 
-import { browser } from '$app/environment';
+// Zero-dependency browser check (was `$app/environment`, which only resolves
+// inside SvelteKit and broke every other consumer and `node --test`).
+const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
 export class NavigationState {
   // Core reactive state
@@ -416,11 +418,6 @@ export function createNavigationState(options = {}) {
     ...options
   });
 }
-
-/**
- * Navigation context key for Svelte context
- */
-export const NAVIGATION_CONTEXT_KEY = 'navigation-state';
 
 /**
  * Create an active route checker function for use with LeftBar/Sidebar components.

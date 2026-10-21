@@ -596,10 +596,13 @@ Snippets: `actions`, `center`, `subnav`, `renderIcon(name, size)`
 
 ### LeftBar
 
-Collapsible sidebar container providing context to children.
+Collapsible sidebar container. Owns a `LeftBarState` (no Svelte context) and
+hands it to every snippet as the snippet argument; each LeftBar child takes it
+as the required `bar` prop (missing: throws in dev, renders nothing in prod).
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| bar | LeftBarState | null | Optional instance; created internally when absent |
 | collapsed | boolean | $bindable(false) | Collapsed state (two-way) |
 | initialCollapsed | boolean | undefined | SSR hydration value |
 | persistKey | string | null | localStorage persistence key |
@@ -607,25 +610,27 @@ Collapsible sidebar container providing context to children.
 | popoverMap | object | {} | Label -> items map for collapsed popovers |
 | class | string | '' | Additional CSS classes |
 
-Snippets: `header`, `navigation`, `footer`, `children`
+Snippets (each receives the bar): `header(bar)`, `navigation(bar)`, `footer(bar)`, `children(bar)`
 
-Context provided: `{ collapsed, toggle(), expand(), collapse(), showPopover(), hidePopover(), keepPopoverOpen() }`
+`LeftBarState` (exported from the LeftBar module): `collapsed` ($state), `hoverPopover` ($state.raw `{item, position}`), `toggle()` (persists to localStorage/cookie), `expand()`, `collapse()`, `restore()`, `showPopover(item, event)`, `hidePopover()`, `keepPopoverOpen()`, `destroy()`.
 
 ```svelte
 <LeftBar bind:collapsed persistKey="sidebar">
-  {#snippet header()}
-    <DropdownContainer user={data.user} {themeState} />
+  {#snippet header(bar)}
+    <DropdownContainer user={data.user} {themeState} isCollapsed={bar.collapsed} />
   {/snippet}
-  {#snippet navigation()}
-    <LeftBarSection title="Main">
-      <LeftBarItem href="/" icon={Home} label="Dashboard" active />
+  {#snippet navigation(bar)}
+    <LeftBarSection {bar} title="Main">
+      <LeftBarItem {bar} href="/" icon={Home} label="Dashboard" active />
     </LeftBarSection>
   {/snippet}
-  {#snippet footer()}
-    <LeftBarToggle />
+  {#snippet footer(bar)}
+    <LeftBarToggle {bar} />
   {/snippet}
 </LeftBar>
 ```
+
+A component of your own that renders LeftBar children must take `bar` and forward it (`let { bar } = $props()` → `<LeftBarItem {bar} />`).
 
 ---
 
@@ -635,6 +640,7 @@ Grouped navigation section within LeftBar.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| bar | LeftBarState | (required) | From LeftBar's snippet argument |
 | title | string | '' | Section heading (hidden when collapsed) |
 | class | string | '' | Additional CSS classes |
 
@@ -648,6 +654,7 @@ Navigation item with optional subroutes.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| bar | LeftBarState | (required) | From LeftBar's snippet argument |
 | href | string | null | Navigation URL |
 | label | string | '' | Display text |
 | icon | Component | null | Svelte component with `size` prop |
@@ -670,6 +677,7 @@ Dynamic item group with search, avatar support, and add button.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| bar | LeftBarState | (required) | From LeftBar's snippet argument |
 | title | string | '' | Group heading |
 | items | array | [] | Data items |
 | expanded | boolean | $bindable(false) | Group expanded |
@@ -686,10 +694,11 @@ Snippets: `item(item, isExpanded)`, `children`
 
 ### LeftBarToggle
 
-Sidebar collapse toggle button. Reads LeftBar context automatically.
+Sidebar collapse toggle button (`type="button"`, aria-label Expand/Collapse sidebar).
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| bar | LeftBarState | (required) | From LeftBar's snippet argument (`footer(bar)`) |
 | class | string | '' | Additional CSS classes |
 
 ---
@@ -702,7 +711,7 @@ User account menu for sidebar headers.
 |------|------|---------|-------------|
 | user | object | null | {full_name, avatar_url, role_name} |
 | title | string | '' | Optional title override |
-| isCollapsed | boolean | false | Sidebar collapsed state |
+| isCollapsed | boolean | false | Sidebar collapsed state (in a LeftBar header: `bar.collapsed`) |
 | themeState | ThemeState | null | Theme state for toggle |
 | signOutLoading | boolean | false | Sign out loading state |
 | signOutAction | string | '/auth?/signout' | Sign out form action |
