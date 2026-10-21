@@ -5,27 +5,33 @@
   Exact 1:1 match with admin.selify.ai AdminSidebar collapse-toggle styles.
 
   @example
-  <LeftBarToggle />
+  {#snippet footer(bar)}
+    <LeftBarToggle {bar} />
+  {/snippet}
 -->
 <script>
-  import { getContext } from 'svelte';
+  import { requireInstance } from '../../utils/requireInstance.js';
 
   let {
-    class: className = ''
+    /** The LeftBarState from LeftBar's snippet argument (required). */
+    bar = null,
+    class: className = '',
+    ...rest
   } = $props();
 
-  const leftbar = getContext('leftbar');
-  const isCollapsed = $derived(leftbar?.collapsed ?? false);
-
-  function handleClick() {
-    leftbar?.toggle?.();
-  }
+  const wired = $derived(requireInstance(bar, 'LeftBarToggle', 'bar', 'LeftBar', 'footer'));
+  const isCollapsed = $derived(bar?.collapsed ?? false);
+  const label = $derived(isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
 </script>
 
+{#if wired}
 <button
+  type="button"
   class="collapse-toggle {className}"
-  onclick={handleClick}
-  title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+  onclick={() => bar.toggle()}
+  title={label}
+  aria-label={label}
+  {...rest}
 >
   {#if isCollapsed}
     <!-- ChevronRight -->
@@ -59,6 +65,7 @@
     </svg>
   {/if}
 </button>
+{/if}
 
 <style>
   .collapse-toggle {

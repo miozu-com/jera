@@ -12,7 +12,10 @@ const { default: LeftBarPopover } =
   await import("../src/components/navigation/LeftBarPopover.svelte");
 const { default: Glyph } = await import("./fixtures/Glyph.svelte");
 
-const html = (props) => render(LeftBarPopover, { props }).body;
+const { LeftBarState } = await import("../src/components/navigation/leftBar.svelte.js");
+
+// Every LeftBar child takes the bar's state as its `bar` prop (0.11.0, no context).
+const html = (props) => render(LeftBarPopover, { props: { bar: new LeftBarState(), ...props } }).body;
 
 test("items carry icon, badge, variant and divider", () => {
   const body = html({

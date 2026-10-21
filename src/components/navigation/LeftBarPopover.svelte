@@ -4,8 +4,12 @@
   Hover popover for collapsed LeftBar showing subroutes.
   Exact 1:1 match with dash.selify.ai WorkspaceSidebar hover-popover styles.
 
+  LeftBar renders it itself (from `popoverMap`) and passes its `bar`; the
+  flyout uses it to stay open while hovered.
+
   @example
   <LeftBarPopover
+    {bar}
     visible={hoverPopover.item === 'services'}
     position={hoverPopover.position}
     title="Services"
@@ -21,9 +25,11 @@
   'danger' | 'success') and `divider` (marks the attention item; since r5 no extra space, no rule).
 -->
 <script>
-  import { getContext } from 'svelte';
+  import { requireInstance } from '../../utils/requireInstance.js';
 
   let {
+    /** The owning LeftBarState (required): hovering the flyout keeps it open. */
+    bar = null,
     visible = false,
     position = { top: 0, left: 0 },
     title = '',
@@ -31,18 +37,18 @@
     class: className = ''
   } = $props();
 
-  const leftbar = getContext('leftbar');
+  const wired = $derived(requireInstance(bar, 'LeftBarPopover', 'bar', 'LeftBar', 'navigation'));
 
   function handleMouseEnter() {
-    leftbar?.keepPopoverOpen?.();
+    bar.keepPopoverOpen();
   }
 
   function handleMouseLeave() {
-    leftbar?.hidePopover?.();
+    bar.hidePopover();
   }
 </script>
 
-{#if visible && items.length > 0}
+{#if wired && visible && items.length > 0}
   <div
     class="hover-popover {className}"
     style="top: {position.top}px; left: {position.left}px;"

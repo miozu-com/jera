@@ -4,170 +4,122 @@
   A collapsible left sidebar with navigation sections, expandable groups, and hover popovers.
   Exact 1:1 match with dash.selify.ai WorkspaceSidebar styles.
 
+  State lives in a LeftBarState (no Svelte context). LeftBar creates one, or
+  uses yours from the `bar` prop, and hands it to every snippet as the snippet
+  argument; each LeftBar child takes it as the `bar` prop.
+
   @example Basic usage
-  <LeftBar
-    bind:collapsed
-    persistKey="my-sidebar"
-  >
-    {#snippet header()}
-      <DropdownContainer {themeState} {teamMember} {isCollapsed} />
+  <LeftBar bind:collapsed persistKey="my-sidebar">
+    {#snippet header(bar)}
+      <DropdownContainer {themeState} user={me} isCollapsed={bar.collapsed} />
     {/snippet}
 
-    {#snippet navigation()}
-      <LeftBarSection>
-        <LeftBarItem href="/" icon={Home} label="Dashboard" active={isActive('/')} />
-        <LeftBarItem href="/settings" icon={Settings} label="Settings" />
+    {#snippet navigation(bar)}
+      <LeftBarSection {bar}>
+        <LeftBarItem {bar} href="/" icon={Home} label="Dashboard" active={isActive('/')} />
+        <LeftBarItem {bar} href="/settings" icon={Settings} label="Settings" />
       </LeftBarSection>
     {/snippet}
 
-    {#snippet footer()}
-      <LeftBarToggle />
+    {#snippet footer(bar)}
+      <LeftBarToggle {bar} />
     {/snippet}
   </LeftBar>
+
+  @example Own the state (read or drive it from outside the bar)
+  // script: import LeftBar, { LeftBarState } from '@miozu/jera/components/navigation/LeftBar';
+  //         const bar = new LeftBarState({ collapsed: data.sidebarCollapsed, persistKey: 'nav' });
+  <LeftBar {bar}>…</LeftBar>
 -->
+<script module>
+  export { LeftBarState } from './leftBar.svelte.js';
+</script>
+
 <script>
-  import { setContext, onMount } from 'svelte';
-  import { slide, fade } from 'svelte/transition';
-  import { cubicOut } from 'svelte/easing';
+  import { onMount, untrack } from 'svelte';
+  import { LeftBarState } from './leftBar.svelte.js';
   import LeftBarPopover from './LeftBarPopover.svelte';
 
   let {
+    /** Optional LeftBarState; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. */
+    bar: barProp = null,
     collapsed = $bindable(false),
     initialCollapsed = undefined,
     persistKey = null,
     cookieKey = null,
     popoverMap = {},
     class: className = '',
+    /** Snippets `(bar: LeftBarState)`: pass `bar` to every LeftBar child. */
     header,
     navigation,
     footer,
     children
   } = $props();
 
-  // Internal collapsed state — prefer SSR-provided initialCollapsed (cookie-based)
-  let isCollapsed = $state(initialCollapsed !== undefined ? initialCollapsed : collapsed);
+  // Prefer SSR-provided initialCollapsed (cookie-based) over the bound value.
+  const bar = untrack(
+    () =>
+      barProp ??
+      new LeftBarState({
+        collapsed: initialCollapsed !== undefined ? initialCollapsed : collapsed,
+        persistKey,
+        cookieKey
+      })
+  );
 
-  // Sync parent → internal (only when not SSR-initialized)
+  // Sync parent → state (only when not SSR-initialized)
   $effect(() => {
     if (initialCollapsed === undefined) {
-      isCollapsed = collapsed;
+      const next = collapsed;
+      untrack(() => (bar.collapsed = next));
     }
   });
 
-  // Sync internal → parent
+  // Sync state → parent
   $effect(() => {
-    collapsed = isCollapsed;
+    collapsed = bar.collapsed;
   });
-
-  // Persist to localStorage + cookie on toggle
-  function toggle() {
-    isCollapsed = !isCollapsed;
-    if (typeof localStorage !== 'undefined') {
-      // Persist to localStorage
-      if (persistKey) {
-        try { localStorage.setItem(persistKey, String(isCollapsed)); } catch {}
-      }
-      // Persist to cookie for SSR (30 day expiry)
-      if (cookieKey || persistKey) {
-        try {
-          const key = cookieKey || persistKey;
-          document.cookie = `${key}=${isCollapsed ? '1' : '0'};path=/;max-age=${60*60*24*30};SameSite=Lax`;
-        } catch {}
-      }
-    }
-  }
 
   // Load saved state from localStorage on mount (fallback for non-cookie scenarios)
   onMount(() => {
-    // If SSR already provided the correct state via cookie, skip localStorage
-    if (initialCollapsed !== undefined) return;
-    if (persistKey && typeof localStorage !== 'undefined') {
-      try {
-        const saved = localStorage.getItem(persistKey);
-        if (saved !== null) {
-          isCollapsed = saved === 'true';
-        }
-      } catch {}
-    }
-  });
-
-  // Hover popover state for collapsed sidebar
-  let hoverPopover = $state.raw({
-    item: null,
-    position: { top: 0, left: 0 }
-  });
-  let hoverTimeout = null;
-
-  function showPopover(itemId, event) {
-    if (!isCollapsed) return;
-
-    if (hoverTimeout) clearTimeout(hoverTimeout);
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    hoverPopover = {
-      item: itemId,
-      position: {
-        top: rect.top,
-        left: rect.right + 8
-      }
-    };
-  }
-
-  function hidePopover() {
-    hoverTimeout = setTimeout(() => {
-      hoverPopover = { ...hoverPopover, item: null };
-    }, 150);
-  }
-
-  function keepPopoverOpen() {
-    if (hoverTimeout) clearTimeout(hoverTimeout);
-  }
-
-  // Provide context to children
-  setContext('leftbar', {
-    get collapsed() { return isCollapsed; },
-    toggle,
-    expand() { isCollapsed = false; },
-    collapse() { isCollapsed = true; },
-    showPopover,
-    hidePopover,
-    keepPopoverOpen,
-    get hoverPopover() { return hoverPopover; }
+    if (initialCollapsed === undefined) bar.restore();
+    return () => bar.destroy();
   });
 </script>
 
-<div class="workspace-sidebar {className}" class:collapsed={isCollapsed}>
+<div class="workspace-sidebar {className}" class:collapsed={bar.collapsed}>
   <!-- Header slot (typically DropdownContainer) -->
   {#if header}
-    {@render header()}
+    {@render header(bar)}
   {/if}
 
   <!-- Main Navigation -->
   {#if navigation}
     <nav class="main-nav">
-      {@render navigation()}
+      {@render navigation(bar)}
     </nav>
   {:else if children}
     <nav class="main-nav">
-      {@render children()}
+      {@render children(bar)}
     </nav>
   {/if}
 
   <!-- Footer with collapse toggle -->
   {#if footer}
     <div class="sidebar-footer">
-      {@render footer()}
+      {@render footer(bar)}
     </div>
   {/if}
 </div>
 
 <!-- Hover popover — rendered outside sidebar to avoid overflow:hidden + will-change clipping -->
-{#if isCollapsed && hoverPopover.item && popoverMap[hoverPopover.item]}
+{#if bar.collapsed && bar.hoverPopover.item && popoverMap[bar.hoverPopover.item]}
   <LeftBarPopover
+    {bar}
     visible={true}
-    position={hoverPopover.position}
-    title={hoverPopover.item}
-    items={popoverMap[hoverPopover.item]}
+    position={bar.hoverPopover.position}
+    title={bar.hoverPopover.item}
+    items={popoverMap[bar.hoverPopover.item]}
   />
 {/if}
 

@@ -5,6 +5,10 @@
   A navigation item within LeftBar.
   Exact 1:1 match with dash.selify.ai WorkspaceSidebar nav-item styles.
 
+  Takes the owning LeftBarState as the `bar` prop (required) — LeftBar hands
+  it to its snippets: `{#snippet navigation(bar)} <LeftBarItem {bar} … />`.
+  Every example below omits `{bar}` for brevity.
+
   @example Basic
   <LeftBarItem href="/dashboard" icon={Home} label="Dashboard" active={isActive('/dashboard')} />
 
@@ -76,13 +80,15 @@
   accessible name of the link).
 -->
 <script>
-  import { getContext } from 'svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import Badge from '../primitives/Badge.svelte';
   import { badgeVariant as variantFor } from '../../utils/badge.js';
+  import { requireInstance } from '../../utils/requireInstance.js';
 
   let {
+    /** The LeftBarState from LeftBar's snippet argument (required). */
+    bar = null,
     href = null,
     label = '',
     icon: Icon = null,
@@ -116,8 +122,8 @@
   const uid = $props.id();
   const subnavId = `${uid}-subnav`;
 
-  const leftbar = getContext('leftbar');
-  const isCollapsed = $derived(leftbar?.collapsed ?? false);
+  const wired = $derived(requireInstance(bar, 'LeftBarItem', 'bar', 'LeftBar', 'navigation'));
+  const isCollapsed = $derived(bar?.collapsed ?? false);
 
   // No color = plain count badge → neutral info chip.
   const badgeVariant = $derived(variantFor(badgeColor));
@@ -151,12 +157,12 @@
 
   function handleMouseEnter(e) {
     if (expandable) {
-      leftbar?.showPopover?.(label, e);
+      bar.showPopover(label, e);
     }
   }
 
   function handleMouseLeave() {
-    leftbar?.hidePopover?.();
+    bar.hidePopover();
   }
 </script>
 
@@ -235,6 +241,7 @@
   {/if}
 {/snippet}
 
+{#if wired}
 <li>
   {#if split}
     <div
@@ -325,6 +332,7 @@
     </button>
   {/if}
 </li>
+{/if}
 
 <style>
   li {

@@ -5,26 +5,32 @@
   Exact 1:1 match with dash.selify.ai WorkspaceSidebar section styles.
 
   @example
-  <LeftBarSection title="Administration">
-    <LeftBarItem href="/team" icon={Users} label="Team" />
-    <LeftBarItem href="/settings" icon={Settings} label="Settings" />
-  </LeftBarSection>
+  {#snippet navigation(bar)}
+    <LeftBarSection {bar} title="Administration">
+      <LeftBarItem {bar} href="/team" icon={Users} label="Team" />
+      <LeftBarItem {bar} href="/settings" icon={Settings} label="Settings" />
+    </LeftBarSection>
+  {/snippet}
 -->
 <script>
-  import { getContext } from 'svelte';
   import { fade } from 'svelte/transition';
+  import { requireInstance } from '../../utils/requireInstance.js';
 
   let {
+    /** The LeftBarState from LeftBar's snippet argument (required). */
+    bar = null,
     title = '',
     class: className = '',
-    children
+    children,
+    ...rest
   } = $props();
 
-  const leftbar = getContext('leftbar');
-  const isCollapsed = $derived(leftbar?.collapsed ?? false);
+  const wired = $derived(requireInstance(bar, 'LeftBarSection', 'bar', 'LeftBar', 'navigation'));
+  const isCollapsed = $derived(bar?.collapsed ?? false);
 </script>
 
-<div class="nav-section {className}">
+{#if wired}
+<div class="nav-section {className}" {...rest}>
   {#if title && !isCollapsed}
     <div class="section-header" transition:fade={{ duration: 150 }}>{title}</div>
   {:else if title && isCollapsed}
@@ -34,6 +40,7 @@
     {@render children?.()}
   </ul>
 </div>
+{/if}
 
 <style>
   .nav-section {

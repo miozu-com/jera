@@ -12,7 +12,10 @@ import { render } from "svelte/server";
 const { default: LeftBarItem } =
   await import("../src/components/navigation/LeftBarItem.svelte");
 
-const html = (props) => render(LeftBarItem, { props }).body;
+const { LeftBarState } = await import("../src/components/navigation/leftBar.svelte.js");
+
+// Every LeftBar child takes the bar's state as its `bar` prop (0.11.0, no context).
+const html = (props) => render(LeftBarItem, { props: { bar: new LeftBarState(), ...props } }).body;
 
 function tag(body, pattern) {
   const match = body.match(new RegExp(`<[^>]*${pattern.source}[^>]*>`));

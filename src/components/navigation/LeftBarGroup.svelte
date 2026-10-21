@@ -4,6 +4,9 @@
   A collapsible group within LeftBar for displaying collections of entities.
   Generic component that can represent accounts, projects, workspaces, channels, etc.
 
+  Takes the owning LeftBarState as the `bar` prop (required), from LeftBar's
+  snippet argument. Examples omit `{bar}` for brevity.
+
   @example Basic usage with items
   <LeftBarGroup
     title="Connected Accounts"
@@ -37,12 +40,15 @@
   />
 -->
 <script>
-  import { getContext } from 'svelte';
   import Avatar from '../primitives/Avatar.svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
 
+  import { requireInstance } from '../../utils/requireInstance.js';
+
   let {
+    /** The LeftBarState from LeftBar's snippet argument (required). */
+    bar = null,
     title = '',
     items = [],
     expanded = $bindable(false),
@@ -70,8 +76,8 @@
     children
   } = $props();
 
-  const leftbar = getContext('leftbar');
-  const isCollapsed = $derived(leftbar?.collapsed ?? false);
+  const wired = $derived(requireInstance(bar, 'LeftBarGroup', 'bar', 'LeftBar', 'navigation'));
+  const isCollapsed = $derived(bar?.collapsed ?? false);
 
   // Filter items based on search
   const filteredItems = $derived(
@@ -95,7 +101,6 @@
 
   function handleSubrouteClick(subroute, item) {
     onSubrouteClick?.(subroute, item);
-    leftbar?.closeMobileOverlay?.();
   }
 
   function handleAddClick() {
@@ -119,6 +124,7 @@
   }
 </script>
 
+{#if wired}
 <div class="left-bar-group {className}">
   <!-- Section Header -->
   <button
@@ -263,6 +269,7 @@
     </div>
   {/if}
 </div>
+{/if}
 
 <style>
   .left-bar-group {
