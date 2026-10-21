@@ -87,7 +87,7 @@ test("neither collapsed nor initialCollapsed: the bar it builds starts expanded"
 });
 
 // Without `collapsed`, LeftBar never writes into an external bar (client effect,
-// checked in a jsdom mount outside this suite): a bar built collapsed stays so.
+// checked on the client runtime in leftBarSync.test.js): a bar built collapsed stays so.
 test("a bar passed in (no collapsed prop) is the one the children see", () => {
   const bar = new LeftBarState({ collapsed: true });
   const body = html({ bar });

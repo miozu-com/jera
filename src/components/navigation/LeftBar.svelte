@@ -6,7 +6,12 @@
 
   State lives in a LeftBarState (no Svelte context). LeftBar creates one, or
   uses yours from the `bar` prop, and hands it to every snippet as the snippet
-  argument; each LeftBar child takes it as the `bar` prop.
+  argument; each LeftBar child takes it as the `bar` prop. One LeftBarState
+  per LeftBar: never share an instance between two bars.
+
+  `initialCollapsed` (SSR cookie seed) wins the first paint over a stale
+  `collapsed`; only that first parent -> bar sync is skipped, so later parent
+  writes to `collapsed` still reach the bar.
 
   @example Basic usage
   <LeftBar bind:collapsed persistKey="my-sidebar">
@@ -44,7 +49,7 @@
 
 <script>
   import { onMount, untrack } from 'svelte';
-  import { LeftBarState } from './leftBar.svelte.js';
+  import { LeftBarState, syncCollapsed } from './leftBar.svelte.js';
   import LeftBarPopover from './LeftBarPopover.svelte';
 
   let {
@@ -75,20 +80,16 @@
       })
   );
 
-  // Sync parent → state: only a value the consumer actually passed, and
-  // never over SSR seeding. With no `collapsed`, an external bar keeps its own
-  // value (the bindable default must not reset a bar built collapsed).
-  $effect(() => {
-    if (initialCollapsed !== undefined && !barProp) return;
-    const next = collapsed;
-    if (next === undefined) return;
-    untrack(() => (bar.collapsed = next));
-  });
-
-  // Sync state → parent
-  $effect(() => {
-    collapsed = bar.collapsed;
-  });
+  // parent <-> state. Parent -> state applies only a value the consumer passed
+  // (an external bar keeps its own value without `collapsed`); with an SSR
+  // seed (initialCollapsed) the first run is skipped so the seed wins the
+  // first paint, and later parent writes to `collapsed` still apply.
+  syncCollapsed(
+    bar,
+    () => collapsed,
+    (value) => (collapsed = value),
+    { skipFirst: untrack(() => initialCollapsed !== undefined && !barProp) }
+  );
 
   // Load saved state from localStorage on mount (fallback for non-cookie
   // scenarios). An external bar belongs to its owner: they call restore().

@@ -1746,7 +1746,7 @@
       "snippets": ["children(accordion: AccordionState)"],
       "consumers": ["dash", "miozu"],
       "stage": "stable",
-      "revision": 3,
+      "revision": 4,
       "lastReviewed": "2026-10-21",
       "breaking": [
         {
@@ -1889,7 +1889,7 @@
         "bar": {
           "type": "LeftBarState",
           "default": "null",
-          "description": "Optional state instance; created from collapsed/initialCollapsed/persistKey/cookieKey when absent. When passed it is the source of truth: read once, no restore() on mount, LeftBar initialCollapsed/persistKey/cookieKey ignored. Exported as `LeftBarState` from this module."
+          "description": "Optional state instance (one per LeftBar, never shared between bars); created from collapsed/initialCollapsed/persistKey/cookieKey when absent. When passed it is the source of truth: read once, no restore() on mount, LeftBar initialCollapsed/persistKey/cookieKey ignored. Exported as `LeftBarState` from this module."
         },
         "collapsed": {
           "type": "boolean",
@@ -1900,7 +1900,7 @@
         "initialCollapsed": {
           "type": "boolean",
           "default": "undefined",
-          "description": "SSR-seeded collapsed value (cookie); wins over collapsed and skips the localStorage restore"
+          "description": "SSR-seeded collapsed value (cookie); wins over collapsed on the first sync only (later parent writes to collapsed still apply) and skips the localStorage restore"
         },
         "popoverMap": {
           "type": "Record<string, Array>",
@@ -1930,7 +1930,7 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 6,
+      "revision": 7,
       "lastReviewed": "2026-10-21",
       "breaking": [
         {

@@ -16,6 +16,8 @@
  *   `keepPopoverOpen` cancels (the pointer moved into the flyout).
  */
 
+import { untrack } from "svelte";
+
 /** Grace period before a flyout closes, so the pointer can cross the gap. */
 export const POPOVER_HIDE_DELAY = 150;
 
@@ -122,4 +124,38 @@ export class LeftBarState {
     if (this.#hideTimer) clearTimeout(this.#hideTimer);
     this.#hideTimer = null;
   }
+}
+
+/**
+ * Keep a LeftBarState and LeftBar's bindable `collapsed` prop in step. Call it
+ * during component initialisation (it creates two `$effect`s).
+ *
+ * - parent -> bar: only a value the consumer actually passed (`read()` returns
+ *   undefined when `collapsed` was not passed, so an external bar keeps its
+ *   own value). With `skipFirst` (an internal bar seeded from
+ *   `initialCollapsed`), the FIRST run only subscribes: the seed wins the
+ *   first paint over a stale bound value, and every later parent write to
+ *   `collapsed` still reaches the bar.
+ * - bar -> parent: `write(bar.collapsed)` on every change.
+ *
+ * @param {LeftBarState} bar
+ * @param {() => boolean | undefined} read
+ * @param {(collapsed: boolean) => void} write
+ * @param {{skipFirst?: boolean}} [options]
+ */
+export function syncCollapsed(bar, read, write, { skipFirst = false } = {}) {
+  let skip = skipFirst;
+  $effect(() => {
+    const next = read();
+    if (skip) {
+      skip = false;
+      return;
+    }
+    if (next === undefined) return;
+    untrack(() => (bar.collapsed = next));
+  });
+
+  $effect(() => {
+    write(bar.collapsed);
+  });
 }
