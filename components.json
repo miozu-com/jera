@@ -2874,7 +2874,7 @@
       "name": "Tooltip",
       "category": "primitives",
       "path": "src/components/primitives/Tooltip.svelte",
-      "description": "Hover/focus tooltip with arrow pointer, delay, and optional rich content snippet",
+      "description": "Hover/focus tooltip with arrow pointer, delay, and optional rich content snippet; top layer (popover), flips and shifts inside the trigger's clipping pane",
       "props": {
         "text": {
           "type": "string",
@@ -2898,9 +2898,10 @@
         }
       },
       "snippets": ["children", "content"],
+      "cssVars": ["--tooltip-max-width", "--tooltip-color", "--tooltip-bg", "--tooltip-border", "--tooltip-radius", "--tooltip-weight"],
       "stage": "stable",
-      "revision": 6,
-      "lastReviewed": "2026-10-09",
+      "revision": 7,
+      "lastReviewed": "2026-10-22",
       "breaking": [],
       "docLevel": "standard"
     },

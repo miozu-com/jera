@@ -33,7 +33,16 @@
   </Tooltip>
 
   Shows on hover, on keyboard focus inside it, and on tap (touch toggles);
-  Escape hides it. It shifts sideways to stay inside the viewport.
+  Escape hides it. The bubble renders in the top layer (`popover="manual"`),
+  so a scrolling pane never clips it, and stays inside the visible box — the
+  viewport cut by every clipping ancestor of the trigger: it flips to the
+  opposite side when the asked one has no room and shifts along the other
+  axis, the arrow kept on the trigger (`utils/tooltipPlacement.js`).
+
+  Theming (inherited custom properties, set on any ancestor):
+  `--tooltip-max-width` (default `min(20rem, 100vw - 1rem)`), `--tooltip-color`
+  (base06), `--tooltip-bg` (base01), `--tooltip-border` (base02),
+  `--tooltip-radius` (radius-md), `--tooltip-weight` (medium).
 
   @example Rich content
   <Tooltip>
@@ -47,6 +56,8 @@
   </Tooltip>
 -->
 <script>
+  import { clipBounds, placeTooltip } from '../../utils/tooltipPlacement.js';
+
   let {
     text = '',
     position = 'top',
@@ -63,9 +74,10 @@
   const descId = `tooltip-desc-${uid}`;
 
   let visible = $state(false);
-  /** Sideways shift (px) that keeps the bubble inside the viewport. */
-  let dx = $state(0);
+  /** Where the bubble sits (`placeTooltip`), null until measured. */
+  let pos = $state.raw(null);
   let tipEl = $state(null);
+  let wrapEl = $state(null);
   let timeout = null;
   /** A touch opened it: the following mouse/click events from that tap are ignored. */
   let touched = false;
@@ -119,27 +131,56 @@
     }
   }
 
-  // Keep the bubble on screen: measure once it renders, shift it sideways.
+  /** Measure the trigger and the bubble, then place it inside the visible box. */
+  function place() {
+    if (!tipEl || !wrapEl) return;
+    const anchor = wrapEl.getBoundingClientRect();
+    const size = { width: tipEl.offsetWidth, height: tipEl.offsetHeight };
+    const bounds = clipBounds(wrapEl, 8, size);
+    pos = placeTooltip({
+      anchor,
+      size,
+      bounds,
+      side: position,
+    });
+  }
+
+  // Into the top layer (no pane clips it), placed once it has a size, and
+  // kept on its trigger while anything scrolls or the window resizes.
   $effect(() => {
     if (!visible || !tipEl) {
-      dx = 0;
+      pos = null;
       return;
     }
-    const r = tipEl.getBoundingClientRect();
-    const margin = 8;
-    const vw = document.documentElement.clientWidth;
-    let shift = 0;
-    if (r.right > vw - margin) shift = vw - margin - r.right;
-    if (r.left + shift < margin) shift = margin - r.left;
-    dx = Math.round(shift);
+    try {
+      tipEl.showPopover?.();
+    } catch {
+      // Already open, or no popover support: it still renders in place.
+    }
+    place();
+    window.addEventListener('scroll', place, { capture: true, passive: true });
+    window.addEventListener('resize', place, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', place, { capture: true });
+      window.removeEventListener('resize', place);
+    };
+  });
+
+  // Escape closes it even when it opened on hover (focus elsewhere).
+  $effect(() => {
+    if (!visible) return;
+    function onEscape(event) {
+      if (event.key === 'Escape') hide();
+    }
+    document.addEventListener('keydown', onEscape);
+    return () => document.removeEventListener('keydown', onEscape);
   });
 
   // A tap outside closes a touch-opened tooltip.
   $effect(() => {
     if (!visible || !touched) return;
-    const wrapper = tipEl?.parentElement;
     function away(event) {
-      if (wrapper && !wrapper.contains(event.target)) {
+      if (wrapEl && !wrapEl.contains(event.target)) {
         touched = false;
         hide();
       }
@@ -154,6 +195,7 @@
 </script>
 
 <div
+  bind:this={wrapEl}
   class="tooltip-wrapper {className}"
   {onmouseenter}
   {onmouseleave}
@@ -174,9 +216,14 @@
     <div
       id={tooltipId}
       bind:this={tipEl}
-      style:--tooltip-dx="{dx}px"
+      popover="manual"
+      data-side={pos?.side ?? position}
+      style:left={pos ? `${pos.x}px` : null}
+      style:top={pos ? `${pos.y}px` : null}
+      style:--tooltip-arrow="{pos?.arrow ?? 0}px"
+      style:visibility={pos ? null : 'hidden'}
       aria-hidden={text ? 'true' : undefined}
-      class="tooltip tooltip-{position} {content ? 'tooltip-interactive' : ''}"
+      class="tooltip {content ? 'tooltip-interactive' : ''}"
       role="tooltip"
       onmouseenter={content ? show : undefined}
       onmouseleave={content ? hide : undefined}
@@ -209,9 +256,16 @@
     white-space: nowrap;
   }
 
+  /* Top layer (popover): the UA's centred, bordered box reset; placed in px. */
   .tooltip {
-    position: absolute;
-    translate: var(--tooltip-dx, 0px) 0;
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    overflow: visible;
     z-index: var(--z-tooltip);
     pointer-events: none;
   }
@@ -236,89 +290,56 @@
   }
 
   .tooltip-content {
+    box-sizing: border-box;
     padding: var(--space-4) var(--space-6);
     font-size: var(--text-xs);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-base06);
-    background: var(--color-base01);
-    border: var(--border-width-thin) solid var(--color-base02);
-    border-radius: var(--radius-md);
+    font-weight: var(--tooltip-weight, var(--font-weight-medium));
+    line-height: 1.45;
+    color: var(--tooltip-color, var(--color-base06));
+    background: var(--tooltip-bg, var(--color-base01));
+    border: var(--border-width-thin) solid var(--tooltip-border, var(--color-base02));
+    border-radius: var(--tooltip-radius, var(--radius-md));
     box-shadow: var(--shadow-md);
     white-space: normal;
-    max-width: min(20rem, calc(100vw - 1rem));
+    overflow-wrap: break-word;
+    max-width: min(var(--tooltip-max-width, 20rem), calc(100vw - 1rem));
     width: max-content;
   }
 
+  /* The arrow points at the trigger: `--tooltip-arrow` is its centre along the bubble's edge. */
   .tooltip-arrow {
     position: absolute;
-    translate: calc(-1 * var(--tooltip-dx, 0px)) 0;
     width: 8px;
     height: 8px;
-    background: var(--color-base01);
-    border: var(--border-width-thin) solid var(--color-base02);
+    background: var(--tooltip-bg, var(--color-base01));
+    border: var(--border-width-thin) solid var(--tooltip-border, var(--color-base02));
     transform: rotate(45deg);
   }
 
-  /* Position: Top */
-  .tooltip-top {
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: var(--space-4);
-  }
-
-  .tooltip-top .tooltip-arrow {
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+  [data-side='top'] .tooltip-arrow {
+    bottom: -4px;
+    left: calc(var(--tooltip-arrow) - 4px);
     border-top: none;
     border-left: none;
   }
 
-  /* Position: Bottom */
-  .tooltip-bottom {
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: var(--space-4);
-  }
-
-  .tooltip-bottom .tooltip-arrow {
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
+  [data-side='bottom'] .tooltip-arrow {
+    top: -4px;
+    left: calc(var(--tooltip-arrow) - 4px);
     border-bottom: none;
     border-right: none;
   }
 
-  /* Position: Left */
-  .tooltip-left {
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-right: var(--space-4);
-  }
-
-  .tooltip-left .tooltip-arrow {
-    right: -5px;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
+  [data-side='left'] .tooltip-arrow {
+    right: -4px;
+    top: calc(var(--tooltip-arrow) - 4px);
     border-left: none;
     border-bottom: none;
   }
 
-  /* Position: Right */
-  .tooltip-right {
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: var(--space-4);
-  }
-
-  .tooltip-right .tooltip-arrow {
-    left: -5px;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
+  [data-side='right'] .tooltip-arrow {
+    left: -4px;
+    top: calc(var(--tooltip-arrow) - 4px);
     border-right: none;
     border-top: none;
   }
