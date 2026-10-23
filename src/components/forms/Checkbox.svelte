@@ -98,6 +98,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-4);
+    min-width: 0;
     cursor: pointer;
     user-select: none;
   }
@@ -119,7 +120,9 @@
     border: 0;
   }
 
+  /* A long label never squeezes the box: every row's box is the same size. */
   .checkbox-box {
+    flex: none;
     display: flex;
     align-items: center;
     justify-content: center;

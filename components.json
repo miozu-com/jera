@@ -603,8 +603,8 @@
       "events": ["onchange"],
       "consumers": ["admin", "miozu", "dash"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-15",
+      "revision": 5,
+      "lastReviewed": "2026-10-23",
       "breaking": [],
       "docLevel": "standard"
     },
