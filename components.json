@@ -799,14 +799,45 @@
           "type": "string",
           "default": "''",
           "description": "Extra class on the wrapper"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Chip mode: picks accumulate in values, the field clears after each pick and the list stays open; picking a chip's option again removes it"
+        },
+        "values": {
+          "type": "array",
+          "default": "[]",
+          "bindable": true,
+          "description": "The picked items in multiple mode (bindable), keyed by getKey; ignored when !multiple"
+        },
+        "getLabel": {
+          "type": "(item) => string",
+          "default": "item => item.label ?? item.name ?? ''",
+          "description": "Text of the default chip and its Remove button label"
+        },
+        "max": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "At values.length >= max a pick is refused (onrefuse('max')), the field goes readonly and its placeholder empties"
+        },
+        "allowCustom": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Enter on typed text with no option to pick adds what oncustom(text) returns"
+        },
+        "chipLabel": {
+          "type": "string",
+          "default": "'Selected'",
+          "description": "aria-label of the chip group"
         }
       },
-      "snippets": ["item", "empty", "header"],
-      "events": ["onquery", "onpick", "onopen", "ondismiss"],
+      "snippets": ["item", "empty", "header", "chip"],
+      "events": ["onquery", "onpick", "onopen", "ondismiss", "onadd", "onremove", "oncustom", "onrefuse"],
       "consumers": ["dash"],
       "stage": "beta",
-      "revision": 1,
-      "lastReviewed": "2026-10-13",
+      "revision": 2,
+      "lastReviewed": "2026-10-23",
       "breaking": [],
       "docLevel": "minimal"
     },

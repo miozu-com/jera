@@ -7,6 +7,28 @@ This project is pre-1.0: breaking changes bump the **minor** version.
 
 ## [Unreleased]
 
+### Added — Combobox multiple mode
+
+`Combobox` takes `multiple`: picks accumulate in the bindable `values` and show
+as chips inside the field's one bordered frame (`role="group"`, labelled
+`chipLabel`); the field clears after each pick and the list stays open, the
+listbox is `aria-multiselectable` and picked rows carry the check. Picking a
+chip's option again removes it; Backspace in an empty field removes the last
+chip. `max` refuses further picks (`onrefuse('max')`) and makes the field
+readonly; `allowCustom` + `oncustom(text) → entry|false` adds typed text when
+there is no option to pick. `getLabel` names the default chip (label + Remove
+button); a `chip(entry, remove)` snippet replaces it. New events `onadd`,
+`onremove`, `oncustom`, `onrefuse`; `onpick` still fires per pick and vetoes
+with `false`. Key decisions in `combobox.rules.js` (`multipleKey`,
+`hasEntry`). Single mode is unchanged.
+
+### Fixed — Combobox Enter on a stale list
+
+Enter while typed text is still in the debounce or `loading` no longer picks the
+older list's first option (typing "gold" + Enter picked the default list's
+"silver"): it adds the text with `allowCustom`, else does nothing (`block`).
+`comboboxKey` and `multipleKey` take `stale`; the component passes it.
+
 ## [0.11.0] - 2026-10-21
 
 ### BREAKING — no Svelte context

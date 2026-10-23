@@ -22,13 +22,21 @@
  * Home/End are deliberately `none`: in an editable combobox they move the
  * caret in the text (APG), which is what someone editing a query expects.
  *
+ * `stale`: the list on screen answers an older query (typed text still in the
+ * debounce, or its answer still loading). Enter then picks nothing (`block`):
+ * the first option is the previous list's, not what the text asks for.
+ *
  * @param {string} key  KeyboardEvent.key
- * @param {{ open: boolean, count: number, active: number, composing?: boolean }} state
+ * @param {{ open: boolean, count: number, active: number, composing?: boolean, stale?: boolean }} state
  * @returns {{ action: 'none'|'open'|'move'|'pick'|'dismiss'|'block', active?: number }}
  */
-export function comboboxKey(key, { open, count, active, composing = false }) {
+export function comboboxKey(
+  key,
+  { open, count, active, composing = false, stale = false },
+) {
   // An IME is still composing: Enter/Escape/arrows belong to it.
   if (composing) return { action: "none" };
+  if (key === "Enter" && stale) return { action: "block" };
 
   switch (key) {
     case "ArrowDown":
@@ -107,4 +115,78 @@ export function createQueryDebouncer(fire, getMs) {
 export function resultsMessage(count) {
   if (count === 0) return "No results";
   return count === 1 ? "1 result" : `${count} results`;
+}
+
+/**
+ * What a keydown does in `multiple` (chip) mode. Decides only what chips add
+ * on top of `comboboxKey`; every other key is delegated to it unchanged.
+ *
+ * Extra actions:
+ * - `remove-last`  Backspace in an empty field removes the last chip (APG /
+ *                  TagInput parity; Delete does nothing).
+ * - `custom`       Enter with typed text, `allowCustom`, and no option to pick
+ *                  (nothing active, an empty list, or a `stale` list that
+ *                  answers an older query): the caller asks `oncustom(text)`
+ *                  for an entry. A stale list without `allowCustom` blocks.
+ * - `refuse`       a pick or a custom entry at `max` (`onrefuse('max')`).
+ *                  Picking an option that is already a chip removes it, so
+ *                  that pick is allowed at `max` (`activeSelected`).
+ *
+ * @param {string} key  KeyboardEvent.key
+ * @param {{ open: boolean, count: number, active: number, query?: string,
+ *   values?: unknown[], max?: number, allowCustom?: boolean,
+ *   activeSelected?: boolean, composing?: boolean, stale?: boolean }} state
+ * @returns {{ action: 'none'|'open'|'move'|'pick'|'dismiss'|'block'|'remove-last'|'custom'|'refuse', active?: number, reason?: 'max' }}
+ */
+export function multipleKey(
+  key,
+  {
+    open,
+    count,
+    active,
+    query = "",
+    values = [],
+    max = Infinity,
+    allowCustom = false,
+    activeSelected = false,
+    composing = false,
+    stale = false,
+  },
+) {
+  if (composing) return { action: "none" };
+  const text = String(query ?? "");
+  // Only typed text makes a list stale: an empty field's list is the default one.
+  const behind = stale && text.trim() !== "";
+  const full = values.length >= max;
+
+  if (key === "Backspace") {
+    return text === "" && values.length > 0
+      ? { action: "remove-last" }
+      : { action: "none" };
+  }
+
+  const base = comboboxKey(key, { open, count, active, stale: behind });
+  if (base.action === "pick") {
+    return full && !activeSelected ? { action: "refuse", reason: "max" } : base;
+  }
+  if (
+    key === "Enter" &&
+    allowCustom &&
+    text.trim() !== "" &&
+    (!open || active < 0 || count === 0 || behind)
+  ) {
+    return full ? { action: "refuse", reason: "max" } : { action: "custom" };
+  }
+  return base;
+}
+
+/**
+ * Whether `entry` is among `values` by `getKey` (multiple mode's selected test).
+ * @param {unknown[]} values
+ * @param {unknown} entry
+ * @param {(item: any) => unknown} getKey
+ */
+export function hasEntry(values, entry, getKey) {
+  const key = getKey(entry);
+  return values.some((v) => getKey(v) === key);
 }

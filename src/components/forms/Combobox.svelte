@@ -1,4 +1,4 @@
-<!-- file-size: justified -- one widget: the APG combobox's input wiring, popup and dismiss handling share one open/active state; the key and debounce decisions are already split into combobox.rules.js, and the rest is CSS. -->
+<!-- file-size: justified -- one widget: the APG combobox's input wiring, popup, dismiss handling and the multiple mode's chips share one open/active/values state; the key and debounce decisions are already split into combobox.rules.js, and the rest is CSS. -->
 <!--
   @component Combobox
 
@@ -18,18 +18,42 @@
   `onpick(item)` closes the list unless it returns `false` synchronously —
   keep it open to browse into a branch (the consumer swaps `items`).
 
+  `multiple` (chips): picks accumulate in the bindable `values` and show as
+  chips inside the field's frame (a `role="group"` labelled `chipLabel`); the
+  field clears after each pick and the list stays open. Picking an option that
+  is already a chip removes it (its row carries the check). Backspace in an
+  empty field removes the last chip. At `max` chips a pick is refused
+  (`onrefuse('max')`) and the field goes readonly. With `allowCustom`, Enter
+  on typed text and no option to pick adds what `oncustom(text)` returns
+  (`false` adds nothing). Enter while typed text is still in the debounce or
+  `loading` never picks the older list's first option: it adds the text
+  (`allowCustom`) or does nothing — so set `loading` while a query is out. `onpick` fires for every pick; in multiple mode
+  returning `false` vetoes it. A `chip(entry, remove)` snippet replaces the
+  default chip (label + remove button). `value` is ignored in multiple mode.
+
   @example
   <Combobox bind:query bind:open {items} {loading} value={picked?.id}
     label="Categories" onquery={search} onopen={() => search('')}
     onpick={(node) => (picked = node)}>
     {#snippet item(node, active)}{node.name}{/snippet}
   </Combobox>
+
+  @example Multiple
+  <Combobox multiple bind:values bind:query {items} max={4} allowCustom
+    getKey={(m) => m.key ?? m.label} label="Material" chipLabel="Materials"
+    onquery={search} oncustom={(text) => ({ key: null, label: text })} />
 -->
 <script>
   import SearchInput from './SearchInput.svelte';
   import { clickOutside } from '../../actions/index.js';
   import { cn } from '../../utils/cn.svelte.js';
-  import { comboboxKey, createQueryDebouncer, resultsMessage } from './combobox.rules.js';
+  import {
+    comboboxKey,
+    multipleKey,
+    hasEntry,
+    createQueryDebouncer,
+    resultsMessage
+  } from './combobox.rules.js';
 
   let {
     query = $bindable(''),
@@ -53,6 +77,17 @@
     onpick = undefined,
     onopen = undefined,
     ondismiss = undefined,
+    multiple = false,
+    values = $bindable([]),
+    getLabel = (entry) => entry?.label ?? entry?.name ?? '',
+    max = Infinity,
+    allowCustom = false,
+    chipLabel = 'Selected',
+    chip: chipSnippet = undefined,
+    onadd = undefined,
+    onremove = undefined,
+    oncustom = undefined,
+    onrefuse = undefined,
     ...rest
   } = $props();
 
@@ -74,6 +109,12 @@
     open && !disabled && (items.length > 0 || showEmpty || Boolean(header))
   );
   const activeId = $derived(popupVisible && active >= 0 ? optionId(active) : undefined);
+
+  // Multiple mode: `values` is the chip list; `full` refuses further picks.
+  const chips = $derived(multiple && Array.isArray(values) ? values : []);
+  const full = $derived(multiple && chips.length >= max);
+  const isSelected = (entry) =>
+    multiple ? hasEntry(chips, entry, getKey) : value != null && getKey(entry) === value;
 
   const debouncer = createQueryDebouncer(
     (text) => onquery?.(text),
@@ -111,8 +152,67 @@
 
   function pick(entry) {
     if (entry === undefined) return;
+    if (multiple) return pickMany(entry);
     const keepOpen = onpick?.(entry) === false;
     if (!keepOpen) open = false;
+  }
+
+  /** The field empties after a chip change and the consumer is told at once
+      (it swaps in its default list); the list stays open. */
+  function resetQuery() {
+    query = '';
+    debouncer.push('');
+  }
+
+  function addEntry(entry) {
+    values = [...chips, entry];
+    onadd?.(entry);
+  }
+
+  function removeEntry(entry) {
+    if (entry === undefined) return;
+    const key = getKey(entry);
+    values = chips.filter((v) => getKey(v) !== key);
+    onremove?.(entry);
+  }
+
+  /** Multiple mode: a picked chip toggles off; a new one is added under `max`. */
+  function pickMany(entry) {
+    const selected = hasEntry(chips, entry, getKey);
+    if (!selected && full) {
+      onrefuse?.('max');
+      return;
+    }
+    if (onpick?.(entry) === false) return;
+    if (selected) removeEntry(entry);
+    else addEntry(entry);
+    resetQuery();
+  }
+
+  function addCustom(text) {
+    if (full) {
+      onrefuse?.('max');
+      return;
+    }
+    const entry = oncustom?.(text.trim());
+    if (!entry) return;
+    if (!hasEntry(chips, entry, getKey)) addEntry(entry);
+    resetQuery();
+  }
+
+  /** A chip's remove button: the field keeps focus, the chip goes. */
+  function removeChip(entry) {
+    removeEntry(entry);
+    refocus();
+  }
+
+  /** A press on the frame outside the field and the chips' buttons must not
+      take focus from the field (a chip is not a control). */
+  function onFrameMousedown(e) {
+    const target = /** @type {HTMLElement} */ (e.target);
+    if (target === inputEl || target.closest?.('button')) return;
+    e.preventDefault();
+    if (!disabled && inputEl && document.activeElement !== inputEl) inputEl.focus();
   }
 
   /** Focus back to the field without that focus reading as "open the list". */
@@ -136,12 +236,29 @@
     if (disabled) return;
     // Keys from the header's own controls are theirs, except Escape.
     if (e.target !== inputEl && e.key !== 'Escape') return;
-    const decision = comboboxKey(e.key, {
-      open,
-      count: items.length,
-      active,
-      composing: e.isComposing
-    });
+    // The list on screen answers an older query while typed text is still in the
+    // debounce or loading: Enter must not pick its first option (combobox.rules.js).
+    const stale = query.trim() !== '' && (debouncer.pending || loading);
+    const decision = multiple
+      ? multipleKey(e.key, {
+          open,
+          count: items.length,
+          active,
+          query,
+          values: chips,
+          max,
+          allowCustom,
+          activeSelected: active >= 0 && active < items.length && isSelected(items[active]),
+          composing: e.isComposing,
+          stale
+        })
+      : comboboxKey(e.key, {
+          open,
+          count: items.length,
+          active,
+          composing: e.isComposing,
+          stale
+        });
     switch (decision.action) {
       case 'open':
         e.preventDefault();
@@ -164,6 +281,18 @@
         break;
       case 'block':
         e.preventDefault();
+        break;
+      case 'remove-last':
+        e.preventDefault();
+        removeEntry(chips.at(-1));
+        break;
+      case 'custom':
+        e.preventDefault();
+        addCustom(query);
+        break;
+      case 'refuse':
+        e.preventDefault();
+        onrefuse?.(decision.reason ?? 'max');
         break;
     }
   }
@@ -221,32 +350,85 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   bind:this={rootEl}
-  class={cn('combobox', `combobox-${size}`, className)}
+  class={cn('combobox', `combobox-${size}`, multiple && 'combobox-multiple', className)}
   use:clickOutside={dismiss}
   onkeydowncapture={onKeydownCapture}
   onfocusout={onFocusout}
 >
-  <SearchInput
-    {...rest}
-    {id}
-    {size}
-    {placeholder}
-    {disabled}
-    {loading}
-    bind:value={query}
-    bind:inputEl
-    role="combobox"
-    aria-expanded={popupVisible}
-    aria-controls={listboxId}
-    aria-autocomplete="list"
-    aria-activedescendant={activeId}
-    autocomplete="off"
-    spellcheck="false"
-    oninput={onInput}
-    onfocus={onFocus}
-    onclick={onClick}
-    onclear={onClear}
-  />
+  {#if multiple}
+    <!-- The frame owns the one border; a press on it (not on the field or a
+         chip's button) keeps focus in the field. -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="combobox-frame" class:disabled onmousedown={onFrameMousedown}>
+      {#if chips.length > 0}
+        <div class="combobox-chips" role="group" aria-label={chipLabel}>
+          {#each chips as entry (getKey(entry))}
+            {#if chipSnippet}
+              {@render chipSnippet(entry, () => removeChip(entry))}
+            {:else}
+              <span class="combobox-chip">
+                <span class="combobox-chip-text">{getLabel(entry)}</span>
+                {#if !disabled}
+                  <button
+                    type="button"
+                    class="combobox-chip-remove"
+                    aria-label="Remove {getLabel(entry)}"
+                    onclick={() => removeChip(entry)}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                  </button>
+                {/if}
+              </span>
+            {/if}
+          {/each}
+        </div>
+      {/if}
+      <SearchInput
+        {...rest}
+        {id}
+        {size}
+        placeholder={full ? '' : placeholder}
+        {disabled}
+        {loading}
+        bind:value={query}
+        bind:inputEl
+        role="combobox"
+        aria-expanded={popupVisible}
+        aria-controls={listboxId}
+        aria-autocomplete="list"
+        aria-activedescendant={activeId}
+        autocomplete="off"
+        spellcheck="false"
+        readonly={full ? true : rest.readonly}
+        oninput={onInput}
+        onfocus={onFocus}
+        onclick={onClick}
+        onclear={onClear}
+      />
+    </div>
+  {:else}
+    <SearchInput
+      {...rest}
+      {id}
+      {size}
+      {placeholder}
+      {disabled}
+      {loading}
+      bind:value={query}
+      bind:inputEl
+      role="combobox"
+      aria-expanded={popupVisible}
+      aria-controls={listboxId}
+      aria-autocomplete="list"
+      aria-activedescendant={activeId}
+      autocomplete="off"
+      spellcheck="false"
+      oninput={onInput}
+      onfocus={onFocus}
+      onclick={onClick}
+      onclear={onClear}
+    />
+  {/if}
 
   <div class="combobox-popup" hidden={!popupVisible}>
     {#if popupVisible && header}
@@ -262,6 +444,7 @@
       id={listboxId}
       role="listbox"
       aria-label={label}
+      aria-multiselectable={multiple || undefined}
       class="combobox-list"
       onmousedown={(e) => e.preventDefault()}
       onpointermove={onListPointermove}
@@ -269,7 +452,7 @@
     >
       {#if popupVisible}
         {#each items as entry, index (getKey(entry))}
-          {@const selected = value != null && getKey(entry) === value}
+          {@const selected = isSelected(entry)}
           <li
             id={optionId(index)}
             role="option"
@@ -306,6 +489,123 @@
   .combobox {
     position: relative;
     width: 100%;
+  }
+
+  /* Multiple mode: one bordered frame holds the chips and the field (the
+     form-border standard — the wrapper owns the border, the field inside has
+     none). The field takes what is left of the row and wraps under the chips
+     when the row is full. */
+  .combobox-frame {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-2);
+    min-height: 2rem;
+    padding-inline: var(--space-2);
+    padding-block: var(--space-1);
+    background: var(--color-base00);
+    border: var(--border-width-default) solid var(--color-base02);
+    border-radius: var(--radius-default);
+    cursor: text;
+    transition: var(--transition-colors);
+  }
+
+  .combobox-xs .combobox-frame {
+    min-height: 1.625rem;
+    padding-block: 0;
+  }
+
+  .combobox-md .combobox-frame {
+    min-height: 2.5rem;
+  }
+
+  .combobox-frame:focus-within {
+    border-color: var(--color-base0D);
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .combobox-frame.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .combobox-frame :global(.search-input) {
+    flex: 1 1 6rem;
+    min-width: 6rem;
+    width: auto;
+  }
+
+  /* Specificity above SearchInput's `.search-input-sm .search-field` (hashed),
+     whatever order the two stylesheets load in. */
+  .combobox-multiple .combobox-frame :global(.search-input .search-field),
+  .combobox-multiple .combobox-frame :global(.search-input .search-field:focus-visible) {
+    height: 1.5rem;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .combobox-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    min-width: 0;
+  }
+
+  /* Default chip: TagInput's chip sizing, accent tint. */
+  .combobox-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-width: 0;
+    max-width: 100%;
+    height: 1.5rem;
+    padding-inline: var(--space-3) var(--space-1);
+    border-radius: var(--radius-full, 9999px);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-base05);
+    background: color-mix(in srgb, var(--color-base0D) 12%, var(--color-base00));
+    cursor: default;
+  }
+
+  .combobox-chip-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .combobox-chip-remove {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 1.125rem;
+    height: 1.125rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-full, 9999px);
+    background: transparent;
+    color: var(--color-base04);
+    cursor: pointer;
+    transition: var(--transition-colors);
+  }
+
+  .combobox-chip-remove:hover {
+    color: var(--color-base06);
+    background: color-mix(in srgb, var(--color-base0D) 20%, var(--color-base00));
+  }
+
+  .combobox-chip-remove:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow);
+  }
+
+  .combobox-chip-remove svg {
+    width: 0.625rem;
+    height: 0.625rem;
   }
 
   /* Under the field, its full width. A clipping ancestor (overflow: hidden)
@@ -412,6 +712,13 @@
     .combobox-xs .combobox-option,
     .combobox-md .combobox-option {
       min-height: 2.75rem;
+    }
+
+    /* A 44px hit area around the small remove glyph, without growing the chip. */
+    .combobox-chip-remove::after {
+      content: '';
+      position: absolute;
+      inset: -0.8125rem;
     }
   }
 
