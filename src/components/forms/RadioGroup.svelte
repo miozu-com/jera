@@ -13,7 +13,7 @@
     {/snippet}
   </RadioGroup>
 
-  @example Segmented (one compact control, 28px; full width with `block`)
+  @example Segmented (one compact control, 32px like `Input size="sm"`; full width with `block`)
   <RadioGroup bind:value={mode} name="mode" variant="segmented" aria-label="Mode">
     {#snippet children(group)}
       <Radio {group} value="resale" label="Resale" />
@@ -94,7 +94,7 @@
   .radio-group-segmented {
     display: inline-flex;
     align-items: stretch;
-    height: 1.75rem;
+    height: 2rem;
     padding: 0.125rem;
     gap: 0.125rem;
     border: var(--border-width-default) solid var(--color-base02);

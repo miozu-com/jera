@@ -25,6 +25,9 @@
 
   @example With type-ahead suggestions (native datalist, no popover code)
   <TagInput bind:tags={materials} suggestions={['cotton', 'mesh fabric', 'polyester']} />
+
+  @example Soft chips beside other chip fields (a quiet 12% accent tint, body text)
+  <TagInput bind:tags={words} size="sm" tone="soft" placeholder="Any" filledPlaceholder="Add another" />
 -->
 <script>
   import { tagRejection } from './tagInput.rules.js';
@@ -32,10 +35,19 @@
   let {
     tags = $bindable([]),
     placeholder = 'Add tag...',
+    /** The field's words once it holds a tag (e.g. `Add another`). Unset, the
+        placeholder stays as it is; a placeholder such as `Any` would read as a
+        value beside the chips, so a form that writes `Any` sets this. */
+    filledPlaceholder = null,
     label = 'Tag input',
     inputLabel = null,
     variant = 'default',
     size = 'md',
+    /** `tint`: the chip in its variant colour at 15% with variant-coloured
+        text. `soft`: a 12% accent tint on the surface with body text — the
+        chip a checklist or combobox field draws, so word lists beside them
+        read as the same chip. */
+    tone = 'tint',
     maxTags = Infinity,
     maxTagLength = Infinity,
     disabled = false,
@@ -63,6 +75,10 @@
 
   const atLimit = $derived(tags.length >= maxTags);
   const fieldLabel = $derived(inputLabel || placeholder || 'Add tag');
+  /** The visible placeholder: `filledPlaceholder` once a tag is in, when set. */
+  const shownPlaceholder = $derived(
+    tags.length > 0 && filledPlaceholder != null ? filledPlaceholder : placeholder
+  );
 
   /**
    * The length of what the field is holding, measured as `addTag` measures it.
@@ -134,6 +150,7 @@
   class:tag-input-disabled={disabled}
   class:tag-input-invalid={overLength}
   style="--_variant-color: {variantColor}"
+  data-tone={tone === 'soft' ? 'soft' : undefined}
   role="group"
   aria-label={label}
   onclick={() => inputRef?.focus()}
@@ -167,7 +184,7 @@
       bind:this={inputRef}
       bind:value={inputValue}
       onkeydown={handleKeydown}
-      placeholder={atLimit ? '' : placeholder}
+      placeholder={atLimit ? '' : shownPlaceholder}
       readonly={atLimit}
       aria-label={fieldLabel}
       aria-invalid={overLength || undefined}
@@ -235,16 +252,18 @@
 
   /* Size scale: chip padding/font and the row's own min-height, `md` matching
      the unscaled rule above. `sm` is for a table cell or a compact facts row
-     beside `Input size="sm"`. */
+     beside `Input size="sm"`: one line of 1.5rem chips is exactly the 2rem of
+     the inputs beside it (1px borders + 0.25rem padding-block). */
   .tag-input-sm {
     gap: 0.25rem;
-    padding: 0.25rem 0.375rem;
+    padding: var(--space-1, 0.125rem) 0.375rem;
     min-height: 2rem;
   }
 
   .tag-input-sm .tag-chip {
-    padding: 0.0625rem 0.375rem;
-    font-size: var(--text-2xs);
+    height: 1.5rem;
+    padding: 0 var(--space-1, 0.125rem) 0 var(--space-3, 0.375rem);
+    font-size: var(--text-xs, 0.75rem);
   }
 
   .tag-input-sm .tag-field {
@@ -265,6 +284,22 @@
        row it shares with other chips — the row wraps, not this one chip. */
     min-width: 0;
     max-width: 100%;
+  }
+
+  /* Soft: the surface a checklist or combobox chip paints — a 12% accent tint
+     on base00, body text, a quiet remove glyph. */
+  [data-tone='soft'] .tag-chip {
+    background: color-mix(in srgb, var(--color-base0D) 12%, var(--color-base00));
+    color: var(--color-base05);
+  }
+
+  [data-tone='soft'] .tag-remove {
+    color: var(--color-base04);
+  }
+
+  [data-tone='soft'] .tag-remove:hover {
+    color: var(--color-base06);
+    background: color-mix(in srgb, var(--color-base0D) 20%, var(--color-base00));
   }
 
   .tag-chip-text {
