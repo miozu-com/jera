@@ -335,7 +335,8 @@
   /* Warning - Yellow/amber accent */
   .warning {
     background-color: color-mix(in srgb, var(--color-base0A) 10%, transparent);
-    color: var(--color-base0A);
+    /* Text in the tone text token: base0A on its own tint is 3.3:1 in light. */
+    color: var(--tone-fair-text, var(--color-base0A));
     border: var(--border-width-thin) solid color-mix(in srgb, var(--color-base0A) 40%, transparent);
   }
 

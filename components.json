@@ -90,8 +90,8 @@
       "events": ["onclick"],
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 14,
-      "lastReviewed": "2026-10-20",
+      "revision": 15,
+      "lastReviewed": "2026-10-24",
       "breaking": [
         {
           "revision": 10,
