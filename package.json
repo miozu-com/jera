@@ -82,7 +82,7 @@
     }
   },
   "devDependencies": {
-    "svelte": "^5.57.0"
+    "svelte": "^5.57.3"
   },
   "keywords": [
     "svelte",
