@@ -1,0 +1,3316 @@
+{
+  "schemaVersion": "2.0.0",
+  "library": "@miozu/jera",
+  "description": "Zero-dependency, AI-first component library for Svelte 5",
+  "framework": "svelte5",
+  "cssSystem": "scoped-css-base16",
+  "totalComponents": 90,
+  "stageDefinitions": {
+    "draft": "Under development, API may change",
+    "beta": "Functional, not yet in production consumers",
+    "stable": "Production-ready, used by consumers",
+    "deprecated": "Replaced, will be removed"
+  },
+  "docLevelDefinitions": {
+    "none": "No docs page",
+    "minimal": "Playground + props table",
+    "standard": "Playground + header + variants + props + usage examples",
+    "complete": "Standard + design guidance + component-specific demos"
+  },
+  "components": [
+    {
+      "name": "Button",
+      "category": "primitives",
+      "path": "src/components/primitives/Button.svelte",
+      "description": "Primary action trigger, polymorphic (a/button)",
+      "props": {
+        "variant": {
+          "type": "'primary'|'secondary'|'outline'|'ghost'|'success'|'danger'|'warning'|'info'",
+          "default": "'primary'",
+          "description": "Visual style variant"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Button size"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable interactions"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show default spinner (simple mode)"
+        },
+        "loader": {
+          "type": "{active, icon?, text?, style?, position?}",
+          "default": "null",
+          "description": "Rich loading state — replaces content with custom icon/text. icon is a snippet, position is 'left'|'right'"
+        },
+        "icon": {
+          "type": "{icon, position?}",
+          "default": "null",
+          "description": "Structured icon placement — icon is a snippet, position is 'left'|'right' (default left)"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Expand to full container width"
+        },
+        "href": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Renders as <a> tag when set"
+        },
+        "type": {
+          "type": "string",
+          "default": "'button'",
+          "description": "HTML button type attribute"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 5,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Badge",
+      "category": "primitives",
+      "path": "src/components/primitives/Badge.svelte",
+      "description": "Status tag with semantic color variants, optional indicator dot, and icon support. Bordered tinted style (10% bg, 30% border, 2px radius).",
+      "props": {
+        "variant": {
+          "type": "'default'|'primary'|'secondary'|'success'|'warning'|'error'|'info'",
+          "default": "'default'",
+          "description": "Color variant"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Badge size"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Convenience text content (used when no children)"
+        },
+        "indicator": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show colored dot matching variant color"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the badge element"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-05",
+      "breaking": [
+        "v2: Removed iconLeft/iconRight snippets, clickable prop. Changed from pill (9999px) to 4px radius with 1px border.",
+        "v3: Changed border-radius from 4px (radius-default) to 2px (radius-sm)."
+      ],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Divider",
+      "category": "primitives",
+      "path": "src/components/primitives/Divider.svelte",
+      "description": "Visual separator with optional label",
+      "props": {
+        "orientation": {
+          "type": "'horizontal'|'vertical'",
+          "default": "'horizontal'",
+          "description": "Divider direction"
+        },
+        "thickness": {
+          "type": "string",
+          "default": "'1px'",
+          "description": "Line thickness"
+        },
+        "spacing": {
+          "type": "string",
+          "default": "'1rem'",
+          "description": "Margin around divider"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Avatar",
+      "category": "primitives",
+      "path": "src/components/primitives/Avatar.svelte",
+      "description": "User avatar with image, algorithmic Truchet fallback, initials, and status indicator",
+      "props": {
+        "src": {
+          "type": "string",
+          "default": "''",
+          "description": "Image URL"
+        },
+        "seed": {
+          "type": "string",
+          "default": "''",
+          "description": "Seed for algorithmic fallback"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Used for initials fallback and alt text"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'|'xl'|'2xl'",
+          "default": "'md'",
+          "description": "Avatar size"
+        },
+        "status": {
+          "type": "null|'online'|'offline'|'busy'|'away'",
+          "default": "null",
+          "description": "Status indicator dot"
+        },
+        "radius": {
+          "type": "number|string",
+          "default": "4",
+          "description": "Border radius in px (number) or CSS value (string, e.g. '50%')"
+        },
+        "alt": {
+          "type": "string",
+          "default": "''",
+          "description": "Alt text for img element (falls back to name)"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Custom CSS class"
+        }
+      },
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "breaking": [],
+      "docLevel": "complete"
+    },
+    {
+      "name": "Stat",
+      "category": "primitives",
+      "path": "src/components/primitives/Stat.svelte",
+      "description": "Metric display with optional progress bar",
+      "props": {
+        "value": {
+          "type": "string|number",
+          "required": true,
+          "description": "Metric value"
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "description": "Metric label"
+        },
+        "status": {
+          "type": "''|'success'|'warning'|'error'|'info'",
+          "default": "''",
+          "description": "Status color"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Display size"
+        },
+        "showBar": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show progress bar below value"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Description text below the value (alias for secondary, takes priority)"
+        }
+      },
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "ThemeToggle",
+      "category": "primitives",
+      "path": "src/components/primitives/ThemeToggle.svelte",
+      "description": "Animated sun/moon theme switcher",
+      "props": {
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Toggle button size"
+        },
+        "variant": {
+          "type": "'ghost'|'outline'|'subtle'",
+          "default": "'ghost'",
+          "description": "Button style"
+        }
+      },
+      "consumers": [
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "ThemeSelect",
+      "category": "primitives",
+      "path": "src/components/primitives/ThemeSelect.svelte",
+      "description": "Three-option theme selector (light/dark/system)",
+      "props": {
+        "variant": {
+          "type": "'segmented'|'dropdown'",
+          "default": "'segmented'",
+          "description": "Selector style"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Control size"
+        }
+      },
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Input",
+      "category": "forms",
+      "path": "src/components/forms/Input.svelte",
+      "description": "Flexible text input with full browser feature control, error states, and aria-invalid accessibility",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Input value (bindable)"
+        },
+        "ref": {
+          "type": "HTMLInputElement",
+          "bindable": true,
+          "description": "DOM element reference (bindable)"
+        },
+        "type": {
+          "type": "string",
+          "default": "'text'",
+          "description": "HTML input type (text, email, password, number, tel, url, search)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark as required"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state with red border and aria-invalid"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form field name"
+        },
+        "id": {
+          "type": "string",
+          "default": "''",
+          "description": "Element ID"
+        },
+        "maxlength": {
+          "type": "number",
+          "description": "Maximum character count"
+        },
+        "minlength": {
+          "type": "number",
+          "description": "Minimum character count"
+        },
+        "inputmode": {
+          "type": "string",
+          "description": "Virtual keyboard hint (numeric, tel, email, url, search)"
+        },
+        "autocomplete": {
+          "type": "string",
+          "default": "'on'",
+          "description": "Browser autocomplete behavior"
+        },
+        "disableBrowserFeatures": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable autofill, autocorrect, autocapitalize, and spellcheck"
+        },
+        "unstyled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Remove default styling"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes"
+        }
+      },
+      "events": [
+        "oninput",
+        "onchange",
+        "onkeydown",
+        "onfocus",
+        "onblur"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Textarea",
+      "category": "forms",
+      "path": "src/components/forms/Textarea.svelte",
+      "description": "Multiline text input with optional auto-resize",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Textarea value (bindable)"
+        },
+        "rows": {
+          "type": "number",
+          "default": "3",
+          "description": "Number of visible rows"
+        },
+        "autoResize": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Auto-grow with content"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
+      },
+      "events": [
+        "oninput",
+        "onchange"
+      ],
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Select",
+      "category": "forms",
+      "path": "src/components/forms/Select.svelte",
+      "description": "Native select element styled with base16 tokens",
+      "props": {
+        "options": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {value, label} objects"
+        },
+        "value": {
+          "type": "any",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected value (bindable)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Select...'",
+          "description": "Placeholder when no selection"
+        },
+        "labelKey": {
+          "type": "string",
+          "default": "'label'",
+          "description": "Key to use for option display text"
+        },
+        "valueKey": {
+          "type": "string",
+          "default": "'value'",
+          "description": "Key to use for option value"
+        },
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Select size"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable selection"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id attribute"
+        },
+        "name": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Form field name (native select handles submission)"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark field as required"
+        }
+      },
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 6,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Checkbox",
+      "category": "forms",
+      "path": "src/components/forms/Checkbox.svelte",
+      "description": "Checkbox with label via children snippet",
+      "props": {
+        "checked": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Checked state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable checkbox"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Switch",
+      "category": "forms",
+      "path": "src/components/forms/Switch.svelte",
+      "description": "Accessible toggle switch for boolean values with smooth CSS transitions",
+      "props": {
+        "checked": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Toggle state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable toggle"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Switch size"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form input name attribute"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id (auto-generated if omitted)"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Label text displayed next to the switch (alternative to children snippet)"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Secondary description text below the label"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the wrapper label"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 5,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "SearchInput",
+      "category": "forms",
+      "path": "src/components/forms/SearchInput.svelte",
+      "description": "Search field with icon, clear button, loading state",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Search value (bindable)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Search...'",
+          "description": "Placeholder text"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show loading spinner"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Input size"
+        },
+        "id": {
+          "type": "string",
+          "default": "undefined",
+          "description": "HTML id attribute"
+        },
+        "name": {
+          "type": "string",
+          "default": "undefined",
+          "description": "Form field name"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mark field as required"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error border state"
+        }
+      },
+      "events": [
+        "oninput",
+        "onchange",
+        "onclear"
+      ],
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Toast",
+      "category": "feedback",
+      "path": "src/components/feedback/Toast.svelte",
+      "description": "Enterprise toast system — singleton state, dual progress (ring/bar), pause-on-hover, Svelte transitions, popover top-layer",
+      "statePattern": "singleton: getToastState()",
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 7,
+      "lastReviewed": "2026-03-28",
+      "breaking": [
+        {
+          "revision": 5,
+          "change": "Convenience methods changed from (message, options?) to (title, messageOrOptions?, options?). Context API deprecated in favor of getToastState() singleton."
+        }
+      ],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Alert",
+      "category": "feedback",
+      "path": "src/components/feedback/Alert.svelte",
+      "description": "Inline alert with icon and actions",
+      "props": {
+        "variant": {
+          "type": "'info'|'success'|'warning'|'error'",
+          "default": "'info'",
+          "description": "Alert color and icon"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Alert title"
+        },
+        "dismissible": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show close button"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Alert size"
+        }
+      },
+      "snippets": [
+        "children",
+        "icon",
+        "actions"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Spinner",
+      "category": "feedback",
+      "path": "src/components/feedback/Spinner.svelte",
+      "description": "Loading indicator",
+      "props": {
+        "size": {
+          "type": "'xs'|'sm'|'md'|'lg'|'xl'",
+          "default": "'md'",
+          "description": "Spinner size"
+        },
+        "color": {
+          "type": "string",
+          "default": "'currentColor'",
+          "description": "Spinner color"
+        }
+      },
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-07",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "EmptyState",
+      "category": "feedback",
+      "path": "src/components/feedback/EmptyState.svelte",
+      "description": "Empty data placeholder",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "'No data found'",
+          "description": "Title text"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Description text"
+        },
+        "size": {
+          "type": "'default'|'compact'|'large'",
+          "default": "'default'",
+          "description": "Display size"
+        }
+      },
+      "snippets": [
+        "icon",
+        "actions"
+      ],
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Skeleton",
+      "category": "feedback",
+      "path": "src/components/feedback/Skeleton.svelte",
+      "description": "Loading placeholder with shimmer animation. Variant mode for primitives, preset mode for layout patterns.",
+      "props": {
+        "variant": {
+          "type": "'text'|'heading'|'circle'|'rect'",
+          "default": "'text'",
+          "description": "Shape variant (ignored when preset is set)"
+        },
+        "preset": {
+          "type": "'card'|'content'|'toc'|null",
+          "default": "null",
+          "description": "Layout preset pattern"
+        },
+        "width": {
+          "type": "string",
+          "default": "'100%'",
+          "description": "CSS width"
+        },
+        "height": {
+          "type": "string",
+          "default": "null",
+          "description": "CSS height override"
+        },
+        "size": {
+          "type": "string",
+          "default": "null",
+          "description": "Width and height for circle variant"
+        },
+        "lines": {
+          "type": "number",
+          "default": "1",
+          "description": "Number of lines (text variant or content/toc preset)"
+        },
+        "animate": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Enable shimmer animation"
+        }
+      },
+      "consumers": [
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "ProgressBar",
+      "category": "feedback",
+      "path": "src/components/feedback/ProgressBar.svelte",
+      "description": "Determinate/indeterminate progress indicator",
+      "props": {
+        "value": {
+          "type": "number",
+          "default": "0",
+          "description": "Current progress value"
+        },
+        "max": {
+          "type": "number",
+          "default": "100",
+          "description": "Maximum value"
+        },
+        "variant": {
+          "type": "'primary'|'success'|'warning'|'error'|'info'",
+          "default": "'primary'",
+          "description": "Color variant"
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show indeterminate animation"
+        }
+      },
+      "consumers": [
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-07",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Modal",
+      "category": "overlays",
+      "path": "src/components/overlays/Modal.svelte",
+      "description": "Dialog overlay with variants and fill mode",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Modal visibility (bindable)"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Modal title"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'|'xl'|'full'",
+          "default": "'md'",
+          "description": "Dialog width"
+        },
+        "variant": {
+          "type": "'default'|'danger'|'warning'|'success'|'info'",
+          "default": "'default'",
+          "description": "Title color variant"
+        },
+        "fill": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Anchor to stable height (80dvh)"
+        },
+        "closeOnBackdrop": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close when clicking backdrop"
+        },
+        "closeOnEscape": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close on Escape key"
+        }
+      },
+      "snippets": [
+        "children",
+        "footer",
+        "icon"
+      ],
+      "events": [
+        "onclose"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Popover",
+      "category": "overlays",
+      "path": "src/components/overlays/Popover.svelte",
+      "description": "Hover popover with CSS Anchor Positioning",
+      "props": {
+        "content": {
+          "type": "string",
+          "default": "''",
+          "description": "Popover text content"
+        },
+        "position": {
+          "type": "'top'|'bottom'|'left'|'right'",
+          "default": "'top'",
+          "description": "Popover position"
+        },
+        "offset": {
+          "type": "number",
+          "default": "8",
+          "description": "Distance from trigger (px)"
+        }
+      },
+      "snippets": [
+        "children",
+        "content"
+      ],
+      "consumers": [
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "ConfirmDialog",
+      "category": "overlays",
+      "path": "src/components/overlays/ConfirmDialog.svelte",
+      "description": "Pre-built confirmation modal",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Dialog visibility (bindable)"
+        },
+        "title": {
+          "type": "string",
+          "default": "'Confirm Action'",
+          "description": "Dialog title"
+        },
+        "message": {
+          "type": "string",
+          "default": "'Are you sure?'",
+          "description": "Confirmation message"
+        },
+        "variant": {
+          "type": "'danger'|'warning'|'success'|'info'",
+          "default": "'danger'",
+          "description": "Color variant"
+        }
+      },
+      "events": [
+        "onconfirm",
+        "oncancel"
+      ],
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Tabs",
+      "category": "navigation",
+      "path": "src/components/navigation/Tabs.svelte",
+      "description": "Tab navigation with animated sliding indicator and configurable accent color",
+      "props": {
+        "tabs": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {id, label, badge?, icon?, disabled?, panelId?}"
+        },
+        "active": {
+          "type": "string",
+          "default": "null",
+          "bindable": true,
+          "description": "Active tab id (bindable)"
+        },
+        "variant": {
+          "type": "'default'|'segment'|'underline'|'pills'",
+          "default": "'default'",
+          "description": "Visual style variant"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Tab size"
+        },
+        "color": {
+          "type": "'primary'|'danger'|'warning'|'success'|'info'",
+          "default": "'primary'",
+          "description": "Accent color for indicator, focus ring, and active badge"
+        },
+        "fullWidth": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Stretch tabs to fill container width"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS classes on the tabs container"
+        }
+      },
+      "events": [
+        "onchange"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-02",
+      "breaking": [
+        "v3: Segment variant — removed box-shadow, simplified to base00 bg with base02 border. Added 2px inset padding around thumb."
+      ],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Accordion",
+      "category": "navigation",
+      "path": "src/components/navigation/Accordion.svelte",
+      "description": "Collapsible content sections",
+      "props": {
+        "expanded": {
+          "type": "array",
+          "default": "[]",
+          "bindable": true,
+          "description": "Array of expanded item ids (bindable)"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Allow multiple items open"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "AccordionItem",
+      "category": "navigation",
+      "path": "src/components/navigation/AccordionItem.svelte",
+      "description": "Expandable item with title and custom indicator",
+      "props": {
+        "id": {
+          "type": "string",
+          "default": "auto",
+          "description": "Unique item identifier"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Item header text"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable toggle"
+        },
+        "badge": {
+          "type": "string|number",
+          "default": "null",
+          "description": "Badge text in header"
+        }
+      },
+      "snippets": [
+        "children",
+        "leading",
+        "trailing",
+        "indicator"
+      ],
+      "consumers": [
+        "dash",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "NavBar",
+      "category": "navigation",
+      "path": "src/components/navigation/NavBar.svelte",
+      "description": "Horizontal mega-menu navigation bar",
+      "props": {
+        "brand": {
+          "type": "object",
+          "default": "{label:'Home'}",
+          "description": "Brand config: {icon, label, description, breadcrumbs}"
+        },
+        "sections": {
+          "type": "array",
+          "default": "[]",
+          "description": "Menu sections with items"
+        },
+        "subnavItems": {
+          "type": "array",
+          "default": "[]",
+          "description": "Sub-navigation items"
+        },
+        "sticky": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Stick to top of viewport"
+        }
+      },
+      "snippets": [
+        "actions",
+        "center",
+        "subnav",
+        "renderIcon"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LeftBar",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBar.svelte",
+      "description": "Collapsible sidebar with context and persistence",
+      "props": {
+        "collapsed": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Sidebar collapsed state (bindable)"
+        },
+        "persistKey": {
+          "type": "string",
+          "default": "null",
+          "description": "LocalStorage key for persistence"
+        },
+        "cookieKey": {
+          "type": "string",
+          "default": "null",
+          "description": "Cookie key for SSR persistence"
+        }
+      },
+      "snippets": [
+        "header",
+        "navigation",
+        "footer",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LeftBarSection",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBarSection.svelte",
+      "description": "Grouped navigation section with title",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Section title"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LeftBarItem",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBarItem.svelte",
+      "description": "Nav item with icon, badge, expandable subroutes",
+      "props": {
+        "href": {
+          "type": "string",
+          "default": "null",
+          "description": "Navigation URL"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Item label"
+        },
+        "icon": {
+          "type": "Component",
+          "default": "null",
+          "description": "Svelte icon component"
+        },
+        "active": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Active state"
+        },
+        "expandable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show expand arrow"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "subroutes": {
+          "type": "array",
+          "default": "[]",
+          "description": "Sub-navigation items"
+        },
+        "badge": {
+          "type": "string|number",
+          "default": "null",
+          "description": "Badge text"
+        },
+        "variant": {
+          "type": "'default'|'warning'|'danger'|'success'",
+          "default": "'default'",
+          "description": "Color variant"
+        }
+      },
+      "snippets": [
+        "leading",
+        "trailing",
+        "children"
+      ],
+      "consumers": [
+        "dash",
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LeftBarGroup",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBarGroup.svelte",
+      "description": "Dynamic item group with search and avatar support",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Group title"
+        },
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "Group items"
+        },
+        "expanded": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Expanded state (bindable)"
+        },
+        "searchable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Enable search filter"
+        },
+        "showAdd": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show add button"
+        }
+      },
+      "snippets": [
+        "item",
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LeftBarToggle",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBarToggle.svelte",
+      "description": "Sidebar collapse toggle, reads LeftBar context",
+      "consumers": [
+        "dash",
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard",
+      "props": {
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS class names"
+        }
+      }
+    },
+    {
+      "name": "DropdownContainer",
+      "category": "navigation",
+      "path": "src/components/navigation/DropdownContainer.svelte",
+      "description": "User account menu with theme toggle and sign out",
+      "props": {
+        "user": {
+          "type": "object",
+          "default": "null"
+        },
+        "themeState": {
+          "type": "ThemeState",
+          "default": "null"
+        },
+        "isCollapsed": {
+          "type": "boolean",
+          "default": "false"
+        }
+      },
+      "snippets": [
+        "userHeader",
+        "envSection",
+        "menuItems",
+        "footerContent",
+        "children"
+      ],
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "PageHeader",
+      "category": "layout",
+      "path": "src/components/layout/PageHeader.svelte",
+      "description": "Flexible page header with stats and action slots",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Page title"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Page description"
+        },
+        "stats": {
+          "type": "array",
+          "default": "[]",
+          "description": "Stat items: {label, value, variant?}"
+        },
+        "size": {
+          "type": "'default'|'compact'|'large'",
+          "default": "'default'",
+          "description": "Header size"
+        }
+      },
+      "snippets": [
+        "icon",
+        "actions",
+        "search",
+        "filters"
+      ],
+      "consumers": [
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "SettingCard",
+      "category": "layout",
+      "path": "src/components/layout/SettingCard.svelte",
+      "description": "Settings group card",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Card title"
+        },
+        "variant": {
+          "type": "'default'|'danger'",
+          "default": "'default'",
+          "description": "Card color variant"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "SettingItem",
+      "category": "layout",
+      "path": "src/components/layout/SettingItem.svelte",
+      "description": "Individual setting row",
+      "props": {
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Setting label"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Setting description"
+        }
+      },
+      "snippets": [
+        "leading",
+        "action"
+      ],
+      "consumers": [
+        "dash"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "BottomPanel",
+      "category": "layout",
+      "path": "src/components/layout/BottomPanel.svelte",
+      "description": "Slide-up panel with drag-to-resize",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Panel visibility (bindable)"
+        },
+        "minimized": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Minimized state (bindable)"
+        },
+        "height": {
+          "type": "number",
+          "default": "280",
+          "bindable": true,
+          "description": "Panel height in px (bindable)"
+        },
+        "minHeight": {
+          "type": "number",
+          "default": "120",
+          "description": "Minimum height"
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Enable drag-to-resize"
+        },
+        "offsetLeft": {
+          "type": "number",
+          "default": "0",
+          "description": "Left offset for sidebar clearance"
+        }
+      },
+      "snippets": [
+        "header",
+        "sidebar",
+        "children"
+      ],
+      "events": [
+        "onresize"
+      ],
+      "consumers": [
+        "dash",
+        "admin"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "CodeBlock",
+      "category": "docs",
+      "path": "src/components/docs/CodeBlock.svelte",
+      "description": "Syntax-highlighted code with Shiki and copy button",
+      "props": {
+        "code": {
+          "type": "string",
+          "default": "''",
+          "description": "Source code to highlight"
+        },
+        "lang": {
+          "type": "string",
+          "default": "'javascript'",
+          "description": "Language for syntax highlighting"
+        },
+        "filename": {
+          "type": "string",
+          "default": "''",
+          "description": "Filename shown in header bar"
+        },
+        "showLineNumbers": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show line numbers via CSS counters"
+        }
+      },
+      "consumers": [
+        "admin",
+        "miozu"
+      ],
+      "stage": "stable",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "IconInput",
+      "category": "forms",
+      "path": "src/components/forms/IconInput.svelte",
+      "description": "Input with leading/trailing icon slots, loading spinner, and clear button",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Input value (bindable)"
+        },
+        "type": {
+          "type": "string",
+          "default": "'text'",
+          "description": "HTML input type"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Input size"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show spinner in left icon slot"
+        },
+        "clearable": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show clear button when value present"
+        }
+      },
+      "snippets": [
+        "leftIcon",
+        "rightIcon"
+      ],
+      "events": [
+        "oninput",
+        "onchange",
+        "onclear"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "NumberInput",
+      "category": "forms",
+      "path": "src/components/forms/NumberInput.svelte",
+      "description": "Stepper input with decrement/increment buttons and min/max enforcement",
+      "props": {
+        "value": {
+          "type": "number",
+          "default": "0",
+          "bindable": true,
+          "description": "Numeric value (bindable)"
+        },
+        "min": {
+          "type": "number",
+          "default": "-Infinity",
+          "description": "Minimum allowed value"
+        },
+        "max": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Maximum allowed value"
+        },
+        "step": {
+          "type": "number",
+          "default": "1",
+          "description": "Increment/decrement step"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "''",
+          "description": "Placeholder text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Input size"
+        },
+        "error": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show error state"
+        }
+      },
+      "events": [
+        "oninput",
+        "onchange"
+      ],
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Radio",
+      "category": "forms",
+      "path": "src/components/forms/Radio.svelte",
+      "description": "Single radio button with animated dot indicator (use inside RadioGroup)",
+      "props": {
+        "value": {
+          "type": "any",
+          "required": true,
+          "description": "Option value for this radio"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Radio label text"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Help text below label"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable this option"
+        }
+      },
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "RadioGroup",
+      "category": "forms",
+      "path": "src/components/forms/RadioGroup.svelte",
+      "description": "Radio group container with context for child Radio components",
+      "props": {
+        "value": {
+          "type": "any",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected value (bindable)"
+        },
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Form field name"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable all radios"
+        },
+        "orientation": {
+          "type": "'vertical'|'horizontal'",
+          "default": "'vertical'",
+          "description": "Layout direction"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "events": [
+        "onchange"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "FileUpload",
+      "category": "forms",
+      "path": "src/components/forms/FileUpload.svelte",
+      "description": "Drag-and-drop upload zone with file list, size validation, and multi-file support",
+      "props": {
+        "accept": {
+          "type": "string",
+          "default": "'*'",
+          "description": "Accepted file types"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Allow multiple files"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable upload"
+        },
+        "maxSize": {
+          "type": "number|null",
+          "default": "null",
+          "description": "Max file size in bytes"
+        },
+        "label": {
+          "type": "string",
+          "default": "'Drop files here or click to upload'",
+          "description": "Zone label text"
+        },
+        "hint": {
+          "type": "string",
+          "default": "''",
+          "description": "Hint text below label"
+        }
+      },
+      "events": [
+        "onchange",
+        "onerror"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "RangeSlider",
+      "category": "forms",
+      "path": "src/components/forms/RangeSlider.svelte",
+      "description": "Styled range input with fill bar, labels, and custom value formatting",
+      "props": {
+        "value": {
+          "type": "number",
+          "default": "50",
+          "bindable": true,
+          "description": "Slider value (bindable)"
+        },
+        "min": {
+          "type": "number",
+          "default": "0",
+          "description": "Minimum value"
+        },
+        "max": {
+          "type": "number",
+          "default": "100",
+          "description": "Maximum value"
+        },
+        "step": {
+          "type": "number",
+          "default": "1",
+          "description": "Step increment"
+        },
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Label above slider"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable slider"
+        },
+        "showValues": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show min/max labels"
+        },
+        "showCurrentValue": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show current value"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Slider size"
+        }
+      },
+      "events": [
+        "oninput",
+        "onchange"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "PinInput",
+      "category": "forms",
+      "path": "src/components/forms/PinInput.svelte",
+      "description": "OTP/PIN code entry with per-digit inputs, auto-advance, and paste support",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "PIN value (bindable)"
+        },
+        "length": {
+          "type": "number",
+          "default": "4",
+          "description": "Number of digits"
+        },
+        "masked": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Mask input as password"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Input size"
+        }
+      },
+      "events": [
+        "oncomplete"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Dropzone",
+      "category": "forms",
+      "path": "src/components/forms/Dropzone.svelte",
+      "description": "Single-file drag-and-drop zone with file preview and type validation",
+      "props": {
+        "accept": {
+          "type": "string",
+          "default": "'*/*'",
+          "description": "Accepted MIME types"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Drag & drop a file here, or click to upload'",
+          "description": "Zone placeholder text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable upload"
+        }
+      },
+      "events": [
+        "ondrop"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Tooltip",
+      "category": "primitives",
+      "path": "src/components/primitives/Tooltip.svelte",
+      "description": "Hover/focus tooltip with arrow pointer, delay, and optional rich content snippet",
+      "props": {
+        "text": {
+          "type": "string",
+          "default": "''",
+          "description": "Tooltip text"
+        },
+        "position": {
+          "type": "'top'|'bottom'|'left'|'right'",
+          "default": "'top'",
+          "description": "Tooltip position"
+        },
+        "delay": {
+          "type": "number",
+          "default": "50",
+          "description": "Show delay in ms"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable tooltip"
+        }
+      },
+      "snippets": [
+        "children",
+        "content"
+      ],
+      "stage": "beta",
+      "revision": 4,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Card",
+      "category": "primitives",
+      "path": "src/components/primitives/Card.svelte",
+      "description": "Bordered container with optional title and semantic color variants",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Card title (supports HTML)"
+        },
+        "variant": {
+          "type": "'default'|'danger'|'warning'|'success'",
+          "default": "'default'",
+          "description": "Color variant"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Link",
+      "category": "primitives",
+      "path": "src/components/primitives/Link.svelte",
+      "description": "Polymorphic link/button with arrow icon that shifts on hover",
+      "props": {
+        "href": {
+          "type": "string|null",
+          "default": "null",
+          "description": "URL (renders as <a> when set)"
+        },
+        "external": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Open in new tab"
+        },
+        "showIcon": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show arrow icon"
+        }
+      },
+      "snippets": [
+        "children",
+        "icon"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LinkCard",
+      "category": "primitives",
+      "path": "src/components/primitives/LinkCard.svelte",
+      "description": "Full-width clickable card rendered as anchor with label and trailing slot",
+      "props": {
+        "href": {
+          "type": "string",
+          "required": true,
+          "description": "Navigation URL"
+        },
+        "label": {
+          "type": "string",
+          "required": true,
+          "description": "Card label text"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable interaction"
+        }
+      },
+      "snippets": [
+        "trailing"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "LazyImage",
+      "category": "primitives",
+      "path": "src/components/primitives/LazyImage.svelte",
+      "description": "Image with IntersectionObserver lazy loading and fade-in animation",
+      "props": {
+        "src": {
+          "type": "string",
+          "required": true,
+          "description": "Image source URL"
+        },
+        "alt": {
+          "type": "string",
+          "default": "''",
+          "description": "Alt text"
+        },
+        "width": {
+          "type": "number|string",
+          "default": "undefined",
+          "description": "Image width"
+        },
+        "height": {
+          "type": "number|string",
+          "default": "undefined",
+          "description": "Image height"
+        },
+        "threshold": {
+          "type": "number",
+          "default": "0.01",
+          "description": "IntersectionObserver threshold"
+        },
+        "placeholder": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Placeholder image src"
+        }
+      },
+      "events": [
+        "onload"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "MetricCard",
+      "category": "primitives",
+      "path": "src/components/primitives/MetricCard.svelte",
+      "description": "Dashboard KPI card with icon, value, unit, progress bar, and auto-colored thresholds",
+      "props": {
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Metric label"
+        },
+        "value": {
+          "type": "any",
+          "default": "0",
+          "description": "Metric value"
+        },
+        "unit": {
+          "type": "string",
+          "default": "''",
+          "description": "Value unit suffix"
+        },
+        "sublabel": {
+          "type": "string",
+          "default": "''",
+          "description": "Secondary label"
+        },
+        "status": {
+          "type": "''|'success'|'warning'|'error'",
+          "default": "''",
+          "description": "Status color"
+        },
+        "progress": {
+          "type": "number|null",
+          "default": "null",
+          "description": "Progress bar value (0-100)"
+        },
+        "href": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Makes card clickable link"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "''",
+          "description": "Secondary label (alias for sublabel, takes priority)"
+        },
+        "trend": {
+          "type": "string",
+          "default": "''",
+          "description": "Trend indicator (e.g. '+12%', '-3%'). Auto-colors: + green, - red, else muted"
+        },
+        "size": {
+          "type": "'sm'|'md'",
+          "default": "'md'",
+          "description": "Card density. 'sm' removes background, reduces padding, and uses lighter borders"
+        }
+      },
+      "snippets": [
+        "icon",
+        "badge"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "stage": "beta",
+      "revision": 4,
+      "lastReviewed": "2026-03-29",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "FilterChip",
+      "category": "primitives",
+      "path": "src/components/primitives/FilterChip.svelte",
+      "description": "Toggleable filter chip with active state indicator",
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard",
+      "props": {
+        "label": {
+          "type": "string",
+          "default": "''",
+          "description": "Chip label text"
+        },
+        "active": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Active/selected state"
+        },
+        "count": {
+          "type": "number|null",
+          "default": "null",
+          "description": "Optional count badge"
+        },
+        "variant": {
+          "type": "'default'|'error'|'warning'|'success'|'info'",
+          "default": "'default'",
+          "description": "Active state color variant"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable interaction"
+        }
+      },
+      "snippets": [
+        "icon"
+      ],
+      "events": [
+        "onclick"
+      ]
+    },
+    {
+      "name": "StatusLine",
+      "category": "primitives",
+      "path": "src/components/primitives/StatusLine.svelte",
+      "description": "Horizontal row of items separated by configurable delimiter",
+      "props": {
+        "separator": {
+          "type": "string",
+          "default": "'\\u00b7'",
+          "description": "Separator character"
+        },
+        "size": {
+          "type": "'sm'|'md'|'lg'",
+          "default": "'md'",
+          "description": "Text size"
+        },
+        "items": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of strings or {text, icon} objects"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "MemberCard",
+      "category": "primitives",
+      "path": "src/components/primitives/MemberCard.svelte",
+      "description": "Team member row with avatar, status dot, role, timestamp, and hover actions",
+      "props": {
+        "name": {
+          "type": "string",
+          "default": "''",
+          "description": "Member name"
+        },
+        "email": {
+          "type": "string",
+          "default": "''",
+          "description": "Email address"
+        },
+        "role": {
+          "type": "string",
+          "default": "''",
+          "description": "Role label"
+        },
+        "avatarUrl": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Avatar image URL"
+        },
+        "status": {
+          "type": "null|'online'|'offline'|'away'|'busy'",
+          "default": "null",
+          "description": "Online status indicator"
+        },
+        "timestamp": {
+          "type": "string|null",
+          "default": "null",
+          "description": "ISO date for relative time"
+        },
+        "variant": {
+          "type": "'default'|'compact'",
+          "default": "'default'",
+          "description": "Display density"
+        }
+      },
+      "snippets": [
+        "badge",
+        "actions"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "DashCard",
+      "category": "primitives",
+      "path": "src/components/primitives/DashCard.svelte",
+      "description": "Glassmorphism dashboard section card with stagger-fade animation on mount",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Card title"
+        },
+        "href": {
+          "type": "string",
+          "default": "''",
+          "description": "Header link URL"
+        },
+        "index": {
+          "type": "number",
+          "default": "0",
+          "description": "Stagger animation delay multiplier"
+        },
+        "variant": {
+          "type": "'default'|'accent'",
+          "default": "'default'",
+          "description": "Card style"
+        },
+        "subtitle": {
+          "type": "string",
+          "default": "''",
+          "description": "Subtitle text below the card title"
+        }
+      },
+      "snippets": [
+        "icon",
+        "linkLabel",
+        "children",
+        "actions"
+      ],
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "DistributionBar",
+      "category": "primitives",
+      "path": "src/components/primitives/DistributionBar.svelte",
+      "description": "Horizontal segmented bar with auto-calculated percentages and optional legend",
+      "props": {
+        "entries": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {label, value, color?}"
+        },
+        "height": {
+          "type": "'sm'|'md'",
+          "default": "'md'",
+          "description": "Bar height (4px or 6px)"
+        },
+        "showLegend": {
+          "type": "boolean|'hover'",
+          "default": "true",
+          "description": "Show color legend below bar. 'hover' shows legend on parent hover via absolute positioning"
+        }
+      },
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-29",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "ChecklistCard",
+      "category": "primitives",
+      "path": "src/components/primitives/ChecklistCard.svelte",
+      "description": "Sequential onboarding checklist. Shows steps with done/current/future states. Auto-hides when all steps complete.",
+      "props": {
+        "title": {
+          "type": "string",
+          "default": "'Quick setup'",
+          "description": "Card heading"
+        },
+        "steps": {
+          "type": "Array<{id: string, label: string, done: boolean, href?: string, onclick?: function, actionLabel?: string}>",
+          "default": "[]",
+          "description": "Ordered step definitions"
+        }
+      },
+      "snippets": [],
+      "events": [],
+      "stage": "beta",
+      "revision": 1,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "minimal"
+    },
+    {
+      "name": "Dropdown",
+      "category": "overlays",
+      "path": "src/components/overlays/Dropdown.svelte",
+      "description": "Portaled action menu with viewport-aware positioning, keyboard navigation, and ARIA",
+      "props": {
+        "open": {
+          "type": "boolean",
+          "default": "false",
+          "bindable": true,
+          "description": "Menu visibility (bindable)"
+        },
+        "position": {
+          "type": "'bottom-start'|'bottom-end'|'bottom-center'|'top-start'|'top-end'|'top-center'",
+          "default": "'bottom-start'",
+          "description": "Preferred menu position (auto-flips if near viewport edge)"
+        }
+      },
+      "snippets": [
+        "trigger",
+        "children"
+      ],
+      "stage": "beta",
+      "revision": 5,
+      "lastReviewed": "2026-03-28",
+      "breaking": [
+        "v2: Content portaled to body via fixed positioning instead of relative. Consumers using :global(.dropdown-content) position overrides should remove them."
+      ],
+      "docLevel": "standard"
+    },
+    {
+      "name": "DropdownItem",
+      "category": "overlays",
+      "path": "src/components/overlays/DropdownItem.svelte",
+      "description": "Menu item with role=menuitem, keyboard support, icon and danger variant",
+      "props": {
+        "variant": {
+          "type": "'default'|'danger'",
+          "default": "'default'",
+          "description": "Item style"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable item"
+        }
+      },
+      "snippets": [
+        "icon",
+        "children"
+      ],
+      "events": [
+        "onclick"
+      ],
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "DropdownDivider",
+      "category": "overlays",
+      "path": "src/components/overlays/DropdownDivider.svelte",
+      "description": "Horizontal separator line for dropdown menu groups",
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "PropsTable",
+      "category": "docs",
+      "path": "src/components/docs/PropsTable.svelte",
+      "description": "Styled API documentation table with type chips and default value highlights",
+      "props": {
+        "props": {
+          "type": "array",
+          "default": "[]",
+          "description": "Array of {name, type, default?, description, required?}"
+        }
+      },
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "SplitPane",
+      "category": "docs",
+      "path": "src/components/docs/SplitPane.svelte",
+      "description": "Two-column layout with configurable ratio, responsive stacking, and optional sticky right pane",
+      "props": {
+        "ratio": {
+          "type": "string",
+          "default": "'1:1'",
+          "description": "Column width ratio (e.g. '2:1')"
+        },
+        "gap": {
+          "type": "string",
+          "default": "'2rem'",
+          "description": "Gap between columns"
+        },
+        "stickyRight": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Stick right pane on scroll"
+        }
+      },
+      "snippets": [
+        "left",
+        "right"
+      ],
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "DocSection",
+      "category": "docs",
+      "path": "src/components/docs/DocSection.svelte",
+      "description": "Documentation section with heading, anchor link, and configurable heading level",
+      "props": {
+        "id": {
+          "type": "string",
+          "default": "''",
+          "description": "Section anchor id"
+        },
+        "title": {
+          "type": "string",
+          "default": "''",
+          "description": "Section heading text"
+        },
+        "description": {
+          "type": "string",
+          "default": "''",
+          "description": "Description paragraph"
+        },
+        "level": {
+          "type": "number",
+          "default": "2",
+          "description": "Heading level (2-6)"
+        },
+        "showAnchor": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show hover anchor link"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-05",
+      "breaking": [],
+      "docLevel": "standard"
+    },
+    {
+      "name": "Sidebar",
+      "category": "navigation",
+      "path": "src/components/navigation/Sidebar.svelte",
+      "description": "Legacy sidebar — replaced by LeftBar",
+      "replacedBy": "LeftBar",
+      "stage": "deprecated",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "none"
+    },
+    {
+      "name": "NavigationContainer",
+      "category": "navigation",
+      "path": "src/components/navigation/NavigationContainer.svelte",
+      "description": "Legacy enterprise nav — unused",
+      "stage": "deprecated",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "none"
+    },
+    {
+      "name": "TabNav",
+      "category": "navigation",
+      "path": "src/components/navigation/TabNav.svelte",
+      "description": "Legacy tab nav — use Tabs instead",
+      "replacedBy": "Tabs",
+      "stage": "deprecated",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "none"
+    },
+    {
+      "name": "ScrollNav",
+      "category": "navigation",
+      "path": "src/components/navigation/ScrollNav.svelte",
+      "description": "Legacy scroll wrapper — unused",
+      "stage": "deprecated",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
+      "breaking": [],
+      "docLevel": "none"
+    },
+    {
+      "name": "WorkspaceMenu",
+      "category": "navigation",
+      "path": "src/components/navigation/WorkspaceMenu.svelte",
+      "description": "Legacy workspace switcher — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "breaking": [],
+      "docLevel": "none"
+    },
+    {
+      "name": "SidebarSection",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarSection.svelte",
+      "description": "Legacy sidebar section — replaced by LeftBarSection",
+      "replacedBy": "LeftBarSection",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarItem",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarItem.svelte",
+      "description": "Legacy sidebar item — replaced by LeftBarItem",
+      "replacedBy": "LeftBarItem",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarGroup",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarGroup.svelte",
+      "description": "Legacy sidebar group — replaced by LeftBarGroup",
+      "replacedBy": "LeftBarGroup",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarPopover",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarPopover.svelte",
+      "description": "Legacy sidebar popover — unused",
+      "replacedBy": "LeftBarPopover",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarToggle",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarToggle.svelte",
+      "description": "Legacy sidebar toggle — replaced by LeftBarToggle",
+      "replacedBy": "LeftBarToggle",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarSearch",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarSearch.svelte",
+      "description": "Legacy sidebar search — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarGroupSwitcher",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarGroupSwitcher.svelte",
+      "description": "Legacy sidebar group switcher — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarAccountGroup",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarAccountGroup.svelte",
+      "description": "Legacy sidebar account group — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarAccountItem",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarAccountItem.svelte",
+      "description": "Legacy sidebar account item — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "SidebarNavigationItem",
+      "category": "navigation",
+      "path": "src/components/navigation/SidebarNavigationItem.svelte",
+      "description": "Legacy sidebar navigation item — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "LeftBarPopover",
+      "category": "navigation",
+      "path": "src/components/navigation/LeftBarPopover.svelte",
+      "description": "LeftBar context-aware popover — internal",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ChipNav",
+      "category": "navigation",
+      "path": "src/components/navigation/ChipNav.svelte",
+      "description": "Internal chip navigation — used inside NavBar",
+      "stage": "deprecated",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "NavigationSearch",
+      "category": "navigation",
+      "path": "src/components/navigation/blocks/NavigationSearch.svelte",
+      "description": "Legacy enterprise nav search block — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "NavigationSection",
+      "category": "navigation",
+      "path": "src/components/navigation/blocks/NavigationSection.svelte",
+      "description": "Legacy enterprise nav section block — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "NavigationAccountGroup",
+      "category": "navigation",
+      "path": "src/components/navigation/blocks/NavigationAccountGroup.svelte",
+      "description": "Legacy enterprise nav account block — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "NavigationGroupSwitcher",
+      "category": "navigation",
+      "path": "src/components/navigation/blocks/NavigationGroupSwitcher.svelte",
+      "description": "Legacy enterprise nav group switcher — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "NavigationCustomBlock",
+      "category": "navigation",
+      "path": "src/components/navigation/blocks/NavigationCustomBlock.svelte",
+      "description": "Legacy enterprise nav custom block — unused",
+      "stage": "deprecated",
+      "revision": 1,
+      "lastReviewed": "2026-02-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ImageDropzone",
+      "category": "forms",
+      "path": "src/components/forms/ImageDropzone.svelte",
+      "description": "Drag-and-drop image upload with preview grid and file validation",
+      "props": {
+        "files": {
+          "type": "Array<{file, preview, name, size}>",
+          "default": "[]",
+          "bindable": true,
+          "description": "Uploaded files"
+        },
+        "accept": {
+          "type": "string",
+          "default": "'image/*'",
+          "description": "Accepted MIME types"
+        },
+        "multiple": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Allow multiple files"
+        },
+        "maxFiles": {
+          "type": "number",
+          "default": "10",
+          "description": "Maximum file count"
+        },
+        "minFiles": {
+          "type": "number",
+          "default": "0",
+          "description": "Minimum required file count for status indicator"
+        },
+        "maxSize": {
+          "type": "number",
+          "default": "10485760",
+          "description": "Max file size in bytes (10MB)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable upload"
+        },
+        "error": {
+          "type": "string",
+          "default": "''",
+          "description": "Error message"
+        },
+        "previews": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Show image thumbnails"
+        },
+        "showNumbers": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Show index numbers on preview thumbnails"
+        },
+        "onchange": {
+          "type": "function",
+          "default": "null",
+          "description": "Files changed callback"
+        },
+        "onremove": {
+          "type": "function",
+          "default": "null",
+          "description": "File removed callback (index)"
+        }
+      },
+      "stage": "beta",
+      "revision": 3,
+      "lastReviewed": "2026-03-22",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "ButtonInput",
+      "category": "forms",
+      "path": "src/components/forms/ButtonInput.svelte",
+      "description": "Input with attached button for search, submit, or inline actions",
+      "props": {
+        "value": {
+          "type": "string",
+          "default": "''",
+          "bindable": true,
+          "description": "Input value"
+        },
+        "ref": {
+          "type": "HTMLInputElement",
+          "default": "undefined",
+          "bindable": true,
+          "description": "Input element reference"
+        },
+        "buttonLabel": {
+          "type": "string",
+          "default": "'Submit'",
+          "description": "Button text (overridden by children snippet)"
+        },
+        "buttonVariant": {
+          "type": "string",
+          "default": "'primary'",
+          "description": "Button variant"
+        },
+        "buttonSize": {
+          "type": "string",
+          "default": "'md'",
+          "description": "Button size"
+        },
+        "buttonType": {
+          "type": "string",
+          "default": "'button'",
+          "description": "Button type attribute (button|submit|reset)"
+        },
+        "buttonPosition": {
+          "type": "'left'|'right'",
+          "default": "'right'",
+          "description": "Button placement"
+        },
+        "buttonIcon": {
+          "type": "{icon, position}|null",
+          "default": "null",
+          "description": "Icon in button: {icon: Component, position: 'left'|'right'}"
+        },
+        "buttonDisabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable button only"
+        },
+        "buttonLoading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Loading state for button only"
+        },
+        "inputDisabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input only"
+        },
+        "inputIcon": {
+          "type": "{icon, position}|null",
+          "default": "null",
+          "description": "Icon overlay in input: {icon: Component, position: 'right'}"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Loading state (disables both)"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable both input and button"
+        },
+        "onsubmit": {
+          "type": "function",
+          "default": "null",
+          "description": "Submit handler (value) => void, fires on click and Enter"
+        },
+        "wrapperClass": {
+          "type": "string",
+          "default": "''",
+          "description": "CSS class for the outer wrapper div"
+        },
+        "class": {
+          "type": "string",
+          "default": "''",
+          "description": "Additional CSS class for the root element"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "stage": "stable",
+      "revision": 3,
+      "lastReviewed": "2026-03-28",
+      "docLevel": "minimal",
+      "breaking": []
+    },
+    {
+      "name": "DatePicker",
+      "category": "forms",
+      "path": "src/components/forms/DatePicker.svelte",
+      "description": "Calendar date picker with month navigation, min/max constraints. Zero dependencies — uses native Date + Intl.DateTimeFormat",
+      "props": {
+        "value": {
+          "type": "string|null",
+          "default": "null",
+          "bindable": true,
+          "description": "Selected date (ISO YYYY-MM-DD)"
+        },
+        "min": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Earliest selectable date (ISO)"
+        },
+        "max": {
+          "type": "string|null",
+          "default": "null",
+          "description": "Latest selectable date (ISO)"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Select date'",
+          "description": "Trigger placeholder"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable picker"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Required field"
+        },
+        "id": {
+          "type": "string",
+          "default": "null",
+          "description": "Hidden input id"
+        },
+        "name": {
+          "type": "string",
+          "default": "null",
+          "description": "Hidden input name"
+        },
+        "onchange": {
+          "type": "function",
+          "default": "null",
+          "description": "Date change callback"
+        }
+      },
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 2,
+      "lastReviewed": "2026-03-28",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "TagInput",
+      "category": "forms",
+      "path": "src/components/forms/TagInput.svelte",
+      "description": "Tag/chip input with add/remove, deduplication, and variant colors",
+      "props": {
+        "tags": {
+          "type": "string[]",
+          "default": "[]",
+          "bindable": true,
+          "description": "Array of tag strings"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "'Add tag...'",
+          "description": "Input placeholder"
+        },
+        "variant": {
+          "type": "'default'|'accent'|'success'|'warning'|'error'",
+          "default": "'default'",
+          "description": "Chip color variant"
+        },
+        "maxTags": {
+          "type": "number",
+          "default": "Infinity",
+          "description": "Maximum number of tags"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable input"
+        },
+        "duplicates": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Allow duplicate tags"
+        },
+        "transform": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Transform function applied to tag value before adding"
+        },
+        "onchange": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Called with updated tags array"
+        }
+      },
+      "dependencies": [],
+      "stage": "draft",
+      "revision": 1,
+      "lastReviewed": "2026-03-07",
+      "docLevel": "none",
+      "breaking": []
+    },
+    {
+      "name": "OptionCard",
+      "category": "forms",
+      "path": "src/components/forms/OptionCard.svelte",
+      "description": "Selectable option card for multi-choice layouts",
+      "props": {
+        "selected": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Whether the option is selected"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Disable the option"
+        },
+        "variant": {
+          "type": "'default'|'compact'",
+          "default": "'default'",
+          "description": "Size variant"
+        },
+        "onclick": {
+          "type": "function|null",
+          "default": "null",
+          "description": "Click handler"
+        }
+      },
+      "snippets": [
+        "children"
+      ],
+      "dependencies": [],
+      "stage": "beta",
+      "revision": 2,
+      "lastReviewed": "2026-03-22",
+      "docLevel": "none",
+      "breaking": []
+    }
+  ],
+  "utilities": [
+    {
+      "name": "cn",
+      "description": "Class name concatenation with falsy filtering",
+      "stage": "stable"
+    },
+    {
+      "name": "cv",
+      "description": "Class variants for type-safe variant composition",
+      "stage": "stable"
+    },
+    {
+      "name": "getTheme",
+      "description": "SSR-safe theme singleton",
+      "stage": "stable"
+    },
+    {
+      "name": "createActiveChecker",
+      "description": "Route matching utility",
+      "stage": "stable"
+    }
+  ],
+  "actions": [
+    {
+      "name": "clickOutside",
+      "description": "Detect clicks outside element",
+      "stage": "stable"
+    },
+    {
+      "name": "focusTrap",
+      "description": "Trap focus within element",
+      "stage": "stable"
+    },
+    {
+      "name": "escapeKey",
+      "description": "Handle Escape key press",
+      "stage": "stable"
+    },
+    {
+      "name": "portal",
+      "description": "Render in different DOM location",
+      "stage": "stable"
+    }
+  ]
+}
