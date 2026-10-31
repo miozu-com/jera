@@ -403,21 +403,38 @@
   /* ── Context panel ── */
   .brand-panel {
     position: absolute;
-    top: calc(100% + var(--space-4));
+    top: calc(100% + var(--space-2));
     left: 0;
     z-index: var(--z-popover);
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
     width: max-content;
-    min-width: 300px;
-    max-width: 380px;
-    background: var(--color-base01);
-    border: var(--border-width-thin) solid var(--color-base03);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 20px 40px color-mix(in srgb, var(--color-base00) 50%, transparent),
-                0 2px 8px color-mix(in srgb, var(--color-base00) 25%, transparent);
-    padding: var(--space-6);
+    min-width: 260px;
+    max-width: 360px;
+    /* Same surface as the section dropdowns and the /workforce overlays
+       (ToolPanel, HoverCard, Dropdown): base00, base02 hairline, radius-md,
+       shadow-lg. */
+    background: var(--color-base00);
+    border: var(--border-width-thin) solid var(--color-base02);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  /* Blocks stack like the account menu's: each its own padded band, a
+     full-width base02 hairline between them. The description belongs to the
+     trail above it, so it joins that band. */
+  .brand-panel > :global(*) {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .brand-panel > :global(* + *) {
+    border-top: var(--border-width-thin) solid var(--color-base02);
+  }
+
+  .brand-panel > .brand-desc {
+    border-top: none;
+    padding-top: 0;
   }
 
   /* A 300px min-width anchored 16px from the left overflows a 390px screen. */
@@ -491,7 +508,7 @@
   .brand-info {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-4) var(--space-6);
+    gap: var(--space-3) var(--space-4);
     margin: 0;
   }
 
@@ -538,22 +555,26 @@
   }
 
   /* ── Links: the area's sibling pages ── */
-  .brand-links {
+  .brand-panel > .brand-links {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
+    padding: var(--space-2);
   }
 
   .links-label {
     margin: 0;
+    padding: var(--space-1) var(--space-4) 0;
     font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
     color: var(--color-base04);
   }
 
   .links-list {
     display: flex;
     flex-direction: column;
-    margin: 0 calc(var(--space-3) * -1);
+    gap: var(--space-1);
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -561,10 +582,10 @@
   .panel-link {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-3);
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-default);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--color-base05);
     text-decoration: none;
     transition: color var(--duration-fast) var(--ease-default),
@@ -573,15 +594,15 @@
 
   .panel-link:hover,
   .panel-link:focus-visible {
-    color: var(--color-base07);
-    background-color: var(--color-base02);
+    color: var(--color-base06);
+    background-color: var(--color-base01);
     outline: none;
   }
 
   .panel-link.active {
-    color: var(--color-base0D);
-    font-weight: var(--font-weight-semibold);
-    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
+    color: var(--color-base07);
+    font-weight: var(--font-weight-medium);
+    background-color: var(--color-base01);
   }
 
   .link-icon {
@@ -591,7 +612,7 @@
   }
 
   .panel-link.active .link-icon {
-    color: inherit;
+    color: var(--color-base0D);
   }
 
   .link-label {
@@ -607,8 +628,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    padding-top: var(--space-4);
-    border-top: var(--border-width-thin) solid var(--color-base02);
   }
 
   /* Entrance animation: matches the navbar's dropdown panels. Compositor-only
@@ -620,7 +639,7 @@
 
       @starting-style {
         opacity: 0;
-        transform: translateY(-6px);
+        transform: translateY(-4px);
       }
     }
   }

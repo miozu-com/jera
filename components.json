@@ -1923,7 +1923,7 @@
       "snippets": ["actions", "center", "subnav", "renderIcon", "brandPanelHeader", "brandPanelFooter"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 9,
+      "revision": 10,
       "lastReviewed": "2026-10-31",
       "breaking": [],
       "docLevel": "standard"
@@ -1957,7 +1957,7 @@
       },
       "snippets": ["renderIcon", "panelHeader", "panelFooter"],
       "stage": "beta",
-      "revision": 7,
+      "revision": 8,
       "lastReviewed": "2026-10-31",
       "breaking": [],
       "docLevel": "none"

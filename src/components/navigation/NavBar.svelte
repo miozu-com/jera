@@ -14,7 +14,10 @@
     brandPanelHeader / brandPanelFooter - Snippets forwarded to the brand panel
     onBrandClick - Optional: called on brand tap/click instead of opening the
                    context panel. Receives no args.
-    sections  - Dropdown menu sections (replaced by subnavItems when provided)
+    sections  - Dropdown menu sections: {id, label, items: [{title, href, icon?,
+                desc?, badge?, badgeColor?, isNew?, children?: [{title, href}]}]}.
+                An item with `children` shows a chevron; hovering, focusing or
+                ArrowRight opens its pages in a flyout beside the row.
     subnavItems - Array of {id, label, href, badge?, icon?} for route-specific ChipNav
     activeSubnav - ID of the currently active subnav item
     sticky    - Pin to top on scroll with frosted-glass backdrop (default: false)
@@ -35,8 +38,9 @@
   <NavBar
     brand={{ label: 'Wardrobe', description: 'Product catalog & garment library', breadcrumbs: [{label: 'Home', href: '/'}, {label: 'Wardrobe'}] }}
     sections={[
-      { id: 'commerce', label: 'Commerce', badge: 'e-commerce', badgeColor: 'blue', items: [
-        { title: 'Wardrobe', href: '/wardrobe', desc: 'Product catalog' }
+      { id: 'commerce', label: 'Commerce', items: [
+        { title: 'Wardrobe', href: '/wardrobe', desc: 'Product catalog',
+          children: [{ title: 'Garments', href: '/wardrobe/garments' }] }
       ]}
     ]}
   >
@@ -72,6 +76,8 @@
   } = $props();
 
   let activeDropdown = $state(null);
+  // The href of the nested item whose flyout is showing, in the open section.
+  let activeItem = $state(null);
   // Owned here (not inside NavBarBrand) purely so opening a section dropdown can
   // close the brand panel and vice versa — the two are mutually exclusive.
   let brandOpen = $state(false);
@@ -88,12 +94,46 @@
   function openDropdown(id) {
     clearTimer();
     brandOpen = false;
+    if (activeDropdown !== id) activeItem = null;
     activeDropdown = id;
+  }
+
+  const flyoutId = (href) => `navbar-flyout-${href.replace(/[^a-z0-9]+/gi, '-')}`;
+
+  // The child the current page sits under: the longest matching href, so a
+  // section root (Overview) does not light up beside its own sub-page.
+  function activeChild(children) {
+    let best = null;
+    for (const child of children) {
+      if (isActive(child.href) && (!best || child.href.length > best.length)) best = child.href;
+    }
+    return best;
+  }
+
+  function onItemKey(e, href) {
+    if (e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    activeItem = href;
+    requestAnimationFrame(() => document.getElementById(flyoutId(href))?.querySelector('a')?.focus());
+  }
+
+  function onChildKey(e, parentHref) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const li = e.currentTarget.parentElement;
+      const next = e.key === 'ArrowDown' ? li.nextElementSibling : li.previousElementSibling;
+      next?.querySelector('a')?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById(flyoutId(parentHref))?.closest('.dropdown-row')?.querySelector('.dropdown-item')?.focus();
+    }
   }
 
   function scheduleClose() {
     closeTimer = setTimeout(() => {
       activeDropdown = null;
+      activeItem = null;
       brandOpen = false;
     }, 120);
   }
@@ -149,6 +189,9 @@
             class="navbar-dropdown"
             onmouseenter={() => openDropdown(section.id)}
             onmouseleave={scheduleClose}
+            onfocusin={() => openDropdown(section.id)}
+            onfocusout={(e) => !e.currentTarget.contains(e.relatedTarget) && scheduleClose()}
+            onkeydown={(e) => e.key === 'Escape' && (activeDropdown = null)}
           >
             <button
               class="navbar-trigger"
@@ -172,35 +215,66 @@
 
             {#if activeDropdown === section.id}
               <div class="dropdown-panel">
-                <div class="dropdown-grid">
-                  {#each section.items as item}
-                    <a href={item.href} class="dropdown-card" class:active={isActive(item.href)}>
-                      <span class="card-icon">
-                        {#if renderIcon}
-                          {@render renderIcon(item.icon, 16)}
-                        {/if}
-                      </span>
-                      <span class="card-body">
-                        <span class="card-title">
-                          {item.title}
-                          {#if item.isNew}
-                            <span class="badge-new">new</span>
-                          {/if}
-                          {#if item.badge}
-                            <Badge size="xs" variant={badgeVariant(item.badgeColor, 'warning')}>{item.badge}</Badge>
-                          {/if}
+                <ul class="dropdown-list" role="menu" aria-label={section.label}>
+                  {#each section.items as item (item.href)}
+                    {@const hasChildren = item.children?.length > 0}
+                    {@const flyoutOpen = hasChildren && activeItem === item.href}
+                    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+                    <li
+                      class="dropdown-row"
+                      role="none"
+                      onmouseenter={() => (activeItem = hasChildren ? item.href : null)}
+                    >
+                      <a
+                        href={item.href}
+                        role="menuitem"
+                        class="dropdown-item"
+                        class:active={isActive(item.href)}
+                        class:open={flyoutOpen}
+                        aria-haspopup={hasChildren ? 'menu' : undefined}
+                        aria-expanded={hasChildren ? flyoutOpen : undefined}
+                        onfocus={() => (activeItem = hasChildren ? item.href : null)}
+                        onkeydown={(e) => hasChildren && onItemKey(e, item.href)}
+                      >
+                        <span class="item-icon">
+                          {#if renderIcon}{@render renderIcon(item.icon, 14)}{/if}
                         </span>
-                        <span class="card-desc">{item.desc}</span>
-                      </span>
-                    </a>
+                        <span class="item-body">
+                          <span class="item-title">
+                            {item.title}
+                            {#if item.isNew}<span class="badge-new">new</span>{/if}
+                            {#if item.badge}
+                              <Badge size="xs" variant={badgeVariant(item.badgeColor, 'warning')}>{item.badge}</Badge>
+                            {/if}
+                          </span>
+                          {#if item.desc}<span class="item-desc">{item.desc}</span>{/if}
+                        </span>
+                        {#if hasChildren}
+                          <svg class="item-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+                        {/if}
+                      </a>
+                      {#if flyoutOpen}
+                        {@const current = activeChild(item.children)}
+                        <div class="flyout">
+                          <ul class="flyout-list" role="menu" aria-label={item.title} id={flyoutId(item.href)}>
+                            {#each item.children as child (child.href)}
+                              <li role="none">
+                                <a
+                                  href={child.href}
+                                  role="menuitem"
+                                  class="flyout-link"
+                                  class:active={child.href === current}
+                                  aria-current={child.href === current ? 'page' : undefined}
+                                  onkeydown={(e) => onChildKey(e, item.href)}
+                                >{child.title}</a>
+                              </li>
+                            {/each}
+                          </ul>
+                        </div>
+                      {/if}
+                    </li>
                   {/each}
-                </div>
-                {#if section.badge}
-                  <div class="dropdown-footer">
-                    <span class="footer-badge" data-color={section.badgeColor}>{section.badge}</span>
-                    <span class="footer-count">{section.items.length} items</span>
-                  </div>
-                {/if}
+                </ul>
               </div>
             {/if}
           </div>
@@ -350,45 +424,43 @@
     transform: rotate(180deg);
   }
 
-  /* ── Dropdown panel ──────────────────── */
+  /* ── Dropdown panel ──────────────────────
+     Same surface as the brand panel and the /workforce overlays (ToolPanel,
+     HoverCard, Dropdown): base00, base02 hairline, radius-md, shadow-lg. */
   .dropdown-panel {
     position: absolute;
-    top: calc(100% + var(--space-4));
+    top: calc(100% + var(--space-2));
     left: 0;
-    min-width: 380px;
-    max-width: 460px;
-    background: var(--color-base01);
-    border: var(--border-width-thin) solid var(--color-base03);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 20px 40px color-mix(in srgb, var(--color-base00) 50%, transparent),
-                0 2px 8px color-mix(in srgb, var(--color-base00) 25%, transparent);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    overflow: hidden;
+    z-index: var(--z-popover);
+    min-width: 248px;
+    max-width: 320px;
+    background: var(--color-base00);
+    border: var(--border-width-thin) solid var(--color-base02);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .dropdown-panel {
-      animation: navDropIn 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: navDropIn 140ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-      @starting-style {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
+    .flyout-list {
+      animation: navFlyIn 120ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .navbar-sections {
       animation: navSectionsIn 180ms cubic-bezier(0.16, 1, 0.3, 1);
-
-      @starting-style {
-        opacity: 0;
-        transform: translateX(-6px);
-      }
     }
 
     @keyframes navDropIn {
-      from { opacity: 0; transform: translateY(-6px); }
+      from { opacity: 0; transform: translateY(-4px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes navFlyIn {
+      from { opacity: 0; transform: translateX(-4px); }
+      to { opacity: 1; transform: translateX(0); }
     }
 
     @keyframes navSectionsIn {
@@ -397,142 +469,153 @@
     }
   }
 
-  .dropdown-grid {
+  .dropdown-list,
+  .flyout-list {
     display: flex;
     flex-direction: column;
-    padding: var(--space-4);
-    gap: 2px;
+    gap: var(--space-1);
+    margin: 0;
+    padding: var(--space-2);
+    list-style: none;
   }
 
-  /* ── Card items ──────────────────────── */
-  .dropdown-card {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-5);
-    padding: var(--space-4) var(--space-5);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    transition: background-color var(--duration-100) var(--ease-default);
+  .dropdown-row {
+    position: relative;
   }
 
-  .dropdown-card:hover {
-    background-color: color-mix(in srgb, var(--color-base02) 60%, transparent);
-  }
-
-  .dropdown-card.active {
-    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-  }
-
-  .card-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--space-16);
-    height: var(--space-16);
-    flex-shrink: 0;
-    border-radius: var(--radius-md);
-    background-color: var(--color-base02);
-    color: var(--color-base05);
-    transition: color var(--duration-100) var(--ease-default),
-                background-color var(--duration-100) var(--ease-default);
-  }
-
-  .dropdown-card:hover .card-icon {
-    background-color: color-mix(in srgb, var(--color-base03) 60%, transparent);
-    color: var(--color-base06);
-  }
-
-  .dropdown-card.active .card-icon {
-    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
-    color: var(--color-base0D);
-  }
-
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    min-width: 0;
-    padding-top: 2px;
-  }
-
-  .card-title {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-size: var(--text-dense);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-base06);
-  }
-
-  .dropdown-card.active .card-title {
-    color: var(--color-base0D);
-  }
-
-  .card-desc {
-    font-size: var(--text-2xs);
-    color: var(--color-base04);
-    line-height: 1.4;
-  }
-
-  .badge-new {
-    font-size: var(--text-2xs);
-    padding: 1px 5px;
-    border-radius: var(--radius-sm);
-    background-color: color-mix(in srgb, var(--color-base0B) 18%, transparent);
-    color: var(--color-base0B);
-    font-weight: var(--font-weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
-    flex-shrink: 0;
-  }
-
-  /* ── Dropdown footer ─────────────────── */
-  .dropdown-footer {
+  /* ── Rows: icon, title over a one-line description, chevron when it nests ── */
+  .dropdown-item {
     display: flex;
     align-items: center;
     gap: var(--space-4);
-    padding: var(--space-4) var(--space-6);
-    border-top: var(--border-width-thin) solid var(--color-base02);
-    background-color: color-mix(in srgb, var(--color-base02) 30%, transparent);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-default);
+    color: var(--color-base05);
+    text-decoration: none;
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
   }
 
-  .footer-badge {
-    font-size: var(--text-2xs);
-    padding: 1px 6px;
-    border-radius: var(--radius-sm);
-    font-weight: var(--font-weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wide);
+  .dropdown-item:hover,
+  .dropdown-item:focus-visible,
+  .dropdown-item.open {
+    color: var(--color-base06);
+    background-color: var(--color-base01);
+    outline: none;
   }
 
-  .footer-badge[data-color='blue'] {
-    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  /* Current page: the account menu's selected row (base01) with the accent
+     carried by the icon only. */
+  .dropdown-item.active {
+    color: var(--color-base07);
+    background-color: var(--color-base01);
+  }
+
+  .item-icon {
+    display: flex;
+    flex-shrink: 0;
+    color: var(--color-base04);
+  }
+
+  .dropdown-item.active .item-icon {
     color: var(--color-base0D);
   }
 
-  .footer-badge[data-color='green'] {
-    background-color: color-mix(in srgb, var(--color-base0B) 15%, transparent);
-    color: var(--color-base0B);
+  .item-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
   }
 
-  .footer-badge[data-color='yellow'] {
-    background-color: color-mix(in srgb, var(--color-base0A) 15%, transparent);
-    color: var(--color-base0A);
+  .item-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-dense);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
   }
 
-  .footer-badge[data-color='purple'] {
-    background-color: color-mix(in srgb, var(--color-base0E) 15%, transparent);
-    color: var(--color-base0E);
-  }
-
-  .footer-badge[data-color='red'] {
-    background-color: color-mix(in srgb, var(--color-base08) 15%, transparent);
-    color: var(--color-base08);
-  }
-
-  .footer-count {
-    font-size: var(--text-2xs);
+  .item-desc {
+    font-size: var(--text-xs);
+    line-height: 1.3;
     color: var(--color-base04);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .item-chevron {
+    flex-shrink: 0;
+    color: var(--color-base04);
+  }
+
+  .badge-new {
+    padding: 0 4px;
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in srgb, var(--color-base0B) 18%, transparent);
+    color: var(--color-base0B);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* ── Flyout: a nested item's pages, beside its row. The left padding is a
+     transparent bridge so the pointer can cross the gap without closing it. */
+  .flyout {
+    position: absolute;
+    top: calc(var(--space-2) * -1 - var(--border-width-thin));
+    left: 100%;
+    z-index: 1;
+    padding-left: var(--space-2);
+  }
+
+  .flyout-list {
+    min-width: 168px;
+    background: var(--color-base00);
+    border: var(--border-width-thin) solid var(--color-base02);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .flyout-link {
+    display: block;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-default);
+    font-size: var(--text-xs);
+    color: var(--color-base05);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
+  }
+
+  .flyout-link:hover,
+  .flyout-link:focus-visible {
+    color: var(--color-base06);
+    background-color: var(--color-base01);
+    outline: none;
+  }
+
+  .flyout-link.active {
+    color: var(--color-base07);
+    font-weight: var(--font-weight-medium);
+    background-color: var(--color-base01);
+  }
+
+  /* No room beside the panel on a phone: the pages open under their row. */
+  @media (max-width: 640px) {
+    .flyout {
+      position: static;
+      padding: 0 0 0 var(--space-6);
+    }
+
+    .flyout-list {
+      min-width: 0;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+    }
   }
 
   /* ── Phone placement of the sections (opt-in, `phoneSections`) ── */
