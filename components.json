@@ -3774,7 +3774,7 @@
       "path": "src/components/navigation/LeftBarPopover.svelte",
       "description": "Collapsed LeftBar hover flyout; rendered by LeftBar with its `bar` \u2014 internal",
       "stage": "deprecated",
-      "revision": 7,
+      "revision": 8,
       "lastReviewed": "2026-10-21",
       "docLevel": "none",
       "breaking": [

@@ -2,7 +2,7 @@
   @component LeftBarPopover
 
   Hover popover for collapsed LeftBar showing subroutes.
-  Exact 1:1 match with dash.selify.ai WorkspaceSidebar hover-popover styles.
+  Same surface and row metrics as NavBar's menus.
 
   LeftBar renders it itself (from `popoverMap`) and passes its `bar`; the
   flyout uses it to stay open while hovered.
@@ -49,6 +49,7 @@
 </script>
 
 {#if wired && visible && items.length > 0}
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="hover-popover {className}"
     style="top: {position.top}px; left: {position.left}px;"
@@ -71,7 +72,7 @@
             aria-label={hint ? `${item.label}, ${hint}` : undefined}
           >
             {#if ItemIcon}
-              <ItemIcon size={16} class="popover-icon" />
+              <ItemIcon size={14} class="popover-icon" />
             {/if}
             <span class="popover-label">{item.label}</span>
             {#if item.badge != null && item.badge !== ''}
@@ -85,41 +86,44 @@
 {/if}
 
 <style>
+  /* Same surface and rows as the top bar's menus and the account menu:
+     base00, base02 hairline, radius-md, shadow-lg; xs rows on base01 hover. */
   .hover-popover {
     position: fixed;
     z-index: 50;
     background-color: var(--color-base00);
-    border: var(--border-width-default) solid color-mix(in srgb, var(--color-base03) 30%, transparent);
-    border-radius: var(--radius-default);
-    box-shadow: var(--shadow-2xl);
+    border: var(--border-width-thin) solid var(--color-base02);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
     min-width: 200px;
     max-width: 280px;
     overflow: hidden;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .popover-content {
-      animation: popover-appear 0.15s ease-out;
+    .hover-popover {
+      animation: popover-appear 120ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes popover-appear {
-      from { opacity: 0; transform: translateX(-8px) scale(0.96); }
-      to { opacity: 1; transform: translateX(0) scale(1); }
+      from { opacity: 0; transform: translateX(-4px); }
+      to { opacity: 1; transform: translateX(0); }
     }
   }
 
   .popover-header {
-    padding: 0.5rem 1rem;
+    padding: var(--space-3) var(--space-6) var(--space-2);
     font-size: var(--text-xs);
-    line-height: 1rem;
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-base06);
-    border-bottom: 1px solid color-mix(in srgb, var(--color-base03) 20%, transparent);
-    background-color: color-mix(in srgb, var(--color-base01) 50%, transparent);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-base04);
+    border-bottom: var(--border-width-thin) solid var(--color-base02);
   }
 
   .popover-list {
-    padding: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-2);
     list-style: none;
     margin: 0;
   }
@@ -127,23 +131,21 @@
   .popover-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: var(--text-sm);
-    line-height: 1.25rem;
-    color: var(--color-base06);
-    transition: all var(--duration-fast);
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-default);
+    font-size: var(--text-xs);
+    color: var(--color-base05);
+    transition: var(--transition-colors);
     cursor: pointer;
     text-decoration: none;
   }
 
-  .popover-item:hover {
-    background-color: color-mix(in srgb, var(--color-base0D) 10%, transparent);
-    color: var(--color-base0D);
-  }
-
-  .popover-item:active {
-    background-color: color-mix(in srgb, var(--color-base0D) 15%, transparent);
+  .popover-item:hover,
+  .popover-item:focus-visible {
+    background-color: var(--color-base01);
+    color: var(--color-base06);
+    outline: none;
   }
 
   .popover-item :global(svg.popover-icon) {
@@ -152,7 +154,7 @@
   }
 
   .popover-item:hover :global(svg.popover-icon) {
-    color: currentColor;
+    color: var(--color-base05);
   }
 
   .popover-label {
