@@ -1,28 +1,52 @@
+<!-- file-size: justified -- one dialog: the question, the type-to-confirm gate and the async states share one open/close lifecycle and one set of styles -->
 <!--
   @component ConfirmDialog
 
-  A confirmation dialog with semantic variants.
-  Uses native <dialog> element for top-layer rendering (no z-index needed).
+  The one confirmation dialog: a question, a consequence, two buttons.
+  Uses the native <dialog> element for top-layer rendering (no z-index needed).
 
-  @example Danger confirmation
-  <ConfirmDialog
-    bind:open={showDelete}
-    title="Delete Item"
-    message="Are you sure you want to delete this item? This action cannot be undone."
-    variant="danger"
-    confirmText="Delete"
-    onconfirm={handleDelete}
-  />
+  Destructive, irreversible actions (delete or archive a workspace, remove a
+  member, delete an account) pass `typeToConfirm`: an input renders under the
+  message with "Type <phrase> to confirm." and the confirm button stays
+  disabled until the typed text matches the phrase (trimmed, case-insensitive).
+  The input is cleared every time the dialog opens; Enter in it confirms once
+  it matches. Ordinary confirmations leave it unset.
 
-  @example Warning confirmation
+  Async flows: pass `closeOnConfirm={false}` and drive `loading` / `error`.
+  While `loading`, both buttons are disabled, the confirm button shows a
+  spinner, and Escape / backdrop / close do nothing; the consumer closes the
+  dialog by setting `open = false` when the work succeeds.
+
+  Note: a close, however it happens, calls `oncancel` (a confirm that closes
+  the dialog included). Consumers rely on it to clear their target.
+
+  @example Ordinary confirmation
   <ConfirmDialog
-    bind:open={showWarning}
-    title="Unsaved Changes"
-    message="You have unsaved changes. Are you sure you want to leave?"
+    bind:open={showLeave}
+    title="Leave workspace?"
+    message="You lose access right away. The owner can invite you again."
     variant="warning"
     confirmText="Leave"
-    cancelText="Stay"
+    onconfirm={leave}
   />
+
+  @example Type to confirm, async
+  <ConfirmDialog
+    bind:open={archiveOpen}
+    title="Archive workspace?"
+    typeToConfirm={workspace.name}
+    confirmText="Archive workspace"
+    closeOnConfirm={false}
+    loading={archiving}
+    error={archiveError}
+    onconfirm={archive}
+  >
+    <p>Archiving hides it from everyone. Support can restore it.</p>
+  </ConfirmDialog>
+
+  A third, non-destructive way out (e.g. "Archive instead" beside Delete) is
+  `altText` + `onalt`; it never needs the typed phrase and follows
+  `closeOnConfirm` like the confirm button.
 
   @example With custom icon
   <ConfirmDialog bind:open={show} title="Confirm">
@@ -33,26 +57,51 @@
 -->
 <script>
   import Button from '../primitives/Button.svelte';
+  import Input from '../forms/Input.svelte';
 
   let {
     open = $bindable(false),
-    title = 'Confirm Action',
-    message = 'Are you sure you want to proceed?',
+    title = 'Confirm',
+    message = 'Do you want to continue?',
     confirmText = 'Confirm',
     cancelText = 'Cancel',
     variant = 'danger',
+    /** The exact phrase the user must type before the confirm button enables. */
+    typeToConfirm = '',
+    /** Accessible name of the type-to-confirm input. */
+    typeLabel = 'Confirmation text',
+    /** Work in flight: buttons disabled, spinner on confirm, no dismissal. */
+    loading = false,
+    /** Inline error shown under the body (role="alert"). */
+    error = '',
+    /** Close after onconfirm (default). Set false for async flows. */
+    closeOnConfirm = true,
+    /** 'sm' (28rem, default) | 'md' (34rem) */
+    size = 'sm',
+    /** Optional third, non-destructive way out (e.g. "Archive instead"). Needs `onalt`. */
+    altText = '',
+    onalt,
     class: className = '',
     icon,
+    children,
     onconfirm,
     oncancel
   } = $props();
 
   let dialogEl = $state(null);
+  let typed = $state('');
 
   // Unique ids so multiple ConfirmDialogs mounted at once don't collide
   // (duplicate ids break aria-labelledby/aria-describedby). Mirrors Modal.svelte.
-  const titleId = `confirm-title-${crypto.randomUUID()}`;
-  const messageId = `confirm-message-${crypto.randomUUID()}`;
+  const uid = crypto.randomUUID();
+  const titleId = `confirm-title-${uid}`;
+  const messageId = `confirm-message-${uid}`;
+  const typeId = `confirm-type-${uid}`;
+  const typeHelpId = `confirm-type-help-${uid}`;
+
+  const phrase = $derived(String(typeToConfirm ?? '').trim());
+  const matches = $derived(!phrase || typed.trim().toLowerCase() === phrase.toLowerCase());
+  const canConfirm = $derived(matches && !loading);
 
   const variantConfig = $derived({
     danger: {
@@ -81,11 +130,13 @@
     buttonVariant: 'primary'
   });
 
-  // Sync open state with native dialog
+  // Sync open state with native dialog; a fresh open starts with an empty
+  // type-to-confirm input.
   $effect(() => {
     if (!dialogEl) return;
 
     if (open && !dialogEl.open) {
+      typed = '';
       dialogEl.showModal();
     } else if (!open && dialogEl.open) {
       dialogEl.close();
@@ -97,25 +148,45 @@
     oncancel?.();
   }
 
+  function requestClose() {
+    if (loading) return;
+    handleClose();
+  }
+
   function handleCancel(e) {
-    // Allow ESC to close
+    // ESC closes, except while work is in flight.
+    if (loading) e.preventDefault();
   }
 
   function handleBackdropClick(e) {
     if (e.target === dialogEl) {
-      handleClose();
+      requestClose();
     }
   }
 
   function handleConfirm() {
+    if (!canConfirm) return;
     onconfirm?.();
-    open = false;
+    if (closeOnConfirm) open = false;
+  }
+
+  function handleAlt() {
+    if (loading) return;
+    onalt?.();
+    if (closeOnConfirm) open = false;
+  }
+
+  function handleTypeKeydown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleConfirm();
+    }
   }
 </script>
 
 <dialog
   bind:this={dialogEl}
-  class="confirm-dialog {className}"
+  class="confirm-dialog confirm-dialog--{size} {className}"
   aria-labelledby={titleId}
   aria-describedby={messageId}
   aria-modal="true"
@@ -126,7 +197,8 @@
   <button
     type="button"
     class="confirm-close"
-    onclick={handleClose}
+    onclick={requestClose}
+    disabled={loading}
     aria-label="Close"
   >
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -170,15 +242,52 @@
 
       <div class="confirm-text">
         <h3 id={titleId} class="confirm-title">{title}</h3>
-        <p id={messageId} class="confirm-message">{message}</p>
+        {#if children}
+          <div id={messageId} class="confirm-message">{@render children()}</div>
+        {:else}
+          <p id={messageId} class="confirm-message">{message}</p>
+        {/if}
       </div>
     </div>
 
+    {#if phrase}
+      <div class="confirm-type">
+        <p id={typeHelpId} class="confirm-type-help">
+          Type <code>{phrase}</code> below to confirm.
+        </p>
+        <Input
+          id={typeId}
+          bind:value={typed}
+          placeholder={phrase}
+          aria-label={typeLabel}
+          aria-describedby={typeHelpId}
+          autocomplete="off"
+          disabled={loading}
+          onkeydown={handleTypeKeydown}
+        />
+      </div>
+    {/if}
+
+    {#if error}
+      <p class="confirm-error" role="alert">{error}</p>
+    {/if}
+
     <div class="confirm-actions">
-      <Button variant="ghost" size="sm" onclick={handleClose}>
+      <Button variant="ghost" size="sm" onclick={requestClose} disabled={loading}>
         {cancelText}
       </Button>
-      <Button variant={variantConfig.buttonVariant} size="sm" onclick={handleConfirm}>
+      {#if altText && onalt}
+        <Button variant="secondary" size="sm" onclick={handleAlt} disabled={loading}>
+          {altText}
+        </Button>
+      {/if}
+      <Button
+        variant={variantConfig.buttonVariant}
+        size="sm"
+        onclick={handleConfirm}
+        disabled={!matches}
+        {loading}
+      >
         {confirmText}
       </Button>
     </div>
@@ -198,6 +307,10 @@
     margin: auto;
     width: 100%;
     max-width: 28rem;
+  }
+
+  dialog.confirm-dialog--md {
+    max-width: 34rem;
   }
 
   dialog.confirm-dialog::backdrop {
@@ -301,8 +414,50 @@
     line-height: 1.5;
   }
 
+  .confirm-message :global(p) {
+    margin: 0 0 var(--space-4);
+  }
+
+  .confirm-message :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .confirm-type {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-10);
+  }
+
+  .confirm-type-help {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-base04);
+  }
+
+  .confirm-type-help code {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-default);
+    background: var(--color-base02);
+    color: var(--color-base06);
+    font-size: var(--text-xs);
+    overflow-wrap: anywhere;
+  }
+
+  .confirm-error {
+    margin: var(--space-4) 0 0;
+    font-size: var(--text-xs);
+    color: var(--color-base08);
+  }
+
+  .confirm-close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .confirm-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--space-6);
     justify-content: flex-end;
     margin-top: var(--space-12);

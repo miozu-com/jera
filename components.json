@@ -1644,7 +1644,7 @@
       "name": "ConfirmDialog",
       "category": "overlays",
       "path": "src/components/overlays/ConfirmDialog.svelte",
-      "description": "Pre-built confirmation modal",
+      "description": "The one confirmation dialog: native <dialog>, semantic variants, optional type-to-confirm for destructive actions, async loading/error",
       "props": {
         "open": {
           "type": "boolean",
@@ -1654,13 +1654,58 @@
         },
         "title": {
           "type": "string",
-          "default": "'Confirm Action'",
+          "default": "'Confirm'",
           "description": "Dialog title"
         },
         "message": {
           "type": "string",
-          "default": "'Are you sure?'",
-          "description": "Confirmation message"
+          "default": "'Do you want to continue?'",
+          "description": "Confirmation message (replaced by the children snippet when given)"
+        },
+        "confirmText": {
+          "type": "string",
+          "default": "'Confirm'",
+          "description": "Confirm button label"
+        },
+        "cancelText": {
+          "type": "string",
+          "default": "'Cancel'",
+          "description": "Cancel button label"
+        },
+        "typeToConfirm": {
+          "type": "string",
+          "default": "''",
+          "description": "Phrase the user must type (trimmed, case-insensitive) before confirm enables; renders 'Type <phrase> below to confirm.' and an input, cleared on open, Enter confirms"
+        },
+        "typeLabel": {
+          "type": "string",
+          "default": "'Confirmation text'",
+          "description": "aria-label of the type-to-confirm input"
+        },
+        "loading": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Work in flight: both buttons disabled, spinner on confirm, Escape/backdrop/close ignored"
+        },
+        "error": {
+          "type": "string",
+          "default": "''",
+          "description": "Inline error under the body (role=alert)"
+        },
+        "closeOnConfirm": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Close after onconfirm; set false for async flows and close by setting open=false"
+        },
+        "size": {
+          "type": "'sm'|'md'",
+          "default": "'sm'",
+          "description": "Dialog width: sm 28rem, md 34rem"
+        },
+        "altText": {
+          "type": "string",
+          "default": "''",
+          "description": "Label of an optional third, non-destructive button (e.g. 'Archive instead'); shown only with onalt, never needs the typed phrase, follows closeOnConfirm"
         },
         "variant": {
           "type": "'danger'|'warning'|'success'|'info'",
@@ -1668,11 +1713,12 @@
           "description": "Color variant"
         }
       },
-      "events": ["onconfirm", "oncancel"],
-      "consumers": ["dash"],
+      "events": ["onconfirm", "oncancel", "onalt"],
+      "snippets": ["icon", "children"],
+      "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 4,
-      "lastReviewed": "2026-10-07",
+      "revision": 6,
+      "lastReviewed": "2026-10-31",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1846,7 +1892,7 @@
         "brand": {
           "type": "object",
           "default": "{label:'Home'}",
-          "description": "Brand config: {icon, label, description, breadcrumbs}"
+          "description": "Brand config forwarded to NavBarBrand: {icon, label, badge?, description?, breadcrumbs?, info?, links?, linksLabel?, actions?}"
         },
         "sections": {
           "type": "array",
@@ -1867,13 +1913,18 @@
           "type": "function",
           "default": "null",
           "description": "Called on brand tap/click instead of opening the context panel (e.g. open a workspace switcher on mobile)"
+        },
+        "phoneSections": {
+          "type": "'inline' | 'row' | 'hidden'",
+          "default": "'inline'",
+          "description": "Where the sections go at <= 640px: inline in the bar (as on desktop), a full-width row under the bar, or hidden (the app's phone menu lists them)"
         }
       },
-      "snippets": ["actions", "center", "subnav", "renderIcon"],
+      "snippets": ["actions", "center", "subnav", "renderIcon", "brandPanelHeader", "brandPanelFooter"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-10-07",
+      "revision": 9,
+      "lastReviewed": "2026-10-31",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1881,12 +1932,12 @@
       "name": "NavBarBrand",
       "category": "navigation",
       "path": "src/components/navigation/NavBarBrand.svelte",
-      "description": "Internal NavBar brand \u2014 page context label with tap/hover breadcrumb panel",
+      "description": "Internal NavBar brand: page context label with a click/keyboard panel of breadcrumbs, page facts, sibling links and actions",
       "props": {
         "brand": {
           "type": "object",
           "default": "{label:'Home'}",
-          "description": "Brand config: {icon, label, badge?, badgeColor?, description, breadcrumbs} \u2014 badge renders a status chip after the label (color: blue|green|yellow|purple|red, yellow default)"
+          "description": "Brand config: {icon, label, badge?, badgeColor?, description?, breadcrumbs?: [{label, href?}], info?: [{label, value, href?, tone?}], links?: [{id, label, href, icon?, active?, badge?, badgeLabel?, badgeVariant?}], linksLabel?, actions?: [{id, label, href?, onclick?, icon?, variant?}] (max 3)}. Every section optional; badge renders a status chip after the label (blue|green|yellow|purple|red, yellow default)"
         },
         "onBrandClick": {
           "type": "function",
@@ -1896,7 +1947,7 @@
         "open": {
           "type": "boolean",
           "default": "false",
-          "description": "Bindable \u2014 whether the context panel is showing"
+          "description": "Bindable: whether the context panel is showing"
         },
         "onopen": {
           "type": "function",
@@ -1904,10 +1955,10 @@
           "description": "Called when the panel opens so the parent can close its own menus"
         }
       },
-      "snippets": ["renderIcon"],
+      "snippets": ["renderIcon", "panelHeader", "panelFooter"],
       "stage": "beta",
-      "revision": 5,
-      "lastReviewed": "2026-10-07",
+      "revision": 7,
+      "lastReviewed": "2026-10-31",
       "breaking": [],
       "docLevel": "none"
     },

@@ -1,15 +1,17 @@
+<!-- file-size: justified -- one navigation bar: the mega-menu, its sections row and their phone layouts share one set of styles -->
 <!--
   @component NavBar
   Reusable horizontal mega-menu navigation bar with hover dropdowns.
 
-  The brand item (see NavBarBrand) shows the current page context: hover reveals
-  a breadcrumb trail + description panel on pointer devices, and tap/click toggles
-  the same panel so touch users can reach it too — distinct from the section
-  dropdowns, which show navigation links. Pass `onBrandClick` to take over the
-  tap entirely, e.g. to open a workspace switcher on mobile.
+  The brand item (see NavBarBrand) shows the current page context: click, tap or
+  Enter opens a panel with the breadcrumb trail, page facts, the area's sibling
+  pages and page actions. Pass `onBrandClick` to take over the tap entirely,
+  e.g. to open a workspace switcher on mobile.
 
   Props:
-    brand     - Current page context (label, icon, description, breadcrumbs)
+    brand     - Current page context: {label, icon, badge?, description?,
+                breadcrumbs?, info?, links?, linksLabel?, actions?} (see NavBarBrand)
+    brandPanelHeader / brandPanelFooter - Snippets forwarded to the brand panel
     onBrandClick - Optional: called on brand tap/click instead of opening the
                    context panel. Receives no args.
     sections  - Dropdown menu sections (replaced by subnavItems when provided)
@@ -20,6 +22,11 @@
     actions   - Snippet slot: right-side action buttons
     renderIcon - Snippet: (name, size) => renders an icon component
     isActive  - Function: (href) => boolean for active state
+    phoneSections - Where the sections go at <= 640px (default 'inline'):
+                    'inline' expands them in the bar as on desktop; 'row' drops
+                    them to a full-width row under the bar (panels span the
+                    screen); 'hidden' removes the toggle, for apps whose phone
+                    menu already lists the sections.
 
   @example With subnav data props (replaces dropdown sections)
   <NavBar brand={...} subnavItems={[{id:'specs', label:'Specs', href:'/tests/specs'}]} activeSubnav="specs" />
@@ -58,7 +65,10 @@
     center,
     subnav,
     renderIcon,
-    isActive = () => false
+    isActive = () => false,
+    phoneSections = 'inline',
+    brandPanelHeader,
+    brandPanelFooter
   } = $props();
 
   let activeDropdown = $state(null);
@@ -100,12 +110,14 @@
   }
 </script>
 
-<nav class="navbar" class:navbar--sticky={sticky}>
+<nav class="navbar" class:navbar--sticky={sticky} data-phone-sections={phoneSections}>
   <div class="navbar-inner">
     <NavBarBrand
       {brand}
       {renderIcon}
       {onBrandClick}
+      panelHeader={brandPanelHeader}
+      panelFooter={brandPanelFooter}
       bind:open={brandOpen}
       onopen={() => (activeDropdown = null)}
     />
@@ -521,6 +533,40 @@
   .footer-count {
     font-size: var(--text-2xs);
     color: var(--color-base04);
+  }
+
+  /* ── Phone placement of the sections (opt-in, `phoneSections`) ── */
+  @media (max-width: 640px) {
+    .navbar[data-phone-sections='hidden'] .navbar-nav-toggle,
+    .navbar[data-phone-sections='hidden'] .navbar-sections {
+      display: none;
+    }
+
+    /* Sticky already positions the bar; only a static one needs relative. */
+    .navbar[data-phone-sections='row']:not(.navbar--sticky) {
+      position: relative;
+    }
+
+    .navbar[data-phone-sections='row'] .navbar-sections {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: var(--z-popover);
+      flex-wrap: wrap;
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-base01);
+      border-bottom: var(--border-width-thin) solid var(--color-base02);
+    }
+
+    .navbar[data-phone-sections='row'] .dropdown-panel {
+      position: fixed;
+      left: var(--space-4);
+      right: var(--space-4);
+      top: calc(var(--navbar-height) + 2.75rem);
+      min-width: 0;
+      max-width: none;
+    }
   }
 
   /* ── Center slot ────────────────────── */
