@@ -125,13 +125,17 @@
 </div>
 
 <!-- Hover popover — rendered outside sidebar to avoid overflow:hidden + will-change clipping -->
+<!-- A popoverMap entry is the items array, or {href, items} to make the
+     flyout's title a link to the row's own page. -->
 {#if bar.collapsed && bar.hoverPopover.item && popoverMap[bar.hoverPopover.item]}
+  {@const entry = popoverMap[bar.hoverPopover.item]}
   <LeftBarPopover
     {bar}
     visible={true}
     position={bar.hoverPopover.position}
     title={bar.hoverPopover.item}
-    items={popoverMap[bar.hoverPopover.item]}
+    href={Array.isArray(entry) ? null : entry.href}
+    items={Array.isArray(entry) ? entry : entry.items}
   />
 {/if}
 

@@ -33,6 +33,8 @@
     visible = false,
     position = { top: 0, left: 0 },
     title = '',
+    /** Optional: makes the title a link to the row's own page. */
+    href = null,
     items = [],
     class: className = ''
   } = $props();
@@ -56,9 +58,11 @@
     onmouseenter={handleMouseEnter}
     onmouseleave={handleMouseLeave}
   >
-    <div class="popover-header">
-      {title}
-    </div>
+    {#if href}
+      <a {href} class="popover-header popover-header-link" onclick={() => bar.hidePopover()}>{title}</a>
+    {:else}
+      <div class="popover-header">{title}</div>
+    {/if}
     <ul class="popover-list">
       {#each items as item}
         {@const ItemIcon = item.icon ?? null}
@@ -117,6 +121,21 @@
     font-weight: var(--font-weight-medium);
     color: var(--color-base04);
     border-bottom: var(--border-width-thin) solid var(--color-base02);
+  }
+
+  .popover-header-link {
+    display: block;
+    color: var(--color-base06);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: var(--transition-colors);
+  }
+
+  .popover-header-link:hover,
+  .popover-header-link:focus-visible {
+    background-color: var(--color-base01);
+    color: var(--color-base07);
+    outline: none;
   }
 
   .popover-list {
