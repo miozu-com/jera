@@ -172,6 +172,13 @@ export {
   generateId,
 } from "./utils/reactive.svelte.js";
 
+// Cookie policy (consent gate for jera's preference cookies)
+export {
+  setCookiePolicy,
+  cookieAllowed,
+  writeCookie,
+} from "./utils/cookiePolicy.js";
+
 // Active Route Checker (used by LeftBar consumers)
 export { createActiveChecker } from "./utils/navigation.svelte.js";
 

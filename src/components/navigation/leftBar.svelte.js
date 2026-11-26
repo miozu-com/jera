@@ -9,7 +9,8 @@
  *
  * - `collapsed`: the bar is the narrow icon rail. `toggle()` persists it
  *   (localStorage under `persistKey`, a 30-day cookie under `cookieKey ??
- *   persistKey` so the server can render the right width next time).
+ *   persistKey` so the server can render the right width next time; the
+ *   cookie only when the app's cookie policy allows it, see cookiePolicy.js).
  * - `hoverPopover`: the collapsed bar's flyout — which item it is for and where
  *   (`{item, position: {top, left}}`). `showPopover` opens it next to the
  *   hovered row, `hidePopover` closes it after a grace period that
@@ -17,6 +18,7 @@
  */
 
 import { untrack } from "svelte";
+import { writeCookie } from "../../utils/cookiePolicy.js";
 
 /** Grace period before a flyout closes, so the pointer can cross the gap. */
 export const POPOVER_HIDE_DELAY = 150;
@@ -61,7 +63,7 @@ export class LeftBarState {
     this.collapsed = true;
   }
 
-  /** Write `collapsed` to localStorage (`persistKey`) and the SSR cookie. Browser only. */
+  /** Write `collapsed` to localStorage (`persistKey`) and, when the cookie policy allows, the SSR cookie. Browser only. */
   persist() {
     if (typeof localStorage === "undefined") return;
     if (this.persistKey) {
@@ -71,9 +73,11 @@ export class LeftBarState {
     }
     const key = this.cookieKey || this.persistKey;
     if (key && typeof document !== "undefined") {
-      try {
-        document.cookie = `${key}=${this.collapsed ? "1" : "0"};path=/;max-age=${60 * 60 * 24 * 30};SameSite=Lax`;
-      } catch {}
+      // A functional cookie: skipped when the app's cookie policy refuses it
+      // (setCookiePolicy); the bar still collapses and localStorage keeps it.
+      writeCookie(key, this.collapsed ? "1" : "0", {
+        maxAge: 60 * 60 * 24 * 30,
+      });
     }
   }
 

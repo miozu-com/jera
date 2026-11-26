@@ -1923,8 +1923,8 @@
       "snippets": ["actions", "center", "subnav", "renderIcon", "brandPanelHeader", "brandPanelFooter"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 10,
-      "lastReviewed": "2026-10-31",
+      "revision": 11,
+      "lastReviewed": "2026-11-25",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1997,7 +1997,7 @@
         "cookieKey": {
           "type": "string",
           "default": "null",
-          "description": "Cookie key for SSR persistence"
+          "description": "Cookie key for SSR persistence; written only when the app's cookie policy allows it (setCookiePolicy)"
         }
       },
       "snippets": [
@@ -2012,8 +2012,8 @@
         "miozu"
       ],
       "stage": "stable",
-      "revision": 8,
-      "lastReviewed": "2026-10-21",
+      "revision": 9,
+      "lastReviewed": "2026-11-26",
       "breaking": [
         {
           "revision": 6,
@@ -2982,8 +2982,8 @@
       "snippets": ["children", "content"],
       "cssVars": ["--tooltip-max-width", "--tooltip-color", "--tooltip-bg", "--tooltip-border", "--tooltip-radius", "--tooltip-weight"],
       "stage": "stable",
-      "revision": 7,
-      "lastReviewed": "2026-10-22",
+      "revision": 8,
+      "lastReviewed": "2026-11-25",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -4454,7 +4454,7 @@
     },
     {
       "name": "getTheme",
-      "description": "SSR-safe theme singleton",
+      "description": "SSR-safe theme singleton; its miozu-theme cookie follows setCookiePolicy",
       "stage": "stable"
     },
     {
@@ -4466,6 +4466,11 @@
       "name": "LeftBarState",
       "description": "Reactive class a LeftBar hands to its children (collapsed + persistence, hover flyout timers); export of the LeftBar module",
       "stage": "stable"
+    },
+    {
+      "name": "setCookiePolicy",
+      "description": "Register the app's consent rule for jera's preference cookies (miozu-theme, LeftBar cookieKey); with cookieAllowed + writeCookie. No rule = write as before; a refused cookie keeps the preference in memory and localStorage",
+      "stage": "beta"
     },
     {
       "name": "requireInstance",

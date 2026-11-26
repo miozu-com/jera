@@ -5,6 +5,8 @@
  * Uses Svelte 5 runes ($state, $derived, $effect) internally.
  */
 
+import { writeCookie } from './cookiePolicy.js';
+
 /**
  * Create a reactive store-like object with Svelte 5 runes
  * Unlike stores, these work seamlessly with runes and don't need $ prefix
@@ -209,12 +211,14 @@ export class ThemeState {
   }
 
   /**
-   * Persist to localStorage and cookie
+   * Persist to localStorage and, when the cookie policy allows, the cookie
    */
   #persist() {
     if (typeof window === 'undefined') return;
     localStorage.setItem('miozu-theme', this.current);
-    document.cookie = `miozu-theme=${this.current};path=/;max-age=31536000;SameSite=Lax`;
+    // A functional cookie: skipped when the app's cookie policy refuses it
+    // (the theme still applies and stays in localStorage).
+    writeCookie('miozu-theme', this.current, { maxAge: 31536000 });
   }
 
   /**

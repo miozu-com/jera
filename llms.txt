@@ -161,6 +161,7 @@ Previous implementations replaced by newer versions. Kept for backward compatibi
 - [cv()](./src/utils/cn.svelte.js): Class variants for type-safe variant composition
 - [getTheme()](./src/utils/reactive.svelte.js): SSR-safe theme singleton — `getTheme().init()`, `.toggle()`, `.isDark`
 - [createActiveChecker()](./src/utils/navigation.svelte.js): Route matching utility for nav items
+- [setCookiePolicy()](./src/utils/cookiePolicy.js): Consent rule for jera's preference cookies (`miozu-theme`, LeftBar `cookieKey`): `setCookiePolicy(({name, category}) => allowed)`; no rule = write
 
 ## Actions
 - [clickOutside](./src/actions/index.js): Detect clicks outside element

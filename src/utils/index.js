@@ -39,4 +39,5 @@ export { normalizeHex } from './color.js';
 
 export { BADGE_COLOR_VARIANTS, badgeVariant } from './badge.js';
 export { isBrowser } from './env.js';
+export { setCookiePolicy, cookieAllowed, writeCookie } from './cookiePolicy.js';
 export { requireInstance } from './requireInstance.js';

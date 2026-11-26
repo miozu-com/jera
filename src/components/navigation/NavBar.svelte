@@ -678,6 +678,9 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
+    /* Tap target: an 18px icon plus padding was 30px tall on phones. */
+    min-height: var(--space-16);
+    min-width: var(--space-16);
     padding: var(--space-3) var(--space-5);
     border: none;
     border-radius: var(--radius-md);

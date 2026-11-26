@@ -162,6 +162,8 @@ theme.set("system"); // Follow OS preference
 theme.isDark; // boolean reactive property
 ```
 
+**Cookie consent:** jera's two preference cookies (`miozu-theme`, the LeftBar `cookieKey`) are functional cookies. An app with a cookie banner registers its rule once at start: `setCookiePolicy(({ name, category }) => allowed)` from `@miozu/jera/utils` (`src/utils/cookiePolicy.js`, module state, no context). No rule = write as before. A refused cookie is just not set: the preference still applies and stays in localStorage. Deleting (`max-age=0`) is always allowed.
+
 ## Import Style (CRITICAL)
 
 **Always use deep-path imports.** Never barrel imports (`from '@miozu/jera'`).

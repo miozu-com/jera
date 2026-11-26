@@ -206,9 +206,10 @@
   {...rest}
 >
   {#if children}
-    {@render children(text ? descId : undefined)}
+    {@render children(text && !disabled ? descId : undefined)}
   {/if}
-  {#if text}
+  {#if text && !disabled}
+    <!-- A disabled tooltip is not shown, so its copy is not announced either. -->
     <span id={descId} class="tooltip-sr">{text}</span>
   {/if}
 
