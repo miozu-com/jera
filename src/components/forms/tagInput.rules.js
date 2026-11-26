@@ -44,7 +44,7 @@ export function tagRejection(
   }
   if (value.length > maxTagLength) {
     return {
-      message: `Limit of ${maxTagLength} characters. This one is ${value.length} — shorten it to add it.`,
+      message: `Limit of ${maxTagLength} characters. This one is ${value.length}. Shorten it to add it.`,
       clearsField: false
     };
   }

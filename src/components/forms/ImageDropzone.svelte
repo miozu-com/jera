@@ -191,7 +191,7 @@
       const bad = [...new Set(rejectedTypes)].join(', ');
       const accepted = acceptedLabels();
       const isnt = rejectedTypes.length === 1 ? "isn't" : "aren't";
-      typeError = `${bad} ${isnt} supported` + (accepted ? ` — use ${accepted.join(', ')}.` : '.');
+      typeError = `${bad} ${isnt} supported` + (accepted ? `. Use ${accepted.join(', ')}.` : '.');
     }
 
     if (oversized.length > 0) {
@@ -442,7 +442,7 @@
   onpointerdown={markTouched}
   onfocusin={markTouched}
   role="region"
-  aria-label="Image upload zone — drop, browse or paste"
+  aria-label="Image upload zone: drop, browse or paste"
 >
   {#if files.length === 0}
     <!-- Empty state: full clickable zone -->
@@ -468,7 +468,7 @@
       </span>
       {#if pasteTarget !== 'none'}
         <span class="upload-hint upload-hint-paste">
-          or paste a screenshot — {PASTE_KEY}
+          or paste a screenshot ({PASTE_KEY})
         </span>
       {/if}
     </button>
@@ -556,7 +556,7 @@
       <div class="preview-footer">
         <span class="file-count">{files.length} / {maxFiles}</span>
         {#if pasteTarget !== 'none' && files.length < maxFiles}
-          <span class="upload-hint">Paste to add more — {PASTE_KEY}</span>
+          <span class="upload-hint">Paste to add more ({PASTE_KEY})</span>
         {/if}
       </div>
     </div>

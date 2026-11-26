@@ -30,6 +30,9 @@
                     them to a full-width row under the bar (panels span the
                     screen); 'hidden' removes the toggle, for apps whose phone
                     menu already lists the sections.
+    phoneSubnavMax - Most subnav tabs kept in the bar at <= 640px (default 3).
+                    With more, and every tab also in the sections menu, the
+                    tabs give way to the grid toggle on a phone.
 
   @example With subnav data props (replaces dropdown sections)
   <NavBar brand={...} subnavItems={[{id:'specs', label:'Specs', href:'/tests/specs'}]} activeSubnav="specs" />
@@ -71,6 +74,7 @@
     renderIcon,
     isActive = () => false,
     phoneSections = 'inline',
+    phoneSubnavMax = 3,
     brandPanelHeader,
     brandPanelFooter
   } = $props();
@@ -148,9 +152,49 @@
   function sectionIsActive(section) {
     return section.items?.some((item) => isActive(item.href));
   }
+
+  // More tabs than a phone bar holds (`phoneSubnavMax`, default 3: three short
+  // tabs fit beside the brand and the actions at 390px, five were squeezed to a
+  // sliver) and every one of them is also a page in the sections menu (an item
+  // or one of its children): on a phone they give way to the grid toggle, which
+  // lists the same pages.
+  const subnavInMenu = $derived.by(() => {
+    if (subnavItems.length <= phoneSubnavMax || !sections.length || phoneSections === 'hidden')
+      return false;
+    const hrefs = new Set();
+    for (const section of sections) {
+      for (const item of section.items ?? []) {
+        hrefs.add(item.href);
+        for (const child of item.children ?? []) hrefs.add(child.href);
+      }
+    }
+    return subnavItems.every((item) => hrefs.has(item.href));
+  });
+
+  // Where the tabs overflow their room (scrollbar hidden), keep the current
+  // one in view, so the clipped tab is never the page you are on.
+  let barEl = $state(null);
+  $effect(() => {
+    void activeSubnav;
+    void subnavItems;
+    const strip = barEl?.querySelector('.chip-nav');
+    const chip = strip?.querySelector('.chip.active');
+    if (!chip || strip.scrollWidth <= strip.clientWidth) return;
+    const s = strip.getBoundingClientRect();
+    const c = chip.getBoundingClientRect();
+    if (c.left < s.left || c.right > s.right) {
+      strip.scrollLeft += c.left - s.left - (s.width - c.width) / 2;
+    }
+  });
 </script>
 
-<nav class="navbar" class:navbar--sticky={sticky} data-phone-sections={phoneSections}>
+<nav
+  bind:this={barEl}
+  class="navbar"
+  class:navbar--sticky={sticky}
+  data-phone-sections={phoneSections}
+  data-subnav-in-menu={subnavInMenu || undefined}
+>
   <div class="navbar-inner">
     <NavBarBrand
       {brand}
@@ -618,6 +662,30 @@
     }
   }
 
+  /* ── Phone: tap targets and the tabs' room ── */
+  @media (max-width: 640px) {
+    /* 28px was under the 32px tap target the action buttons already meet. */
+    .navbar-nav-toggle {
+      width: var(--space-16);
+      height: var(--space-16);
+    }
+
+    /* More tabs than fit (`phoneSubnavMax`) were squeezed to a sliver ("Ove")
+       beside the brand and the actions; when the sections menu lists every
+       one of them, the grid toggle is the way to them on a phone. */
+    .navbar[data-subnav-in-menu] :global(.chip-nav) {
+      display: none;
+    }
+
+    /* A filled centre (an app's view switches) keeps its whole width; the
+       brand, whose label truncates on a phone, gives way instead. Sharing the
+       leftover clipped the switches at the slot's edges. (`.navbar` for
+       weight: the base `.navbar-center` rule comes later in this sheet.) */
+    .navbar .navbar-center {
+      flex: none;
+    }
+  }
+
   /* ── Phone placement of the sections (opt-in, `phoneSections`) ── */
   @media (max-width: 640px) {
     .navbar[data-phone-sections='hidden'] .navbar-nav-toggle,
@@ -664,6 +732,11 @@
     scrollbar-width: none;
   }
 
+  /* A `center` snippet that rendered nothing must not take half the free
+     width from the tabs beside it (they were clipped at 1019px). */
+  .navbar-center:empty {
+    display: none;
+  }
 
   /* ── Right side actions ──────────────── */
   .navbar-actions {

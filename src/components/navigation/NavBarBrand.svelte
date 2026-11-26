@@ -375,9 +375,12 @@
       min-width: 0;
     }
 
+    /* `100%`: a button is shrink-to-fit, so when the bar squeezes the wrap
+       (NavBar keeps a filled centre whole on a phone) the label still has
+       to truncate inside the wrap instead of running over the next control. */
     .navbar-brand {
       min-width: 0;
-      max-width: 11rem;
+      max-width: min(11rem, 100%);
     }
 
     .brand-label {

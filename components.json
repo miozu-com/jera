@@ -1038,8 +1038,8 @@
       "statePattern": "singleton: getToastState() (browser-cached; SSR: fresh instance per call)",
       "consumers": ["dash", "admin", "miozu"],
       "stage": "stable",
-      "revision": 10,
-      "lastReviewed": "2026-10-21",
+      "revision": 11,
+      "lastReviewed": "2026-11-26",
       "breaking": [
         {
           "revision": 10,
@@ -1918,13 +1918,18 @@
           "type": "'inline' | 'row' | 'hidden'",
           "default": "'inline'",
           "description": "Where the sections go at <= 640px: inline in the bar (as on desktop), a full-width row under the bar, or hidden (the app's phone menu lists them)"
+        },
+        "phoneSubnavMax": {
+          "type": "number",
+          "default": "3",
+          "description": "Most subnav tabs kept in the bar at <= 640px; with more, and every tab also in the sections menu, they give way to the grid toggle"
         }
       },
       "snippets": ["actions", "center", "subnav", "renderIcon", "brandPanelHeader", "brandPanelFooter"],
       "consumers": ["dash", "admin"],
       "stage": "stable",
-      "revision": 11,
-      "lastReviewed": "2026-11-25",
+      "revision": 12,
+      "lastReviewed": "2026-11-26",
       "breaking": [],
       "docLevel": "standard"
     },
@@ -1957,8 +1962,8 @@
       },
       "snippets": ["renderIcon", "panelHeader", "panelFooter"],
       "stage": "beta",
-      "revision": 8,
-      "lastReviewed": "2026-10-31",
+      "revision": 9,
+      "lastReviewed": "2026-11-26",
       "breaking": [],
       "docLevel": "none"
     },
@@ -4032,8 +4037,8 @@
         }
       },
       "stage": "beta",
-      "revision": 8,
-      "lastReviewed": "2026-10-07",
+      "revision": 9,
+      "lastReviewed": "2026-11-26",
       "docLevel": "none",
       "breaking": []
     },
@@ -4283,8 +4288,8 @@
       },
       "dependencies": [],
       "stage": "beta",
-      "revision": 7,
-      "lastReviewed": "2026-10-24",
+      "revision": 8,
+      "lastReviewed": "2026-11-26",
       "docLevel": "standard",
       "breaking": []
     },

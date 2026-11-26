@@ -1,3 +1,4 @@
+<!-- file-size: justified -- one toast system: its singleton state, markup and the per-position/progress CSS are a single concern -->
 <!--
   @component Toast
 
@@ -6,6 +7,10 @@
 
   Uses a singleton reactive state (like all Selify reactive classes) so toasts
   can be triggered from any .js file, reactive state class, or Svelte component.
+
+  At <= 480px every position spans the screen between 12px gutters. Top
+  positions sit `--toast-inset-top` (default 1rem) from the top: set it to
+  clear an app bar. Hover pauses the timer for a mouse only; a tap does not.
 
   @example
   // In your root layout — just mount the component
@@ -281,8 +286,8 @@
       aria-live="polite"
       in:slide={prefersReducedMotion ? {duration: 0} : slideIn}
       out:slide={prefersReducedMotion ? {duration: 0} : slideOut}
-      onmouseenter={() => toast.pause(item.id)}
-      onmouseleave={() => toast.resume(item.id)}
+      onpointerenter={(e) => e.pointerType === 'mouse' && toast.pause(item.id)}
+      onpointerleave={(e) => e.pointerType === 'mouse' && toast.resume(item.id)}
     >
       {#if item.duration > 0}
         <div
@@ -690,12 +695,24 @@
   /* ============================================================
      Responsive
      ============================================================ */
+  /* Every position spans the screen between 12px gutters. `width: auto` is
+     what lets left + right stretch it: the popover UA style is
+     `width: fit-content`, which kept it text-wide and pinned to the left. */
   @media (max-width: 480px) {
     .toast-container {
       left: 0.75rem;
       right: 0.75rem;
+      width: auto;
       max-width: none;
       transform: none;
+    }
+
+    /* An app can drop phone toasts below its top bar so the bar's controls
+       stay tappable while a toast shows (dash: under the navbar). */
+    .toast-top-left,
+    .toast-top-center,
+    .toast-top-right {
+      top: var(--toast-inset-top, 1rem);
     }
 
     .toast-item {
